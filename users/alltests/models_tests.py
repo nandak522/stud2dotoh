@@ -21,7 +21,7 @@ class UserProfileCreationTests(TestCase):
         self.assertEquals(userprofile.name, data['name'])
         
     def test_userprofile_duplicate_creation(self):
-        data = {'username':'madhav.bnk',
+        data = {'username':'madhavbnk',
                 'password':'somevalidpasssword',
                 'email':'madhav.bnk@gmail.com',
                 'name':'Madhav'}

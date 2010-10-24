@@ -37,7 +37,11 @@ class UserProfile(BaseModel):
     objects = UserProfileManager()
 
     def __unicode__(self):
-        return self.email
+        return self.name
     
     def check_password(self, password):
         return self.user.check_password(password)
+    
+    def update_password(self, new_password):
+        self.user.set_password(new_password)
+        return True
