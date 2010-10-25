@@ -64,7 +64,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = '%s.urls' % PROJECT_FOLDER_NAME
 
 TEMPLATE_DIRS = (
-                 '%s/templates' % PROJECT_FOLDER_NAME,
+                 '%s/templates' % ROOT_PATH,
 )
 
 INSTALLED_APPS = (
@@ -81,3 +81,5 @@ INSTALLED_APPS = (
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
+
+AUTH_PROFILE_MODULE = 'users.UserProfile'

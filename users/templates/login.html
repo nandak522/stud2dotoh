@@ -1,0 +1,14 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}Login{% endblock %}
+{%block content%}
+<div class='prepend-8'>
+	<form action="{%url login%}" method='POST'>
+	<input type='hidden' name='next' value="{{next}}"/>
+	<table class='form-table'>
+	    <tr><td class='form-row'><label for="id_username">Username</label></td><td class='form-row'>{{form.username}}{{form.username.errors}}</td></tr>
+	    <tr><td class='form-row'><label for="id_password">Password</label></td><td class='form-row'>{{form.password}}{{form.password.errors}}</td></tr>
+	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Log in"/></td></tr>
+	</table>
+	</form>
+</div>
+{%endblock%}

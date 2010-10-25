@@ -8,6 +8,7 @@ class UserProfileAlreadyExistsException(Exception):
 
 class UserProfileManager(BaseModelManager):
     def create_userprofile(self, username, password, email='', name=''):
+        print 'username:%s, password:%s, email:%s, name:%s' % (username, password, email, name)
         if self.exists(username=username, email=email):
             raise UserProfileAlreadyExistsException
         user = User.objects.create_user(username=username,

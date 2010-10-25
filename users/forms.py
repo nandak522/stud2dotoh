@@ -7,8 +7,10 @@ USERNAME_FILTER_REGEX = '[^\w]'
 
 class UserSignupForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(max_length=50, required=False)
     password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput())
+    email = forms.EmailField(max_length=50, required=False)
+    name = forms.CharField(max_length=50, required=False)
+    next_url = forms.CharField(max_length=128, required=False, widget=forms.HiddenInput())
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -26,11 +28,12 @@ class UserSignupForm(forms.Form):
             UserProfile.objects.get(user__email=email)
             raise ValidationError('Email Already Picked!')
         except UserProfile.DoesNotExist:
-            return True
+            return email
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)
     password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput())
+    next_url = forms.CharField(max_length=128, required=False, widget=forms.HiddenInput())
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
