@@ -62,7 +62,7 @@ def view_login(request, login_template, next=''):
     if request.method == 'POST':
         form = UserLoginForm(post_data(request))
         if form.is_valid():
-            userprofile = UserProfile.objects.get(username=form.cleaned_data.get('username'))
+            userprofile = UserProfile.objects.get(user__username=form.cleaned_data.get('username'))
             if not userprofile.check_password(form.cleaned_data.get('password')):
                 from users.messages import USER_LOGIN_FAILURE
                 messages.error(request, USER_LOGIN_FAILURE)

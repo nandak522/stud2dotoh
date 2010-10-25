@@ -2,7 +2,7 @@
 {% block title %}Login{% endblock %}
 {%block content%}
 <div class='prepend-8'>
-	<form action="{%url login%}" method='POST'>
+	<form action="{%url login%}" method='POST'>{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
 	    <tr><td class='form-row'><label for="id_username">Username</label></td><td class='form-row'>{{form.username}}{{form.username.errors}}</td></tr>
