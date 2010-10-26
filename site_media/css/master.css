@@ -1,0 +1,10 @@
+body{background:#2D2620;color:#FFF;}
+#logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;}
+#header{margin-top:1em;}
+#content{background:#FFF;color:#2D2620;}
+.tab{background:#473831;color:#FFF;display:inline;padding:6px;margin:6px 6px 0 0;font-size:1.2em;cursor:pointer;}
+.tab a{border:0;}
+.tab:hover{background:#D66018;}
+.tab a:hover{color:#FFF;}
+a{color:#FFF;text-decoration:none;border-bottom:1px solid #FFF;}
+#footer_links{font:bold 14px sans-serif,Arial;text-align:center;padding:10px;}

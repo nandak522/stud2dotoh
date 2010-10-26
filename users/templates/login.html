@@ -1,5 +1,5 @@
 {%extends 'singlepane_base.html'%}
-{% block title %}Login{% endblock %}
+{% block title %}Login with existing account details{% endblock %}
 {%block content%}
 <div class='prepend-8'>
 	<form action="{%url login%}" method='POST'>{% csrf_token %}

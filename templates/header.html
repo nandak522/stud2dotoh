@@ -1,18 +1,17 @@
-<div class='column span-10'>
+<div id='logo' class='column span-10'>
     <a href="{%url homepage%}"><h1>Stud2.0</h1></a>
 </div>
 <div id='header_toplinks' class='column push-1'>
     <ul>
-        <li><a href='{%url homepage%}'>Home</a></li>
+        <li class='tab'><a href='{%url homepage%}'>Home</a></li>
         {%if user.is_authenticated%}
             {%with user.get_profile as userprofile%}
                <li>Hi {%firstof userprofile.name userprofile.username%}</li>
-               <li><a href='{%url logout%}'>Logout</a></li>
+               <li class='tab'><a href='{%url logout%}'>Logout</a></li>
             {%endwith%}
         {%else%}
-           <li><a href='{%url register%}'>Register</a></li>
-           <li><a href='{%url login%}'>Login</a></li>
+           <li class='tab'><a href='{%url register%}'>Register</a></li>
+           <li class='tab'><a href='{%url login%}'>Login</a></li>
         {%endif%}
-        <li><a href='/site_media/html/about.html'>About</a></li>
     </ul>
 </div>
