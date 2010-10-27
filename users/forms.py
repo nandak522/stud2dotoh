@@ -3,7 +3,7 @@ import re
 from users.models import UserProfile
 from django.core.exceptions import ValidationError
 
-USERNAME_FILTER_REGEX = '[^\w]'
+USERNAME_FILTER_REGEX = '[^a-zA-Z0-9]'
 
 class UserSignupForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)
@@ -20,6 +20,8 @@ class UserSignupForm(forms.Form):
                 raise ValidationError('Username Already Picked!')
             except UserProfile.DoesNotExist:
                 return username
+        else:
+            raise ValidationError('Username should only contain alphabets and digits!')
         return username
 
     def clean_email(self):
