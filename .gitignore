@@ -3,4 +3,5 @@
 .project
 .pydevproject
 .settings
-*_settings.py
+prod_settings.py
+local_settings.py
