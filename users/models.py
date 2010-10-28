@@ -8,6 +8,7 @@ class UserProfileAlreadyExistsException(Exception):
 
 class UserProfileManager(BaseModelManager):
     def create_userprofile(self, username, password, email='', name=''):
+        print 'username:%s, password:%s, email:%s, name:%s' % (username, password, email, name)
         if self.exists(username=username, email=email):
             raise UserProfileAlreadyExistsException
         user = User.objects.create_user(username=username,
@@ -37,7 +38,11 @@ class UserProfile(BaseModel):
     objects = UserProfileManager()
 
     def __unicode__(self):
-        return self.email
+        return self.name
     
     def check_password(self, password):
         return self.user.check_password(password)
+    
+    def update_password(self, new_password):
+        self.user.set_password(new_password)
+        return True

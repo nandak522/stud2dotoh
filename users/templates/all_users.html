@@ -1,0 +1,12 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}All Users{%endblock%}
+{%block content%}
+<h3>List of Users</h3>
+<ul>
+{%for user in users.object_list%}
+    <li><a href="{%url user_profile user_id=user.id user_slug_name=user.slug%}">{{user.name|title}}</a></li>
+{%empty%}
+    <li>No Users as of now</li>
+{%endfor%}
+</ul>
+{%endblock%}

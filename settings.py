@@ -1,4 +1,5 @@
 import os
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -19,6 +20,10 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+if 'test' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'sqlite3' 
+    DATABASES['default']['NAME'] = 'stud2dotoh.db'
 
 TIME_ZONE = 'Asia/Calcutta'
 
@@ -59,7 +64,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = '%s.urls' % PROJECT_FOLDER_NAME
 
 TEMPLATE_DIRS = (
-                 '%s/templates' % PROJECT_FOLDER_NAME,
+                 '%s/templates' % ROOT_PATH,
 )
 
 INSTALLED_APPS = (
@@ -76,3 +81,5 @@ INSTALLED_APPS = (
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
+
+AUTH_PROFILE_MODULE = 'users.UserProfile'

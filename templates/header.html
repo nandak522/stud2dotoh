@@ -1,0 +1,17 @@
+<div id='logo' class='column span-10'>
+    <a href="{%url homepage%}"><h1>Stud2.0</h1></a>
+</div>
+<div id='header_toplinks' class='column push-1'>
+    <ul>
+        <li class='tab'><a href='{%url homepage%}'>Home</a></li>
+        {%if user.is_authenticated%}
+            {%with user.get_profile as userprofile%}
+               <li>Hi {%firstof userprofile.name userprofile.username%}</li>
+               <li class='tab'><a href='{%url logout%}'>Logout</a></li>
+            {%endwith%}
+        {%else%}
+           <li class='tab'><a href='{%url register%}'>Register</a></li>
+           <li class='tab'><a href='{%url login%}'>Login</a></li>
+        {%endif%}
+    </ul>
+</div>
