@@ -8,3 +8,6 @@ body{background:#2D2620;color:#FFF;}
 .tab a:hover{color:#FFF;}
 a{color:#FFF;text-decoration:none;border-bottom:1px solid #FFF;}
 #footer_links{font:bold 14px sans-serif,Arial;text-align:center;padding:10px;}
+
+#vision_banner{text-align:center;color:#2D2620;height:200px;padding:4em;text-shadow:6px 2px 15px #473831;}
+.orange{color:#D66018;}
