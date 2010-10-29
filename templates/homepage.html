@@ -1,5 +1,23 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}Home{% endblock %}
 {%block content%}
+{%if user.is_authenticated%}
+<div class="column prepend-1 span-10">
+Want to save something quickly ?
+<form action='/save_as_file/' method="POST">
+    <textarea rows="10" cols="20">Enter something here</textarea>
+    <input type="submit" value="Save this"/>
+   </form>
+</div>
+<div class="column prepend-4 span-8 last">
+List of files uploaded previously
+<ul>
+<li><a class='file_link' href="/users/{{user.id}}/files/3/">File 3</a></li>
+<li><a class='file_link' href="/users/{{user.id}}/files/2/">File 2</a></li>
+<li><a class='file_link' href="/users/{{user.id}}/files/1/">File 1</a></li>
+</ul>
+</div>
+{%else%}
 <h1 id='vision_banner'>Studying in College <span class='orange'>?</span> Bored <span class='orange'>?</span><br/><br/>Not anymore! <span class='orange'>Join Us</span>!</h1>
+{%endif%}
 {%endblock%}
