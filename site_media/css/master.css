@@ -1,7 +1,7 @@
 body{background:#2D2620;color:#FFF;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;}
 #header{margin-top:1em;}
-#content{background:#FFF;color:#2D2620;}
+#content{background:#FFF;color:#2D2620;padding:6px;}
 .tab{background:#473831;color:#FFF;display:inline;padding:6px;margin:6px 6px 0 0;font-size:1.2em;cursor:pointer;}
 .tab a{border:0;}
 .tab:hover{background:#D66018;}
@@ -11,3 +11,5 @@ a{color:#FFF;text-decoration:none;border-bottom:1px solid #FFF;}
 
 #vision_banner{text-align:center;color:#2D2620;height:200px;padding:4em;text-shadow:6px 2px 15px #473831;}
 .orange{color:#D66018;}
+
+.profile_link,.email{color:#2D2620;text-decoration:none;border-bottom:1px solid #06C;}

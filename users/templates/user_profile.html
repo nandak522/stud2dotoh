@@ -1,11 +1,10 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}User {{userprofile.name|title}}{% endblock %}
 {%block content%}
-<h3>This is the profile page</h3>
+<h3>{{userprofile.name|title}}</h3>
 <div class='column span-24 last'>
 <table>
-<tr><td class='strong'>Name:</td><td>{{userprofile.name|title}}</td></tr>
-<tr><td>Email:</td><td><a href='mailto:{{userprofile.email}}'>{{userprofile.email}}</a></td></tr>
+<tr><td>Email:</td><td><a class='email' href='mailto:{{userprofile.user.email}}'>{{userprofile.user.email}}</a></td></tr>
 </table>
 </div>
 <br/><br/><br/>

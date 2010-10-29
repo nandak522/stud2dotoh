@@ -2,11 +2,16 @@
 {%block title%}All Users{%endblock%}
 {%block content%}
 <h3>List of Users</h3>
-<ul>
-{%for user in users.object_list%}
-    <li><a href="{%url user_profile user_id=user.id user_slug_name=user.slug%}">{{user.name|title}}</a></li>
-{%empty%}
-    <li>No Users as of now</li>
-{%endfor%}
-</ul>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Joined on</th>
+    </tr>
+    {%for user in users.object_list%}
+        <tr><td><a class="profile_link" href="{%url user_profile user_id=user.id user_slug_name=user.slug%}">{{user.name|title}}</a></td><td>{{user.user__username}}</td><td>{{user.created_on|date:"dS M Y g:i A"}}</td></tr>
+	{%empty%}
+	   <tr><td colspan="3">No Users as of now</td></tr>
+	{%endfor%}
+</table>
 {%endblock%}

@@ -11,7 +11,7 @@ from django.contrib import messages
 
 def view_all_users(request, all_users_template):
     from django.core.paginator import Paginator, EmptyPage, InvalidPage
-    paginator = Paginator(UserProfile.objects.values('id', 'name', 'user__username'), 2)
+    paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__username', 'created_on'), 2)
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:
