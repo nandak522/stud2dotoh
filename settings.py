@@ -58,7 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = '%s.urls' % PROJECT_FOLDER_NAME
@@ -90,3 +90,5 @@ if DOCSTORE_CONFIG['local']:
     DOCSTORE_CONFIG['files_storage_path'] = '/home/nanda/workspace2/stud2dotoh_uploaded_files'
 else:
     DOCSTORE_CONFIG['files_storage_path'] = 's3.amazonaws.com'
+    
+INTERNAL_IPS = ('127.0.0.1',)
