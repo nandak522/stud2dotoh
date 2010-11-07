@@ -2,7 +2,7 @@
 {% block title %}Notepad{% endblock %}
 {%block content%}
 <div id='notepad' class="column span-18">
-<h3>Want to save something quickly ?</h3>
+<h3 class='droid'>Want to save something quickly ?</h3>
 <form action='{%url notepad%}' method="POST">{% csrf_token %}
     <table>
         <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(Max of 30 characters)</span><br/>{{form.name.errors}}</td></tr>
@@ -13,11 +13,11 @@
     </table>
    </form>
 </div>
-<div id='uploaded_files' class="column span-5 last">
-<h4>All your uploaded files</h4>
+<div id='uploaded_files' class="widget column span-5 last">
+<h4 class='widget_header centeralign'>All your uploaded files</h4>
 <ul>
-{%for filename in all_uploaded_files%}
-<li><a class='file_link' target='blank' href="{%url file_content_view_link filename=filename%}">{{filename}}</a></li>
+{%for filename in public_uploaded_files%}
+<li><a class='file_link' target='_blank' href="{%url file_content_view_link filename=filename%}">{{filename}}</a></li>
 {%empty%}
 <li>You havenot uploaded any files yet!</li>
 {%endfor%}

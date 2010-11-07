@@ -112,7 +112,7 @@ class UserUploadFilesTests(TestCase):
         form = context.get('form')
         self.assertFalse(form.is_bound)
         self.assertFalse(form.errors)
-        self.assertTrue(context.has_key('all_uploaded_files'))
+        self.assertTrue(context.has_key('public_uploaded_files'))
 
     def test_empty_notepad_saving(self):
         self.login_as(username='madhavbnk', password='nopassword')
@@ -130,9 +130,9 @@ class UserUploadFilesTests(TestCase):
         form = context.get('form')
         self.assertTrue(form.is_bound)
         self.assertTrue(form.errors)
-        self.assertTrue(context.has_key('all_uploaded_files'))
-        all_uploaded_files = context.get('all_uploaded_files')
-        self.assertFalse(all_uploaded_files)
+        self.assertTrue(context.has_key('public_uploaded_files'))
+        public_uploaded_files = context.get('public_uploaded_files')
+        self.assertFalse(public_uploaded_files)
     
     def test_valid_notepad_saving(self):
         self.login_as(username='madhavbnk', password='nopassword')
@@ -150,11 +150,11 @@ class UserUploadFilesTests(TestCase):
         form = context.get('form')
         self.assertFalse(form.is_bound)
         self.assertFalse(form.errors)
-        self.assertTrue(context.has_key('all_uploaded_files'))
-        all_uploaded_files = context.get('all_uploaded_files')
-        self.assertTrue(all_uploaded_files)
+        self.assertTrue(context.has_key('public_uploaded_files'))
+        public_uploaded_files = context.get('public_uploaded_files')
+        self.assertTrue(public_uploaded_files)
         from utils import slugify
-        self.assertTrue(slugify(form_data['name']) in all_uploaded_files)
+        self.assertTrue(slugify(form_data['name']) in public_uploaded_files)
         
     def test_viewing_saved_notepad_content(self):
         self.login_as(username='madhavbnk', password='nopassword')

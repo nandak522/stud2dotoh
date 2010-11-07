@@ -91,14 +91,15 @@ def view_logout(request, logout_template):
 @login_required
 def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
-    return response(request, userprofile_template, {'userprofile': userprofile})
+    public_uploaded_files = userprofile.public_uploaded_files
+    return response(request, userprofile_template, {'userprofile': userprofile,
+                                                    'public_uploaded_files': public_uploaded_files})
 
 def view_homepage(request, homepage_template):
     return response(request, homepage_template, {})
 
 def _create_directory_for_user(userprofile):
-    from utils import get_user_directory_path
-    user_directory_path = get_user_directory_path(userprofile)
+    user_directory_path = userprofile.user_directory_path
     if os.path.exists(user_directory_path):
         return user_directory_path
     os.mkdir(user_directory_path)
@@ -117,19 +118,8 @@ def _convert_notes_to_file(content, filename, user_directory_path):
     else:
         raise NotImplementedError
 
-def _list_all_uploaded_files(userprofile):
-    from utils import get_user_directory_path
-    user_directory_path = get_user_directory_path(userprofile)
-    if settings.DOCSTORE_CONFIG['local']:
-        if os.path.exists(user_directory_path):
-            return tuple(os.walk(user_directory_path).next()[-1])
-    else:
-        raise NotImplementedError
-    return ()
-
 def _fetch_content_from_user_uploaded_file(userprofile, filename):
-    from utils import get_user_directory_path
-    user_directory_path = get_user_directory_path(userprofile)
+    user_directory_path = userprofile.user_directory_path
     if settings.DOCSTORE_CONFIG['local']:
         supposed_filepath = "/".join([user_directory_path, filename]) 
         if os.path.exists(supposed_filepath):
@@ -143,10 +133,11 @@ def _fetch_content_from_user_uploaded_file(userprofile, filename):
 def view_notepad(request, notepad_template):
     from users.forms import SaveFileForm
     userprofile = loggedin_userprofile(request)
-    all_uploaded_files = _list_all_uploaded_files(userprofile)
     if request.method == 'GET':
+        public_uploaded_files = userprofile.public_uploaded_files
+        print 'public_uploaded_files:%s' % str(public_uploaded_files)
         return response(request, notepad_template, {'form':SaveFileForm(),
-                                                    'all_uploaded_files':all_uploaded_files})
+                                                    'public_uploaded_files':public_uploaded_files})
     form = SaveFileForm(post_data(request))
     userprofile = loggedin_userprofile(request)
     if form.is_valid():
@@ -156,11 +147,12 @@ def view_notepad(request, notepad_template):
                                           user_directory_path=user_directory_path)
         from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
         messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % filename)
-        all_uploaded_files = _list_all_uploaded_files(userprofile)
-        return response(request, notepad_template, {'all_uploaded_files':all_uploaded_files,
+        public_uploaded_files = userprofile.public_uploaded_files
+        print 'public_uploaded_files:%s' % str(public_uploaded_files)
+        return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
                                                     'form':SaveFileForm()})
-    all_uploaded_files = _list_all_uploaded_files(userprofile)
-    return response(request, notepad_template, {'all_uploaded_files':all_uploaded_files,
+    public_uploaded_files = userprofile.public_uploaded_files
+    return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
                                                 'form':form})
 
 @login_required
@@ -172,3 +164,16 @@ def view_file_content_view(request, filename):
     userprofile = loggedin_userprofile(request)
     file_content = _fetch_content_from_user_uploaded_file(userprofile, filename)
     return HttpResponse(content=file_content, mimetype='text/plain')
+
+#TODO:All the questions related views need to be moved to a separate app
+@login_required
+def view_ask_question(request, question_template):
+    raise NotImplementedError
+
+@login_required
+def view_questions(request, question_template):
+    raise NotImplementedError
+
+@login_required
+def view_account_settings(request, settings_template):
+    raise NotImplementedError
