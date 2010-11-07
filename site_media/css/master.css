@@ -1,6 +1,6 @@
 /*Global Styles*/
 body{background:#2D2620;color:#FFF;}
-#logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;color:#FF6633;}
+#logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;color:#FF6633;margin-bottom:0.3em;}
 #header{margin-top:1em;}
 #content{background:#FFF;color:#2D2620;padding:6px;}
 #header_toplinks .tab{background:#473831;color:#FFF;display:inline;padding:6px;margin:6px 6px 0 0;font-size:1.2em;cursor:pointer;}

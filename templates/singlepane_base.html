@@ -12,12 +12,12 @@
 </head>
 <body>
     <div id="container" class='container'>
-        <div id='header' class='header span-24'>
+        <div id='header' class='column span-24 last'>
             {%block header%}
                 {%include 'header.html'%}        
             {%endblock%}
         </div><!-- end of header -->
-        <div id='content' class='span-24'>
+        <div id='content' class='column span-24 last'>
             {%block messages%}
 	            {% if messages %}
 					<ul class="messages">
@@ -30,7 +30,7 @@
             {%block content%}
             {%endblock%}
         </div><!-- end of content -->
-        <div id='footer' class='footer span-24'>
+        <div id='footer' class='column span-24 last'>
             {%block footer%}
                 {%include 'footer.html'%}            
             {%endblock%}
