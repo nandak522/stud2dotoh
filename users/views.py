@@ -1,14 +1,18 @@
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.contrib.auth import authenticate as django_authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.urlresolvers import reverse as url_reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from users.models import UserProfile
-from utils import response, post_data
+from utils import response, post_data, loggedin_userprofile, slugify
 from users.decorators import anonymoususer
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+import os
 
+@login_required
 def view_all_users(request, all_users_template):
     from django.core.paginator import Paginator, EmptyPage, InvalidPage
     paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__username', 'created_on'), 2)
@@ -84,9 +88,87 @@ def view_logout(request, logout_template):
     messages.info(request, USER_LOGOUT_SUCCESSFUL)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
 
+@login_required
 def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
     return response(request, userprofile_template, {'userprofile': userprofile})
 
 def view_homepage(request, homepage_template):
     return response(request, homepage_template, {})
+
+def _create_directory_for_user(userprofile):
+    from utils import get_user_directory_path
+    user_directory_path = get_user_directory_path(userprofile)
+    if os.path.exists(user_directory_path):
+        return user_directory_path
+    os.mkdir(user_directory_path)
+    return user_directory_path
+
+def _convert_notes_to_file(content, filename, user_directory_path):
+    filename = slugify(filename)
+    supposed_filepath = "/".join([user_directory_path, filename])
+    if settings.DOCSTORE_CONFIG['local']:
+        if os.path.exists(supposed_filepath):
+            supposed_filepath += '_1'
+        file = open(supposed_filepath, 'w')
+        file.write(content)
+        file.close()
+        return filename
+    else:
+        raise NotImplementedError
+
+def _list_all_uploaded_files(userprofile):
+    from utils import get_user_directory_path
+    user_directory_path = get_user_directory_path(userprofile)
+    if settings.DOCSTORE_CONFIG['local']:
+        if os.path.exists(user_directory_path):
+            return tuple(os.walk(user_directory_path).next()[-1])
+    else:
+        raise NotImplementedError
+    return ()
+
+def _fetch_content_from_user_uploaded_file(userprofile, filename):
+    from utils import get_user_directory_path
+    user_directory_path = get_user_directory_path(userprofile)
+    if settings.DOCSTORE_CONFIG['local']:
+        supposed_filepath = "/".join([user_directory_path, filename]) 
+        if os.path.exists(supposed_filepath):
+            file_content = open(supposed_filepath, 'r').read()
+            return file_content
+        #TODO:This should be file 404 and not any typical 404
+        raise Http404
+    raise NotImplementedError
+
+@login_required
+def view_notepad(request, notepad_template):
+    from users.forms import SaveFileForm
+    userprofile = loggedin_userprofile(request)
+    all_uploaded_files = _list_all_uploaded_files(userprofile)
+    if request.method == 'GET':
+        return response(request, notepad_template, {'form':SaveFileForm(),
+                                                    'all_uploaded_files':all_uploaded_files})
+    form = SaveFileForm(post_data(request))
+    userprofile = loggedin_userprofile(request)
+    if form.is_valid():
+        user_directory_path = _create_directory_for_user(userprofile)
+        filename = _convert_notes_to_file(content=form.cleaned_data.get('content'),
+                                          filename=form.cleaned_data.get('name'),
+                                          user_directory_path=user_directory_path)
+        from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
+        messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % filename)
+        all_uploaded_files = _list_all_uploaded_files(userprofile)
+        return response(request, notepad_template, {'all_uploaded_files':all_uploaded_files,
+                                                    'form':SaveFileForm()})
+    all_uploaded_files = _list_all_uploaded_files(userprofile)
+    return response(request, notepad_template, {'all_uploaded_files':all_uploaded_files,
+                                                'form':form})
+
+@login_required
+def view_notepad_preview(request, notepad_preview_template):
+    raise NotImplementedError
+
+@login_required
+def view_file_content_view(request, filename):
+    userprofile = loggedin_userprofile(request)
+    file_content = _fetch_content_from_user_uploaded_file(userprofile, filename)
+    return HttpResponse(content=file_content, mimetype='text/plain')

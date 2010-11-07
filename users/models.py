@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.template.defaultfilters import slugify
+from utils import slugify
 from utils.models import BaseModel, BaseModelManager
 
 class UserProfileAlreadyExistsException(Exception):
@@ -8,7 +8,6 @@ class UserProfileAlreadyExistsException(Exception):
 
 class UserProfileManager(BaseModelManager):
     def create_userprofile(self, username, password, email='', name=''):
-        print 'username:%s, password:%s, email:%s, name:%s' % (username, password, email, name)
         if self.exists(username=username, email=email):
             raise UserProfileAlreadyExistsException
         user = User.objects.create_user(username=username,
