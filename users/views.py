@@ -135,7 +135,6 @@ def view_notepad(request, notepad_template):
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':
         public_uploaded_files = userprofile.public_uploaded_files
-        print 'public_uploaded_files:%s' % str(public_uploaded_files)
         return response(request, notepad_template, {'form':SaveFileForm(),
                                                     'public_uploaded_files':public_uploaded_files})
     form = SaveFileForm(post_data(request))
@@ -148,7 +147,6 @@ def view_notepad(request, notepad_template):
         from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
         messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % filename)
         public_uploaded_files = userprofile.public_uploaded_files
-        print 'public_uploaded_files:%s' % str(public_uploaded_files)
         return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
                                                     'form':SaveFileForm()})
     public_uploaded_files = userprofile.public_uploaded_files

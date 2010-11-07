@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.template import add_to_builtins
 
 from django.contrib import admin
 admin.autodiscover()
@@ -25,3 +26,5 @@ urlpatterns += patterns('users.views',
     (r'^accounts/logout/$', 'view_logout', {'logout_template': 'logout.html'}, 'logout'),
     (r'^settings/$', 'view_account_settings', {'settings_template':''}, 'settings'),
 )
+
+add_to_builtins('utils.templateutils')
