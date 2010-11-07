@@ -68,31 +68,40 @@ class UserLoginTests(TestCase):
             self.assertTrue(form.errors)
             self.assertTrue(form.errors.get('username'))
             
-#class UserProfilePageTests(TestCase):
-#    fixtures = ['users.json']
-#    
-#    def test_userprofilepage_success_response(self):
-#        userprofile = UserProfile.objects.get(email='madhav.bnk@gmail.com')
-#        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
-#        self.assertTrue(response)
-#        self.assertEquals(response.status_code, 200)
-#        self.assertTemplateUsed(response, 'user_profile.html')
-#        context = response.context[0]
-#        self.assertTrue(context.has_key('userprofile'))
-#        userprofile = context.get('userprofile')
-#        self.assertEquals(userprofile, UserProfile.objects.get(email='madhav.bnk@gmail.com'))
-#        self.assertTrue(context.has_key('submitted_snippets'))
-#        submitted_snippets = context.get('submitted_snippets')
-#        from quest.models import Snippet
-#        snippet = Snippet.objects.get(slug=submitted_snippets[0]['slug'])
-#        snippet_submitter = snippet.userprofilesnippetmembership_set.all()[0]
-#        self.assertEquals(userprofile, snippet_submitter.userprofile)
-#    
-#    def test_invalidlink_for_userprofilepage(self):
-#        userprofile = UserProfile.objects.get(email='madhav.bnk@gmail.com')
-#        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, 'madness')))
-#        self.assertTrue(response)
-#        self.assertEquals(response.status_code, 404)
+class UserProfilePageTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_userprofilepage_success_response(self):
+        userprofile = UserProfile.objects.get(user__username='somerandomuser')
+        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'user_profile.html')
+        context = response.context[0]
+        self.assertTrue(context.has_key('userprofile'))
+        userprofile = context.get('userprofile')
+        self.assertEquals(userprofile.user.username, UserProfile.objects.get(user__username='somerandomuser').user.username)
+        self.assertTrue(context.has_key('public_uploaded_files'))
+        self.login_as(username='somerandomuser', password='nopassword')
+        form_data = {'name': 'My Python Assignment',
+                     'short_description': 'Hello World',
+                     'content': 'print "Hello World"',
+                     'public': True}
+        response = self.client.post(path=url_reverse('users.views.view_notepad'),
+                                    data=form_data)
+        self.logout()
+        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+        context = response.context[0]
+        public_uploaded_files = context.get('public_uploaded_files')
+        self.assertTrue(public_uploaded_files)
+        from utils import slugify
+        self.assertTrue(slugify(form_data['name']) in public_uploaded_files)
+    
+    def test_invalidlink_for_userprofilepage(self):
+        userprofile = UserProfile.objects.get(user__username='madhavbnk')
+        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, 'madness')))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 404)
 
 class UserUploadFilesTests(TestCase):
     fixtures = ['users.json']

@@ -88,7 +88,6 @@ def view_logout(request, logout_template):
     messages.info(request, USER_LOGOUT_SUCCESSFUL)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
 
-@login_required
 def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
     public_uploaded_files = userprofile.public_uploaded_files

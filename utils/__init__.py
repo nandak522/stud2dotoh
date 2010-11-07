@@ -19,12 +19,16 @@ def get_data(request):
     return request.GET.copy()
 
 class TestCase(TestCase):
+    settings.DOCSTORE_CONFIG['files_storage_path'] = '/home/nanda/workspace2/test_stud2dotoh_uploaded_files'
     def tearDown(self):
         del self.client
         
     def login_as(self, username, password):
         return self.client.post(path=url_reverse('users.views.view_login'),
                                 data={'username':username, 'password':password})
+        
+    def logout(self):
+        return self.client.post(path=url_reverse('users.views.view_logout'))
     
 def loggedin_userprofile(request):
     return request.user.get_profile()
