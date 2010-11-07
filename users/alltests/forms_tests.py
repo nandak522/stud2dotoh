@@ -1,5 +1,6 @@
 from utils import TestCase
-from users.forms import UserSignupForm, UserLoginForm
+from users.forms import UserSignupForm, UserLoginForm, SaveFileForm
+from django.conf import settings
 
 class UserSignupFormTests(TestCase):
     fixtures = ['users.json']
@@ -9,9 +10,9 @@ class UserSignupFormTests(TestCase):
                 'password':'somevalidpasssword',
                 'email':'nandakishore@gmail.com'}
         form = UserSignupForm(data)
-        self.assertTrue(form.is_valid())
-        self.assertFalse(form.errors)
-        self.assertTrue(form.cleaned_data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.errors)
+        self.assertFalse(hasattr(form, 'cleaned_data'))
         
     def test_duplicate_signup(self):
         data = {'username':'madhavbnk',
@@ -67,5 +68,36 @@ class UserLoginFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.has_key('username'))
-        self.assertEquals(form.errors.get('username')[0], 'Invalid Username!')
+        self.assertEquals(form.errors.get('username')[0], 'Invalid Username! Username should only be alphabetic. a-z,A-Z,0-9')
         self.assertFalse(form.errors.has_key('password'))
+        
+class SaveFileFormTests(TestCase):
+    def test_empty_form_submission(self):
+        data = {'name':'','short_description':'','content':'', 'public':''}
+        form = SaveFileForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.errors)
+        self.assertTrue(form.errors.has_key('name'))
+        self.assertFalse(form.errors.has_key('short_description'))
+        self.assertTrue(form.errors.has_key('content'))
+        self.assertFalse(form.errors.has_key('public'))
+        
+    def test_empty_content_submission(self):
+        data = {'name':'My C Assignment','short_description':'','content':'', 'public':True}
+        form = SaveFileForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.errors)
+        self.assertFalse(form.errors.has_key('name'))
+        self.assertFalse(form.errors.has_key('short_description'))
+        self.assertTrue(form.errors.has_key('content'))
+        self.assertFalse(form.errors.has_key('public'))
+        
+    def test_valid_form_submission(self):
+        data = {'name':'My last semister Assignment',
+                'short_description':'',
+                'content':open("/".join([settings.ROOT_PATH, 'users', 'fixtures', 'assignment.py'])).read(),
+                'public':True}
+        form = SaveFileForm(data)
+        self.assertTrue(form.is_valid())
+        self.assertFalse(form.errors)
+        self.assertEquals(data['content'].strip(), form.cleaned_data.get('content'))

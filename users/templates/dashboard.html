@@ -1,0 +1,9 @@
+<h2 class='droid'>Hi {{user.get_profile.name|title}}, This is your Dashboard</h2>
+<ul id='dashboard_links'><!-- Tomorrow these individual links could be turning to individual widgets -->
+    <li><h3><a href="{%url notepad%}">Notepad</a></h3></li>
+    <li><h3><a href="{%url user_profile user.get_profile.id user.get_profile.slug%}">Public Profile</a></h3></li>
+    <li><h3><a href="{%url ask_question%}">Ask a Question ?</a></h3></li>
+    <li><h3><a href="{%url questions%}">Answer a Question ?</a></h3></li>
+    <li><h3><a href="{%url settings%}">Account Settings</a></h3></li>
+</ul>
+<a></a>

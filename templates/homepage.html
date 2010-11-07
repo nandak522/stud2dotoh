@@ -1,5 +1,12 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}Home{% endblock %}
 {%block content%}
-<div style='height:100px;text-align:center;'>This is the homepage</div>
+{%if user.is_authenticated%}
+{%include 'dashboard.html'%}
+{%else%}
+<h1 id='vision_banner'>We make <span class='orange_underline'>studying in college</span>, <span class='orange_underline'>fun and easy</span><br/>
+<br/>
+<a href='{%url register%}'>Join Us</a>
+</h1>
+{%endif%}
 {%endblock%}

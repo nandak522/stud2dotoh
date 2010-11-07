@@ -4,12 +4,13 @@ from users.models import UserProfile
 from django.core.exceptions import ValidationError
 
 USERNAME_FILTER_REGEX = '[^a-zA-Z0-9]'
+FILENAME_FILTER_REGEXT = '[^\.]'
 
 class UserSignupForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)
     password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput())
-    email = forms.EmailField(max_length=50, required=False)
     name = forms.CharField(max_length=50, required=False)
+    email = forms.EmailField(max_length=50, required=False)
     next_url = forms.CharField(max_length=128, required=False, widget=forms.HiddenInput())
 
     def clean_username(self):
@@ -46,3 +47,12 @@ class UserLoginForm(forms.Form):
             except UserProfile.DoesNotExist:
                 raise ValidationError('Invalid Username!')
         raise ValidationError('Invalid Username! Username should only be alphabetic. a-z,A-Z,0-9')
+    
+class SaveFileForm(forms.Form):
+    name = forms.CharField(max_length=30, required=True)
+    short_description = forms.CharField(max_length=50, required=False)
+    content = forms.CharField(max_length=7000, required=True,widget=forms.Textarea())
+    public = forms.BooleanField(required=False, initial=True)
+    
+    def clean_content(self):
+        return self.cleaned_data.get('content').strip()

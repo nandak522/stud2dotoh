@@ -22,7 +22,7 @@
 	            {% if messages %}
 					<ul class="messages">
 					    {% for message in messages %}
-					    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
 					    {% endfor %}
 					</ul>
 				{% endif %}
@@ -36,6 +36,8 @@
             {%endblock%}
         </div><!-- end of footer -->
     </div><!-- end of container -->
+    <script type='text/javascript' src='/site_media/js/jquery/jquery-1.4.3.min.js'></script>
+    <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(10000);}</script>
     {%block extrajs%}{%endblock%}
 </body>
 </html>

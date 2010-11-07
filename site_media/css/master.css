@@ -1,10 +1,50 @@
+/*Global Styles*/
 body{background:#2D2620;color:#FFF;}
-#logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;}
+#logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;color:#FF6633;}
 #header{margin-top:1em;}
-#content{background:#FFF;color:#2D2620;}
-.tab{background:#473831;color:#FFF;display:inline;padding:6px;margin:6px 6px 0 0;font-size:1.2em;cursor:pointer;}
-.tab a{border:0;}
-.tab:hover{background:#D66018;}
-.tab a:hover{color:#FFF;}
-a{color:#FFF;text-decoration:none;border-bottom:1px solid #FFF;}
+#content{background:#FFF;color:#2D2620;padding:6px;}
+#header_toplinks .tab{background:#473831;color:#FFF;display:inline;padding:6px;margin:6px 6px 0 0;font-size:1.2em;cursor:pointer;}
+#header_toplinks .tab a{border:0;color:#FFF;}
+#header_toplinks .tab a:hover{color:#FFF;}
+#header_toplinks .tab:hover{background:#FF6633;}
+a{text-decoration:none;border-bottom:1px solid #06C;}
 #footer_links{font:bold 14px sans-serif,Arial;text-align:center;padding:10px;}
+.help_text{color:#333;padding-left:4px;font-size:0.875em;}
+.required{color:#F00;}
+.optional{color:#105Cb6;}
+ul.errorlist{font-size:12px;padding:0;margin:0;list-style-type:none;padding:0.2em;}
+ul.errorlist li{display:inline;padding:2px 4px;margin:0;background:#F00;color:#FFF;}
+input[type="text"], input[type="password"], input.text, input.title, textarea, select{padding:2px;margin:0.5em 0 0 0;}
+.leftalign{text-align:left;}
+.rightalign{text-align:right;}
+.centeralign{text-align:center;}
+.previous_page, .next_page{padding:4px;border:1px solid #CCC;font-weight:bold;}
+.previous_page:hover, .next_page:hover{padding:4px;border:1px solid #00223B;color:#FFF;background:#00223B;}
+.current_page{padding:4px;font-weight:bold;background:#00223B;color:#FFF;}
+.tag{background:#00223B;color:#FFF;padding:2px 4px;}
+.messages{margin:0 auto;list-style-type:none;width:50%;padding:0;text-align:center;font:bold 1.2em "Droid sans",Monospace,Arial,sans-serif;}
+.error, .info, .success {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
+.error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+.info,.success {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+/*.success {background:#E6EFC2;color:#264409;border-color:#C6D880;}*/
+.error a {color:#8a1f11;}
+.info a,.success a {color:#514721;}
+/*.success a {color:#264409;}*/
+.orange{color:#FF6633;}
+.orange_underline{text-decoration:none;border-bottom:2px solid #FF6633;}
+.profile_link,.email,.file_link{color:#2D2620;text-decoration:none;border-bottom:1px solid #06C;font-size:1.1em;}
+.file_link{font-size:1.2em;}
+.italic{font-style:italic;}
+.droid{font-family:"Droid Sans", Arial, Sans-serif;text-shadow:0px 1px 3px #999;}
+.widget{margin-top:2em;border:2px solid #FFD24D;}
+.widget_header{font-weight:normal;background:#FFD24D;padding:4px;font-family:"Droid Sans", Arial, Sans-serif;}
+.widget li{list-style-type:none;margin-bottom:4px;}
+
+/*Homepage Styles*/
+#vision_banner{text-align:center;color:#2D2620;height:200px;padding-top:3em;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}
+
+/*Notepad Page Styles*/
+#notepad{padding-top:2em;}
+#notepad h3{padding-bottom:0.4em;border-bottom:2px solid #FFD24D;}
+
+/*User Profile Page Styles*/

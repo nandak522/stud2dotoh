@@ -1,14 +1,15 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.template.defaultfilters import slugify
+from utils import slugify
 from utils.models import BaseModel, BaseModelManager
+from django.conf import settings
+import os
 
 class UserProfileAlreadyExistsException(Exception):
     pass
 
 class UserProfileManager(BaseModelManager):
     def create_userprofile(self, username, password, email='', name=''):
-        print 'username:%s, password:%s, email:%s, name:%s' % (username, password, email, name)
         if self.exists(username=username, email=email):
             raise UserProfileAlreadyExistsException
         user = User.objects.create_user(username=username,
@@ -46,3 +47,22 @@ class UserProfile(BaseModel):
     def update_password(self, new_password):
         self.user.set_password(new_password)
         return True
+    
+    @property
+    def user_directory_path(self):
+        return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(self.id)])
+    
+    @property
+    def public_uploaded_files(self):
+        #TODO:For now all uploaded files are public by default.
+        return self.all_uploaded_files
+    
+    @property
+    def all_uploaded_files(self):
+        user_directory_path = self.user_directory_path
+        if settings.DOCSTORE_CONFIG['local']:
+            if os.path.exists(user_directory_path):
+                return tuple(os.walk(user_directory_path).next()[-1])
+        else:
+            raise NotImplementedError
+        return ()
