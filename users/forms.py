@@ -61,6 +61,7 @@ class SaveFileForm(forms.Form):
 class AccountSettingsForm(forms.Form):
     name = forms.CharField(max_length=50, required=False)
     slug = forms.CharField(max_length=50, required=False)
+    new_password = forms.CharField(max_length=50, required=False, widget=forms.PasswordInput())
     
     def clean_slug(self):
         slug = self.cleaned_data.get('slug')

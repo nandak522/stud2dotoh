@@ -63,6 +63,7 @@ class UserProfile(BaseModel):
     
     def update_password(self, new_password):
         self.user.set_password(new_password)
+        self.user.save()
         return True
     
     @property
