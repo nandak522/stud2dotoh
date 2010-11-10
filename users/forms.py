@@ -4,6 +4,7 @@ from users.models import UserProfile
 from django.core.exceptions import ValidationError
 
 USERNAME_FILTER_REGEX = '[^a-zA-Z0-9]'
+SLUG_FILTER_REGEX = '[^a-zA-Z0-9]'
 FILENAME_FILTER_REGEXT = '[^\.]'
 
 class UserSignupForm(forms.Form):
@@ -56,3 +57,13 @@ class SaveFileForm(forms.Form):
     
     def clean_content(self):
         return self.cleaned_data.get('content').strip()
+    
+class AccountSettingsForm(forms.Form):
+    name = forms.CharField(max_length=50, required=False)
+    slug = forms.CharField(max_length=50, required=False)
+    
+    def clean_slug(self):
+        slug = self.cleaned_data.get('slug')
+        if slug == re.sub(r'%s' % SLUG_FILTER_REGEX, '', slug):
+            return slug
+        raise ValidationError('Invalid Domain Name! Domain Name should only contains alphabets and/or numbers')

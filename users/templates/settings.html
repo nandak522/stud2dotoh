@@ -1,0 +1,13 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}Your Account Settings{%endblock%}
+{%block content%}
+<h3 class='centeralign'>Your Account Settings</h3>
+<form action="{%url settings%}" method='post'>{% csrf_token %}
+    <table class='form-table'>
+        <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<br/>{{form.name.errors}}</td></tr>
+        <tr><td class='rightalign'><label for="id_slug">Domain Url :</label></td><td class='leftalign'>{{form.slug}}<br/>{{form.slug.errors}}</td></tr>
+        <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Save Account Settings"/></td></tr>
+    </table>
+    </form>
+{%endblock%}
+{%block extrajs%}<script type='text/javascript'>document.forms[0].name.focus();</script>{%endblock%}

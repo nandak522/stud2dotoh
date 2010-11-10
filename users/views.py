@@ -173,4 +173,20 @@ def view_questions(request, question_template):
 
 @login_required
 def view_account_settings(request, settings_template):
-    raise NotImplementedError
+    from users.forms import AccountSettingsForm
+    userprofile = loggedin_userprofile(request)
+    if request.method == 'GET':
+        form = AccountSettingsForm({'name':userprofile.name,
+                                    'slug':userprofile.slug})
+        return response(request, settings_template, {'form':form})
+    form = AccountSettingsForm(post_data(request))
+    if form.is_valid():
+        name = form.cleaned_data.get('name')
+        slug = form.cleaned_data.get('slug')
+        #The below code has to be moved to a common model update method 
+        userprofile.name = name
+        userprofile.slug = slug
+        userprofile.save()
+        from users.messages import ACCOUNT_SETTINGS_SAVED
+        messages.success(request, ACCOUNT_SETTINGS_SAVED)
+    return response(request, settings_template, {'form':form})  

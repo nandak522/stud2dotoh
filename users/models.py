@@ -3,9 +3,13 @@ from django.db import models
 from utils import slugify
 from utils.models import BaseModel, BaseModelManager
 from django.conf import settings
+from datetime import timedelta
 import os
 
 class UserProfileAlreadyExistsException(Exception):
+    pass
+
+class CantUpdateSlugAgainException(Exception):
     pass
 
 class UserProfileManager(BaseModelManager):
@@ -37,6 +41,19 @@ class UserProfile(BaseModel):
     name = models.CharField(max_length=50, null=True, blank=True)
     slug = models.SlugField(max_length=50, db_index=True)#this will be used as his unique url identifier
     objects = UserProfileManager()
+    
+    def can_update_slug(self):
+        if self.modified_on <= (self.created_on+timedelta(minutes=1)):
+            return True
+        return False
+    
+    def update_slug(self, new_slug_name):
+        '''Ensuring slug cant be updated more than once'''
+        if self.can_update_slug():
+            self.slug = new_slug_name
+            self.save()
+            return
+        raise CantUpdateSlugAgainException
 
     def __unicode__(self):
         return self.name
