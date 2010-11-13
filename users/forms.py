@@ -59,12 +59,20 @@ class SaveFileForm(forms.Form):
         return self.cleaned_data.get('content').strip()
     
 class AccountSettingsForm(forms.Form):
-    name = forms.CharField(max_length=50, required=False)
+    name = forms.CharField(max_length=50, required=True)
     slug = forms.CharField(max_length=50, required=False)
     new_password = forms.CharField(max_length=50, required=False, widget=forms.PasswordInput())
     
     def clean_slug(self):
+        
         slug = self.cleaned_data.get('slug')
+        slug = re.sub(r'stud2dotoh.com', '', slug)
         if slug == re.sub(r'%s' % SLUG_FILTER_REGEX, '', slug):
             return slug
         raise ValidationError('Invalid Domain Name! Domain Name should only contains alphabets and/or numbers')
+    
+    def masquerade_slug(self):
+        #TODO:The goal is to show editable slug field only once.
+        #so {{form.slug}} should be dynamic enough to render as a 
+        #editable text field first time and as a simple label from second time.  
+        raise NotImplementedError

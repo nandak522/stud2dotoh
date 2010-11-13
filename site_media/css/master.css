@@ -35,16 +35,20 @@ input[type="text"], input[type="password"], input.text, input.title, textarea, s
 .profile_link,.email,.file_link{color:#2D2620;text-decoration:none;border-bottom:1px solid #06C;font-size:1.1em;}
 .file_link{font-size:1.2em;}
 .italic{font-style:italic;}
+.bold{font-weight:bold;}
+.domain{font-size:120%;}
 .droid{font-family:"Droid Sans", Arial, Sans-serif;text-shadow:0px 1px 3px #999;}
 .widget{margin-top:2em;border:2px solid #FFD24D;}
 .widget_header{font-weight:normal;background:#FFD24D;padding:4px;font-family:"Droid Sans", Arial, Sans-serif;}
 .widget li{list-style-type:none;margin-bottom:4px;}
+.black_stress{color:#000;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#2D2620;height:200px;padding-top:3em;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}
 
 /*Notepad Page Styles*/
-#notepad{padding-top:2em;}
-#notepad h3{padding-bottom:0.4em;border-bottom:2px solid #FFD24D;}
+#notepad{padding-top:2em;padding-left:1em;}
+#notepad h3, #account_settings h3{padding-bottom:0.4em;border-bottom:2px solid #FFD24D;}
 
 /*User Profile Page Styles*/
+#account_settings h3{margin-top:1em;}

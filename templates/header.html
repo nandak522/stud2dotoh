@@ -6,7 +6,7 @@
         <li class='tab'><a href='{%url homepage%}'>Home</a></li>
         {%if user.is_authenticated%}
             {%with user.get_profile as userprofile%}
-               <li class='tab'>Hi {%firstof userprofile.name|title userprofile.username|title%}</li>
+               <li class='tab'><a href="{%url settings%}" title='Account Settings'>Hi {%firstof userprofile.name|title userprofile.username|title%}</a></li>
                <li class='tab'><a href='{%url logout%}'>Logout</a></li>
             {%endwith%}
         {%else%}

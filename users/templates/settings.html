@@ -1,14 +1,16 @@
 {%extends 'singlepane_base.html'%}
 {%block title%}Your Account Settings{%endblock%}
 {%block content%}
-<h3 class='centeralign'>Your Account Settings</h3>
+<div id='account_settings' class='centeralign'>
+<h3 class='droid'>Your Account Settings</h3>
 <form action="{%url settings%}" method='post'>{% csrf_token %}
-    <table class='form-table'>
-        <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<br/>{{form.name.errors}}</td></tr>
-        <tr><td class='rightalign'><label for="id_slug">Domain Url :</label></td><td class='leftalign'>{{form.slug}}<br/>{{form.slug.errors}}</td></tr>
-        <tr><td class='rightalign'><label for="id_new_password">New Password :</label></td><td class='leftalign'>{{form.new_password}}<br/>{{form.new_password.errors}}</td></tr>
-        <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Save Account Settings"/></td></tr>
-    </table>
-    </form>
+<table class='form-table prepend-7'>
+    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<br/>{{form.name.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_slug">Web Resume :</label></td><td class='leftalign'>{%if user.get_profile.can_update_slug%}{{form.slug}}.stud2dotoh.com<br/>{{form.slug.errors}}{%else%}<a class='domain bold' href='{{user.get_profile.domain|domainify}}'>{{user.get_profile.domain|domainify}}</a>{%endif%}</td></tr>
+    <tr><td class='rightalign'><label for="id_new_password">New Password :</label></td><td class='leftalign'>{{form.new_password}}<span class='help_text'>(Leave this blank, if you dont wish to change the existing password)</span><br/>{{form.new_password.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Save Account Settings"/></td></tr>
+</table>
+</form>
+</div>
 {%endblock%}
 {%block extrajs%}<script type='text/javascript'>document.forms[0].name.focus();</script>{%endblock%}

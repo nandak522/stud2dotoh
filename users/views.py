@@ -184,11 +184,7 @@ def view_account_settings(request, settings_template):
         name = form.cleaned_data.get('name')
         slug = form.cleaned_data.get('slug')
         new_password = form.cleaned_data.get('new_password')
-        #The below code has to be moved to a common model update method 
-        userprofile.name = name
-        userprofile.slug = slug
-        userprofile.save()
-        userprofile.update_password(new_password)
+        userprofile.update(name=name, slug=slug, password=new_password)
         from users.messages import ACCOUNT_SETTINGS_SAVED
         messages.success(request, ACCOUNT_SETTINGS_SAVED)
     return response(request, settings_template, {'form':form})  
