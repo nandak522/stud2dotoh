@@ -4,6 +4,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.test import TestCase
 from django.template.defaultfilters import slugify
+import shutil
+import os
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))
@@ -29,6 +31,13 @@ class TestCase(TestCase):
         
     def logout(self):
         return self.client.post(path=url_reverse('users.views.view_logout'))
+    
+    def setUp(self):
+        try:
+            shutil.rmtree(settings.DOCSTORE_CONFIG['files_storage_path'])
+        except OSError:
+            pass
+        os.mkdir(settings.DOCSTORE_CONFIG['files_storage_path'])
     
 def loggedin_userprofile(request):
     return request.user.get_profile()

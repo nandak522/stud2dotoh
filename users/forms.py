@@ -63,13 +63,21 @@ class AccountSettingsForm(forms.Form):
     slug = forms.CharField(max_length=50, required=False)
     new_password = forms.CharField(max_length=50, required=False, widget=forms.PasswordInput())
     
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if not name:
+            raise ValidationError('Please Enter a Valid Name')
+        name = re.sub(r'[^\.a-zA-Z0-9\s_-]', '', name)
+        if not name.strip():
+            raise ValidationError('Please Enter a Valid Name')
+        return name
+    
     def clean_slug(self):
-        
         slug = self.cleaned_data.get('slug')
         slug = re.sub(r'stud2dotoh.com', '', slug)
         if slug == re.sub(r'%s' % SLUG_FILTER_REGEX, '', slug):
             return slug
-        raise ValidationError('Invalid Domain Name! Domain Name should only contains alphabets and/or numbers')
+        raise ValidationError('Please choose a Valid Web Resume Url. Should only contain alphabets and/or numbers')
     
     def masquerade_slug(self):
         #TODO:The goal is to show editable slug field only once.

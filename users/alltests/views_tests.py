@@ -103,7 +103,7 @@ class UserProfilePageTests(TestCase):
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
 
-class UserUploadFilesTests(TestCase):
+class UserNotepadSavingTests(TestCase):
     fixtures = ['users.json']
     
     def test_access_to_notepad_page(self):
@@ -187,3 +187,21 @@ class UserUploadFilesTests(TestCase):
         response = self.client.get(url_reverse('users.views.view_file_content_view', args=(slugify(data['name']),)))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
+        
+class AccountSettingsTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_valid_account_settings_form(self):
+        raise NotImplementedError
+    
+    def test_saving_domain_url_first_time(self):
+        raise NotImplementedError
+    
+    def test_saving_domain_url_from_second_time(self):
+        raise NotImplementedError
+    
+    def test_empty_form_submission(self):
+        raise NotImplementedError
+    
+    def test_invalid_form_submission(self):
+        raise NotImplementedError
