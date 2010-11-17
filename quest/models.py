@@ -9,6 +9,9 @@ class QuestionAlreadyExistsException(Exception):
 class AnswerCantBeAcceptedException(Exception):
     pass
 
+class AnsweringIsClosedException(Exception):
+    pass
+
 class QuestionManager(BaseModelManager):
     def create_question(self, title, description, userprofile):
         if self.exists(title=title):
@@ -28,6 +31,7 @@ class Question(BaseModel):
     slug = models.SlugField(max_length=80, db_index=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
     raised_by = models.ForeignKey(UserProfile)
+    closed = models.BooleanField(default=False)
     objects = QuestionManager()
     
     def __unicode__(self):
@@ -43,8 +47,15 @@ class Question(BaseModel):
             return self.answers().filter(accepted=True)[0]#and there will only be one accepted answer for a question
         return None
     
+    def close_answering(self):
+        if not self.closed:
+            self.closed = True
+            self.save()
+    
 class AnswerManager(BaseModelManager):
     def create_answer(self, question, description, accepted, userprofile):
+        if question.closed:
+            raise AnsweringIsClosedException
         if accepted and (question.raised_by.id != userprofile.id):
             raise AnswerCantBeAcceptedException
         answer = Answer(question=question,

@@ -10,6 +10,9 @@ class QuestionCreationTests(TestCase):
     def test_creating_duplicate_questions(self):
         raise NotImplementedError
     
+    def test_close_answering(self):
+        raise NotImplementedError
+    
 class AnswerCreationTests(TestCase):
     fixtures = ['users.json']
     
@@ -32,4 +35,7 @@ class AnswerCreationTests(TestCase):
         raise NotImplementedError
     
     def test_retrieving_all_answers_for_a_question(self):
+        raise NotImplementedError
+    
+    def test_answering_a_closed_question(self):
         raise NotImplementedError
