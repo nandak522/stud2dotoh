@@ -1,0 +1,28 @@
+[
+    {
+        "pk": 1, 
+        "model": "quest.question", 
+        "fields": {
+            "raised_by": 1, 
+            "description": "<a href=\"http://google.com/\">Google</a>, <a href=\"http://hp.com/\">HP</a>", 
+            "title": "What are the best companies working on Python ?", 
+            "created_on": "2010-11-18 08:07:53", 
+            "closed": false, 
+            "modified_on": "2010-11-18 08:07:53", 
+            "slug": "what-are-the-best-companies-working-on-python"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "quest.question", 
+        "fields": {
+            "raised_by": 1, 
+            "description": "<a href=\"http://google.com/\">Google</a>, <a href=\"http://hp.com/\">HP</a>", 
+            "title": "How do you handle recursion in Python ?", 
+            "created_on": "2010-11-18 08:10:53", 
+            "closed": false, 
+            "modified_on": "2010-11-18 08:10:53", 
+            "slug": "how-do-you-handle-recursion-in-python"
+        }
+    }
+]

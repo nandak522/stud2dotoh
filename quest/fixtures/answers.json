@@ -1,0 +1,26 @@
+[
+    {
+        "pk": 1, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": "Approach 1 to solve recursion", 
+            "question": 2, 
+            "created_on": "2010-11-21 08:51:10", 
+            "modified_on": "2010-11-21 08:51:10", 
+            "accepted": false, 
+            "given_by": 1
+        }
+    },
+     {
+        "pk": 2, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": "Approach 2 to solve recursion", 
+            "question": 2, 
+            "created_on": "2010-11-21 08:53:10", 
+            "modified_on": "2010-11-21 08:53:10", 
+            "accepted": true, 
+            "given_by": 1
+        }
+    }
+]

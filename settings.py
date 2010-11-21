@@ -75,7 +75,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'debug_toolbar',
-    'users'
+    'users',
+    'quest'
 )
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}

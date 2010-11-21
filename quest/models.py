@@ -22,14 +22,14 @@ class QuestionManager(BaseModelManager):
         return question 
             
     def exists(self, title):
-        if self.filter(title=slugify(title)).count():
+        if self.filter(slug=slugify(title)).count():
             return True
         return False
     
 class Question(BaseModel):
     title = models.CharField(max_length=80, blank=False)
     slug = models.SlugField(max_length=80, db_index=True)
-    description = models.CharField(max_length=1000, blank=True, null=True)
+    description = models.CharField(max_length=1000, blank=True, null=True)#should clean tags.
     raised_by = models.ForeignKey(UserProfile)
     closed = models.BooleanField(default=False)
     objects = QuestionManager()
@@ -43,8 +43,8 @@ class Question(BaseModel):
     
     @property
     def accepted_answer(self):
-        if self.answers().filter(accepted=True).count():#since lazy fetching is allowed
-            return self.answers().filter(accepted=True)[0]#and there will only be one accepted answer for a question
+        if self.answers.filter(accepted=True).count():#since lazy fetching is allowed
+            return self.answers.get(accepted=True)#there will only be one accepted answer for a question
         return None
     
     def close_answering(self):
@@ -53,11 +53,14 @@ class Question(BaseModel):
             self.save()
     
 class AnswerManager(BaseModelManager):
-    def create_answer(self, question, description, accepted, userprofile):
+    def create_answer(self, question, description, userprofile, accepted=False):
         if question.closed:
             raise AnsweringIsClosedException
         if accepted and (question.raised_by.id != userprofile.id):
             raise AnswerCantBeAcceptedException
+        if accepted:
+            for previous_answer in question.answer_set.all():
+                previous_answer.unaccept()
         answer = Answer(question=question,
                         description=description,
                         accepted=accepted,
@@ -80,9 +83,9 @@ class Answer(BaseModel):
             self.accepted = False
             self.save()
     
-    def accept(self):
+    def accept(self, accepted_by):
         if not self.accepted:
-            if self.question.raised_by.id != self.given_by.id:
+            if self.question.raised_by.id != accepted_by.id:
                 raise AnswerCantBeAcceptedException
             all_answers_for_the_question = self.question.answer_set.all()
             for answer in all_answers_for_the_question:
