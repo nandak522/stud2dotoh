@@ -1,0 +1,8 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}{{question.title}}{%endblock%}
+{%block content%}
+<h3>{{question.title}}</h3>
+<h4>{{question.description}}</h4>
+{%include 'existing_answers.html'%}
+{%include 'give_answer.html'%}
+{%endblock%}

@@ -1,0 +1,8 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}All Questions{%endblock%}
+{%block content%}
+<h3>List of Questions</h3>
+{%for question in questions%}
+<a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a>
+{%endfor%}
+{%endblock%}

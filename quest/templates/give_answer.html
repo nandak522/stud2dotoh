@@ -1,0 +1,11 @@
+{%if question.closed%}
+<h4>Answers are Closed</h4>
+{%else%}
+<form action="{%url give_answer question.id %}" method='POST'>{% csrf_token %}
+{{give_answer_form.question}}
+<table class='form-table'>
+    <tr><td class='rightalign'><label for="id_description">Your Answer :</label></td><td class='leftalign'>{{give_answer_form.description}}<span class='help_text'>(<span class='required'>Required</span>. Max of 2000 characters)</span><br/>{{give_answer_form.description.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Submit Answer"/></td></tr>
+</table>
+</form>
+{%endif%}
