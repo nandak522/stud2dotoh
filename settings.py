@@ -93,3 +93,5 @@ else:
     DOCSTORE_CONFIG['files_storage_path'] = 's3.amazonaws.com'
     
 INTERNAL_IPS = ('127.0.0.1',)
+
+FILTER_HTML_TAGS = "script button input marquee"
