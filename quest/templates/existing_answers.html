@@ -1,6 +1,8 @@
-<h4>Existing Answers:</h4>
-<ol>
-{%for answer in question.answers%}
-<li>{{answer.description}}</li>
+{%with question.answers as all_answers%}
+<h3>{{all_answers.count}} Answers</h3>
+{%for answer in all_answers%}
+<div class='answer_block'>
+{{answer.description|removetags:"script button input marquee"}}
+</div>
 {%endfor%}
-</ol>
+{%endwith%}

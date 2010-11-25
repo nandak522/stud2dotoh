@@ -15,6 +15,7 @@ a{text-decoration:none;border-bottom:1px solid #06C;}
 ul.errorlist{font-size:12px;padding:0;margin:0;list-style-type:none;padding:0.2em;}
 ul.errorlist li{display:inline;padding:2px 4px;margin:0;background:#F00;color:#FFF;}
 input[type="text"], input[type="password"], input.text, input.title, textarea, select{padding:4px;margin:0.5em 0 0 0;}
+textarea{width:auto;}
 input[type="text"], input[type="password"], input.text, input.title, textarea{padding:4px;margin:0.5em 0 0 0;border-width:1px;border-style:solid;border-top-color:#CCC;border-left-color:#CCC;border-right-color:#EFEFEF;border-bottom-color:#EFEFEF;}
 .leftalign{text-align:left;}
 .rightalign{text-align:right;}
@@ -49,3 +50,6 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 #notepad h3{padding-bottom:0.4em;border-bottom:2px solid #FFD24D;}
 
 /*User Profile Page Styles*/
+
+/*Question Page Styles*/
+.answer_block{margin-bottom:1em;padding:3px;border-bottom:1px solid #EEE;font:normal 1.2em Monopsace,Arial,sans-serif;}
