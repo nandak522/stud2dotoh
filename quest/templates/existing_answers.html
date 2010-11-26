@@ -2,7 +2,8 @@
 <h3>{{all_answers.count}} Answers</h3>
 {%for answer in all_answers%}
 <div class='answer_block'>
-{{answer.description|removetags:"script button input marquee"}}
+{{answer.description|removetags:"script button input marquee"}}<br/>
+<span class='small_text'>Posted @ {{answer.created_on|date:"dS M Y g:i A"}}</span>
 </div>
 {%endfor%}
 {%endwith%}
