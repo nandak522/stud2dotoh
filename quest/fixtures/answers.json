@@ -1,0 +1,62 @@
+[
+    {
+        "pk": 1, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": "Approach 1 to solve recursion", 
+            "question": 2, 
+            "created_on": "2010-11-21 08:51:10", 
+            "modified_on": "2010-11-21 08:51:10", 
+            "accepted": false, 
+            "given_by": 1
+        }
+    },
+     {
+        "pk": 2, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": "Approach 2 to solve recursion", 
+            "question": 2, 
+            "created_on": "2010-11-21 08:53:10", 
+            "modified_on": "2010-11-21 08:53:10", 
+            "accepted": true, 
+            "given_by": 1
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": "Apply a function of two arguments cumulatively to the items of a sequence,\r\n    from left to right, so as to reduce the sequence to a single value.\r\n    For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates\r\n    ((((1+2)+3)+4)+5).  If initial is present, it is placed before the items\r\n    of the sequence in the calculation, and serves as a default when the\r\n    sequence is empty.", 
+            "question": 3, 
+            "created_on": "2010-11-26 06:52:23", 
+            "modified_on": "2010-11-26 06:52:23", 
+            "accepted": false, 
+            "given_by": 1
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": "reduce(function, iterable[, initializer]):\r\n\r\nApply \"function\" of two arguments cumulatively to the items of \"iterable\", from\r\nleft to right, so as to reduce the \"iterable\" to a single value", 
+            "question": 3, 
+            "created_on": "2010-11-26 06:51:56", 
+            "modified_on": "2010-11-26 06:51:56", 
+            "accepted": false, 
+            "given_by": 1
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "quest.answer", 
+        "fields": {
+            "description": ">>> help(reduce)", 
+            "question": 3, 
+            "created_on": "2010-11-26 06:51:18", 
+            "modified_on": "2010-11-26 06:51:18", 
+            "accepted": false, 
+            "given_by": 1
+        }
+    }
+]

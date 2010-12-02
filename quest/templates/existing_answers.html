@@ -1,0 +1,6 @@
+{%with question.answers as all_answers%}
+<h3>{{all_answers.count}} Answers</h3>
+<div id='all_answers'>
+{%include 'answers.html'%}
+</div><!-- end of all_answers -->
+{%endwith%}

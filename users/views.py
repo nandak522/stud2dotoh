@@ -162,15 +162,6 @@ def view_file_content_view(request, filename):
     file_content = _fetch_content_from_user_uploaded_file(userprofile, filename)
     return HttpResponse(content=file_content, mimetype='text/plain')
 
-#TODO:All the questions related views need to be moved to a separate app
-@login_required
-def view_ask_question(request, question_template):
-    raise NotImplementedError
-
-@login_required
-def view_questions(request, question_template):
-    raise NotImplementedError
-
 @login_required
 def view_account_settings(request, settings_template):
     raise NotImplementedError
