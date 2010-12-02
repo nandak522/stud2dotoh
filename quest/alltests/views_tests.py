@@ -178,10 +178,13 @@ class GiveAnswerTests(TestCase):
     fixtures = ['users.json', 'questions.json']
 
     def test_answer_page_fresh_access(self):
+        question = Question.objects.latest()
         self.login_as(username='madhavbnk', password='nopassword')
-        response = self.client.post(url_reverse('quest.views.view_give_answer'))
-        self.assertTrue(response)
-        self.assertEquals(response.status_code, 404)
+        response = self.client.get(url_reverse('quest.views.view_give_answer', args=(question.id,)))
+        self.assertRedirects(response,
+                             expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
+                             status_code=302,
+                             target_status_code=200)
 
     def test_answering_a_question(self):
         self.login_as(username='madhavbnk', password='nopassword')

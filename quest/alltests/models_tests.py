@@ -47,9 +47,6 @@ class QuestionCreationTests(TestCase):
         question.close_answering()
         self.assertTrue(question.closed)
         
-    def test_close_answering_by_non_owner(self):
-        raise NotImplementedError
-    
 class AnswerCreationTests(TestCase):
     fixtures = ['users.json', 'questions.json', 'answers.json']
     
@@ -135,10 +132,10 @@ class AnswerCreationTests(TestCase):
         self.assertTrue(answer.accepted)
     
     def test_unaccepting_an_answer(self):
-        answer = Answer.objects.latest()
+        answer = Answer.objects.filter(accepted=True)[0]
         self.assertTrue(answer.accepted)
         answer.unaccept()
-        answer = Answer.objects.latest()
+        answer = Answer.objects.get(id=answer.id)
         self.assertFalse(answer.accepted)
     
     def test_retrieving_all_answers_for_a_question(self):
