@@ -48,6 +48,8 @@ class UserProfile(BaseModel):
         self.user.set_password(new_password)
         return True
     
+    set_password = update_password 
+    
     @property
     def user_directory_path(self):
         return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(self.id)])

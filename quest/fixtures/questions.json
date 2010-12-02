@@ -24,5 +24,18 @@
             "modified_on": "2010-11-18 08:10:53", 
             "slug": "how-do-you-handle-recursion-in-python"
         }
+    },
+    {
+        "pk": 3, 
+        "model": "quest.question", 
+        "fields": {
+            "raised_by": 1, 
+            "description": "I am newbee to Python. Was wondering how and where would I use <span style='font-style:italic;font-weight:bold;'>reduce()</span> builtin method in Python.", 
+            "title": "What does reduce() builtin method do in Python ?", 
+            "created_on": "2010-11-26 06:44:44", 
+            "closed": false, 
+            "modified_on": "2010-11-26 06:49:48", 
+            "slug": "what-does-reduce-builtin-method-do-in-python"
+        }
     }
 ]

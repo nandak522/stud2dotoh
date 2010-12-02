@@ -42,6 +42,7 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 .widget{margin-top:2em;border:2px solid #FFD24D;}
 .widget_header{font-weight:normal;background:#FFD24D;padding:4px;font-family:"Droid Sans", Arial, Sans-serif;}
 .widget li{list-style-type:none;margin-bottom:4px;}
+#ajax_status_header{display:none;margin:0 auto;width:150px;background:#F7D920;text-align:center;padding:2px;top:0px;left:45%;position:fixed;z-index:10000;color:#000;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#2D2620;height:200px;padding-top:3em;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}
@@ -54,3 +55,4 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 
 /*Question Page Styles*/
 .answer_block{margin-bottom:1em;padding:3px;border-bottom:1px solid #EEE;font:normal 1.2em Monopsace,Arial,sans-serif;}
+#accepted_answer{background:#EEE;padding:4px;}

@@ -18,6 +18,7 @@
             {%endblock%}
         </div><!-- end of header -->
         <div id='content' class='column span-24 last'>
+            <div id='ajax_status_header'></div>
             {%block messages%}
 	            {% if messages %}
 					<ul class="messages">
@@ -37,7 +38,8 @@
         </div><!-- end of footer -->
     </div><!-- end of container -->
     <script type='text/javascript' src='/site_media/js/jquery/jquery-1.4.3.min.js'></script>
-    <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(5000);}</script>
+    <script type='text/javascript' src='/site_media/js/common.js'></script>
+    <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(6000);}</script>
     {%block extrajs%}{%endblock%}
 </body>
 </html>

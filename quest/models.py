@@ -42,6 +42,10 @@ class Question(BaseModel):
         return self.answer_set.all()
     
     @property
+    def owner(self):
+        return self.raised_by
+    
+    @property
     def accepted_answer(self):
         if self.answers.filter(accepted=True).count():#since lazy fetching is allowed
             return self.answers.get(accepted=True)#there will only be one accepted answer for a question
@@ -51,6 +55,11 @@ class Question(BaseModel):
         if not self.closed:
             self.closed = True
             self.save()
+    
+    def is_accepting_answers(self):
+        if self.closed:
+            return False
+        return True 
     
 class AnswerManager(BaseModelManager):
     def create_answer(self, question, description, userprofile, accepted=False):

@@ -1,0 +1,18 @@
+{%for answer in all_answers%}
+    <div class='answer_block'>
+        {%if answer.accepted%}
+            <div id="accepted_answer">This is the Accepted Answer</div>
+            {%autoescape off%}
+	            {{answer.description|removetags:"script button input marquee"}}<br/>
+	        {%endautoescape%}
+        {%else%}
+            {%autoescape off%}
+	            {{answer.description|removetags:"script button input marquee"}}<br/>
+	        {%endautoescape%}
+            {%ifequal question.raised_by.id loggedinuserprofile.id%}
+                <input type="button" value="Make this as final answer" name="accept_answer" onClick="javascript:accept_answer('{{question.id}}','{{answer.id}}');"/><br/>
+            {%endifequal%}
+        {%endif%}
+        <span class='small_text'>Posted by {%with answer.given_by as given_by%}<a href="{%url user_profile given_by.id given_by.slug%}">{{given_by.name|title}}</a>{%endwith%} on {{answer.created_on|date:"dS M Y g:i A"}}</span>
+    </div>
+{%endfor%}

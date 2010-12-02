@@ -1,6 +1,4 @@
-{%if question.closed%}
-<h3>Answers are Closed</h3>
-{%else%}
+{%if give_answer_form%}
 <form action="{%url give_answer question.id %}" method='POST'>{% csrf_token %}
 {{give_answer_form.question}}
 <h3>Want to Suggest an Answer ? Please answer!</h3>
@@ -9,4 +7,6 @@
     <tr><td><input type='submit' name='submit' value="Submit Your Answer" onClick="javascript:return confirm('Are you sure you want to submit the answer now ?');"/></td></tr>
 </table>
 </form>
+{%else%}
+<h3>Answers are Closed</h3>
 {%endif%}

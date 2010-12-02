@@ -18,9 +18,35 @@ def view_all_questions(request, all_questions_template):
     return response(request, all_questions_template, {'questions':questions})
 
 def view_question(request, question_id, question_slug, question_template):
-    question = get_object_or_404(Question, id=int(question_id), slug=question_slug)
-    give_answer_form = GiveAnswerForm()
+    question = get_object_or_404(Question, id=int(question_id))#question_slug is for SEO
+    if question.is_accepting_answers():
+        give_answer_form = GiveAnswerForm()
+    else:
+        give_answer_form = None
     return response(request, question_template, {'question':question, 'give_answer_form':give_answer_form})
+
+@login_required
+def view_close_answering(request, question_template, close_answer_template):#This would be an ajax post call
+    if request.method == 'POST':
+        question_id = post_data(request).get('question_id')
+        question = get_object_or_404(Question, id=int(question_id))
+        userprofile = loggedin_userprofile(request)
+        if userprofile.id == question.owner.id:
+            question.close_answering()
+            return response(request, close_answer_template, {'give_answer_form':None})
+    raise Http404
+
+@login_required
+def view_accept_answer(request, question_id, answers_template):
+    if request.method == 'POST':
+        question = get_object_or_404(Question, id=int(question_id))
+        userprofile = loggedin_userprofile(request)
+        if userprofile.id == question.owner.id:
+            answer_id = post_data(request).get('answer_id')
+            answer = get_object_or_404(Answer, id=int(answer_id))
+            answer.accept(userprofile)
+            return response(request, answers_template, {'question':question, 'all_answers':question.answers, 'loggedinuserprofile':userprofile})
+    raise Http404
 
 @login_required
 def view_ask_question(request, ask_question_template):
@@ -37,6 +63,10 @@ def view_ask_question(request, ask_question_template):
         messages.success(request, QUESTION_POSTING_SUCCESSFUL)
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
     return response(request, ask_question_template, {'form':form})
+
+@login_required
+def view_edit_question(request, question_id, question_slug):
+    raise NotImplementedError
 
 @login_required
 def view_give_answer(request, question_id, give_answer_template, question_template):

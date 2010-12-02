@@ -46,6 +46,9 @@ class QuestionCreationTests(TestCase):
         self.assertFalse(question.closed)
         question.close_answering()
         self.assertTrue(question.closed)
+        
+    def test_close_answering_by_non_owner(self):
+        raise NotImplementedError
     
 class AnswerCreationTests(TestCase):
     fixtures = ['users.json', 'questions.json', 'answers.json']
