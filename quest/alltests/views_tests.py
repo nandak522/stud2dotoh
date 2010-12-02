@@ -178,7 +178,10 @@ class GiveAnswerTests(TestCase):
     fixtures = ['users.json', 'questions.json']
 
     def test_answer_page_fresh_access(self):
-        raise NotImplementedError
+        self.login_as(username='madhavbnk', password='nopassword')
+        response = self.client.post(url_reverse('quest.views.view_give_answer'))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 404)
 
     def test_answering_a_question(self):
         self.login_as(username='madhavbnk', password='nopassword')
@@ -194,7 +197,33 @@ class GiveAnswerTests(TestCase):
         self.assertEquals(context.get('question').id, question.id)
 
     def test_answer_a_question_with_xss(self):
-        raise NotImplementedError
+        self.login_as(username='madhavbnk', password='nopassword')
+        data = {'description':'My Answer goes like this <script>alert("Hey");</script>'}
+        question = Question.objects.latest()
+        response = self.client.post(url_reverse('quest.views.view_give_answer', args=(question.id,)), data=data)
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        context = response.context[0]
+        self.assertTrue(context.has_key('question'))
+        question = context.get('question')
+        answer = question.answers[0]
+        self.assertNotEquals(answer.description, data['description'])
+        self.assertFalse('script' in answer.description)
 
     def test_answering_a_question_with_blocked_tags(self):
-        raise NotImplementedError
+        self.login_as(username='madhavbnk', password='nopassword')
+        blocked_descriptions = ['I am giving a <marquee>fake</marquee> answer',
+                                'This is also a fake <style>*{font-weight:120em;}</style>answer']
+        question = Question.objects.latest()
+        for description in blocked_descriptions:
+            data = {'description':description}
+            response = self.client.post(url_reverse('quest.views.view_give_answer', args=(question.id,)), data=data)
+            self.assertTrue(response)
+            self.assertEquals(response.status_code, 200)
+            context = response.context[0]
+            self.assertTrue(context.has_key('question'))
+            question = context.get('question')
+            answer = question.answers[0]
+            self.assertNotEquals(answer.description, data['description'])
+            for tag in settings.FILTER_HTML_TAGS.split(" "):
+                self.assertFalse(tag in answer.description)
