@@ -117,7 +117,7 @@ class AskQuestionTests(TestCase):
         response = self.client.get(url_reverse('quest.views.view_ask_question'))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'ask_question.html')
+        self.assertTemplateUsed(response, 'ask_or_edit_question.html')
         context = response.context[0]
         self.assertTrue(context.has_key('form'))
         ask_question_form = context.get('form')
@@ -164,7 +164,7 @@ class AskQuestionTests(TestCase):
         self.login_as(username='madhavbnk', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
                          'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script><input type=\'text\' name=\'head_name\' value=\'Your Name\'/><marquee>I am big distracting rolling banner</marquee>'}
-        response = self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
+        self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
         question = Question.objects.latest()
         response = self.client.get(url_reverse('quest.views.view_question', args=(question.id, question.slug)))
         self.assertTrue(response)
@@ -173,6 +173,72 @@ class AskQuestionTests(TestCase):
         question_description = question.description
         for tag in settings.FILTER_HTML_TAGS.split(' '):
             self.assertFalse(tag in question_description)
+
+class EditQuestionTests(TestCase):
+    fixtures = ['questions.json', 'users.json']
+
+    def test_edit_question_page_fresh_access_anonymous_user(self):
+        question = Question.objects.latest()
+        response = self.client.get(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)))
+        self.assertRedirects(response,
+                             expected_url='/accounts/login/?next=/questions/%s/%s/edit/' % (question.id, question.slug),
+                             status_code=302,
+                             target_status_code=200)
+
+    def test_edit_question_page_fresh_access_any_authenticated_user(self):
+        self.login_as(username='somerandomuser', password='nopassword')
+        question = Question.objects.latest()
+        response = self.client.get(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)))
+        self.assertRedirects(response,
+                             expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
+                             status_code=302,
+                             target_status_code=200)
+        #TODO:Should check the "Not-Allowed" message
+
+    def test_edit_question_page_fresh_access_by_question_owner(self):
+        self.login_as(username='madhavbnk', password='nopassword')
+        question = Question.objects.latest()
+        response = self.client.get(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ask_or_edit_question.html')
+        context = response.context[0]
+        self.assertTrue(context.has_key('question'))
+        self.assertTrue(context.has_key('form'))
+        form = context.get('form')
+        self.assertEquals(form.cleaned_data.get('title'), question.title)
+        self.assertEquals(form.cleaned_data.get('description'), question.description)
+
+    def test_edit_question_with_invalid_content(self):
+        self.login_as(username='madhavbnk', password='nopassword')
+        question = Question.objects.latest()
+        invalid_question_data = {'title':"", 'description':''}
+        response = self.client.post(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)), data=invalid_question_data)
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ask_or_edit_question.html')
+        context = response.context[0]
+        self.assertTrue(context.has_key('question'))
+        self.assertTrue(context.has_key('form'))
+        form = context.get('form')
+        self.assertTrue(form.errors)
+        self.assertTrue(form.errors.get('title'))
+        self.assertTrue(form.errors.get('description'))
+        self.assertNotEquals(invalid_question_data['title'], question.title)
+        self.assertNotEquals(invalid_question_data['description'], question.description)
+
+    def test_edit_question_with_valid_content(self):
+        self.login_as(username='madhavbnk', password='nopassword')
+        question = Question.objects.latest()
+        valid_question_data = {'title':"Some Valid title", 'description':'Some valid description'}
+        response = self.client.post(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)), data=valid_question_data)
+        self.assertRedirects(response,
+                             expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
+                             status_code=302,
+                             target_status_code=200)
+        question = Question.objects.get(id=question.id)
+        self.assertEquals(valid_question_data['title'], question.title)
+        self.assertEquals(valid_question_data['description'], question.description)
 
 class GiveAnswerTests(TestCase):
     fixtures = ['users.json', 'questions.json']

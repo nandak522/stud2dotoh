@@ -1,20 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
-from django.contrib.auth import authenticate as django_authenticate
-from django.contrib.auth import login as django_login
-from django.contrib.auth import logout as django_logout
 from django.core.urlresolvers import reverse as url_reverse
-from django.http import HttpResponseRedirect, Http404, HttpResponse
-from users.models import UserProfile
-from utils import response, post_data, loggedin_userprofile, slugify
-from users.decorators import anonymoususer
+from django.http import HttpResponseRedirect, Http404
+from utils import response, post_data, loggedin_userprofile
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from quest.models import Question, Answer
 from quest.forms import AskQuestionForm, GiveAnswerForm
 
 def view_all_questions(request, all_questions_template):
-    questions = Question.objects.all()
+    questions = Question.objects.all().order_by('-modified_on')
     return response(request, all_questions_template, {'questions':questions})
 
 def view_question(request, question_id, question_slug, question_template):
@@ -64,9 +58,30 @@ def view_ask_question(request, ask_question_template):
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
     return response(request, ask_question_template, {'form':form})
 
-@login_required
-def view_edit_question(request, question_id, question_slug):
+def view_email_question(request, question_id, question_slug, email_question_template):
     raise NotImplementedError
+
+@login_required
+def view_edit_question(request, question_id, question_slug, edit_question_template):
+    question = get_object_or_404(Question, id=int(question_id))
+    if question.owner.id != loggedin_userprofile(request).id:
+        from quest.messages import QUESTION_UPDATION_DISALLOWED
+        messages.success(request, QUESTION_UPDATION_DISALLOWED)
+        return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
+    if request.method == 'GET':
+        question_data = {'title':question.title,
+                         'description':question.description}
+        form = AskQuestionForm(question_data)
+        return response(request, edit_question_template, {'form':form, 'question':question})
+    form = AskQuestionForm(post_data(request))
+    if form.is_valid():
+        Question.objects.update_question(question,
+                                         title=form.cleaned_data.get('title'),
+                                         description=form.cleaned_data.get('description'))
+        from quest.messages import QUESTION_UPDATED_SUCCESSFULLY
+        messages.success(request, QUESTION_UPDATED_SUCCESSFULLY)
+        return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
+    return response(request, edit_question_template, {'form':form, 'question':question})
 
 @login_required
 def view_give_answer(request, question_id, give_answer_template, question_template):

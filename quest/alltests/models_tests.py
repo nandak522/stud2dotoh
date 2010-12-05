@@ -1,6 +1,6 @@
 from utils import TestCase
 from users.models import UserProfile
-from quest.models import Question, Answer, QuestionAlreadyExistsException, AnswerCantBeAcceptedException, AnsweringIsClosedException
+from quest.models import Question, Answer, QuestionAlreadyExistsException, AnswerCantBeAcceptedException, AnsweringIsClosedException,EmptyQuestionCantBeSavedException
 
 class QuestionCreationTests(TestCase):
     fixtures = ['users.json']
@@ -46,6 +46,36 @@ class QuestionCreationTests(TestCase):
         self.assertFalse(question.closed)
         question.close_answering()
         self.assertTrue(question.closed)
+        
+class QuestionUpdatingTests(TestCase):
+    fixtures = ['questions.json']
+    
+    def test_update_question_with_empty_content(self):
+        question = Question.objects.latest()
+        self.assertRaises(EmptyQuestionCantBeSavedException,
+                          Question.objects.update_question,
+                          question)
+        self.assertRaises(EmptyQuestionCantBeSavedException,
+                          Question.objects.update_question,
+                          question,
+                          title='',
+                          description='')
+        modified_question = Question.objects.get(id=question.id)
+        self.assertEquals(modified_question.title, question.title)
+        self.assertEquals(modified_question.description, question.description)
+    
+    def test_update_question_with_valid_content(self):
+        question = Question.objects.latest()
+        question_previous_info = {'title':question.title,
+                                  'description':question.description} 
+        updated_info = {'title':"Title is updated",
+                        'description':"Description is updated"}
+        Question.objects.update_question(question, title=updated_info['title'], description=updated_info['description'])
+        modified_question = Question.objects.get(id=question.id)
+        self.assertNotEquals(modified_question.title, question_previous_info['title'])
+        self.assertNotEquals(modified_question.description, question_previous_info['description'])
+        self.assertEquals(modified_question.title, updated_info['title'])
+        self.assertEquals(modified_question.description, updated_info['description'])
         
 class AnswerCreationTests(TestCase):
     fixtures = ['users.json', 'questions.json', 'answers.json']

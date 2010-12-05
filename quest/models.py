@@ -12,6 +12,9 @@ class AnswerCantBeAcceptedException(Exception):
 class AnsweringIsClosedException(Exception):
     pass
 
+class EmptyQuestionCantBeSavedException(Exception):
+    pass
+
 class QuestionManager(BaseModelManager):
     def create_question(self, title, description, userprofile):
         if self.exists(title=title):
@@ -26,8 +29,23 @@ class QuestionManager(BaseModelManager):
             return True
         return False
     
+    def update_question(self, question, **attributes):
+        if attributes and attributes.has_key('title') and attributes.has_key('description'):
+            if attributes.get('title') and attributes.get('description'):
+                for attr_label in attributes:
+                    setattr(question, attr_label, attributes[attr_label])
+                question.save()
+                return
+            raise EmptyQuestionCantBeSavedException
+        elif attributes:
+            for attr_label in attributes:
+                setattr(question, attr_label, attributes[attr_label])
+            question.save()
+        else:
+            raise EmptyQuestionCantBeSavedException
+    
 class Question(BaseModel):
-    title = models.CharField(max_length=80, blank=False)
+    title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80, db_index=True)
     description = models.CharField(max_length=1000, blank=True, null=True)#should clean tags.
     raised_by = models.ForeignKey(UserProfile)
