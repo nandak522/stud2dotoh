@@ -1,8 +1,8 @@
-from utils import TestCase
-from django.core.urlresolvers import reverse as url_reverse
-from users.models import UserProfile
-from quest.models import Question, Answer
 from django.conf import settings
+from django.core.urlresolvers import reverse as url_reverse
+from quest.models import Question, Answer
+from users.models import UserProfile
+from utils import TestCase
 
 class AllQuestionsPageTests(TestCase):
     fixtures = ['users.json', 'questions.json', 'answers.json']
@@ -17,7 +17,7 @@ class AllQuestionsPageTests(TestCase):
         self.assertTrue(context.get('questions'))
 
     def test_all_questions_page_authenticated_access(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.get(url_reverse('quest.views.view_all_questions'))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -49,14 +49,14 @@ class QuestionPageTests(TestCase):
 
     def test_close_answering_a_question_by_non_owner(self):
         question = Question.objects.latest()
-        self.login_as(username='somerandomuser', password='nopassword')
+        self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         response = self.client.post(url_reverse('quest.views.view_close_answering'), {'question_id':question.id})
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
 
     def test_close_answering_a_question_by_owner(self):
         question = Question.objects.latest()
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.post(url_reverse('quest.views.view_close_answering'), {'question_id':question.id})
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -69,7 +69,7 @@ class QuestionPageTests(TestCase):
     def test_accept_an_answer_for_a_question_by_non_owner(self):
         question = Question.objects.latest()
         answer = question.answers[0]
-        self.login_as(username='somerandomuser', password='nopassword')
+        self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         response = self.client.post(url_reverse('quest.views.view_accept_answer', args=(question.id,)), data={'question_id':question.id, 'answer_id':answer.id})
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
@@ -78,7 +78,7 @@ class QuestionPageTests(TestCase):
     def test_accept_an_answer_for_a_question_by_owner(self):
         question = Question.objects.latest()
         answer = question.answers[0]
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.post(url_reverse('quest.views.view_accept_answer', args=(question.id,)), data={'question_id':question.id, 'answer_id':answer.id})
         self.assertTrue(response)
         self.assertTrue(Answer.objects.get(id=answer.id).accepted)
@@ -88,7 +88,7 @@ class QuestionPageTests(TestCase):
     def test_unaccepting_an_answer_of_a_question(self):
         question = Question.objects.latest()
         answer = question.answers[0]
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.post(url_reverse('quest.views.view_accept_answer', args=(question.id,)), data={'question_id':question.id, 'answer_id':answer.id})
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -113,7 +113,7 @@ class AskQuestionTests(TestCase):
                              target_status_code=200)
 
     def test_ask_question_page_authenticated_access(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.get(url_reverse('quest.views.view_ask_question'))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -124,7 +124,7 @@ class AskQuestionTests(TestCase):
         self.assertFalse(ask_question_form.errors)
 
     def test_asking_a_question(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
                          'description':'Just interested in the process of hiring for Stud2dotoh'}
         old_questions_count = Question.objects.count()
@@ -135,14 +135,14 @@ class AskQuestionTests(TestCase):
         self.assertTrue(question)
         self.assertEquals(question.title, question_data['title'])
         self.assertEquals(question.description, question_data['description'])
-        self.assertEquals(UserProfile.objects.get(user__username='madhavbnk').id, question.raised_by.id)
+        self.assertEquals(UserProfile.objects.get(user__email='madhav.bnk@gmail.com').id, question.raised_by.id)
         self.assertRedirects(response,
                              expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
                              status_code=302,
                              target_status_code=200)
 
     def test_asking_a_question_with_xss(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
                          'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script>'}
         response = self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
@@ -161,7 +161,7 @@ class AskQuestionTests(TestCase):
         self.assertFalse('<script>' in question_description)
 
     def test_asking_a_question_with_blocked_tags(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
                          'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script><input type=\'text\' name=\'head_name\' value=\'Your Name\'/><marquee>I am big distracting rolling banner</marquee>'}
         self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
@@ -186,7 +186,7 @@ class EditQuestionTests(TestCase):
                              target_status_code=200)
 
     def test_edit_question_page_fresh_access_any_authenticated_user(self):
-        self.login_as(username='somerandomuser', password='nopassword')
+        self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         question = Question.objects.latest()
         response = self.client.get(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)))
         self.assertRedirects(response,
@@ -196,7 +196,7 @@ class EditQuestionTests(TestCase):
         #TODO:Should check the "Not-Allowed" message
 
     def test_edit_question_page_fresh_access_by_question_owner(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question = Question.objects.latest()
         response = self.client.get(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)))
         self.assertTrue(response)
@@ -210,7 +210,7 @@ class EditQuestionTests(TestCase):
         self.assertEquals(form.cleaned_data.get('description'), question.description)
 
     def test_edit_question_with_invalid_content(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question = Question.objects.latest()
         invalid_question_data = {'title':"", 'description':''}
         response = self.client.post(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)), data=invalid_question_data)
@@ -228,7 +228,7 @@ class EditQuestionTests(TestCase):
         self.assertNotEquals(invalid_question_data['description'], question.description)
 
     def test_edit_question_with_valid_content(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question = Question.objects.latest()
         valid_question_data = {'title':"Some Valid title", 'description':'Some valid description'}
         response = self.client.post(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)), data=valid_question_data)
@@ -245,7 +245,7 @@ class GiveAnswerTests(TestCase):
 
     def test_answer_page_fresh_access(self):
         question = Question.objects.latest()
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.get(url_reverse('quest.views.view_give_answer', args=(question.id,)))
         self.assertRedirects(response,
                              expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
@@ -253,7 +253,7 @@ class GiveAnswerTests(TestCase):
                              target_status_code=200)
 
     def test_answering_a_question(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         data = {'description':'My Answer goes like this'}
         question = Question.objects.latest()
         response = self.client.post(url_reverse('quest.views.view_give_answer', args=(question.id,)), data=data)
@@ -266,7 +266,7 @@ class GiveAnswerTests(TestCase):
         self.assertEquals(context.get('question').id, question.id)
 
     def test_answer_a_question_with_xss(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         data = {'description':'My Answer goes like this <script>alert("Hey");</script>'}
         question = Question.objects.latest()
         response = self.client.post(url_reverse('quest.views.view_give_answer', args=(question.id,)), data=data)
@@ -280,7 +280,7 @@ class GiveAnswerTests(TestCase):
         self.assertFalse('script' in answer.description)
 
     def test_answering_a_question_with_blocked_tags(self):
-        self.login_as(username='madhavbnk', password='nopassword')
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         blocked_descriptions = ['I am giving a <marquee>fake</marquee> answer',
                                 'This is also a fake <style>*{font-weight:120em;}</style>answer']
         question = Question.objects.latest()

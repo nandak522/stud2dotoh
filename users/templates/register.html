@@ -5,13 +5,12 @@
     <form action="{%url register%}" method='POST'>{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
-	    <tr><td class='rightalign'><label for="id_username">UserName :</label></td><td class='leftalign'>{{form.username}}<span class='help_text'>(<span class='required'>Required</span>. Max of 30 characters and should be unique)</span><br/>{{form.username.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Min of 6 characters. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
 	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
 	</table>
 	</form>
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].username.focus();</script>{%endblock%}
+{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}

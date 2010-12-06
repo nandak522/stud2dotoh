@@ -5,6 +5,7 @@ from utils.models import BaseModel, BaseModelManager
 from django.conf import settings
 from datetime import timedelta
 import os
+import hashlib
 
 class UserProfileAlreadyExistsException(Exception):
     pass
@@ -13,25 +14,22 @@ class CantUpdateSlugAgainException(Exception):
     pass
 
 class UserProfileManager(BaseModelManager):
-    def create_userprofile(self, username, password, email='', name=''):
-        if self.exists(username=username, email=email):
+    def create_profile(self, email, password, name):
+        if self.exists(email=email):
             raise UserProfileAlreadyExistsException
-        user = User.objects.create_user(username=username,
+        user = User.objects.create_user(username=self._compute_username(email),
                                         email=email,
                                         password=password)
         userprofile = UserProfile(user=user, name=name, slug=slugify(name))
         userprofile.save()
         return userprofile
     
-    def exists(self, username, email=''):
-        if not email:
-            try:
-                self.get(user__username=username)
-                return True
-            except UserProfile.ModelDoesNotExist:
-                return False
+    def _compute_username(self, email):
+        return hashlib.sha1(email).hexdigest()[:30]
+    
+    def exists(self, email=''):
         try:
-            self.get(user__username=username, user__email=email)
+            self.get(user__email=email)
             return True
         except UserProfile.DoesNotExist:
             return False

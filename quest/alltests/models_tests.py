@@ -125,12 +125,13 @@ class AnswerCreationTests(TestCase):
     def test_accepting_more_than_one_answer(self):
         question = Question.objects.latest()
         answer = question.answers[0]
-        answer.accept(accepted_by=question.raised_by)
+        owner = question.raised_by
+        answer.accept(accepted_by=owner)
         self.assertTrue(answer.accepted)
         answer_data = {'question':question,
                        'description':'There are many ways to handle recursion',
                        'accepted':True,
-                       'given_by':UserProfile.objects.latest()}
+                       'given_by':owner}
         Answer.objects.create_answer(question=answer_data['question'],
                                      description=answer_data['description'],
                                      accepted=answer_data['accepted'],

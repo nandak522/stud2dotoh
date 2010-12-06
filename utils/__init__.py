@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.template.defaultfilters import slugify
 import shutil
 import os
+from users.models import User, UserProfile
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))
@@ -25,9 +26,9 @@ class TestCase(TestCase):
     def tearDown(self):
         del self.client
         
-    def login_as(self, username, password):
+    def login_as(self, email, password):
         return self.client.post(path=url_reverse('users.views.view_login'),
-                                data={'username':username, 'password':password})
+                                data={'email':email, 'password':password})
         
     def logout(self):
         return self.client.post(path=url_reverse('users.views.view_logout'))

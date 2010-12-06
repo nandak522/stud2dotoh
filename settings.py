@@ -95,3 +95,5 @@ else:
 INTERNAL_IPS = ('127.0.0.1',)
 
 FILTER_HTML_TAGS = "script button input marquee style"
+
+AUTHENTICATION_BACKENDS = ('utils.backends.EmailAuthBackend',)

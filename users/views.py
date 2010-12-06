@@ -15,7 +15,7 @@ import os
 @login_required
 def view_all_users(request, all_users_template):
     from django.core.paginator import Paginator, EmptyPage, InvalidPage
-    paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__username', 'created_on'), 2)
+    paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__email', 'created_on'), 2)
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:
@@ -37,7 +37,7 @@ def view_register(request, registration_template, next=''):
             messages.success(request, USER_SIGNUP_SUCCESSFUL)
             return _let_user_login(request,
                                    userprofile.user,
-                                   username=form.cleaned_data.get('username'),
+                                   email=form.cleaned_data.get('email'),
                                    password=form.cleaned_data.get('password'),
                                    next=form.cleaned_data.get('next'))
     else:
@@ -45,16 +45,12 @@ def view_register(request, registration_template, next=''):
     return response(request, registration_template, {'form': form, 'next': next})
 
 def _handle_user_registration(registration_form):
-    return UserProfile.objects.create_userprofile(username=registration_form.cleaned_data.get('username'),
-                                                 email=registration_form.cleaned_data.get('email'),
-                                                 password=registration_form.cleaned_data.get('password'),
-                                                 name=registration_form.cleaned_data.get('name'))
+    return UserProfile.objects.create_profile(email=registration_form.cleaned_data.get('email'),
+                                                  password=registration_form.cleaned_data.get('password'),
+                                                  name=registration_form.cleaned_data.get('name'))
 
-def _authenticate_user(user):
-    raise NotImplementedError
-
-def _let_user_login(request, user, username, password, next=''):
-    user = django_authenticate(username=username, password=password)
+def _let_user_login(request, user, email, password, next=''):
+    user = django_authenticate(email=email, password=password)
     django_login(request, user)
     if next:
         return HttpResponseRedirect(redirect_to=next)
@@ -66,7 +62,7 @@ def view_login(request, login_template, next=''):
     if request.method == 'POST':
         form = UserLoginForm(post_data(request))
         if form.is_valid():
-            userprofile = UserProfile.objects.get(user__username=form.cleaned_data.get('username'))
+            userprofile = UserProfile.objects.get(user__email=form.cleaned_data.get('email'))
             if not userprofile.check_password(form.cleaned_data.get('password')):
                 from users.messages import USER_LOGIN_FAILURE
                 messages.error(request, USER_LOGIN_FAILURE)
@@ -75,7 +71,7 @@ def view_login(request, login_template, next=''):
             messages.success(request, USER_LOGIN_SUCCESSFUL)
             return _let_user_login(request,
                                    userprofile.user,
-                                   username=form.cleaned_data.get('username'),
+                                   email=form.cleaned_data.get('email'),
                                    password=form.cleaned_data.get('password'),
                                    next=form.cleaned_data.get('next'))
     else:
