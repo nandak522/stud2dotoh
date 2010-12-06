@@ -164,4 +164,18 @@ def view_file_content_view(request, filename):
 
 @login_required
 def view_account_settings(request, settings_template):
-    raise NotImplementedError
+    from users.forms import AccountSettingsForm
+    userprofile = loggedin_userprofile(request)
+    if request.method == 'GET':
+        form = AccountSettingsForm({'name':userprofile.name,
+                                    'slug':userprofile.slug})
+        return response(request, settings_template, {'form':form})
+    form = AccountSettingsForm(post_data(request))
+    if form.is_valid():
+        name = form.cleaned_data.get('name')
+        slug = form.cleaned_data.get('slug')
+        new_password = form.cleaned_data.get('new_password')
+        userprofile.update(name=name, slug=slug, password=new_password)
+        from users.messages import ACCOUNT_SETTINGS_SAVED
+        messages.success(request, ACCOUNT_SETTINGS_SAVED)
+    return response(request, settings_template, {'form':form})  

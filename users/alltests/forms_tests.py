@@ -1,5 +1,5 @@
 from utils import TestCase
-from users.forms import UserSignupForm, UserLoginForm, SaveFileForm
+from users.forms import UserSignupForm, UserLoginForm, SaveFileForm, AccountSettingsForm
 from django.conf import settings
 
 class UserSignupFormTests(TestCase):
@@ -101,3 +101,29 @@ class SaveFileFormTests(TestCase):
         self.assertTrue(form.is_valid())
         self.assertFalse(form.errors)
         self.assertEquals(data['content'].strip(), form.cleaned_data.get('content'))
+        
+class AccountSettingsFormTests(TestCase):
+    def test_empty_form_submission(self):
+        data = {'name':'', 'slug':'', 'new_password':''}
+        form = AccountSettingsForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.errors)
+        self.assertTrue(form.errors.has_key('name'))
+        self.assertFalse(form.errors.has_key('slug'))
+        self.assertFalse(form.errors.has_key('new_password'))
+    
+    def test_invalid_name_submission(self):
+        invalid_names = ['', '    ', '*(*(*(*']
+        for name in invalid_names:
+            form = AccountSettingsForm({'name':name, 'slug':'somedomain', 'new_password':'asdasdf'})
+            self.assertFalse(form.is_valid())
+            self.assertTrue(form.errors)
+            self.assertTrue(form.errors.has_key('name'))
+            self.assertFalse(form.errors.has_key('slug'))
+            self.assertFalse(form.errors.has_key('new_password'))
+    
+    def test_valid_account_details_updation(self):
+        data = {'name':'Nanda Kishore.B', 'slug':'madhavbnk', 'new_password':'somepass'}
+        form = AccountSettingsForm(data)
+        self.assertTrue(form.is_valid())
+        self.assertFalse(form.errors)

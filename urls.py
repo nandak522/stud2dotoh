@@ -25,7 +25,7 @@ urlpatterns += patterns('users.views',
     (r'^accounts/register/$', 'view_register', {'registration_template': 'register.html'}, 'register'),
     (r'^accounts/login/$', 'view_login', {'login_template': 'login.html'}, 'login'),
     (r'^accounts/logout/$', 'view_logout', {'logout_template': 'logout.html'}, 'logout'),
-    (r'^settings/$', 'view_account_settings', {'settings_template':''}, 'settings'),
+    (r'^settings/$', 'view_account_settings', {'settings_template':'settings.html'}, 'settings'),
 )
 
 add_to_builtins('utils.templateutils')
