@@ -1,11 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
 from utils import slugify
-from utils.models import BaseModel, BaseModelManager
+from utils.models import BaseModel, BaseModelManager, YearField
 from django.conf import settings
 from datetime import timedelta
 import os
 import hashlib
+
+branches = (('CSE', 'Computer Science Engineering'),)
 
 class UserProfileAlreadyExistsException(Exception):
     pass
@@ -98,26 +100,92 @@ class UserProfile(BaseModel):
             return ''
         return ".".join([self.slug, 'stud2dotoh.com'])
     
-#class StudentManager(UserProfileManager):
-#    def create_student(self, *args, **kwargs):
-#        return self.create_userprofile(*args, **kwargs)
-#    
-#class Student(UserProfile):
-#    objects = StudentManager()
-#
-#class Professor(UserProfile):
-#    raise NotImplementedError
-#
+class CollegeAlreadyExistsException(Exception):
+    pass
+
+class CollegeManager(BaseModelManager):
+    def create_college(self, name):
+        slug=slugify(name)
+        if self.exists(slug):
+            raise CollegeAlreadyExistsException
+        college = College(name=name,slug=slug)
+        college.save()
+        return college 
+            
+    def exists(self, slug):
+        try:
+            return self.get(slug=slug)
+        except College.DoesNotExist:
+            return False
+
+class College(BaseModel):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, db_index=True)#this will be used as its unique url identifier
+    objects = CollegeManager()
+    
+    def __unicode__(self):
+        return self.name
+    
+class ProfessorAlreadyExistsException(Exception):
+    pass
+    
+class ProfessorManager(BaseModelManager):
+    def create_professor(self, userprofile, college):
+        if self.exists(userprofile):
+            raise ProfessorAlreadyExistsException
+        professor = Professor(userprofile=userprofile, college=college)
+        professor.save()
+        return professor
+    
+    def exists(self, userprofile):
+        try:
+            return self.get(userprofile=userprofile)
+        except Professor.DoesNotExist:
+            return False
+    
+class Professor(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    college = models.ForeignKey(College)
+    objects = ProfessorManager()
+    
+    def __unicode__(self):
+        return "%s-(%s)" % (self.userprofile.name, self.college.name)
+    
 #class IndustryGuy(UserProfile):
 #    raise NotImplementedError
 #
 #class Company(BaseModel):
 #    raise NotImplementedError
-#    
-#class CollegeManager(BaseModelManager):
-#    pass
 #
-#class College(BaseModel):
-#    name = models.CharField(max_length=50)
-#    slug = models.SlugField(max_length=50, db_index=True)#this will be used as his unique url identifier
-#    objects = CollegeManager()    
+    
+class StudentAlreadyExistsException(Exception):
+    pass
+    
+class StudentManager(BaseModelManager):
+    def create_student(self, userprofile, branch, college, start_year, end_year):
+        if self.exists(userprofile):
+            raise StudentAlreadyExistsException
+        student = Student(userprofile=userprofile,
+                          branch=branch,
+                          college=college,
+                          start_year=start_year,
+                          end_year=end_year)
+        student.save()
+        return student
+            
+    def exists(self, userprofile):
+        try:
+            return self.get(userprofile=userprofile)
+        except Student.DoesNotExist:
+            return False
+
+class Student(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    branch = models.CharField(choices=branches, max_length=4)
+    college = models.ForeignKey(College)
+    start_year = YearField(max_length=4, blank=True, null=True)
+    end_year = YearField(max_length=4, blank=True, null=True)
+    objects = StudentManager()
+    
+    def __unicode__(self):
+        return "%s-(%s-%s-%s)" % (self.userprofile, self.branch, self.start_year, self.end_year)
