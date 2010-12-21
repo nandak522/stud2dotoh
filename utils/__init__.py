@@ -46,3 +46,6 @@ def loggedin_userprofile(request):
 def get_user_directory_path(userprofile):
     #TODO:Raise a deprecation warning about the usage of this method. Use userprofile.user_directory_path
     return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(userprofile.id)])
+
+def set_userprofile_in_context(request):
+    return {'userprofile':request.user.get_profile()}
