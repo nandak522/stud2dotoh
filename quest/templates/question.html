@@ -3,17 +3,15 @@
 {%block content%}
 <h2><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h2>
 <h4>{%autoescape off%}{{question.description}}{%endautoescape%}</h4>
-{%with user.get_profile as loggedinuserprofile %}
 <div id='question_action_links'>
-<a title="Link to this question" href="{%url question question.id question.slug%}">Link</a>&nbsp;&nbsp;{%if loggedinuserprofile.id == question.owner.id%}|&nbsp;&nbsp;<a title="Edit this question" href="{%url edit_question question.id question.slug%}">Edit</a>&nbsp;&nbsp;{%endif%}|&nbsp;&nbsp;<a title="Email this question to other people" href="{%url email_question question.id question.slug%}">Email</a>
+<a title="Link to this question" href="{%url question question.id question.slug%}">Link</a>&nbsp;&nbsp;{%if userprofile.id == question.owner.id%}|&nbsp;&nbsp;<a title="Edit this question" href="{%url edit_question question.id question.slug%}">Edit</a>&nbsp;&nbsp;{%endif%}|&nbsp;&nbsp;<a title="Email this question to other people" href="{%url email_question question.id question.slug%}">Email</a>
 </div>
 <span class='small_text'>Posted by {%with question.raised_by as raised_by%}<a href="{%url user_profile raised_by.id raised_by.slug%}">{{raised_by.name|title}}</a>{%endwith%} on {{question.modified_on|date:"dS M Y g:i A"}}</span>
 
-    {%if not question.closed and loggedinuserprofile.id == question.owner.id %}
+    {%if not question.closed and userprofile.id == question.owner.id %}
         <br/><input type='button' onClick='javascript:close_answering("{{question.id}}")' value='Close Answering' name='close_answering'/>    
     {%endif%}
     {%include 'existing_answers.html'%}
-{%endwith%}
 <div id='give_answer_section'>
     {%include 'give_answer.html'%}
 </div><!-- end of give_answer_section -->
