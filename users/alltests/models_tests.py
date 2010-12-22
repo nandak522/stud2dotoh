@@ -1,5 +1,6 @@
 from utils import TestCase
-from users.models import UserProfile, Student, College, Professor
+from utils import slugify
+from users.models import UserProfile, Student, College, Professor, IndustryGuy, Company 
 
 class UserProfileCreationTests(TestCase):
     fixtures = ['users.json']
@@ -62,6 +63,7 @@ class CollegeCreationTests(TestCase):
         college = College.objects.latest()
         self.assertTrue(college)
         self.assertEquals(college.name, data['name'])
+        self.assertEquals(college.slug, slugify(data['name']))
     
     def test_college_duplicate_creation(self):
         data = {'name':'JNTU Hyderabad'}
@@ -88,4 +90,48 @@ class ProfessorCreationTests(TestCase):
         from users.models import ProfessorAlreadyExistsException
         self.assertRaises(ProfessorAlreadyExistsException,
                           Professor.objects.create_professor,
+                          **data)
+        
+class CompanyCreationTests(TestCase):
+    fixtures = ['companies.json']
+    
+    def test_company_valid_creation(self):
+        data = {'name':'Infosys'}
+        Company.objects.create_company(**data)
+        company = Company.objects.latest()
+        self.assertTrue(company)
+        self.assertEquals(company.name, data['name'])
+        self.assertEquals(company.slug, slugify(data['name']))
+        
+    def test_duplicate_company_creation(self):
+        data = {'name':'IBM'}
+        from users.models import CompanyAlreadyExistsException
+        self.assertRaises(CompanyAlreadyExistsException,
+                          Company.objects.create_company,
+                          **data)
+
+class IndustryGuyCreationTests(TestCase):
+    fixtures = ['industry_guys.json', 'users.json', 'companies.json']
+    
+    def test_industry_guy_valid_creation(self):
+        data = {'userprofile': UserProfile.objects.get(user__email='somerandomuser@gmail.com'),
+                'company': Company.objects.latest(),
+                'designation': 'Software Developer',
+                'years_of_exp':2}
+        IndustryGuy.objects.create_industry_guy(**data)
+        industry_guy = IndustryGuy.objects.latest()
+        self.assertTrue(industry_guy)
+        self.assertEquals(industry_guy.userprofile, data['userprofile'])
+        self.assertEquals(industry_guy.company, data['company'])
+        self.assertEquals(industry_guy.designation, data['designation'])
+        self.assertEquals(industry_guy.years_of_exp, data['years_of_exp'])
+        
+    def test_duplicate_industry_valid_creation(self):
+        data = {'userprofile': UserProfile.objects.get(user__email='madhav.bnk@gmail.com'),
+                'company': Company.objects.latest(),
+                'designation': 'Software Developer',
+                'years_of_exp':2}
+        from users.models import IndustryGuyAlreadyExistsException
+        self.assertRaises(IndustryGuyAlreadyExistsException,
+                          IndustryGuy.objects.create_industry_guy,
                           **data)

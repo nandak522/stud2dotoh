@@ -17,18 +17,13 @@ class EmptyQuestionCantBeSavedException(Exception):
 
 class QuestionManager(BaseModelManager):
     def create_question(self, title, description, userprofile):
-        if self.exists(title=title):
+        if self.exists(slug=slugify(title)):
             raise QuestionAlreadyExistsException
         question = Question(title=title, slug=slugify(title),
                             description=description, raised_by=userprofile)
         question.save()
         return question 
             
-    def exists(self, title):
-        if self.filter(slug=slugify(title)).count():
-            return True
-        return False
-    
     def update_question(self, question, **attributes):
         if attributes and attributes.has_key('title') and attributes.has_key('description'):
             if attributes.get('title') and attributes.get('description'):

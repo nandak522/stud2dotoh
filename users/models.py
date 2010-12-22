@@ -17,7 +17,7 @@ class CantUpdateSlugAgainException(Exception):
 
 class UserProfileManager(BaseModelManager):
     def create_profile(self, email, password, name):
-        if self.exists(email=email):
+        if self.exists(user__email=email):
             raise UserProfileAlreadyExistsException
         user = User.objects.create_user(username=self._compute_username(email),
                                         email=email,
@@ -29,13 +29,6 @@ class UserProfileManager(BaseModelManager):
     def _compute_username(self, email):
         return hashlib.sha1(email).hexdigest()[:30]
     
-    def exists(self, email=''):
-        try:
-            self.get(user__email=email)
-            return True
-        except UserProfile.DoesNotExist:
-            return False
-
 class UserProfile(BaseModel):
     user = models.OneToOneField(User)
     name = models.CharField(max_length=50, null=True, blank=True)
@@ -106,18 +99,12 @@ class CollegeAlreadyExistsException(Exception):
 class CollegeManager(BaseModelManager):
     def create_college(self, name):
         slug=slugify(name)
-        if self.exists(slug):
+        if self.exists(slug=slug):
             raise CollegeAlreadyExistsException
         college = College(name=name,slug=slug)
         college.save()
         return college 
             
-    def exists(self, slug):
-        try:
-            return self.get(slug=slug)
-        except College.DoesNotExist:
-            return False
-
 class College(BaseModel):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, db_index=True)#this will be used as its unique url identifier
@@ -131,18 +118,12 @@ class ProfessorAlreadyExistsException(Exception):
     
 class ProfessorManager(BaseModelManager):
     def create_professor(self, userprofile, college):
-        if self.exists(userprofile):
+        if self.exists(userprofile=userprofile):
             raise ProfessorAlreadyExistsException
         professor = Professor(userprofile=userprofile, college=college)
         professor.save()
         return professor
-    
-    def exists(self, userprofile):
-        try:
-            return self.get(userprofile=userprofile)
-        except Professor.DoesNotExist:
-            return False
-    
+
 class Professor(BaseModel):
     userprofile = models.ForeignKey(UserProfile)
     college = models.ForeignKey(College)
@@ -151,19 +132,56 @@ class Professor(BaseModel):
     def __unicode__(self):
         return "%s-(%s)" % (self.userprofile.name, self.college.name)
     
-#class IndustryGuy(UserProfile):
-#    raise NotImplementedError
-#
-#class Company(BaseModel):
-#    raise NotImplementedError
-#
+class CompanyAlreadyExistsException(Exception):
+    pass
+
+class CompanyManager(BaseModelManager):
+    def create_company(self, name):
+        slug = slugify(name)
+        if self.exists(slug=slug):
+            raise CompanyAlreadyExistsException
+        company = Company(name=name, slug=slug)
+        company.save()
+        return company
     
+class Company(BaseModel):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, db_index=True)#this will be used as its unique url identifier
+    objects = CompanyManager()
+    
+    def __unicode__(self):
+        return self.name
+    
+class IndustryGuyAlreadyExistsException(Exception):
+    pass
+    
+class IndustryGuyManager(BaseModelManager):
+    def create_industry_guy(self, userprofile, company, designation, years_of_exp):
+        if self.exists(userprofile=userprofile):
+            raise IndustryGuyAlreadyExistsException
+        industry_guy = IndustryGuy(userprofile=userprofile,
+                                   company=company,
+                                   designation=designation,
+                                   years_of_exp=years_of_exp)
+        industry_guy.save()
+        return industry_guy
+    
+class IndustryGuy(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    company = models.ForeignKey(Company)
+    designation = models.CharField(max_length=50)
+    years_of_exp = models.DecimalField(max_digits=4, decimal_places=2)
+    objects = IndustryGuyManager()
+    
+    def __unicode__(self):
+        return '%s (%s)' % (self.userprofile.name, self.company.name)
+
 class StudentAlreadyExistsException(Exception):
     pass
     
 class StudentManager(BaseModelManager):
     def create_student(self, userprofile, branch, college, start_year, end_year):
-        if self.exists(userprofile):
+        if self.exists(userprofile=userprofile):
             raise StudentAlreadyExistsException
         student = Student(userprofile=userprofile,
                           branch=branch,
@@ -172,12 +190,6 @@ class StudentManager(BaseModelManager):
                           end_year=end_year)
         student.save()
         return student
-            
-    def exists(self, userprofile):
-        try:
-            return self.get(userprofile=userprofile)
-        except Student.DoesNotExist:
-            return False
 
 class Student(BaseModel):
     userprofile = models.ForeignKey(UserProfile)

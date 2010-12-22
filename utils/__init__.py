@@ -48,4 +48,6 @@ def get_user_directory_path(userprofile):
     return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(userprofile.id)])
 
 def set_userprofile_in_context(request):
-    return {'userprofile':request.user.get_profile()}
+    if request.user.is_authenticated():
+        return {'userprofile':request.user.get_profile()}
+    return {}
