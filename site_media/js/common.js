@@ -1,18 +1,33 @@
-function ajaxPost(url,params){
-    $.ajax({
+function ajaxCall(url, params, callType){
+	var successCallback = params['successCallback'];
+	var successCallbackParams = params['successCallbackParams'];
+	delete params.successCallbackParams;
+	delete params.successCallback;
+	return $.ajax({
         url:url,
         data:params,
-        type:'POST',
+        type:callType,
         success: function(response){
-            if(params['successCallback']){
-                params['successCallback'](response);
+            if(successCallback){
+            	if(successCallbackParams){
+            		successCallback(successCallbackParams, response);
+            	}else{
+            		successCallback(response);
+            	}
+            	$('#ajax_status_header').text('Done');
+                $('#ajax_status_header').fadeOut(5000);
             }else{
                 $('#ajax_status_header').text('Done');
                 $('#ajax_status_header').fadeOut(5000);
             }
         },
         beforeSend:function(){
-            $('#ajax_status_header').text('Processing...');
+        	
+        	if(callType === 'GET'){
+        		$('#ajax_status_header').text('Retrieving...');	
+        	}else{
+        		$('#ajax_status_header').text('Processing...');
+        	}
             $('#ajax_status_header').show();
         },
         error: function(response){
@@ -24,4 +39,12 @@ function ajaxPost(url,params){
             }
         }
     });
+}
+
+function ajaxPost(url,params){
+	return ajaxCall(url, params, 'POST');    
+}
+
+function ajaxGet(url, params){
+	return ajaxCall(url, params, 'GET');
 }
