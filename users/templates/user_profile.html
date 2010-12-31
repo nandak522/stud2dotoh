@@ -18,6 +18,17 @@
 {%endfor%}
 </ul>
 </div><!-- end of uploaded_files -->
-<div id='qa_details'>
-</div><!-- end of qa_details -->
+<div id='asked_questions' class='widget'>
+<h4 class='droid widget_header leftalign'>Asked Questions</h4>
+<ul><li>{{userprofile.name|title}} has not asked any questions yet!</li></ul>
+</div><!-- end of asked_questions -->
+<div id='answers_given' class='widget'>
+<h4 class='droid widget_header leftalign'>Answers Given</h4>
+<ul><li>{{userprofile.name|title}} has not given any answers to any of the questions yet!</li></ul>
+</div><!-- end of answers_given -->
+<div id='comments_given' class='widget'>
+<h4 class='droid widget_header leftalign'>Comments Given</h4>
+<ul><li>{{userprofile.name|title}} didn't comment on anything yet!</li></ul>
+</div><!-- end of comments_given -->
+
 {%endblock%}
