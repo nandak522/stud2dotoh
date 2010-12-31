@@ -23,6 +23,7 @@ def get_data(request):
 
 class TestCase(TestCase):
     settings.DOCSTORE_CONFIG['files_storage_path'] = "/".join([os.path.dirname(settings.ROOT_PATH), 'test_stud2dotoh_uploaded_files'])
+    settings.DEBUG = True
     def tearDown(self):
         del self.client
         

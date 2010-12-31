@@ -1,6 +1,6 @@
 from utils import TestCase
 from utils import slugify
-from users.models import UserProfile, Student, College, Professor, IndustryGuy, Company 
+from users.models import UserProfile, AcadInfo, College, WorkInfo, Company
 
 class UserProfileCreationTests(TestCase):
     fixtures = ['users.json']
@@ -25,33 +25,52 @@ class UserProfileCreationTests(TestCase):
                           UserProfile.objects.create_profile,
                           **data)
         
-class StudentCreationTests(TestCase):
-    fixtures = ['users.json', 'colleges.json', 'students.json']
+    def test_make_student(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        self.assertFalse(userprofile.is_student)
+        userprofile.make_student()
+        self.assertTrue(UserProfile.objects.get(user__email='madhav.bnk@gmail.com').is_student)
+        
+    def test_make_professor(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        self.assertFalse(userprofile.is_professor)
+        userprofile.make_professor()
+        self.assertTrue(UserProfile.objects.get(user__email='madhav.bnk@gmail.com').is_professor)
+        
+    def test_make_employee(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        self.assertFalse(userprofile.is_employee)
+        userprofile.make_employee()
+        self.assertTrue(UserProfile.objects.get(user__email='madhav.bnk@gmail.com').is_employee)
+        
+class AcadInfoCreationTests(TestCase):
+    fixtures = ['users.json', 'colleges.json', 'acadinfo.json']
     
-    def test_student_valid_creation(self):
-        data = {'userprofile':UserProfile.objects.get(slug='nanda-kishore'),
+    def test_acadinfo_valid_creation(self):
+        userprofile = UserProfile.objects.get(slug='nanda-kishore')
+        data = {'userprofile':userprofile,
                 'branch':'CSE',
                 'college':College.objects.latest(),
                 'start_year':2006,
                 'end_year':2010}
-        Student.objects.create_student(**data)
-        student = Student.objects.latest()
-        self.assertTrue(student)
-        self.assertEquals(student.userprofile, data['userprofile'])
-        self.assertEquals(student.branch, data['branch'])
-        self.assertEquals(student.college, data['college'])
-        self.assertEquals(student.start_year, data['start_year'])
-        self.assertEquals(student.end_year, data['end_year'])
+        AcadInfo.objects.create_acadinfo(**data)
+        acad_details = userprofile.acad_details
+        self.assertTrue(acad_details)
+        self.assertEquals(AcadInfo.objects.latest().userprofile, data['userprofile'])
+        self.assertEquals(acad_details.branch, data['branch'])
+        self.assertEquals(acad_details.college.slug, data['college'].slug)
+        self.assertEquals(acad_details.start_year, data['start_year'])
+        self.assertEquals(acad_details.end_year, data['end_year'])
     
-    def test_student_duplicate_creation(self):
+    def test_acadinfo_duplicate_creation(self):
         data = {'userprofile':UserProfile.objects.get(slug='somerandomuser'),
                 'branch':'CSE',
                 'college':College.objects.latest(),
                 'start_year':2006,
                 'end_year':2010}
-        from users.models import StudentAlreadyExistsException
-        self.assertRaises(StudentAlreadyExistsException,
-                          Student.objects.create_student,
+        from users.models import AcadInfoAlreadyExistsException
+        self.assertRaises(AcadInfoAlreadyExistsException,
+                          AcadInfo.objects.create_acadinfo,
                           **data)
     
 class CollegeCreationTests(TestCase):
@@ -72,26 +91,6 @@ class CollegeCreationTests(TestCase):
                           College.objects.create_college,
                           **data)
     
-class ProfessorCreationTests(TestCase):
-    fixtures = ['users.json', 'colleges.json', 'profs.json']
-    
-    def test_prof_valid_creation(self):
-        data = {'userprofile':UserProfile.objects.get(slug='nanda-kishore'),
-                'college':College.objects.get(slug='jntu-hyderabad')}
-        Professor.objects.create_professor(**data)
-        prof = Professor.objects.latest()
-        self.assertTrue(prof)
-        self.assertEquals(prof.userprofile, data['userprofile'])
-        self.assertEquals(prof.college, data['college'])
-    
-    def test_prof_duplicate_creation(self):
-        data = {'userprofile':UserProfile.objects.get(slug='somerandomuser'),
-                'college':College.objects.get(slug='jntu-hyderabad')}
-        from users.models import ProfessorAlreadyExistsException
-        self.assertRaises(ProfessorAlreadyExistsException,
-                          Professor.objects.create_professor,
-                          **data)
-        
 class CompanyCreationTests(TestCase):
     fixtures = ['companies.json']
     
@@ -110,28 +109,33 @@ class CompanyCreationTests(TestCase):
                           Company.objects.create_company,
                           **data)
 
-class IndustryGuyCreationTests(TestCase):
-    fixtures = ['industry_guys.json', 'users.json', 'companies.json']
+class WorkInfoCreationTests(TestCase):
+    fixtures = ['users.json', 'companies.json', 'colleges.json', 'workinfo.json']
     
-    def test_industry_guy_valid_creation(self):
-        data = {'userprofile': UserProfile.objects.get(user__email='somerandomuser@gmail.com'),
-                'company': Company.objects.latest(),
-                'designation': 'Software Developer',
-                'years_of_exp':2}
-        IndustryGuy.objects.create_industry_guy(**data)
-        industry_guy = IndustryGuy.objects.latest()
-        self.assertTrue(industry_guy)
-        self.assertEquals(industry_guy.userprofile, data['userprofile'])
-        self.assertEquals(industry_guy.company, data['company'])
-        self.assertEquals(industry_guy.designation, data['designation'])
-        self.assertEquals(industry_guy.years_of_exp, data['years_of_exp'])
+    def test_workinfo_valid_creation(self):
+        workplaces = [{'userprofile': UserProfile.objects.get(user__email='somerandomuser@gmail.com'),
+                       'workplace': Company.objects.latest(),
+                       'designation': 'Software Developer',
+                       'years_of_exp':2},
+                      {'userprofile': UserProfile.objects.get(user__email='pavani.sharma@gmail.com'),
+                       'workplace': College.objects.latest(),
+                       'designation': 'Computer Science Professor',
+                       'years_of_exp':4}]
+        for workplace_data in workplaces:
+            WorkInfo.objects.create_workinfo(**workplace_data)
+            workinfo = WorkInfo.objects.latest()
+            self.assertTrue(workinfo)
+            self.assertEquals(workinfo.userprofile, workplace_data['userprofile'])
+            self.assertEquals(workinfo.workplace, workplace_data['workplace'])
+            self.assertEquals(workinfo.designation, workplace_data['designation'])
+            self.assertEquals(workinfo.years_of_exp, workplace_data['years_of_exp'])
         
-    def test_duplicate_industry_valid_creation(self):
+    def test_duplicate_workinfo_creation(self):
         data = {'userprofile': UserProfile.objects.get(user__email='madhav.bnk@gmail.com'),
-                'company': Company.objects.latest(),
+                'workplace': Company.objects.latest(),
                 'designation': 'Software Developer',
                 'years_of_exp':2}
-        from users.models import IndustryGuyAlreadyExistsException
-        self.assertRaises(IndustryGuyAlreadyExistsException,
-                          IndustryGuy.objects.create_industry_guy,
+        from users.models import WorkInfoAlreadyExistsException
+        self.assertRaises(WorkInfoAlreadyExistsException,
+                          WorkInfo.objects.create_workinfo,
                           **data)

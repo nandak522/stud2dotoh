@@ -1,7 +1,7 @@
 [
     {
         "pk": 1, 
-        "model": "users.student", 
+        "model": "users.acadinfo", 
         "fields": {
             "start_year": 2006, 
             "end_year": 2010, 
