@@ -1,16 +1,9 @@
 {%extends 'singlepane_base.html'%}
-{% block title %}Create a Student Account{% endblock %}
+{% block title %}Registration{% endblock %}
 {%block content%}
-<div class='prepend-6'>
-    <form action="{%url register%}" method='POST'>{% csrf_token %}
-	<input type='hidden' name='next' value="{{next}}"/>
-	<table class='form-table'>
-	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Min of 6 characters. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
-	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
-	</table>
-	</form>
+<div style="text-align:center;min-height:200px;padding-top:4em;">
+<input class='big_button' type="button" value="Are you a Student ?" onClick="javascript:document.location.href='{%url student_register%}';">
+<input class='big_button' type="button" value="Are you a Professor ?" onClick="javascript:document.location.href='{%url professor_register%}';">
+<input class='big_button' type="button" value="Are you an Employee ?" onClick="javascript:document.location.href='{%url employee_register%}';">
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}

@@ -27,5 +27,5 @@ class YearField(models.IntegerField):
             raise exceptions.ValidationError, 'Year can\'t be less than 1910'
         present_year = datetime.today().year
         if value > present_year:
-            raise exceptions.ValidationError, 'Year can\'t be less than %s' % present_year
+            raise exceptions.ValidationError, 'Year can\'t be greater than %s' % present_year
         return

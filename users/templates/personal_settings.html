@@ -1,0 +1,16 @@
+{%autoescape off%}
+<ul class="messages" id="personal_settings_messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
+{% endfor %}
+</ul>
+<h3 class='droid leftalign'>Personal Settings</h3>
+<form name="personal_settings_form">{% csrf_token %}
+<table class='form-table'>
+    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{personal_form.name}}<br/>{{personal_form.name.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_slug">Web Resume :</label></td><td class='leftalign'>{%if userprofile.can_update_slug%}{{personal_form.slug}}.{{site.domain}}<span class='help_text'>(This will become your public resume page)</span><br/>{{personal_form.slug.errors}}{%else%}<a class='domain bold' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>{%endif%}</td></tr>
+    <tr><td class='rightalign'><label for="id_new_password">New Password :</label></td><td class='leftalign'>{{personal_form.new_password}}<span class='help_text'>(Leave this blank, if you dont wish to change the existing password)</span><br/>{{personal_form.new_password.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='button' name="save_personal_settings_button" id="personal_settings_button" value="Save my Personal Settings" onClick="javascript:save_personal_settings(this.form.getAttribute('name'));"/></td></tr>
+</table>
+</form>
+{%endautoescape%}
