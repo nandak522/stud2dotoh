@@ -14,15 +14,11 @@ function ajaxCall(url, params, callType){
             	}else{
             		successCallback(response);
             	}
-            	$('#ajax_status_header').text('Done');
-                $('#ajax_status_header').fadeOut(5000);
-            }else{
-                $('#ajax_status_header').text('Done');
-                $('#ajax_status_header').fadeOut(5000);
             }
+            $('#ajax_status_header').text('Done');
+            $('#ajax_status_header').fadeOut(5000);
         },
         beforeSend:function(){
-        	
         	if(callType === 'GET'){
         		$('#ajax_status_header').text('Retrieving...');	
         	}else{
