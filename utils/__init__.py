@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.test import TestCase
 from django.template.defaultfilters import slugify
+from django.contrib.sites.models import Site 
 import shutil
 import os
 from users.models import User, UserProfile
@@ -48,7 +49,11 @@ def get_user_directory_path(userprofile):
     #TODO:Raise a deprecation warning about the usage of this method. Use userprofile.user_directory_path
     return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(userprofile.id)])
 
-def set_userprofile_in_context(request):
+def useful_params_in_context(request):
+    params = {}
+    params['site'] = Site.objects.get(id=settings.SITE_ID)
     if request.user.is_authenticated():
-        return {'userprofile':request.user.get_profile()}
-    return {}
+        params['userprofile'] = request.user.get_profile()
+        params['userprofilegroup'] = request.user.get_profile().group_name
+    #TODO:the entire params dict needs to be cached
+    return params

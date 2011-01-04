@@ -104,5 +104,4 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.i18n",
                                "django.core.context_processors.media",
                                "django.contrib.messages.context_processors.messages",
-                               "utils.set_userprofile_in_context")
- 
+                               "utils.useful_params_in_context")
