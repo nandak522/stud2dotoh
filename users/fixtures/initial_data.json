@@ -22,5 +22,13 @@
             "name": "Employee", 
             "permissions": []
         }
+    },
+    {
+        "pk": 1, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "stud2dotoh.com", 
+            "name": "stud2dotoh.com"
+        }
     }
 ]
