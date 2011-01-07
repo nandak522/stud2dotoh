@@ -118,8 +118,13 @@ def view_logout(request, logout_template):
 def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
     public_uploaded_files = userprofile.public_uploaded_files
+    asked_questions = userprofile.asked_questions
+    answered_questions = userprofile.answered_questions
+    #TODO: All Comments given
     return response(request, userprofile_template, {'userprofile': userprofile,
-                                                    'public_uploaded_files': public_uploaded_files})
+                                                    'public_uploaded_files': public_uploaded_files,
+                                                    'asked_questions':asked_questions,
+                                                    'answered_questions':answered_questions})
 
 def view_homepage(request, homepage_template):
     #TODO:Homepage layout showing message, screenshots, latest updates across the system

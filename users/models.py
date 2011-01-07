@@ -40,6 +40,20 @@ class UserProfile(BaseModel):
     slug = models.SlugField(max_length=50, db_index=True, unique=True)#this will be used as his unique url identifier
     objects = UserProfileManager()
     
+    def __unicode__(self):
+        return self.name
+
+    @property
+    def asked_questions(self):
+        return self.question_set.values('title', 'id', 'slug')
+    
+    @property
+    def answered_questions(self):
+        from quest.models import Question
+        #FIXME:the above import globally is causing circular import error
+        answers_ids = tuple([question['question_id'] for question in self.answer_set.values('question_id')])
+        return Question.objects.filter(id__in=answers_ids).values('title', 'id', 'slug')
+    
     @property
     def group_name(self):
         return self.user.groups.all()[0].name
@@ -142,9 +156,6 @@ class UserProfile(BaseModel):
             return
         raise CantUpdateSlugAgainException
 
-    def __unicode__(self):
-        return self.name
-    
     def check_password(self, password):
         return self.user.check_password(password)
     

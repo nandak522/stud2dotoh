@@ -1,13 +1,12 @@
 from django.conf import settings
+from django.contrib.sites.models import Site 
 from django.core.urlresolvers import reverse as url_reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.test import TestCase
 from django.template.defaultfilters import slugify
-from django.contrib.sites.models import Site 
-import shutil
+from django.test import TestCase
 import os
-from users.models import User, UserProfile
+import shutil
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))

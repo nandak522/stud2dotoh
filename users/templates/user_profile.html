@@ -1,11 +1,23 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block content%}
-<h3 class='droid'>{{userprofile.name|title}}</h3>
+<h3 class='droid'>{{userprofile.name|title}}(member since {{userprofile.created_on|date:"dS M Y"}})</h3>
 <div id='personal_details'>
 <table>
 <tr><td class='column span-3'>Email:</td><td>{{userprofile.user.email|emailify}}</td></tr>
-<tr><td class='column span-3'>Member since:</td><td>{{userprofile.created_on|date:"dS M Y"}}</td></tr>
+<tr><td class='column span-3'>Web Resume:</td><td><a class='domain bold' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a></td></tr>
+{%ifequal userprofilegroup 'Student'%}
+{%with userprofile.acad_details as acad_details%}
+<tr><td class='column span-3'>Studies at:</td><td>{{acad_details.1}}</td></tr>
+<tr><td class='column span-3'>Specialization:</td><td>{{acad_details.0}}</td></tr>
+{%endwith%}
+{%else%}
+{%with userprofile.work_details as work_details%}
+<tr><td class='column span-3'>Works at:</td><td>{{work_details.0.name}}</td></tr>
+<tr><td class='column span-3'>as:</td><td>{{work_details.1}}</td></tr>
+<tr><td class='column span-3'>Has:</td><td>{{work_details.2}} Years of Experience</td></tr>
+{%endwith%}
+{%endifequal%}
 </table>
 </div><!-- end of personal_details -->
 <div id='uploaded_files' class='widget'>
@@ -20,15 +32,22 @@
 </div><!-- end of uploaded_files -->
 <div id='asked_questions' class='widget'>
 <h4 class='droid widget_header leftalign'>Asked Questions</h4>
-<ul><li>{{userprofile.name|title}} has not asked any questions yet!</li></ul>
+<ul>
+{%for question in asked_questions%}
+<li><h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h3></li>
+{%endfor%}
+</ul>
 </div><!-- end of asked_questions -->
-<div id='answers_given' class='widget'>
-<h4 class='droid widget_header leftalign'>Answers Given</h4>
-<ul><li>{{userprofile.name|title}} has not given any answers to any of the questions yet!</li></ul>
-</div><!-- end of answers_given -->
+<div id='answered_questions' class='widget'>
+<h4 class='droid widget_header leftalign'>Answers Given For</h4>
+<ul>
+{%for question in answered_questions%}
+<li><h4><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h4></li>
+{%endfor%}
+</ul>
+</div><!-- end of answered_questions -->
 <div id='comments_given' class='widget'>
 <h4 class='droid widget_header leftalign'>Comments Given</h4>
 <ul><li>{{userprofile.name|title}} didn't comment on anything yet!</li></ul>
 </div><!-- end of comments_given -->
-
 {%endblock%}
