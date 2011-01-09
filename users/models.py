@@ -129,7 +129,7 @@ class UserProfile(BaseModel):
         if work_details.count():
             work_details = work_details.values('content_type', 'object_id', 'designation', 'years_of_exp')[0]
             content_type = ContentType.objects.get(id=work_details['content_type'])
-            return (content_type.get_object_for_this_type(id=work_details['object_id']), work_details['designation'], work_details['years_of_exp'])
+            return (content_type.get_object_for_this_type(id=work_details['object_id']), work_details['designation'], work_details['years_of_exp'] if work_details['years_of_exp'] else '')
         return (None,'', '')
         
     def update(self, **kwargs):
