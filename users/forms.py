@@ -45,7 +45,7 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput())
     next_url = forms.CharField(max_length=128, required=False, widget=forms.HiddenInput())
     
-class SaveFileForm(forms.Form):
+class SaveNoteForm(forms.Form):
     name = forms.CharField(max_length=30, required=True)
     short_description = forms.CharField(max_length=50, required=False)
     content = forms.CharField(max_length=7000, required=True,widget=forms.Textarea())

@@ -1,6 +1,6 @@
 from utils import TestCase
 from users.forms import StudentSignupForm, ProfessorSignupForm, EmployeeSignupForm
-from users.forms import UserLoginForm, SaveFileForm
+from users.forms import UserLoginForm, SaveNoteForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from django.conf import settings
 
@@ -138,7 +138,7 @@ class UserLoginFormTests(TestCase):
 class SaveNotepadFormTests(TestCase):
     def test_empty_form_submission(self):
         data = {'name':'','short_description':'','content':'', 'public':''}
-        form = SaveFileForm(data)
+        form = SaveNoteForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.has_key('name'))
@@ -148,7 +148,7 @@ class SaveNotepadFormTests(TestCase):
         
     def test_empty_content_submission(self):
         data = {'name':'My C Assignment','short_description':'','content':'', 'public':True}
-        form = SaveFileForm(data)
+        form = SaveNoteForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertFalse(form.errors.has_key('name'))
@@ -161,7 +161,7 @@ class SaveNotepadFormTests(TestCase):
                 'short_description':'',
                 'content':open("/".join([settings.ROOT_PATH, 'users', 'fixtures', 'assignment.py'])).read(),
                 'public':True}
-        form = SaveFileForm(data)
+        form = SaveNoteForm(data)
         self.assertTrue(form.is_valid())
         self.assertFalse(form.errors)
         self.assertEquals(data['content'].strip(), form.cleaned_data.get('content'))

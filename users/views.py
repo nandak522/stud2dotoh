@@ -163,15 +163,16 @@ def _fetch_content_from_user_uploaded_file(userprofile, filename):
 
 @login_required
 def view_notepad(request, notepad_template):
-    from users.forms import SaveFileForm
+    from users.forms import SaveNoteForm
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':
         public_uploaded_files = userprofile.public_uploaded_files
-        return response(request, notepad_template, {'form':SaveFileForm(),
+        return response(request, notepad_template, {'form':SaveNoteForm(),
                                                     'public_uploaded_files':public_uploaded_files})
-    form = SaveFileForm(post_data(request))
+    form = SaveNoteForm(post_data(request))
     userprofile = loggedin_userprofile(request)
     if form.is_valid():
+        #TODO:If the notepad is made hidden, its not handled now
         user_directory_path = _create_directory_for_user(userprofile)
         filename = _convert_notes_to_file(content=form.cleaned_data.get('content'),
                                           filename=form.cleaned_data.get('name'),
@@ -180,7 +181,7 @@ def view_notepad(request, notepad_template):
         messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % filename)
         public_uploaded_files = userprofile.public_uploaded_files
         return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
-                                                    'form':SaveFileForm()})
+                                                    'form':SaveNoteForm()})
     public_uploaded_files = userprofile.public_uploaded_files
     return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
                                                 'form':form})
