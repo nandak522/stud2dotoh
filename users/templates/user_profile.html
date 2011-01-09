@@ -13,7 +13,6 @@
 {%endwith%}
 {%else%}
 {%with userprofile.work_details as work_details%}
-{{work_details}}
 <tr><td class='column span-3'>Works at:</td><td>{{work_details.0.name}}</td></tr>
 <tr><td class='column span-3'>as:</td><td>{%if work_details.1%}{{work_details.1}}{%endif%}</td></tr>
 <tr><td class='column span-3'>Has:</td><td>{%if work_details.2%}{{work_details.2}} Years of Experience{%endif%}</td></tr>
