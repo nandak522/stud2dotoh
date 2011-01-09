@@ -10,7 +10,9 @@
             "is_superuser": false, 
             "is_staff": false, 
             "last_login": "2010-12-06 07:04:30", 
-            "groups": [], 
+            "groups": [
+                1
+            ],
             "user_permissions": [], 
             "password": "sha1$38272$718d78b163c28d6f2dd7fa96a0b3f1676c3a7943", 
             "email": "madhav.bnk@gmail.com", 
@@ -46,11 +48,75 @@
             "is_superuser": false, 
             "is_staff": false, 
             "last_login": "2010-12-06 07:05:07", 
-            "groups": [], 
+            "groups": [
+                1
+            ], 
             "user_permissions": [], 
             "password": "sha1$051e8$e735483758a8ea91be6097309da733f81de28713", 
             "email": "somerandomuser@gmail.com", 
             "date_joined": "2010-12-06 07:05:07"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "7dcae4712e8cac29e97780367825b3", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": false, 
+            "is_staff": false, 
+            "last_login": "2010-12-06 07:05:07", 
+            "groups": [
+                2
+            ], 
+            "user_permissions": [], 
+            "password": "sha1$051e8$e735483758a8ea91be6097309da733f81de28713", 
+            "email": "someprof@gmail.com", 
+            "date_joined": "2010-12-06 07:05:07"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "7dcae4712e8cac29e97780367825b2", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": false, 
+            "is_staff": false, 
+            "last_login": "2010-12-06 07:05:07", 
+            "groups": [
+                3
+            ], 
+            "user_permissions": [], 
+            "password": "sha1$051e8$e735483758a8ea91be6097309da733f81de28713", 
+            "email": "someemployee@gmail.com", 
+            "date_joined": "2010-12-06 07:05:07"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "users.userprofile", 
+        "fields": {
+            "modified_on": "2010-12-06 07:05:07", 
+            "created_on": "2010-12-06 07:05:07", 
+            "user": 5, 
+            "slug": "someemployee", 
+            "name": "Some Employee"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "users.userprofile", 
+        "fields": {
+            "modified_on": "2010-12-06 07:05:07", 
+            "created_on": "2010-12-06 07:05:07", 
+            "user": 4, 
+            "slug": "some-prof", 
+            "name": "Some Professor"
         }
     },
     {

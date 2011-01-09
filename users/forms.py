@@ -84,7 +84,7 @@ class PersonalSettingsForm(forms.Form):
 class AcadSettingsForm(forms.Form):
     branch = forms.ChoiceField(required=True, choices=branches)
     college = forms.CharField(required=True, max_length=100)
-    start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE, initial='2007')
+    start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE, initial=(2007, 2007))
     end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE, initial='2011')
     
     def clean_college(self):

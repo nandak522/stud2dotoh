@@ -1,4 +1,3 @@
-{%autoescape off%}
 <ul class="messages" id="workinfo_settings_messages">
 {% for message in messages %}
 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
@@ -13,4 +12,3 @@
     <tr><td>&nbsp;</td><td><input type='button' id="save_workinfo_settings_button" name='save_workinfo_settings_button' value="Save my WorkPlace Settings" onClick="javascript:save_workinfo_settings(this.form.name);"/></td></tr>
 </table>
 </form>
-{%endautoescape%}

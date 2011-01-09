@@ -204,13 +204,18 @@ def view_account_settings(request, settings_template):
         (branch, college, start_year, end_year) = userprofile.acad_details
         acad_form = AcadSettingsForm({'branch':branch,
                                       'college':college.name if college else '',
-                                      'start_year':start_year,
-                                      'end_year':end_year})
-        (workplace, designation, years_of_exp) = userprofile.work_details
-        workinfo_form = WorkInfoSettingsForm({'workplace':workplace.name if workplace else '', 'designation':designation, 'years_of_exp':years_of_exp})
-        return response(request, settings_template, {'personal_form':personal_form,
-                                                     'acad_form':acad_form,
-                                                     'workinfo_form':workinfo_form})
+                                      'start_year':start_year if start_year else 2007,#TODO:hardcoding year is not good
+                                      'end_year':end_year if end_year else 2011})#TODO:hardcoding year is not good
+        if userprofile.is_student:
+            return response(request, settings_template, {'personal_form':personal_form,
+                                                         'acad_form':acad_form})
+        else:
+            (workplace, designation, years_of_exp) = userprofile.work_details
+            workinfo_form = WorkInfoSettingsForm({'workplace':workplace.name if workplace else '', 'designation':designation, 'years_of_exp':years_of_exp})
+            return response(request, settings_template, {'personal_form':personal_form,
+                                                         'acad_form':acad_form,
+                                                         'workinfo_form':workinfo_form})
+        
     form = PersonalSettingsForm(post_data(request))
     if form.is_valid():
         name = form.cleaned_data.get('name')
@@ -223,7 +228,7 @@ def view_account_settings(request, settings_template):
 
 @login_required
 def view_save_personal_settings(request, personal_settings_template):
-    if not request.is_ajax():
+    if not request.is_ajax():#TODO:This has to go in a decorator
         return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':
@@ -252,7 +257,7 @@ def view_save_personal_settings(request, personal_settings_template):
 
 @login_required
 def view_save_acad_settings(request, acad_settings_template):
-    if not request.is_ajax():
+    if not request.is_ajax():#TODO:This has to go in a decorator
         return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':
@@ -275,7 +280,7 @@ def view_save_acad_settings(request, acad_settings_template):
 
 @login_required
 def view_save_workinfo_settings(request, workinfo_settings_template):
-    if not request.is_ajax():
+    if not request.is_ajax():#TODO:This has to go in a decorator
         return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':

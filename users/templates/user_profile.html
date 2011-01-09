@@ -1,7 +1,7 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block content%}
-<h3 class='droid'>{{userprofile.name|title}}(member since {{userprofile.created_on|date:"dS M Y"}})</h3>
+<h3 class='droid'>{{userprofile.name|title}} ( member since {{userprofile.created_on|date:"dS M Y"}} )</h3>
 <div id='personal_details'>
 <table>
 <tr><td class='column span-3'>Email:</td><td>{{userprofile.user.email|emailify}}</td></tr>
@@ -32,19 +32,27 @@
 </div><!-- end of uploaded_files -->
 <div id='asked_questions' class='widget'>
 <h4 class='droid widget_header leftalign'>Asked Questions</h4>
-<ul>
-{%for question in asked_questions%}
-<li><h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h3></li>
-{%endfor%}
-</ul>
+{%if asked_questions%}
+	<ul>
+	{%for question in asked_questions%}
+	<li><h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h3></li>
+	{%endfor%}
+	</ul>
+{%else%}
+	<ul><li>{{userprofile.name|title}} didn't ask any questions yet!</li></ul>
+{%endif%}
 </div><!-- end of asked_questions -->
 <div id='answered_questions' class='widget'>
 <h4 class='droid widget_header leftalign'>Answers Given For</h4>
-<ul>
-{%for question in answered_questions%}
-<li><h4><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h4></li>
-{%endfor%}
-</ul>
+{%if answered_questions%}
+	<ul>
+	{%for question in answered_questions%}
+	<li><h4><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h4></li>
+	{%endfor%}
+	</ul>
+{%else%}
+	<ul><li>{{userprofile.name|title}} didn't answer for any questions yet!</li></ul>
+{%endif%}
 </div><!-- end of answered_questions -->
 <div id='comments_given' class='widget'>
 <h4 class='droid widget_header leftalign'>Comments Given</h4>

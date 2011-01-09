@@ -8,7 +8,7 @@
 		{%include 'acad_settings.html'%}				
 	</div><!-- end of acad_settings -->
 	<div id="workinfo_settings">
-		{%if userprofilegroup != 'Student'%}
+		{%if workinfo_form%}
 			{%include 'workinfo_settings.html'%}
 		{%else%}
 			<input type='button' value="Did you get a job recently ? Please update your Work Place details!" onClick="javascript:return get_workinfo_settings();"/>

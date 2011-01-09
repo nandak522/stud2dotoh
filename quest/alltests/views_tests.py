@@ -62,7 +62,7 @@ class QuestionPageTests(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'give_answer.html')
         self.assertFalse(Question.objects.get(id=question.id).is_accepting_answers())
-        context = response.context
+        context = response.context[0]
         give_answer_form = context.get('give_answer_form')
         self.assertFalse(give_answer_form)
 
