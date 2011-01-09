@@ -1,0 +1,17 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}Create a Employee Account{% endblock %}
+{%block content%}
+<div class='prepend-6'>
+    <form action="{%url employee_register%}" method='POST'>{% csrf_token %}
+	<input type='hidden' name='next' value="{{next}}"/>
+	<table class='form-table'>
+	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Min of 6 characters. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_name">Company :</label></td><td class='leftalign'>{{form.company}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.company.errors}}</td></tr>
+	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
+	</table>
+	</form>
+</div>
+{%endblock%}
+{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}

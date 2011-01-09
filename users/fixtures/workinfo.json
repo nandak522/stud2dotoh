@@ -1,0 +1,37 @@
+[
+    {
+        "pk": 1, 
+        "model": "users.workinfo", 
+        "fields": {
+            "designation": "Software Developer", 
+            "years_of_exp": "2", 
+            "created_on": "2010-12-21 08:04:33", 
+            "modified_on": "2010-12-21 08:04:33",
+            "content_type": 14,
+            "object_id": 1, 
+            "userprofile": 1
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "users.workinfo", 
+        "fields": {
+            "designation": "Architect", 
+            "years_of_exp": "2", 
+            "created_on": "2010-12-21 08:04:33", 
+            "modified_on": "2010-12-21 08:04:33",
+            "content_type": 14,
+            "object_id": 2, 
+            "userprofile": 4
+        }
+    },
+    {
+        "pk": 14, 
+        "model": "contenttypes.contenttype", 
+        "fields": {
+            "model": "workinfo", 
+            "name": "work info", 
+            "app_label": "users"
+        }
+    }
+]

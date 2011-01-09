@@ -3,58 +3,153 @@
         "pk": 1, 
         "model": "auth.user", 
         "fields": {
-            "username": "madhavbnk", 
+            "username": "e327ed53d5347305546e0b367a5ea4", 
             "first_name": "", 
             "last_name": "", 
             "is_active": true, 
             "is_superuser": false, 
             "is_staff": false, 
-            "last_login": "2010-10-23 18:38:58", 
-            "groups": [], 
+            "last_login": "2010-12-06 07:04:30", 
+            "groups": [
+                1
+            ],
             "user_permissions": [], 
-            "password": "sha1$0cb48$a4ab9243f7c2ef0e331b62bf79e487e70a677c88", 
+            "password": "sha1$38272$718d78b163c28d6f2dd7fa96a0b3f1676c3a7943", 
             "email": "madhav.bnk@gmail.com", 
-            "date_joined": "2010-10-23 18:38:58"
+            "date_joined": "2010-12-06 07:04:30"
         }
-    },
-    {
-        "pk": 1, 
-        "model": "users.userprofile", 
-        "fields": {
-            "modified_on": "2010-10-23 18:38:58", 
-            "created_on": "2010-10-23 18:38:58", 
-            "user": 1, 
-            "slug": "nanda-kishore", 
-            "name": "Nanda Kishore"
-        }
-    },
+    }, 
     {
         "pk": 2, 
         "model": "auth.user", 
         "fields": {
-            "username": "somerandomuser", 
+            "username": "c684ee2a66ec2bdb81875700f947e3", 
             "first_name": "", 
             "last_name": "", 
             "is_active": true, 
             "is_superuser": false, 
             "is_staff": false, 
-            "last_login": "2010-10-23 18:38:58", 
+            "last_login": "2010-12-06 07:04:49", 
             "groups": [], 
             "user_permissions": [], 
-            "password": "sha1$0cb48$a4ab9243f7c2ef0e331b62bf79e487e70a677c88", 
+            "password": "sha1$5d88a$547dc3f9b1738ed781534fa5a1fa7039481afda3", 
+            "email": "pavani.sharma@gmail.com", 
+            "date_joined": "2010-12-06 07:04:49"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "7dcae4712e8cac29e97780367825b8", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": false, 
+            "is_staff": false, 
+            "last_login": "2010-12-06 07:05:07", 
+            "groups": [
+                1
+            ], 
+            "user_permissions": [], 
+            "password": "sha1$051e8$e735483758a8ea91be6097309da733f81de28713", 
             "email": "somerandomuser@gmail.com", 
-            "date_joined": "2010-10-23 18:38:58"
+            "date_joined": "2010-12-06 07:05:07"
         }
     },
+    {
+        "pk": 4, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "7dcae4712e8cac29e97780367825b3", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": false, 
+            "is_staff": false, 
+            "last_login": "2010-12-06 07:05:07", 
+            "groups": [
+                2
+            ], 
+            "user_permissions": [], 
+            "password": "sha1$051e8$e735483758a8ea91be6097309da733f81de28713", 
+            "email": "someprof@gmail.com", 
+            "date_joined": "2010-12-06 07:05:07"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "7dcae4712e8cac29e97780367825b2", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": false, 
+            "is_staff": false, 
+            "last_login": "2010-12-06 07:05:07", 
+            "groups": [
+                3
+            ], 
+            "user_permissions": [], 
+            "password": "sha1$051e8$e735483758a8ea91be6097309da733f81de28713", 
+            "email": "someemployee@gmail.com", 
+            "date_joined": "2010-12-06 07:05:07"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "users.userprofile", 
+        "fields": {
+            "modified_on": "2010-12-06 07:05:07", 
+            "created_on": "2010-12-06 07:05:07", 
+            "user": 5, 
+            "slug": "someemployee", 
+            "name": "Some Employee"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "users.userprofile", 
+        "fields": {
+            "modified_on": "2010-12-06 07:05:07", 
+            "created_on": "2010-12-06 07:05:07", 
+            "user": 4, 
+            "slug": "some-prof", 
+            "name": "Some Professor"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "users.userprofile", 
+        "fields": {
+            "modified_on": "2010-12-06 07:05:07", 
+            "created_on": "2010-12-06 07:05:07", 
+            "user": 3, 
+            "slug": "somerandomuser", 
+            "name": "SomeRandomUser"
+        }
+    }, 
     {
         "pk": 2, 
         "model": "users.userprofile", 
         "fields": {
-            "modified_on": "2010-10-23 18:38:58", 
-            "created_on": "2010-10-23 18:38:58", 
+            "modified_on": "2010-12-06 07:04:49", 
+            "created_on": "2010-12-06 07:04:49", 
             "user": 2, 
-            "slug": "some-random-user", 
-            "name": "Some Random User"
+            "slug": "pavani", 
+            "name": "Pavani"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "users.userprofile", 
+        "fields": {
+            "modified_on": "2010-12-06 07:04:30", 
+            "created_on": "2010-12-06 07:04:30", 
+            "user": 1, 
+            "slug": "nanda-kishore", 
+            "name": "Nanda Kishore"
         }
     }
 ]

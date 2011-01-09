@@ -1,0 +1,14 @@
+<ul class="messages" id="workinfo_settings_messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
+{% endfor %}
+</ul>
+<h3 class='droid leftalign'>Work Place Settings</h3>
+<form name="workplace_settings_form">{% csrf_token %}
+<table class='form-table'>
+    <tr><td class='rightalign'><label for="id_workplace">WorkPlace :</label></td><td class='leftalign'>{{workinfo_form.workplace}}<br/>{{workinfo_form.workplace.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_designation">Designation :</label></td><td class='leftalign'>{{workinfo_form.designation}}<br/>{{workinfo_form.designation.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_years_of_exp">Total Years of Experience :</label></td><td class='leftalign'>{{workinfo_form.years_of_exp}}<br/>{{workinfo_form.years_of_exp.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='button' id="save_workinfo_settings_button" name='save_workinfo_settings_button' value="Save my WorkPlace Settings" onClick="javascript:save_workinfo_settings(this.form.name);"/></td></tr>
+</table>
+</form>

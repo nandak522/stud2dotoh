@@ -58,7 +58,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 ROOT_URLCONF = '%s.urls' % PROJECT_FOLDER_NAME
@@ -88,10 +89,20 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 DOCSTORE_CONFIG = {'local':True}
 
 if DOCSTORE_CONFIG['local']:
-    DOCSTORE_CONFIG['files_storage_path'] = '/home/nanda/workspace2/stud2dotoh_uploaded_files'
+    DOCSTORE_CONFIG['files_storage_path'] = "/".join([os.path.dirname(ROOT_PATH), 'stud2dotoh_uploaded_files'])
 else:
     DOCSTORE_CONFIG['files_storage_path'] = 's3.amazonaws.com'
+    raise NotImplementedError
     
 INTERNAL_IPS = ('127.0.0.1',)
 
 FILTER_HTML_TAGS = "script button input marquee style"
+
+AUTHENTICATION_BACKENDS = ('utils.backends.EmailAuthBackend',)
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+                               "django.core.context_processors.debug",
+                               "django.core.context_processors.i18n",
+                               "django.core.context_processors.media",
+                               "django.contrib.messages.context_processors.messages",
+                               "utils.useful_params_in_context")
