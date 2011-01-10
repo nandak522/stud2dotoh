@@ -39,7 +39,7 @@ def view_accept_answer(request, question_id, answers_template):
             answer_id = post_data(request).get('answer_id')
             answer = get_object_or_404(Answer, id=int(answer_id))
             answer.accept(userprofile)
-            return response(request, answers_template, {'question':question, 'all_answers':question.answers, 'loggedinuserprofile':userprofile})
+            return response(request, answers_template, {'question':question, 'all_answers':question.answers})
     raise Http404
 
 @login_required

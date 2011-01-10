@@ -9,7 +9,7 @@
             {%autoescape off%}
 	            {{answer.description|removetags:"script button input marquee"}}<br/>
 	        {%endautoescape%}
-            {%ifequal question.raised_by.id loggedinuserprofile.id%}
+            {%ifequal question.raised_by.id userprofile.id%}
                 <input type="button" value="Make this as final answer" name="accept_answer" onClick="javascript:accept_answer('{{question.id}}','{{answer.id}}');"/><br/>
             {%endifequal%}
         {%endif%}
