@@ -50,6 +50,9 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #CCCCCC;background:#105FB6;color:#FFF;border:0;cursor:pointer;padding:2px;}
 .roundcorner{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #092244;}
 .big_button{padding:10px;font-size:1.5em;-moz-border-radius:6px 6px 6px 6px;margin-right:1em;}
+.leftfloat{float:left;}
+.rightfloat{float:right;}
+.clearfloat{clear:both;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#092244;height:200px;padding-top:3em;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}
@@ -64,3 +67,8 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 /*Question Page Styles*/
 .answer_block{margin-bottom:1em;padding:3px;border-bottom:1px solid #EEE;font:normal 1.2em Monopsace,Arial,sans-serif;}
 #accepted_answer{background:#EEE;padding:4px;}
+
+/*Dashboard Page Styles*/
+.dashboard_widget_header{background:#105FB6;margin:0;padding:4px 6px;color:#FFF;text-align:center;}
+.dashboard_widget_content{border:1px solid #105FB6;text-align:center;min-height:40px;padding-top:2em;}
+#notepad_widget,#public_profile_widget,#ask_question_widget,#answer_question_widget,#account_settings_widget{width:170px;}
