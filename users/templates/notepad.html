@@ -5,7 +5,7 @@
 <h3 class='droid'>Want to save something quickly ?</h3>
 <form action='{%url notepad%}' method="POST">{% csrf_token %}
     <table>
-        <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(Max of <span class='black_stress'>30</span> characters)</span><br/>{{form.name.errors}}</td></tr>
+        <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of <span class='black_stress'>30</span> characters)</span><br/>{{form.name.errors}}</td></tr>
         <tr><td><label for="id_name">Short Description:</label></td><td>{{form.short_description}}<span class='help_text'>(Max of <span class='black_stress'>50</span> characters)</span><br/>{{form.short_description.errors}}</td></tr>
         <tr><td><label for="id_name">Content:</label></td><td>{{form.content}}<span class='help_text'>(Max of <span class='black_stress'>7000</span> characters)</span><br/>{{form.content.errors}}</td></tr>
         <tr><td><label for="id_public">&nbsp;</label></td><td>{{form.public}}Make the Note Public? (Everyone can see this)</td></tr>
@@ -19,7 +19,7 @@
 {%for filename in public_uploaded_files%}
 <li><a class='file_link' target='_blank' href="{%url file_content_view_link filename=filename%}">{{filename}}</a></li>
 {%empty%}
-<li>You have not uploaded any files yet!</li>
+<li>You havenot saved any notes yet!</li>
 {%endfor%}
 </ul>
 </div>

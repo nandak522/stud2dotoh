@@ -5,7 +5,7 @@ from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
-from users.models import UserProfile
+from users.models import UserProfile, College, Company
 from utils import response, post_data, loggedin_userprofile, slugify
 from users.decorators import anonymoususer
 from django.shortcuts import get_object_or_404
@@ -308,3 +308,17 @@ def view_save_workinfo_settings(request, workinfo_settings_template):
         from users.messages import ACCOUNT_SETTINGS_SAVED
         messages.success(request, ACCOUNT_SETTINGS_SAVED)
     return response(request, workinfo_settings_template, {'workinfo_form':form})
+
+def view_colleges(request, colleges_template):
+    return response(request, colleges_template, {'colleges':College.objects.values('id', 'name', 'slug')})
+
+def view_college(request, college_id, college_slug, college_template):
+    college = get_object_or_404(College, id=int(college_id), slug=college_slug)
+    return response(request, college_template, {'college':college, 'students':college.students})
+
+def view_companies(request, companies_template):
+    return response(request, companies_template, {'companies':Company.objects.values('id', 'name', 'slug')})
+
+def view_company(request, company_id, company_slug, company_template):
+    company = get_object_or_404(Company, id=int(company_id), slug=company_slug)
+    return response(request, company_template, {'company':company, 'employees':company.employees})

@@ -28,10 +28,23 @@ urlpatterns += patterns('users.views',
     (r'^accounts/professorregister/$', 'view_register', {'registration_template': 'professor_register.html', 'user_type':'P'}, 'professor_register'),
     (r'^accounts/login/$', 'view_login', {'login_template': 'login.html'}, 'login'),
     (r'^accounts/logout/$', 'view_logout', {'logout_template': 'logout.html'}, 'logout'),
+)
+
+urlpatterns += patterns('users.views',
     (r'^settings/$', 'view_account_settings', {'settings_template':'settings.html'}, 'settings'),
     (r'^settings/personal/$', 'view_save_personal_settings', {'personal_settings_template':'personal_settings.html'}, 'personal_settings'),
     (r'^settings/acad/$', 'view_save_acad_settings', {'acad_settings_template':'acad_settings.html'}, 'acad_settings'),
-    (r'^settings/workinfo/$', 'view_save_workinfo_settings', {'workinfo_settings_template':'workinfo_settings.html'}, 'workinfo_settings'),
+    (r'^settings/workinfo/$', 'view_save_workinfo_settings', {'workinfo_settings_template':'workinfo_settings.html'}, 'workinfo_settings'),                    
+)
+
+urlpatterns += patterns('users.views',
+    (r'^colleges/$', 'view_colleges', {'colleges_template':'colleges.html'}, 'colleges'),
+    (r'^colleges/(?P<college_id>\d+)/(?P<college_slug>[\w\s-]+)/$', 'view_college', {'college_template':'college.html'}, 'college_profile'),                    
+)
+
+urlpatterns += patterns('users.views',
+    (r'^companies/$', 'view_companies', {'companies_template':'companies.html'}, 'companies'),
+    (r'^companies/(?P<company_id>\d+)/(?P<company_slug>[\w\s-]+)/$', 'view_company', {'company_template':'company.html'}, 'company_profile'),                    
 )
 
 add_to_builtins('utils.templateutils')

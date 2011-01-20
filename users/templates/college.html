@@ -1,0 +1,12 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}{{college.name|title}}{% endblock %}
+{%block content%}
+<h3>{{college.name|title}}'s Students</h3>
+<ul>
+{%for student in students%}
+<a href="{%url user_profile student.id student.slug%}">{{student.name}}</a>
+{%empty%}
+No Students Yet!
+{%endfor%}
+</ul>
+{%endblock%}

@@ -6,7 +6,7 @@
 <h3 class='droid leftalign'>Academic Settings</h3>
 <form name="acad_settings_form">{% csrf_token %}
 <table class='form-table'>
-	<tr><td class='rightalign'><label for="id_college">College :</label></td><td class='leftalign'>{{acad_form.college}}<br/>{{acad_form.college.errors}}</td></tr>
+	<tr><td class='rightalign'><label for="id_college">College :</label></td><td class='leftalign'>{{acad_form.college}}&nbsp;(<span class='required'>Required</span>. Max of <span class='black_stress'>100</span> characters)</span><br/>{{acad_form.college.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_branch">Branch :</label></td><td class='leftalign'>{{acad_form.branch}}<br/>{{acad_form.branch.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_start_year">Start Year :</label></td><td class='leftalign'>{{acad_form.start_year}}<br/>{{acad_form.start_year.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_end_year">End Year :</label></td><td class='leftalign'>{{acad_form.end_year}}<br/>{{acad_form.end_year.errors}}</td></tr>

@@ -121,7 +121,7 @@ class UserProfile(BaseModel):
         if acad_details.count():
             acad_details = acad_details.values('branch', 'college', 'start_year', 'end_year')[0]
             return (acad_details['branch'], College.objects.get(id=acad_details['college']), acad_details['start_year'], acad_details['end_year'])
-        return ('', '', '', '')
+        return ('', None, '', '')
         
     @property
     def work_details(self):
@@ -210,6 +210,11 @@ class College(BaseModel):
     def __unicode__(self):
         return self.name
     
+    @property
+    def students(self):
+        userprofiles_ids = self.acadinfo_set.values('userprofile')
+        return UserProfile.objects.filter(id__in=[id['userprofile'] for id in userprofiles_ids]).values('id', 'slug', 'name')
+    
 class CompanyAlreadyExistsException(Exception):
     pass
 
@@ -229,6 +234,12 @@ class Company(BaseModel):
     
     def __unicode__(self):
         return self.name
+    
+    @property
+    def employees(self):
+        content_type = ContentType.objects.get(name='company')
+        userprofiles_ids = WorkInfo.objects.filter(content_type=content_type,object_id=self.id).values('userprofile')
+        return UserProfile.objects.filter(id__in=[id['userprofile'] for id in userprofiles_ids]).values('id', 'slug', 'name')
     
 class WorkInfoAlreadyExistsException(Exception):
     pass

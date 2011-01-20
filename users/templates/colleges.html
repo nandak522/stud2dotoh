@@ -1,0 +1,11 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}All Colleges{% endblock %}
+{%block content%}
+<ul>
+{%for college in colleges%}
+<li><a href="{%url college college.id college.slug%}">{{college.name}}</a></li>
+{%empty%}
+No Colleges Yet!
+{%endfor%}
+</ul>
+{%endblock%}
