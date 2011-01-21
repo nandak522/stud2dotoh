@@ -116,5 +116,5 @@ def view_tagged_questions(request, tag_name, tagged_questions_template):
         questions = paginator.page(page)
     except (EmptyPage, InvalidPage):
         questions = paginator.page(paginator.num_pages)
-    return response(request, tagged_questions_template, {'questions': questions,
+    return response(request, tagged_questions_template, {'questions': questions.object_list,
                                                         'tag': tag})
