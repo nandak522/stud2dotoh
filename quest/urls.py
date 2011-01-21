@@ -9,4 +9,5 @@ urlpatterns = patterns('quest.views',
     (r'^(?P<question_id>\d+)/(?P<question_slug>[\w\s-]+)/edit/$', 'view_edit_question', {'edit_question_template':'ask_or_edit_question.html'}, 'edit_question'),
     (r'^(?P<question_id>\d+)/(?P<question_slug>[\w\s-]+)/email/$', 'view_email_question', {'email_question_template':'email_question.html'}, 'email_question'),
     (r'^ask/$', 'view_ask_question', {'ask_question_template':'ask_or_edit_question.html'}, 'ask_question'),
+    (r'^(?P<tag_name>[\w-]+)/$', 'view_tagged_questions', {'tagged_questions_template':'all_questions.html'}, 'tagged_questions'),
 )

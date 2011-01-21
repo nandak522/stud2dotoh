@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from quest.models import Question, Answer
 from quest.forms import AskQuestionForm, GiveAnswerForm
+from taggit.models import Tag, TaggedItem
+from django.core.paginator import Paginator
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')
@@ -52,7 +54,8 @@ def view_ask_question(request, ask_question_template):
         userprofile = loggedin_userprofile(request)
         question = Question.objects.create_question(title=form.cleaned_data.get('title'),
                                                     description=form.cleaned_data.get('description'),
-                                                    userprofile=userprofile)
+                                                    userprofile=userprofile,
+                                                    tags=form.cleaned_data.get('tags'))
         from quest.messages import QUESTION_POSTING_SUCCESSFUL
         messages.success(request, QUESTION_POSTING_SUCCESSFUL)
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
@@ -77,7 +80,8 @@ def view_edit_question(request, question_id, question_slug, edit_question_templa
     if form.is_valid():
         Question.objects.update_question(question,
                                          title=form.cleaned_data.get('title'),
-                                         description=form.cleaned_data.get('description'))
+                                         description=form.cleaned_data.get('description'),
+                                         tags=form.cleaned_data.get('tags'))
         from quest.messages import QUESTION_UPDATED_SUCCESSFULLY
         messages.success(request, QUESTION_UPDATED_SUCCESSFULLY)
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
@@ -99,3 +103,18 @@ def view_give_answer(request, question_id, give_answer_template, question_templa
             return response(request, question_template, {'question':question, 'give_answer_form':give_answer_form})
         return response(request, question_template, {'question':question, 'give_answer_form':form})
     return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
+
+def view_tagged_questions(request, tag_name, tagged_questions_template):
+    tag = get_object_or_404(Tag, name=tag_name)
+    questions = Question.objects.filter(tags__name__in=[tag_name])
+    paginator = Paginator(questions, 1)
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        page = 1
+    try:
+        questions = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        questions = paginator.page(paginator.num_pages)
+    return response(request, tagged_questions_template, {'questions': questions,
+                                                        'tag': tag})
