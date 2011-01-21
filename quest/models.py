@@ -2,6 +2,7 @@ from django.db import models
 from utils.models import BaseModel, BaseModelManager
 from utils import slugify
 from users.models import UserProfile
+from taggit.managers import TaggableManager
 
 class QuestionAlreadyExistsException(Exception):
     pass
@@ -16,28 +17,27 @@ class EmptyQuestionCantBeSavedException(Exception):
     pass
 
 class QuestionManager(BaseModelManager):
-    def create_question(self, title, description, userprofile):
+    def create_question(self, title, description, userprofile, tags):
         if self.exists(slug=slugify(title)):
             raise QuestionAlreadyExistsException
         question = Question(title=title, slug=slugify(title),
                             description=description, raised_by=userprofile)
         question.save()
+        question.tags.add(*tags)
         return question 
             
     def update_question(self, question, **attributes):
-        if attributes and attributes.has_key('title') and attributes.has_key('description'):
-            if attributes.get('title') and attributes.get('description'):
+        if attributes:
+            if attributes.has_key('title') and attributes.has_key('description') and attributes.get('title') and attributes.get('description'):
+                if attributes.has_key('tags'):
+                    tags = attributes.get('tags')
+                    question.tags.add(*tags)
+                attributes.pop('tags')
                 for attr_label in attributes:
                     setattr(question, attr_label, attributes[attr_label])
                 question.save()
-                return
-            raise EmptyQuestionCantBeSavedException
-        elif attributes:
-            for attr_label in attributes:
-                setattr(question, attr_label, attributes[attr_label])
-            question.save()
-        else:
-            raise EmptyQuestionCantBeSavedException
+                return 
+        raise EmptyQuestionCantBeSavedException
     
 class Question(BaseModel):
     title = models.CharField(max_length=80)
@@ -46,6 +46,7 @@ class Question(BaseModel):
     raised_by = models.ForeignKey(UserProfile)
     closed = models.BooleanField(default=False)
     objects = QuestionManager()
+    tags = TaggableManager()
     
     def __unicode__(self):
         return "%s...." % self.title[:10]

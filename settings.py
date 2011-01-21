@@ -77,7 +77,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'debug_toolbar',
     'users',
-    'quest'
+    'quest',
+    'taggit'#Ideally this should be a submodule
 )
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
