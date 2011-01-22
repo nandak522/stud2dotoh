@@ -20,7 +20,9 @@
 <tr><td class='column span-3'>Has:</td><td>{%if work_details.2%}{{work_details.2}} Years of Experience{%endif%}</td></tr>
 {%endwith%}
 {%endifequal%}
-
+</table>
+<table>
+<tr><td><h3><a id='contactuser' href="{%url contactuser userprofile.id%}">Contact {{userprofile.name|title}}</a></h3></td></tr>
 </table>
 </div><!-- end of personal_details -->
 <div id='uploaded_files' class='widget'>

@@ -109,3 +109,8 @@ class WorkInfoSettingsForm(forms.Form):
         if re.match(YEARS_OF_EXP_CLEANUP_REGEX_PATTERN, years_of_exp):
             return years_of_exp
         raise ValidationError('Please enter Valid years of Experience. It should be of the format YY.MM')
+    
+class ContactUserForm(forms.Form):
+    to_email = forms.EmailField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
+    subject = forms.CharField(required=False,max_length=100)
+    message = forms.CharField(max_length=500, required=True,widget=forms.Textarea())

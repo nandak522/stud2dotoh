@@ -107,3 +107,5 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.media",
                                "django.contrib.messages.context_processors.messages",
                                "utils.useful_params_in_context")
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

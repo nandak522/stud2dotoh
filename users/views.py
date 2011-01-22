@@ -1,18 +1,20 @@
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate as django_authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
-from users.models import UserProfile, College, Company
-from utils import response, post_data, loggedin_userprofile, slugify
-from users.decorators import anonymoususer
 from django.shortcuts import get_object_or_404
-from django.contrib import messages
-import os
+from users.decorators import anonymoususer
+from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
+from users.models import UserProfile, College, Company
+from utils import response, post_data, loggedin_userprofile, slugify
+import os
+from utils.emailer import default_emailer
 
 @login_required
 def view_all_users(request, all_users_template):
@@ -323,6 +325,29 @@ def view_companies(request, companies_template):
 def view_company(request, company_id, company_slug, company_template):
     company = get_object_or_404(Company, id=int(company_id), slug=company_slug)
     return response(request, company_template, {'company':company, 'employees':company.employees})
+
+@login_required
+def view_contactuser(request, user_id, contactuser_template):
+    userprofile = loggedin_userprofile(request)
+    to_userprofile = get_object_or_404(UserProfile, id=int(user_id))
+    if request.method == 'GET':
+        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to_email':to_userprofile.user.email,
+                                                                                           'message':'Hello,'}),
+                                                        'to_userprofile':to_userprofile})
+    form = ContactUserForm(post_data(request))
+    if form.is_valid():
+        try:
+            default_emailer(from_email=userprofile.user.email,
+                            to_emails=[form.cleaned_data.get('to_email')],
+                            subject=form.cleaned_data.get('subject'),
+                            message=form.cleaned_data.get('message'))
+            from users.messages import CONTACTED_USER_SUCCESSFULLY
+            messages.success(request, CONTACTED_USER_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(user_id, to_userprofile.slug)))
+        except Exception,e:
+            from users.messages import CONTACTING_USER_FAILED
+            messages.error(request, CONTACTING_USER_FAILED)
+    return response(request, contactuser_template, {'contactuserform':form, 'to_userprofile':to_userprofile})
 
 @login_required
 def view_webresume(request):
