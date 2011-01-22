@@ -31,6 +31,7 @@ class QuestionManager(BaseModelManager):
             if attributes.has_key('title') and attributes.has_key('description') and attributes.get('title') and attributes.get('description'):
                 if attributes.has_key('tags'):
                     tags = attributes.get('tags')
+                    question.tags.clear()
                     question.tags.add(*tags)
                 attributes.pop('tags')
                 for attr_label in attributes:

@@ -73,7 +73,8 @@ def view_edit_question(request, question_id, question_slug, edit_question_templa
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
     if request.method == 'GET':
         question_data = {'title':question.title,
-                         'description':question.description}
+                         'description':question.description,
+                         'tags':",".join([tag['name'] for tag in question.tags.values('name')])}
         form = AskQuestionForm(question_data)
         return response(request, edit_question_template, {'form':form, 'question':question})
     form = AskQuestionForm(post_data(request))
