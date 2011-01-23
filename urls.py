@@ -29,7 +29,9 @@ urlpatterns += patterns('users.views',
     (r'^accounts/professorregister/$', 'view_register', {'registration_template': 'professor_register.html', 'user_type':'P'}, 'professor_register'),
     (r'^accounts/login/$', 'view_login', {'login_template': 'login.html'}, 'login'),
     (r'^accounts/logout/$', 'view_logout', {'logout_template': 'logout.html'}, 'logout'),
-    (r'^contactuser/(?P<user_id>\d+)/$', 'view_contactuser', {'contactuser_template':'contactuser.html'}, 'contactuser')
+    (r'^contactuser/(?P<user_id>\d+)/$', 'view_contactuser', {'contactuser_template':'contactuser.html'}, 'contactuser'),
+#    (r'^contactgroup/$', 'view_contactgroup', {'contactgroup_template':'contactgroup.html'}, 'contactgroup'),
+    (r'^contactus/$', 'view_contactus', {'contactus_template':'contactus.html'}, 'contactus')
 )
 
 urlpatterns += patterns('users.views',

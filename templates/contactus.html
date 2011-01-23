@@ -1,0 +1,14 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}Contact the People behind Stud2.0{% endblock %}
+{%block content%}
+<h3>Contact the People behind Stud2.0</h3>
+<form action="{%url contactus%}" method="POST">{% csrf_token %}
+<table>
+	<tr><td class='rightalign'><label for="id_from_name">Your Name:</label></td><td class='leftalign'>{{form.from_name}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 50 characters)</span></td></tr>
+	<tr><td class='rightalign'><label for="id_from_email">Your Email:</label></td><td class='leftalign'>{{form.from_email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.from_email.errors}}</td></tr>
+	<tr><td class='rightalign'><label for="id_subject">Subject :</label></td><td class='leftalign'>{{form.subject}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 100 characters)</span></td></tr>
+	<tr><td class='rightalign'><label for="id_message">Message :</label></td><td class='leftalign'>{{form.message}}<span class='help_text'>(<span class='required'>Required</span>. Max of 500 characters)</span><br/>{{form.message.errors}}</td></tr>
+	<tr><td class='rightalign'>&nbsp;</td><td><input type="submit" value="Send Message"/></td></tr>
+</table>
+</form>
+{%endblock%}

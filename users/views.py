@@ -11,10 +11,11 @@ from users.decorators import anonymoususer
 from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
+from users.forms import ContactUsForm
 from users.models import UserProfile, College, Company
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
-from utils.emailer import default_emailer
+from utils.emailer import default_emailer, mail_admins
 
 @login_required
 def view_all_users(request, all_users_template):
@@ -331,25 +332,42 @@ def view_contactuser(request, user_id, contactuser_template):
     userprofile = loggedin_userprofile(request)
     to_userprofile = get_object_or_404(UserProfile, id=int(user_id))
     if request.method == 'GET':
-        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to_email':to_userprofile.user.email,
+        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to':to_userprofile.user.email,
                                                                                            'message':'Hello,'}),
                                                         'to_userprofile':to_userprofile})
     form = ContactUserForm(post_data(request))
     if form.is_valid():
         try:
             default_emailer(from_email=userprofile.user.email,
-                            to_emails=[form.cleaned_data.get('to_email')],
+                            to_emails=[form.cleaned_data.get('to')],
                             subject=form.cleaned_data.get('subject'),
                             message=form.cleaned_data.get('message'))
-            from users.messages import CONTACTED_USER_SUCCESSFULLY
-            messages.success(request, CONTACTED_USER_SUCCESSFULLY)
+            from users.messages import CONTACTED_SUCCESSFULLY
+            messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(user_id, to_userprofile.slug)))
         except Exception,e:
-            from users.messages import CONTACTING_USER_FAILED
-            messages.error(request, CONTACTING_USER_FAILED)
+            from users.messages import CONTACTING_FAILED
+            messages.error(request, CONTACTING_FAILED)
     return response(request, contactuser_template, {'contactuserform':form, 'to_userprofile':to_userprofile})
 
 @login_required
 def view_webresume(request):
     userprofile = loggedin_userprofile(request)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+
+def view_contact_group(request, contact):
+    raise NotImplementedError
+
+def view_contactus(request, contactus_template):
+    if request.method == 'GET':
+        return response(request, contactus_template, {'form':ContactUsForm()})
+    form = ContactUsForm(post_data(request))
+    if form.is_valid():
+        mail_admins(from_email=form.cleaned_data.get('from_email'),
+                    from_name=form.cleaned_data.get('from_name'),
+                    subject=form.cleaned_data.get('subject'),
+                    message=form.cleaned_data.get('message'))
+        from users.messages import CONTACTED_SUCCESSFULLY
+        messages.success(request, CONTACTED_SUCCESSFULLY)
+        return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+    return response(request, contactus_template, {'form':form})
