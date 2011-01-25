@@ -2,7 +2,7 @@
 {%block title%}{{question.title}}{%endblock%}
 {%block content%}
 <h2><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h2>
-<h4>{%autoescape off%}{{question.description}}{%endautoescape%}</h4>
+<div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
 <div id='question_action_links'>
 <a title="Link to this question" href="{%url question question.id question.slug%}">Link</a>&nbsp;&nbsp;{%if userprofile.id == question.owner.id%}|&nbsp;&nbsp;<a title="Edit this question" href="{%url edit_question question.id question.slug%}">Edit</a>&nbsp;&nbsp;{%endif%}|&nbsp;&nbsp;<a title="Email this question to other people" href="{%url email_question question.id question.slug%}">Email</a>
 <br/><span id='tags_header'>Tags:</span>{%for tag in question.tags.all%}

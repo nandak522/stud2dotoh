@@ -71,6 +71,7 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 /*Question Page Styles*/
 .answer_block{margin-bottom:1em;padding:3px;border-bottom:1px solid #EEE;font:normal 1.2em Monopsace,Arial,sans-serif;}
 #accepted_answer{background:#EEE;padding:4px;}
+#question_description{font:normal 1.1em sans-serif;margin-bottom:4px;}
 
 /*Dashboard Page Styles*/
 .dashboard_widget_header{background:#105FB6;margin:0;padding:4px 6px;color:#FFF;text-align:center;}
