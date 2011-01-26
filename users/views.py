@@ -355,7 +355,7 @@ def view_webresume(request):
     userprofile = loggedin_userprofile(request)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
 
-def view_contact_group(request, contact):
+def view_contactgroup(request, contact):
     raise NotImplementedError
 
 def view_contactus(request, contactus_template):

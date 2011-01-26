@@ -1,7 +1,10 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}{{college.name|title}}{% endblock %}
 {%block content%}
-<h3>{{college.name|title}}'s Students</h3>
+{%with college.name as college_name%}
+<h3>{{college_name|title}}'s Students</h3>
+<h3><a id='contactgroup' href="{%url contactgroup 'college' college.id%}">Contact All {{college_name|title}} Students</a></h3>
+{%endwith%}
 <ul>
 {%for student in students%}
 <a href="{%url user_profile student.id student.slug%}">{{student.name}}</a>
