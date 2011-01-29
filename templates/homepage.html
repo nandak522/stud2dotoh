@@ -1,5 +1,6 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}Home{% endblock %}
+{%block hometab%}activetab{%endblock%}
 {%block content%}
 {%if user.is_authenticated%}
 {%include 'dashboard.html'%}

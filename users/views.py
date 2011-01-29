@@ -85,12 +85,13 @@ def _let_user_login(request, user, email, password, next=''):
 def view_login(request, login_template, next=''):
     from users.forms import UserLoginForm
     if request.method == 'POST':
-        form = UserLoginForm(post_data(request))
+        data = post_data(request)
+        next = data.get('next') if not next else next 
+        form = UserLoginForm(data)
         if form.is_valid():
             try:
                 userprofile = UserProfile.objects.get(user__email=form.cleaned_data.get('email'))
             except UserProfile.DoesNotExist:
-                print 'Coming Here'
                 from users.messages import USER_LOGIN_FAILURE
                 messages.error(request, USER_LOGIN_FAILURE)
                 return response(request, login_template, {'form': form, 'next': next})
@@ -104,7 +105,7 @@ def view_login(request, login_template, next=''):
                                    userprofile.user,
                                    email=form.cleaned_data.get('email'),
                                    password=form.cleaned_data.get('password'),
-                                   next=form.cleaned_data.get('next'))
+                                   next=next)
     else:
         form = UserLoginForm()
     return response(request, login_template, {'form': form, 'next': next})
@@ -322,3 +323,8 @@ def view_companies(request, companies_template):
 def view_company(request, company_id, company_slug, company_template):
     company = get_object_or_404(Company, id=int(company_id), slug=company_slug)
     return response(request, company_template, {'company':company, 'employees':company.employees})
+
+@login_required
+def view_webresume(request):
+    userprofile = loggedin_userprofile(request)
+    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
