@@ -59,7 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+#    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 ROOT_URLCONF = '%s.urls' % PROJECT_FOLDER_NAME
@@ -75,7 +75,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'debug_toolbar',
+#    'debug_toolbar',
     'users',
     'quest',
     'taggit'#Ideally this should be a submodule

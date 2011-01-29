@@ -1,13 +1,12 @@
 /*Global Styles*/
-body{background:#092244;color:#FFF;}
-#logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;color:#FFF;margin-bottom:0.3em;}
+body{background:#FFF;}
+#logo a h1{color:#073763;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;}
 #header{margin-top:1em;}
 #content{background:#FFF;color:#09222F;padding:6px;}
-#header_toplinks .tab{background:#105FB6;color:#FFF;display:inline;padding:6px 12px;margin:6px 6px 0 0;font-size:1.2em;cursor:pointer;}
-#header_toplinks .tab a{text-decoration:none;border:0;color:#FFF;}
-#header_toplinks .tab a:hover{color:#FFF;}
-#header_toplinks .tab:hover{background:#105FB6;color:#FFF;}
+#header_toplinks{float:right;}
+#header_toplinks li{display:inline;font-size:1.2em;padding-right:10px;}
 a{text-decoration:none;border-bottom:1px solid #06C;}
+#footer{border-top:1px solid #9fc5e8;color:#105FB6;}
 #footer_links{font:bold 14px sans-serif,Arial;text-align:center;padding:10px;}
 .help_text{color:#333;padding-left:4px;font-size:0.875em;}
 .small_text{color:#777;font-size:12px;}
@@ -41,22 +40,30 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 .italic{font-style:italic;}
 .bold{font-weight:bold;}
 .domain{font-size:120%;}
-.droid{font-family:"Droid Sans", Arial, Sans-serif;border-bottom:2px solid #CCC;padding-bottom:4px;}
-.widget{margin-top:2em;border:2px solid #FFD24D;}
-.widget_header{font-weight:normal;background:#FFD24D;padding:4px;font-family:"Droid Sans", Arial, Sans-serif;}
+.droid{font-family:"Droid Sans",Arial, Sans-serif;padding-bottom:4px;}
+.widget{margin-top:2em;border:2px solid #CFE2F3;}
+.widget_header{font-weight:normal;background:#CFE2F3;padding:4px;color:#105FB6;font-weight:bold;}
 .widget li{list-style-type:none;margin-bottom:4px;}
 .black_stress{color:#000;}
 #ajax_status_header{display:none;margin:0 auto;width:150px;background:#F7D920;text-align:center;padding:2px;top:0px;left:45%;position:fixed;z-index:10000;color:#000;}
 input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #CCCCCC;background:#105FB6;color:#FFF;border:0;cursor:pointer;padding:2px;}
-.roundcorner{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #092244;}
+.roundcorner{-moz-border-radius:2px 2px 2px 2px;}
 .big_button{padding:10px;font-size:1.5em;-moz-border-radius:6px 6px 6px 6px;margin-right:1em;}
+.main_tabs{padding-top:1em;border-bottom:1px solid #9fc5e8;text-align:center;margin:0;}
+.main_tabs li{list-style: none;display:inline;padding:4px 6px;background:#cfe2f3;border:1px solid #9fc5e8;border-bottom:0;color:#073763;font:1.6em bold Arial,sans-serif;cursor:pointer;margin-right:6px;}
+.main_tabs li a{text-decoration:none;border:0;}
+.main_tabs li:hover{background:#105FB6;color:#FFF;}
+.main_tabs li:hover a{color:#FFF;}
+.main_tabs li.activetab{background:#105FB6;color:#FFF;}
+.main_tabs li.activetab a{color:#FFF;border:0;height:40px;}
+.dropdown{vertical-align:middle;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#092244;height:200px;padding-top:3em;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}
 
 /*Notepad Page Styles*/
 #notepad{padding-top:2em;padding-left:1em;}
-#notepad h3, #account_settings h3{padding-bottom:0.4em;border-bottom:2px solid #FFD24D;}
+#notepad h3, #account_settings h3{padding-bottom:0.4em;border-bottom:2px solid #CFE2F3;}
 
 /*User Profile Page Styles*/
 #account_settings h3{margin-top:1em;}
@@ -64,3 +71,8 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 /*Question Page Styles*/
 .answer_block{margin-bottom:1em;padding:3px;border-bottom:1px solid #EEE;font:normal 1.2em Monopsace,Arial,sans-serif;}
 #accepted_answer{background:#EEE;padding:4px;}
+
+/*Dashboard Page Styles*/
+.dashboard_widget_header{background:#105FB6;margin:0;padding:4px 6px;color:#FFF;text-align:center;}
+.dashboard_widget_content{border:1px solid #105FB6;text-align:center;min-height:40px;padding-top:2em;}
+#notepad_widget,#public_profile_widget,#ask_question_widget,#answer_question_widget,#account_settings_widget{width:170px;}

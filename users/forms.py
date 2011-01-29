@@ -21,7 +21,6 @@ class UserSignupForm(forms.Form):
     email = forms.EmailField(max_length=50, required=True)
     password = forms.CharField(min_length=6, max_length=50, required=True, widget=forms.PasswordInput())
     name = forms.CharField(max_length=50, required=True)
-    next_url = forms.CharField(max_length=128, required=False, widget=forms.HiddenInput())
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -43,7 +42,6 @@ class ProfessorSignupForm(UserSignupForm):
 class UserLoginForm(forms.Form):
     email = forms.EmailField(max_length=50, required=True)
     password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput())
-    next_url = forms.CharField(max_length=128, required=False, widget=forms.HiddenInput())
     
 class SaveNoteForm(forms.Form):
     name = forms.CharField(max_length=30, required=True)

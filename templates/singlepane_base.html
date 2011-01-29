@@ -3,9 +3,9 @@
 <head>
 <title>{% block title %}{% endblock %} - Stud2.0</title>
 {%block css%}
-<link rel="stylesheet" type="text/css" media="screen" href="/site_media/css/blueprint/screen.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/site_media/css/master.css" />
-<!--[if IE]><link rel="stylesheet" href="/site_media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/blueprint/screen.css" />
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/master.css" />
+<!--[if lt IE 8]><link rel="stylesheet" href="/site_media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
 {%endblock%}
 {%block extrastyle%}
 {%endblock%}
@@ -17,6 +17,14 @@
                 {%include 'header.html'%}        
             {%endblock%}
         </div><!-- end of header -->
+        <div id='maintabs' class='column span-24 last'>
+	        <ul class='main_tabs'>
+				<li class='{%block hometab%}{%endblock%} roundcorner'><a href='{%url homepage%}'>Home</a></li>
+				<li class='{%block notepadtab%}{%endblock%} roundcorner'><a href="{%url notepad%}">Notepad</a></li>
+				<li class='{%block questionstab%}{%endblock%} roundcorner'><a href="{%url all_questions%}">Questions</a></li>
+				<li class='{%block webresumetab%}{%endblock%} roundcorner'><a href="{%if userprofile%}{%url user_profile userprofile.id userprofile.slug%}{%else%}{%url webresume%}{%endif%}">Web Resume</a></li>
+			</ul>        
+        </div><!-- end of maintabs -->
         <div id='content' class='column span-24 last'>
             <div id='ajax_status_header'></div>
             {%block messages%}

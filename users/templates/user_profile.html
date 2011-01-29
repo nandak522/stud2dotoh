@@ -1,5 +1,6 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
+{%block webresumetab%}activetab{%endblock%}
 {%block content%}
 <h3 class='droid'>{{userprofile.name|title}} ( member since {{userprofile.created_on|date:"dS M Y"}} )</h3>
 <div id='personal_details'>

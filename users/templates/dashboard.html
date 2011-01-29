@@ -1,9 +1,32 @@
 <h2 class='droid'>Hi {{userprofile.name|title}}, This is your Dashboard</h2>
-<ul id='dashboard_links'><!-- Tomorrow these individual links could be turning to individual widgets -->
-    <li><h3><a href="{%url notepad%}">Notepad</a></h3></li>
-    <li><h3><a href="{%url user_profile userprofile.id userprofile.slug%}">Public Profile</a></h3></li>
-    <li><h3><a href="{%url ask_question%}">Ask a Question ?</a></h3></li>
-    <li><h3><a href="{%url all_questions%}">Answer a Question ?</a></h3></li>
-    <li><h3><a href="{%url settings%}">Account Settings</a></h3></li>
-</ul>
-<a></a>
+<div id='notepad_widget' class='column prepend-5 span-4'>
+	<h3 class='dashboard_widget_header'>Notepad</h3>
+	<div class='dashboard_widget_content'>
+	<a href="{%url notepad%}">Notepad</a>
+	</div>
+</div><!-- end of notepad_widget -->
+<div id='public_profile_widget' class='column span-4'>
+	<h3 class='dashboard_widget_header'>Public Profile</h3>
+	<div class='dashboard_widget_content'>
+	<a href="{%url user_profile userprofile.id userprofile.slug%}">Public Profile</a>
+	</div>
+</div><!-- end of public_profile_widget -->
+<div id='ask_question_widget' class='column span-4 clearfix'>
+	<h3 class='dashboard_widget_header'>Ask a Question</h3>
+	<div class='dashboard_widget_content'>
+	<a href="{%url ask_question%}">Ask a Question ?</a>
+	</div>
+</div><!-- end of ask_question_widget -->
+<br/><br/>
+<div id='answer_question_widget' class='column prepend-7 span-4'>
+	<h3 class='dashboard_widget_header'>Answer a Question</h3>
+	<div class='dashboard_widget_content'>
+	<a href="{%url all_questions%}">Answer a Question ?</a>
+	</div>
+</div><!-- end of answer_question_widget -->
+<div id='account_settings_widget' class='column span-4'>
+	<h3 class='dashboard_widget_header'>Account Settings</h3>
+	<div class='dashboard_widget_content'>
+	<a href="{%url settings%}">Account Settings</a>
+	</div>
+</div><!-- end of account_settings_widget -->
