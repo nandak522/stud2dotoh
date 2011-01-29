@@ -101,7 +101,8 @@ INTERNAL_IPS = ('127.0.0.1',)
 
 FILTER_HTML_TAGS = "script button input marquee style"
 
-AUTHENTICATION_BACKENDS = ('utils.backends.EmailAuthBackend',)
+AUTHENTICATION_BACKENDS = ('utils.backends.EmailAuthBackend',
+                           'django.contrib.auth.backends.ModelBackend')
 
 TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.debug",
