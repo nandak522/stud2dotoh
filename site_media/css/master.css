@@ -6,8 +6,7 @@ body{background:#FFF;}
 #header_toplinks{float:right;}
 #header_toplinks li{display:inline;font-size:1.2em;padding-right:10px;}
 a{text-decoration:none;border-bottom:1px solid #06C;}
-#footer{border-top:1px solid #9fc5e8;color:#105FB6;}
-#footer_links{font:bold 14px sans-serif,Arial;text-align:center;padding:10px;}
+#footer{border-top:1px solid #9fc5e8;color:#105FB6;font:bold 14px sans-serif,Arial;text-align:center;padding:10px;}
 .help_text{color:#333;padding-left:4px;font-size:0.875em;}
 .small_text{color:#777;font-size:12px;}
 .required{color:#F00;}
@@ -40,7 +39,7 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 .italic{font-style:italic;}
 .bold{font-weight:bold;}
 .domain{font-size:120%;}
-.droid{font-family:"Droid Sans",Arial, Sans-serif;padding-bottom:4px;}
+.droid{font-family:"Droid Sans",Arial, Sans-serif;padding-bottom:4px;color:#073763;}
 .widget{margin-top:2em;border:2px solid #CFE2F3;}
 .widget_header{font-weight:normal;background:#CFE2F3;padding:4px;color:#105FB6;font-weight:bold;}
 .widget li{list-style-type:none;margin-bottom:4px;}
