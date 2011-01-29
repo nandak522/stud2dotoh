@@ -1,18 +1,21 @@
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate as django_authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
-from users.models import UserProfile, College, Company
-from utils import response, post_data, loggedin_userprofile, slugify
-from users.decorators import anonymoususer
 from django.shortcuts import get_object_or_404
-from django.contrib import messages
-import os
+from users.decorators import anonymoususer
+from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
+from users.forms import ContactUsForm, ContactGroupForm
+from users.models import UserProfile, College, Company
+from utils import response, post_data, loggedin_userprofile, slugify
+import os
+from utils.emailer import default_emailer, mail_admins, mail_group
 
 @login_required
 def view_all_users(request, all_users_template):
@@ -325,6 +328,73 @@ def view_company(request, company_id, company_slug, company_template):
     return response(request, company_template, {'company':company, 'employees':company.employees})
 
 @login_required
+def view_contactuser(request, user_id, contactuser_template):
+    userprofile = loggedin_userprofile(request)
+    to_userprofile = get_object_or_404(UserProfile, id=int(user_id))
+    if request.method == 'GET':
+        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to':to_userprofile.user.email,
+                                                                                           'message':'Hello,'}),
+                                                        'to_userprofile':to_userprofile})
+    form = ContactUserForm(post_data(request))
+    if form.is_valid():
+        try:
+            default_emailer(from_email=userprofile.user.email,
+                            to_emails=[form.cleaned_data.get('to')],
+                            subject=form.cleaned_data.get('subject'),
+                            message=form.cleaned_data.get('message'))
+            from users.messages import CONTACTED_SUCCESSFULLY
+            messages.success(request, CONTACTED_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(user_id, to_userprofile.slug)))
+        except Exception,e:
+            from users.messages import CONTACTING_FAILED
+            messages.error(request, CONTACTING_FAILED)
+    return response(request, contactuser_template, {'contactuserform':form, 'to_userprofile':to_userprofile})
+
+@login_required
 def view_webresume(request):
     userprofile = loggedin_userprofile(request)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+
+@login_required
+def view_contactgroup(request, group_type, group_id, contactgroup_template):
+    userprofile = loggedin_userprofile(request)
+    if group_type == 'college':
+        group = get_object_or_404(College, id=int(group_id))
+        to = "%s Students" % group.name
+        redirect_url = url_reverse('users.views.view_college', args=(group_id, group.slug))
+    elif group_type == 'company':
+        group = get_object_or_404(Company, id=int(group_id))
+        to = "%s Employees" % group.name
+        redirect_url = url_reverse('users.views.view_company', args=(group_id, group.slug))
+    else:
+        raise Http404
+    if request.method == 'POST':
+        contactgroupform = ContactGroupForm(post_data(request))
+        if contactgroupform.is_valid():
+            mail_group(group_type=group_type,
+                       group=group,
+                       from_email=userprofile.user.email,
+                       message=contactgroupform.cleaned_data.get('message'),
+                       from_name=userprofile.name,
+                       subject=contactgroupform.cleaned_data.get('subject'))
+            from users.messages import CONTACTED_SUCCESSFULLY
+            messages.success(request, CONTACTED_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=redirect_url)
+    contactgroupform = ContactGroupForm({'to':to})
+    return response(request, contactgroup_template, {'contactgroupform':contactgroupform,
+                                                     'group_type':group_type,
+                                                     'group_id':group_id})
+
+def view_contactus(request, contactus_template):
+    if request.method == 'GET':
+        return response(request, contactus_template, {'form':ContactUsForm()})
+    form = ContactUsForm(post_data(request))
+    if form.is_valid():
+        mail_admins(from_email=form.cleaned_data.get('from_email'),
+                    from_name=form.cleaned_data.get('from_name'),
+                    subject=form.cleaned_data.get('subject'),
+                    message=form.cleaned_data.get('message'))
+        from users.messages import CONTACTED_SUCCESSFULLY
+        messages.success(request, CONTACTED_SUCCESSFULLY)
+        return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+    return response(request, contactus_template, {'form':form})

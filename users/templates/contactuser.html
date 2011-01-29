@@ -1,0 +1,12 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}Contact {{to_userprofile.name|title}}{% endblock %}
+{%block content%}
+<form action="{%url contactuser to_userprofile.id%}" method='POST'>{% csrf_token %}
+<table class='form-table'>
+    <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{contactuserform.to}}</td></tr>
+    <tr><td class='rightalign'><label for="id_subject">Subject :</label></td><td class='leftalign'>{{contactuserform.subject}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 100 characters)</span><br/>{{contactuserform.subject.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_message">Message :</label></td><td class='form-row'>{{contactuserform.message}}<span class='help_text'>(<span class='required'>Required</span>. Max of 500 characters)</span><br/>{{contactuserform.message.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='submit' value='Send Message'/>&nbsp;<input type='button' value='Back to {{to_userprofile.name|title}} Profile Page' onClick="javascript:document.location.href='{%url user_profile to_userprofile.id to_userprofile.slug%}'"/></td></tr>
+</table>
+</form>
+{%endblock%}
