@@ -118,7 +118,7 @@ class ContactUserForm(ContactForm):
     to = forms.EmailField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
 
 class ContactGroupForm(ContactForm):
-    to = forms.EmailField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
+    to = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
     
 class ContactUsForm(ContactForm):
     from_name = forms.CharField(required=False,max_length=50)

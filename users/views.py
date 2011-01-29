@@ -11,11 +11,11 @@ from users.decorators import anonymoususer
 from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
-from users.forms import ContactUsForm
+from users.forms import ContactUsForm, ContactGroupForm
 from users.models import UserProfile, College, Company
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
-from utils.emailer import default_emailer, mail_admins
+from utils.emailer import default_emailer, mail_admins, mail_group
 
 @login_required
 def view_all_users(request, all_users_template):
@@ -355,8 +355,35 @@ def view_webresume(request):
     userprofile = loggedin_userprofile(request)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
 
-def view_contactgroup(request, contact):
-    raise NotImplementedError
+@login_required
+def view_contactgroup(request, group_type, group_id, contactgroup_template):
+    userprofile = loggedin_userprofile(request)
+    if group_type == 'college':
+        group = get_object_or_404(College, id=int(group_id))
+        to = "%s Students" % group.name
+        redirect_url = url_reverse('users.views.view_college', args=(group_id, group.slug))
+    elif group_type == 'company':
+        group = get_object_or_404(Company, id=int(group_id))
+        to = "%s Employees" % group.name
+        redirect_url = url_reverse('users.views.view_company', args=(group_id, group.slug))
+    else:
+        raise Http404
+    if request.method == 'POST':
+        contactgroupform = ContactGroupForm(post_data(request))
+        if contactgroupform.is_valid():
+            mail_group(group_type=group_type,
+                       group=group,
+                       from_email=userprofile.user.email,
+                       message=contactgroupform.cleaned_data.get('message'),
+                       from_name=userprofile.name,
+                       subject=contactgroupform.cleaned_data.get('subject'))
+            from users.messages import CONTACTED_SUCCESSFULLY
+            messages.success(request, CONTACTED_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=redirect_url)
+    contactgroupform = ContactGroupForm({'to':to})
+    return response(request, contactgroup_template, {'contactgroupform':contactgroupform,
+                                                     'group_type':group_type,
+                                                     'group_id':group_id})
 
 def view_contactus(request, contactus_template):
     if request.method == 'GET':

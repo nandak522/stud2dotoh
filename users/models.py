@@ -56,7 +56,10 @@ class UserProfile(BaseModel):
     
     @property
     def group_name(self):
-        return self.user.groups.all()[0].name
+        user_groups = self.user.groups
+        if user_groups.count():
+            return self.user.groups.all()[0].name
+        return ''
     
     def make_student(self):
         user_groups = self.user.groups

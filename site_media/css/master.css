@@ -49,7 +49,7 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #CCCCCC;background:#105FB6;color:#FFF;border:0;cursor:pointer;padding:2px;}
 .roundcorner{-moz-border-radius:2px 2px 2px 2px;}
 .big_button{padding:10px;font-size:1.5em;-moz-border-radius:6px 6px 6px 6px;margin-right:1em;}
-.main_tabs{padding-top:1em;border-bottom:1px solid #9fc5e8;text-align:center;margin:0;}
+.main_tabs{padding-top:1em;border-bottom:1px solid #105FB6;text-align:center;margin:0;}
 .main_tabs li{list-style: none;display:inline;padding:4px 6px;background:#cfe2f3;border:1px solid #9fc5e8;border-bottom:0;color:#073763;font:1.6em bold Arial,sans-serif;cursor:pointer;margin-right:6px;}
 .main_tabs li a{text-decoration:none;border:0;}
 .main_tabs li:hover{background:#105FB6;color:#FFF;}
