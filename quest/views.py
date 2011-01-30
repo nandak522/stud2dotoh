@@ -46,12 +46,14 @@ def view_accept_answer(request, question_id, answers_template):
 
 @login_required
 def view_ask_question(request, ask_question_template):
+    userprofile = loggedin_userprofile(request)
+    asked_questions = userprofile.asked_questions
     if request.method == 'GET':
         form = AskQuestionForm()
-        return response(request, ask_question_template, {'form':form})
+        return response(request, ask_question_template, {'form':form,
+                                                         'asked_questions':asked_questions})
     form = AskQuestionForm(post_data(request))
     if form.is_valid():
-        userprofile = loggedin_userprofile(request)
         question = Question.objects.create_question(title=form.cleaned_data.get('title'),
                                                     description=form.cleaned_data.get('description'),
                                                     userprofile=userprofile,
@@ -59,24 +61,35 @@ def view_ask_question(request, ask_question_template):
         from quest.messages import QUESTION_POSTING_SUCCESSFUL
         messages.success(request, QUESTION_POSTING_SUCCESSFUL)
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
-    return response(request, ask_question_template, {'form':form})
+    return response(request, ask_question_template, {'form':form,
+                                                     'asked_questions':asked_questions})
 
 def view_email_question(request, question_id, question_slug, email_question_template):
     raise NotImplementedError
 
 @login_required
 def view_edit_question(request, question_id, question_slug, edit_question_template):
+    userprofile = loggedin_userprofile(request)
     question = get_object_or_404(Question, id=int(question_id))
     if question.owner.id != loggedin_userprofile(request).id:
         from quest.messages import QUESTION_UPDATION_DISALLOWED
         messages.success(request, QUESTION_UPDATION_DISALLOWED)
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
+    asked_questions = list(userprofile.asked_questions)
+    for question_info in asked_questions:
+        if question_info['id'] == int(question_id):
+            asked_questions.remove({'title':question.title,
+                                    'id':int(question_id),
+                                    'slug':question_slug})
+    
     if request.method == 'GET':
         question_data = {'title':question.title,
                          'description':question.description,
                          'tags':",".join([tag['name'] for tag in question.tags.values('name')])}
         form = AskQuestionForm(question_data)
-        return response(request, edit_question_template, {'form':form, 'question':question})
+        return response(request, edit_question_template, {'form':form,
+                                                          'question':question,
+                                                          'previous_questions':asked_questions})
     form = AskQuestionForm(post_data(request))
     if form.is_valid():
         Question.objects.update_question(question,
@@ -86,7 +99,9 @@ def view_edit_question(request, question_id, question_slug, edit_question_templa
         from quest.messages import QUESTION_UPDATED_SUCCESSFULLY
         messages.success(request, QUESTION_UPDATED_SUCCESSFULLY)
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
-    return response(request, edit_question_template, {'form':form, 'question':question})
+    return response(request, edit_question_template, {'form':form,
+                                                      'question':question,
+                                                      'previous_questions':asked_questions})
 
 @login_required
 def view_give_answer(request, question_id, give_answer_template, question_template):

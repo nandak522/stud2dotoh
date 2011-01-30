@@ -1,6 +1,7 @@
 {%extends 'singlepane_base.html'%}
 {%block title%}{{question.title}}{%endblock%}
 {%block content%}
+<div class='span-20 column'>
 <h2><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h2>
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
 <div id='question_action_links'>
@@ -18,6 +19,10 @@
 <div id='give_answer_section'>
     {%include 'give_answer.html'%}
 </div><!-- end of give_answer_section -->
+</div>
+<div class='span-4 column last'>
+<input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
+</div>
 {%endblock%}
 {%block extrajs%}
 <script type='text/javascript' src='/site_media/js/questions.js'></script>
