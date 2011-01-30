@@ -6,10 +6,14 @@ register = template.Library()
 
 @register.filter
 def college_url(college_id):
+    if not college_id:
+        return ''
     college_details = College.objects.filter(id=int(college_id)).values('id', 'slug', 'name')[0]
     return "<a href='%(url)s'>%(name)s</a>" % {'name':college_details['name'], 'url':url_reverse('users.views.view_college', args=(college_details['id'], college_details['slug']))}
 
 @register.filter
 def workplace_url(company_id):
+    if not company_id:
+        return ''
     company_details = Company.objects.filter(id=int(company_id)).values('id', 'slug', 'name')[0]
     return "<a href='%(url)s'>%(name)s</a>" % {'name':company_details['name'], 'url':url_reverse('users.views.view_company', args=(company_details['id'], company_details['slug']))}  
