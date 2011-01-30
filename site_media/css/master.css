@@ -57,6 +57,8 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 .main_tabs li.activetab{background:#105FB6;color:#FFF;}
 .main_tabs li.activetab a{color:#FFF;border:0;height:40px;}
 .dropdown{vertical-align:middle;}
+.stats{background:#EEE;border:1px solid #CCC;padding:10px;margin-bottom:4px;}
+.stats li{font-size:1.2em;list-style:none;font-family:"Droid Sans", Arial, Sans-serif;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#092244;height:200px;padding-top:3em;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}

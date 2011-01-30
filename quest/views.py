@@ -8,10 +8,16 @@ from quest.models import Question, Answer
 from quest.forms import AskQuestionForm, GiveAnswerForm
 from taggit.models import Tag, TaggedItem
 from django.core.paginator import Paginator
+from users.models import UserProfile, College, Company, Group
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')
-    return response(request, all_questions_template, {'questions':questions})
+    stats = {'colleges_count':College.objects.count(),
+             'students_count':Group.objects.get(name='Student').user_set.count(),
+             'companies_count':Company.objects.count(),
+             'employees_count':Group.objects.get(name='Employee').user_set.count()}
+    return response(request, all_questions_template, {'questions':questions,
+                                                      'stats':stats})
 
 def view_question(request, question_id, question_slug, question_template):
     question = get_object_or_404(Question, id=int(question_id))#question_slug is for SEO
