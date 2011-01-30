@@ -12,7 +12,22 @@ from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
 import os
 
-branches = (('CSE', 'Computers'),)
+branches = (('CSE', 'Computers'),
+            ('ME', 'Mechanical'),
+            ('CVE', 'Civil'),
+            ('ECE', 'Electronics & Communications'),
+            ('EEE', 'Electrical & Electronics'),
+            ('IE', 'Instrumentation'),
+            ('CHE', 'Chemical'),
+            ('TXE', 'Textile'),
+            ('BTE', 'Bio-Tech'),
+            ('MNE', 'Mining'),
+            ('ENVE', 'Environmental'),
+            ('PYE', 'Polymer'),
+            ('BME', 'Bio-Medical'),
+            ('CCE', 'Ceramics & Cement'),
+            ('PTE', 'Printing'),
+            )
 
 class UserProfileAlreadyExistsException(Exception):
     pass
