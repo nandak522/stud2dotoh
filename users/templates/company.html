@@ -1,10 +1,10 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}{{company.name|title}}{% endblock %}
 {%block content%}
-<h3>{{company.name|title}}'s Employees</h3>
+<h2 class='droid'>{{company.name|title}} Employees</h2>
 <ul>
 {%for employee in employees%}
-<a href="{%url user_profile employee.id employee.slug%}">{{employee.name}}</a>
+<li><h3><a href="{%url user_profile employee.id employee.slug%}">{{employee.name}}</a></h3></li>
 {%empty%}
 No Employees Yet!
 {%endfor%}

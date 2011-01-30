@@ -1,9 +1,10 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}All Companies{% endblock %}
 {%block content%}
+<h2 class='droid'>All Companies</h2>
 <ul>
 {%for company in companies%}
-<li><a href="{%url company_profile company.id company.slug%}">{{company.name|title}}</a></li>
+<li><h3><a href="{%url company_profile company.id company.slug%}">{{company.name|title}}</a></h3></li>
 {%empty%}
 No Companies Yet!
 {%endfor%}
