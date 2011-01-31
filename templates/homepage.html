@@ -5,9 +5,16 @@
 {%if user.is_authenticated%}
 {%include 'dashboard.html'%}
 {%else%}
-<h1 id='vision_banner'>We make <span class='orange_underline'>studying in college</span>, <span class='orange_underline'>fun and easy</span><br/>
-<br/>
-<a href='{%url register%}'>Join Us</a>
-</h1>
+<h1 id='vision_banner'>Making Student's Education system <span class='orange_underline'>open</span> &amp; <span class='orange_underline'>supportive</span></h1>
+<div id='slideshow' class='push-7 span-10'>
+Slideshow goes here
+</div><!-- end of slideshow -->
+<div id='features_blocks' class='span-24 column last'>
+    <div id='notepad' class='push-4 span-8'>Notepad Content</div><!-- end of notepad -->
+    <div id='webresume' class='span-8'>Web Resume Content</div><!-- end of webresume -->
+    <div class='clear'></div>
+    <div id='questions' class='push-4 span-8'>Questions</div><!-- end of questions -->
+    <div id='answers' class='span-8'>Answers</div><!-- end of answers -->
+</div><!-- end of features_blocks -->
 {%endif%}
 {%endblock%}
