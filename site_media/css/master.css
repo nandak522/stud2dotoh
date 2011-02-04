@@ -65,7 +65,9 @@ hr{margin:0;padding:0;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#092244;padding:1em 0;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;}
-#slideshow{background:#0b5394;height:50px;text-align:center;height:240px;padding-top:40px;}
+.slideshow{height:50px;text-align:center;border:2px solid #0b5394;padding:4px;}
+#slider{position:relative;width:430px;height:300px;background:url(/site_media/img/slideshow_pix/loading.gif) no-repeat 50% 50%;}
+#slider img {position:absolute;top:0px;left:0px;display:none;}
 #features_blocks{text-align:center;}
 #features_blocks #notepad,#webresume,#questions,#answers{border:1px solid #CCC;padding-top:8px;height:40px;margin-right:10px;}
 
