@@ -6,21 +6,23 @@
 {%include 'dashboard.html'%}
 {%else%}
 <h1 id='vision_banner'>Making Student's Education system <span class='orange_underline'>open</span> &amp; <span class='orange_underline'>supportive</span></h1>
-<div id="slides" class='slideshow push-7 span-10'>
+<div id='slideshow' class='span-24'>
+<div id="slides" class='push-7 span-10'>
     <div class="slides_container">
-	    <div>
-	       <a href="{%url notepad%}" title="Notepad Page" target="_blank"><img src="/site_media/img/slideshow_pix/notepad.png" alt="Notepad Page"/></a>
-	    </div>
-	    <div>
-	       <a href="{%url all_questions%}" title="Questions Page" target="_blank"><img src="/site_media/img/slideshow_pix/all_questions.png" alt="Questions Page"/></a>
-	    </div>
-	    <div>
-	       <a href="{%url webresume%}" title="Web Resume Page" target="_blank"><img src="/site_media/img/slideshow_pix/web_resume.png" alt="Web Resume Page"/></a>
-	    </div>
-	</div>
-	<a href="#" class="prev"><img src="/site_media/img/slideshow_pix/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+        <div>
+           <a href="{%url notepad%}" title="Notepad Page" target="_blank"><img src="/site_media/img/slideshow_pix/notepad.png" alt="Notepad Page"/></a>
+        </div>
+        <div>
+           <a href="{%url all_questions%}" title="Questions Page" target="_blank"><img src="/site_media/img/slideshow_pix/all_questions.png" alt="Questions Page"/></a>
+        </div>
+        <div>
+           <a href="{%url webresume%}" title="Web Resume Page" target="_blank"><img src="/site_media/img/slideshow_pix/web_resume.png" alt="Web Resume Page"/></a>
+        </div>
+    </div>
+    <a href="#" class="prev"><img src="/site_media/img/slideshow_pix/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
     <a href="#" class="next"><img src="/site_media/img/slideshow_pix/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
 </div><!-- end of slides -->
+</div>
 <div id='features_blocks' class='span-24 column last'>
     <div id='notepad' class='push-4 span-8'>Notepad Content</div><!-- end of notepad -->
     <div id='webresume' class='span-8'>Web Resume Content</div><!-- end of webresume -->
