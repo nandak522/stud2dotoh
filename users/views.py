@@ -15,7 +15,7 @@ from users.forms import ContactUsForm, ContactGroupForm, InvitationForm
 from users.models import UserProfile, College, Company
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
-from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer
+from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer
 
 @login_required
 def view_all_users(request, all_users_template):
@@ -75,6 +75,8 @@ def _handle_user_registration(registration_form, user_type):
                                    workplace_type='Company',
                                    designation='',
                                    years_of_exp=None)
+    welcome_emailer(registration_form.cleaned_data.get('email'),
+                    registration_form.cleaned_data.get('name'))
     return userprofile
         
 def _let_user_login(request, user, email, password, next=''):
@@ -414,7 +416,6 @@ def view_invite(request, invite_template):
             messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
         except Exception,e:
-            print 'Error e:%s' % e.__str__()
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, invite_template, {'form':form})
