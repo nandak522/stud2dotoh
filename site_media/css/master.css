@@ -46,7 +46,7 @@ input[type="text"], input[type="password"], input.text, input.title, textarea{pa
 .widget_header{font-weight:normal;background:#CFE2F3;padding:4px;color:#0b5394;font-weight:bold;}
 .widget li{list-style-type:none;margin-bottom:4px;}
 .black_stress{color:#000;}
-.special_blue{color:#0b5394;background:#0b5394;}
+.special_blue{color:#0b5394;}
 #ajax_status_header{display:none;margin:0 auto;width:150px;background:#F7D920;text-align:center;padding:2px;top:0px;left:45%;position:fixed;z-index:10000;color:#000;}
 input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #CCCCCC;background:#0b5394;color:#FFF;border:0;cursor:pointer;padding:2px;}
 .roundcorner{-moz-border-radius:2px 2px 2px 2px;}
@@ -59,8 +59,10 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 .main_tabs li.activetab{background:#FFF;color:#0b5394;}
 .main_tabs li.activetab a{color:#0b5394;border:0;}
 .dropdown{vertical-align:middle;}
-.stats{background:#EEE;border:1px solid #CCC;padding:10px;margin-bottom:4px;}
-.stats li{font-size:1.2em;list-style:none;font-family:"Droid Sans", Arial, Sans-serif;}
+.board{background:#EEE;border:1px solid #CCC;padding:10px;margin-bottom:4px;}
+.board li{font-size:1.2em;list-style:none;font-family:"Droid Sans", Arial, Sans-serif;}
+#explain_invite li{list-style-type:disc;list-style-position:inside;}
+#explain_invite h4{margin-bottom:0;}
 hr{margin:0;padding:0;}
 
 /*Homepage Styles*/

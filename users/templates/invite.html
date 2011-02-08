@@ -1,0 +1,22 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}Invite somebody you know{% endblock %}
+{%block content%}
+<br/>
+<div class='span-12 column'>
+<form action="{%url invite %}" method='POST'>{% csrf_token %}
+<table class='form-table'>
+    <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{form.to_emails}}<span class='help_text'>(Mention multiple emails separated by commas.)</span>{{form.to_emails.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='submit' value='Send Invite'/></td></tr>
+</table>
+</form>
+</div>
+<div id="explain_invite" class='span-12 column last'>
+<h4 class='droid'>Multiple ways to use Invitation Form</h4>
+<ul class='board'>
+<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Senior</span> and get help on your studies</li>
+<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Branch mate</span> and interact with him/her</li>
+<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Professor</span> and share your assignments online</li>
+<li>You can <span class='special_blue bold'>contact</span> any <span class='special_blue bold'>Industry Person</span> you know and get connected with the Industry</li>
+</ul>
+</div>
+{%endblock%}

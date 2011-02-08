@@ -1,6 +1,10 @@
 from django.core.mail import send_mail, send_mass_mail
 from django.conf import settings
 from users.models import UserProfile
+from django.template.loader import render_to_string as render_template
+#from django.core.validators import email_re
+EMAIL_REGEX = '[\w\.-]+@[a-zA-Z0-9]+[\.][a-zA-Z]{2,4}'
+import re
 
 def default_emailer(from_email, to_emails, message, from_name='', subject=''):
     send_mail(subject, message, clean_from_email(from_email, from_name), to_emails)
@@ -30,3 +34,15 @@ def mail_group(group_type, group, from_email, message, from_name='', subject='')
     for email in emails:
         messages_info.append((subject, message, clean_from_email(from_email, from_name), [email]))
     send_mass_mail(messages_info)
+    
+def invitation_emailer(from_email, to_emails, from_name=''):
+    message = render_template('emails/invitation.html', {'inviter_name':from_name,
+                                                         'inviter_email':from_email}) 
+    default_emailer(from_email=from_email,
+                    to_emails=to_emails,
+                    message=message,
+                    from_name=from_name,
+                    subject='Hi, This is %s' % from_name)
+    
+def clean_emails(multiple_emails_string):
+    return re.findall(r'%s' % EMAIL_REGEX, multiple_emails_string)

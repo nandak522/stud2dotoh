@@ -11,7 +11,7 @@
 <div class='span-4 column last'>
 <input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <br/><br/><br/>
-<ul class='stats'>
+<ul id='stats' class='board'>
 <li><a href="{%url colleges%}" target='_blank'>{{stats.colleges_count}} Colleges</a></li>
 <li>{{stats.students_count}} Students</li>
 <li><a href="{%url companies%}" target='_blank'>{{stats.companies_count}} Companies</a></li>

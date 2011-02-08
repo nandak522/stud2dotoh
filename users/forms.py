@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from users.models import UserProfile, branches
 import re
 from users.messages import USER_LOGIN_FAILURE
+from utils.formfields import MultipleEmailsField
 
 USER_NAME_CLEANUP_REGEX_PATTERN = re.compile(r'[^\w.&\s-]+', re.IGNORECASE)
 USER_SLUG_DOMAIN_CLEANUP_REGEX_PATTERN = re.compile(r'stud2dotoh.com', re.IGNORECASE)
@@ -123,3 +124,6 @@ class ContactGroupForm(ContactForm):
 class ContactUsForm(ContactForm):
     from_name = forms.CharField(required=False,max_length=50)
     from_email = forms.EmailField(max_length=50, required=True)
+    
+class InvitationForm(forms.Form):
+    to_emails = MultipleEmailsField(max_length=500, required=True)

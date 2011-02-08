@@ -11,11 +11,11 @@ from users.decorators import anonymoususer
 from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
-from users.forms import ContactUsForm, ContactGroupForm
+from users.forms import ContactUsForm, ContactGroupForm, InvitationForm
 from users.models import UserProfile, College, Company
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
-from utils.emailer import default_emailer, mail_admins, mail_group
+from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer
 
 @login_required
 def view_all_users(request, all_users_template):
@@ -398,3 +398,23 @@ def view_contactus(request, contactus_template):
         messages.success(request, CONTACTED_SUCCESSFULLY)
         return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
     return response(request, contactus_template, {'form':form})
+
+@login_required
+def view_invite(request, invite_template):
+    if request.method == 'GET':
+        return response(request, invite_template, {'form':InvitationForm()})
+    userprofile = loggedin_userprofile(request)
+    form = InvitationForm(post_data(request))
+    if form.is_valid():
+        try:
+            invitation_emailer(from_email=userprofile.user.email,
+                               to_emails=form.cleaned_data.get('to_emails'),
+                               from_name=userprofile.name)
+            from users.messages import CONTACTED_SUCCESSFULLY
+            messages.success(request, CONTACTED_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+        except Exception,e:
+            print 'Error e:%s' % e.__str__()
+            from users.messages import CONTACTING_FAILED
+            messages.error(request, CONTACTING_FAILED)
+    return response(request, invite_template, {'form':form})
