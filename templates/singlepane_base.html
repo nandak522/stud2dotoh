@@ -49,7 +49,11 @@
             {%endblock%}
         </div><!-- end of footer -->
     </div><!-- end of container -->
-    <script type='text/javascript' src='/site_media/js/jquery/jquery-1.4.3.min.js'></script>
+    {%if debug%}
+    <script type='text/javascript' src='/site_media/js/jquery-1.5.min.js'></script>
+    {%else%}
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js'></script>
+    {%endif%}
     <script type='text/javascript' src='/site_media/js/common.js'></script>
     <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(6000);}</script>
     {%block extrajs%}{%endblock%}
