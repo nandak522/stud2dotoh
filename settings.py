@@ -89,14 +89,6 @@ EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
-DOCSTORE_CONFIG = {'local':True}
-
-if DOCSTORE_CONFIG['local']:
-    DOCSTORE_CONFIG['files_storage_path'] = "/".join([os.path.dirname(ROOT_PATH), 'stud2dotoh_uploaded_files'])
-else:
-    DOCSTORE_CONFIG['files_storage_path'] = 's3.amazonaws.com'
-    raise NotImplementedError
-    
 INTERNAL_IPS = ('127.0.0.1', '192.168.1.2')
 
 FILTER_HTML_TAGS = "script button input marquee style"

@@ -22,7 +22,6 @@ def get_data(request):
     return request.GET.copy()
 
 class TestCase(TestCase):
-    settings.DOCSTORE_CONFIG['files_storage_path'] = "/".join([os.path.dirname(settings.ROOT_PATH), 'test_stud2dotoh_uploaded_files'])
     settings.DEBUG = True
     def tearDown(self):
         del self.client
@@ -34,19 +33,8 @@ class TestCase(TestCase):
     def logout(self):
         return self.client.post(path=url_reverse('users.views.view_logout'))
     
-    def setUp(self):
-        try:
-            shutil.rmtree(settings.DOCSTORE_CONFIG['files_storage_path'])
-        except OSError:
-            pass
-        os.mkdir(settings.DOCSTORE_CONFIG['files_storage_path'])
-    
 def loggedin_userprofile(request):
     return request.user.get_profile()
-
-def get_user_directory_path(userprofile):
-    #TODO:Raise a deprecation warning about the usage of this method. Use userprofile.user_directory_path
-    return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(userprofile.id)])
 
 def useful_params_in_context(request):
     params = {}

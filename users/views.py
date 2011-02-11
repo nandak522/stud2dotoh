@@ -11,8 +11,8 @@ from users.decorators import anonymoususer
 from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
-from users.forms import ContactUsForm, ContactGroupForm, InvitationForm
-from users.models import UserProfile, College, Company
+from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNoteForm
+from users.models import UserProfile, College, Company, Note
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer
@@ -123,12 +123,11 @@ def view_logout(request, logout_template):
 
 def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
-    public_uploaded_files = userprofile.public_uploaded_files
+    public_notes = userprofile.public_notes
     asked_questions = userprofile.asked_questions
     answered_questions = userprofile.answered_questions
-    #TODO: All Comments given
     return response(request, userprofile_template, {'userprofile': userprofile,
-                                                    'public_uploaded_files': public_uploaded_files,
+                                                    'public_notes': public_notes,
                                                     'asked_questions':asked_questions,
                                                     'answered_questions':answered_questions})
 
@@ -136,71 +135,35 @@ def view_homepage(request, homepage_template):
     #TODO:Homepage layout showing message, screenshots, latest updates across the system
     return response(request, homepage_template, {})
 
-def _create_directory_for_user(userprofile):
-    user_directory_path = userprofile.user_directory_path
-    if os.path.exists(user_directory_path):
-        return user_directory_path
-    os.mkdir(user_directory_path)
-    return user_directory_path
-
-def _convert_notes_to_file(content, filename, user_directory_path):
-    filename = slugify(filename)
-    supposed_filepath = "/".join([user_directory_path, filename])
-    if settings.DOCSTORE_CONFIG['local']:
-        if os.path.exists(supposed_filepath):
-            supposed_filepath += '_1'
-        file = open(supposed_filepath, 'w')
-        file.write(content)
-        file.close()
-        return filename
-    else:
-        raise NotImplementedError
-
-def _fetch_content_from_user_uploaded_file(userprofile, filename):
-    user_directory_path = userprofile.user_directory_path
-    if settings.DOCSTORE_CONFIG['local']:
-        supposed_filepath = "/".join([user_directory_path, filename]) 
-        if os.path.exists(supposed_filepath):
-            file_content = open(supposed_filepath, 'r').read()
-            return file_content
-        #TODO:This should be file 404 and not any typical 404
-        raise Http404
-    raise NotImplementedError
-
 @login_required
 def view_notepad(request, notepad_template):
-    from users.forms import SaveNoteForm
     userprofile = loggedin_userprofile(request)
+    all_notes = userprofile.all_notes
     if request.method == 'GET':
-        public_uploaded_files = userprofile.public_uploaded_files
         return response(request, notepad_template, {'form':SaveNoteForm(),
-                                                    'public_uploaded_files':public_uploaded_files})
+                                                    'all_notes':all_notes})
     form = SaveNoteForm(post_data(request))
     userprofile = loggedin_userprofile(request)
-    if form.is_valid():
-        #TODO:If the notepad is made hidden, its not handled now
-        user_directory_path = _create_directory_for_user(userprofile)
-        filename = _convert_notes_to_file(content=form.cleaned_data.get('content'),
-                                          filename=form.cleaned_data.get('name'),
-                                          user_directory_path=user_directory_path)
-        from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
-        messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % filename)
-        public_uploaded_files = userprofile.public_uploaded_files
-        return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
-                                                    'form':SaveNoteForm()})
-    public_uploaded_files = userprofile.public_uploaded_files
-    return response(request, notepad_template, {'public_uploaded_files':public_uploaded_files,
-                                                'form':form})
+    if not form.is_valid():
+        return response(request, notepad_template, {'form':form,
+                                                    'all_notes':all_notes})
+    Note.objects.create_note(userprofile=userprofile,
+                             name=form.cleaned_data.get('name'),
+                             short_description=form.cleaned_data.get('short_description'),
+                             note=form.cleaned_data.get('content'),
+                             public=form.cleaned_data.get('public'))
+    from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
+    messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % form.cleaned_data.get('name'))
+    return response(request, notepad_template, {'form':SaveNoteForm(),
+                                                'all_notes':all_notes})
 
 @login_required
-def view_notepad_preview(request, notepad_preview_template):
-    raise NotImplementedError
-
-@login_required
-def view_file_content_view(request, filename):
+def view_note(request, note_id):
     userprofile = loggedin_userprofile(request)
-    file_content = _fetch_content_from_user_uploaded_file(userprofile, filename)
-    return HttpResponse(content=file_content, mimetype='text/plain')
+    note = get_object_or_404(Note, id=int(note_id))
+    if userprofile.is_my_note(note):
+        return HttpResponse(content=note.note, mimetype='text/plain')
+    raise Http404
 
 @login_required
 def view_account_settings(request, settings_template):

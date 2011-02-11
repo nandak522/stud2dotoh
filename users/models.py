@@ -184,24 +184,16 @@ class UserProfile(BaseModel):
     set_password = update_password 
     
     @property
-    def user_directory_path(self):
-        return "/".join([settings.DOCSTORE_CONFIG['files_storage_path'], str(self.id)])
+    def all_notes(self):
+        return self.note_set.values('id', 'name', 'public').all()
     
     @property
-    def public_uploaded_files(self):
-        #TODO:For now all uploaded files are public by default.
-        return self.all_uploaded_files
+    def public_notes(self):
+        return self.note_set.filter(public=True).values('id', 'name').all()
     
-    @property
-    def all_uploaded_files(self):
-        user_directory_path = self.user_directory_path
-        if settings.DOCSTORE_CONFIG['local']:
-            if os.path.exists(user_directory_path):
-                return tuple(os.walk(user_directory_path).next()[-1])
-        else:
-            raise NotImplementedError
-        return ()
-
+    def is_my_note(self, note):
+        return bool(self.note_set.filter(id=note.id).count())
+    
     @property
     def domain(self):
         if not self.slug:
@@ -311,3 +303,24 @@ class AcadInfo(BaseModel):
     
     def __unicode__(self):
         return "%s-(%s-%s-%s)" % (self.userprofile, self.branch, self.start_year, self.end_year)
+    
+class NoteManager(BaseModelManager):
+    def create_note(self, userprofile, name, note, short_description='', public=True):
+        note = Note(userprofile=userprofile,
+                     name=name,
+                     short_description=short_description,
+                     note=note,
+                     public=public)
+        note.save()
+        return note
+    
+class Note(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    name = models.CharField(max_length=30)
+    short_description = models.CharField(max_length=50)
+    note = models.CharField(max_length=7000)
+    public = models.BooleanField(default=True)
+    objects = NoteManager()
+    
+    def __unicode__(self):
+        return "%s..." % self.note[:10]

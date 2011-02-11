@@ -17,10 +17,10 @@
 <div id='uploaded_files' class="widget column span-5 last">
 <h4 class='widget_header centeralign'>My Saved Notes</h4>
 <ul>
-{%for filename in public_uploaded_files%}
-<li><a class='file_link' target='_blank' href="{%url file_content_view_link filename=filename%}">{{filename}}</a></li>
+{%for note in all_notes%}
+<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{%if note.public%}Public:{%else%}Private:{%endif%}{{note.name|capfirst}}</a></li>
 {%empty%}
-<li>You havenot saved any notes yet!</li>
+<li>You have not saved any notes yet!</li>
 {%endfor%}
 </ul>
 </div>
