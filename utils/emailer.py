@@ -55,3 +55,14 @@ def welcome_emailer(to_email, to_name):
                     to_emails=[address_email_with_name(to_email, to_name)],
                     message=message,
                     subject='Welcome to Stud2.0')
+    
+def new_anwer_emailer(question, new_answer):
+    messages_info = []
+    subject = 'New Answer for:%s' % question.title
+    message = render_template('emails/new_answer.html', {'question':question,
+                                                         'new_answer':new_answer})
+    all_related_users_emails = question.all_related_users_emails()
+    print 'all_related_users_emails:%s' % all_related_users_emails
+    for email in all_related_users_emails:
+        messages_info.append((subject, message, DEFAULT_FROM_EMAIL, [email]))
+    send_mass_mail(messages_info)

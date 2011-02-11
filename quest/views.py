@@ -9,6 +9,8 @@ from quest.forms import AskQuestionForm, GiveAnswerForm
 from taggit.models import Tag, TaggedItem
 from django.core.paginator import Paginator
 from users.models import UserProfile, College, Company, Group
+from utils.decorators import is_post
+from utils.emailer import new_anwer_emailer
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')
@@ -28,27 +30,25 @@ def view_question(request, question_id, question_slug, question_template):
     return response(request, question_template, {'question':question, 'give_answer_form':give_answer_form})
 
 @login_required
+@is_post
 def view_close_answering(request, question_template, close_answer_template):#This would be an ajax post call
-    if request.method == 'POST':
-        question_id = post_data(request).get('question_id')
-        question = get_object_or_404(Question, id=int(question_id))
-        userprofile = loggedin_userprofile(request)
-        if userprofile.id == question.owner.id:
-            question.close_answering()
-            return response(request, close_answer_template, {'give_answer_form':None})
-    raise Http404
+    question_id = post_data(request).get('question_id')
+    question = get_object_or_404(Question, id=int(question_id))
+    userprofile = loggedin_userprofile(request)
+    if userprofile.id == question.owner.id:
+        question.close_answering()
+        return response(request, close_answer_template, {'give_answer_form':None})
 
 @login_required
+@is_post
 def view_accept_answer(request, question_id, answers_template):
-    if request.method == 'POST':
-        question = get_object_or_404(Question, id=int(question_id))
-        userprofile = loggedin_userprofile(request)
-        if userprofile.id == question.owner.id:
-            answer_id = post_data(request).get('answer_id')
-            answer = get_object_or_404(Answer, id=int(answer_id))
-            answer.accept(userprofile)
-            return response(request, answers_template, {'question':question, 'all_answers':question.answers})
-    raise Http404
+    question = get_object_or_404(Question, id=int(question_id))
+    userprofile = loggedin_userprofile(request)
+    if userprofile.id == question.owner.id:
+        answer_id = post_data(request).get('answer_id')
+        answer = get_object_or_404(Answer, id=int(answer_id))
+        answer.accept(userprofile)
+        return response(request, answers_template, {'question':question, 'all_answers':question.answers})
 
 @login_required
 def view_ask_question(request, ask_question_template):
@@ -69,9 +69,6 @@ def view_ask_question(request, ask_question_template):
         return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
     return response(request, ask_question_template, {'form':form,
                                                      'asked_questions':asked_questions})
-
-def view_email_question(request, question_id, question_slug, email_question_template):
-    raise NotImplementedError
 
 @login_required
 def view_edit_question(request, question_id, question_slug, edit_question_template):
@@ -116,9 +113,10 @@ def view_give_answer(request, question_id, give_answer_template, question_templa
         form = GiveAnswerForm(post_data(request))
         if form.is_valid():
             userprofile = loggedin_userprofile(request)
-            Answer.objects.create_answer(question=question,
-                                         description=form.cleaned_data.get('description'),
-                                         userprofile=userprofile)
+            new_answer = Answer.objects.create_answer(question=question,
+                                                      description=form.cleaned_data.get('description'),
+                                                      userprofile=userprofile)
+            new_anwer_emailer(question, new_answer)
             from quest.messages import ANSWER_POSTING_SUCCESSFUL
             messages.success(request, ANSWER_POSTING_SUCCESSFUL)
             give_answer_form = GiveAnswerForm()

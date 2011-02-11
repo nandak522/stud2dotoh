@@ -97,7 +97,7 @@ else:
     DOCSTORE_CONFIG['files_storage_path'] = 's3.amazonaws.com'
     raise NotImplementedError
     
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', '192.168.1.2')
 
 FILTER_HTML_TAGS = "script button input marquee style"
 

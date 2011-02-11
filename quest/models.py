@@ -74,7 +74,14 @@ class Question(BaseModel):
     def is_accepting_answers(self):
         if self.closed:
             return False
-        return True 
+        return True
+    
+    def all_related_users_emails(self):
+        emails = []
+        emails.append(self.raised_by.user.email)
+        for answer in self.answers:
+            emails.append(answer.given_by.user.email)
+        return set(emails)
     
 class AnswerManager(BaseModelManager):
     def create_answer(self, question, description, userprofile, accepted=False):
