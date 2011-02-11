@@ -28,8 +28,8 @@
 <div id='uploaded_files' class='widget'>
 <h4 class='droid widget_header leftalign'>Saved Notes</h4>
 <ul>
-{%for filename in public_uploaded_files%}
-<li><a class='file_link' target='_blank' href="{%url file_content_view_link filename=filename%}">{{filename}}</a></li>
+{%for note in public_notes%}
+<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
 {%empty%}
 <li>{{userprofile.name|title}} has not saved any notes yet!</li>
 {%endfor%}
@@ -59,8 +59,4 @@
 	<ul><li>{{userprofile.name|title}} didn't answer for any questions yet!</li></ul>
 {%endif%}
 </div><!-- end of answered_questions -->
-<div id='comments_given' class='widget'>
-<h4 class='droid widget_header leftalign'>Comments Given</h4>
-<ul><li>{{userprofile.name|title}} didn't comment on anything yet!</li></ul>
-</div><!-- end of comments_given -->
 {%endblock%}

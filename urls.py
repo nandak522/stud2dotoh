@@ -18,7 +18,6 @@ urlpatterns += patterns('',
 urlpatterns += patterns('users.views',
     (r'^$', 'view_homepage', {'homepage_template':'homepage.html'}, 'homepage'),
     (r'^notepad/$', 'view_notepad', {'notepad_template':'notepad.html'}, 'notepad'),
-    (r'^notepad/preview/$', 'view_notepad_preview', {'notepad_preview_template':'notepad.html'}, 'notepad_preview'),
     (r'^webresume/$', 'view_webresume', {}, 'webresume'),
     (r'^invite/$', 'view_invite', {'invite_template':'invite.html'}, 'invite'),
 )

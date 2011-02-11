@@ -273,7 +273,7 @@ class UserProfilePageTests(TestCase):
         self.assertTrue(context.has_key('userprofile'))
         userprofile = context.get('userprofile')
         self.assertEquals(userprofile.user.email, UserProfile.objects.get(user__email='somerandomuser@gmail.com').user.email)
-        self.assertTrue(context.has_key('public_uploaded_files'))
+        self.assertTrue(context.has_key('all_notes'))
         self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         form_data = {'name': 'My Python Assignment',
                      'short_description': 'Hello World',
@@ -284,10 +284,10 @@ class UserProfilePageTests(TestCase):
         self.logout()
         response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
         context = response.context[0]
-        public_uploaded_files = context.get('public_uploaded_files')
-        self.assertTrue(public_uploaded_files)
+        all_notes = context.get('all_notes')
+        self.assertTrue(all_notes)
         from utils import slugify
-        self.assertTrue(slugify(form_data['name']) in public_uploaded_files)
+        self.assertTrue(slugify(form_data['name']) in all_notes)
         self.assertTrue(context.has_key('asked_questions'))
         self.assertTrue(context.has_key('answered_questions'))
     
@@ -315,7 +315,7 @@ class UserNotepadSavingTests(TestCase):
         form = context.get('form')
         self.assertFalse(form.is_bound)
         self.assertFalse(form.errors)
-        self.assertTrue(context.has_key('public_uploaded_files'))
+        self.assertTrue(context.has_key('all_notes'))
 
     def test_empty_notepad_saving(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
@@ -333,9 +333,9 @@ class UserNotepadSavingTests(TestCase):
         form = context.get('form')
         self.assertTrue(form.is_bound)
         self.assertTrue(form.errors)
-        self.assertTrue(context.has_key('public_uploaded_files'))
-        public_uploaded_files = context.get('public_uploaded_files')
-        self.assertFalse(public_uploaded_files)
+        self.assertTrue(context.has_key('all_notes'))
+        all_notes = context.get('all_notes')
+        self.assertFalse(all_notes)
     
     def test_valid_notepad_saving(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
@@ -353,11 +353,11 @@ class UserNotepadSavingTests(TestCase):
         form = context.get('form')
         self.assertFalse(form.is_bound)
         self.assertFalse(form.errors)
-        self.assertTrue(context.has_key('public_uploaded_files'))
-        public_uploaded_files = context.get('public_uploaded_files')
-        self.assertTrue(public_uploaded_files)
+        self.assertTrue(context.has_key('all_notes'))
+        all_notes = context.get('all_notes')
+        self.assertTrue(all_notes)
         from utils import slugify
-        self.assertTrue(slugify(form_data['name']) in public_uploaded_files)
+        self.assertTrue(slugify(form_data['name']) in all_notes)
         
     def test_viewing_saved_notepad_content(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
