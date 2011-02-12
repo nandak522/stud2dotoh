@@ -2,6 +2,16 @@
 {%block title%}All Questions{%endblock%}
 {%block questionstab%}activetab{%endblock%}
 {%block content%}
+<div id='questions_usage' class='feature_usage info'>
+<h3><span class='black_stress'>Questions</span> is a Bank of Questions and Answers. Here you can&nbsp;:</h3>
+<ul>
+    <li><span class='black_stress'>Clearly know</span> about things you are facing difficulty in <span class='black_stress'>understanding</span> from the text book.</li>
+    <li>Get <span class='black_stress'>opinions</span> about you topic of interest from <span class='black_stress'>Industry Experts</span></li>
+    {%if userprofile.is_student%}
+    <li>If you are a <span class='black_stress'>Senior student</span>, You can <span class='black_stress'>help</span> out <span class='black_stress'>juniors</span> by advising on the questions he/she raised</li>
+    {%endif%} 
+</ul>
+</div>
 <div class='span-20 column'>
 <h2 class='droid'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
 {%for question in questions%}

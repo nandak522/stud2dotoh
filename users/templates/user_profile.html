@@ -2,6 +2,16 @@
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block webresumetab%}activetab{%endblock%}
 {%block content%}
+<div id='webresume_usage' class='feature_usage info'>
+<h3><span class='black_stress'>Gone are the days</span> where you prepare 2 page word resumes &nbsp;:</h3>
+<ul>
+    <li>Web Resume <span class='black_stress'>aggregates</span> all your activity from the system and Helps any <span class='black_stress'>Company/Industry person</span> in getting a <span class='black_stress'>Multi-Dimensional</span> view of your skills.</li>
+    {%if userprofile.is_student%}
+    <li>If you are a <span class='black_stress'>final year</span> Student, A <span class='black_stress'>Recruiter/Company</span> person can easily <span class='black_stress'>select you</span> as he/she has ready view of your accomplishments</li>
+    {%endif%}    
+    <li>As this is an <span class='black_stress'>Online Resume</span>, You can pass it along to any body at <span class='black_stress'>zero cost</span> and Your <span class='black_stress'>Resume/CV</span> is searchable <span class='black_stress'>Globally</span></li>
+</ul>
+</div>
 <h3 class='droid'>{{userprofile.name|title}} ( member since {{userprofile.created_on|date:"dS M Y"}} )</h3>
 <div id='personal_details'>
 <table>

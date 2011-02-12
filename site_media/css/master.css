@@ -63,16 +63,20 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 .main_tabs li.activetab{background:#FFF;color:#0b5394;}
 .main_tabs li.activetab a{color:#0b5394;border:0;}
 .dropdown{vertical-align:middle;}
-.board{background:#EEE;border:1px solid #CCC;padding:10px;margin-bottom:4px;}
+.board{background:#F6F6F6;border:1px solid #CCC;padding:10px;margin-bottom:4px;}
 .board li{font-size:1.2em;list-style:none;font-family:"Droid Sans", Arial, Sans-serif;}
 #explain_invite li{list-style-type:disc;list-style-position:inside;}
 #explain_invite h4{margin-bottom:0;}
 hr{margin:0;padding:0;}
+.feature_usage{color:#666;}
+.feature_usage h3{color:#666;font-size:2em;}
+.feature_usage li{font:bold 1.1em Arial,sans-serif;padding-bottom:0.5em;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#092244;padding:1em 0;text-shadow:0px 1px 3px #999;font-family:"Droid Sans", Arial, Sans-serif;font-size:3em;margin:0;}
 #slideshow{background:#105FB6;padding:2em 0;color:#FFF;}
-.slideshow_content_area h1,.slideshow_content_area h4{color:#FFF;}
+.slideshow_content_area h1,.slideshow_content_area h4{color:#FFF;font-family:"Droid Sans",Arial,Sans-serif;}
+.slideshow_content_area li{font:bold 1.2em "Droid Sans", Arial, Sans-serif;padding-bottom:0.5em;}
 .slideshow_pic_area{height:380px;}
 #slides .next,#slides .prev {position:absolute;top:420px;width:24px;height:43px;display:block;z-index:101;border-bottom:0;}
 #slides .prev {left:260px;}

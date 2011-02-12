@@ -2,6 +2,16 @@
 {% block title %}Notepad{% endblock %}
 {%block notepadtab%}activetab{%endblock%}
 {%block content%}
+<div id='notepad_usage' class='feature_usage info'>
+<h3><span class='black_stress'>Notepad</span> is quite useful to you in these ways &nbsp;:</h3>
+<ul>
+    <li>You can quickly <span class='black_stress'>save something</span>, and keep it <span class='black_stress'>private</span> also.</li>
+    {%if userprofile.is_student%}
+    <li>You can store your class <span class='black_stress'>assignments</span> online. Also you can <span class='black_stress'>share</span> your work with the world with this</li>
+    {%endif%}    
+    <li>You can <span class='black_stress'>write an article about</span> an interesting topic and share it with your friends, collegues, world</li>
+</ul>
+</div>
 <div id='notepad' class="column span-18">
 <h3 class='droid'>Want to save something quickly ?</h3>
 <form action='{%url notepad%}' method="POST">{% csrf_token %}
