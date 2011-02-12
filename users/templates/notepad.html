@@ -16,12 +16,15 @@
 </div>
 <div id='uploaded_files' class="widget column span-5 last">
 <h4 class='widget_header centeralign'>My Saved Notes</h4>
-<ul>
+<table>
 {%for note in all_notes%}
-<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{%if note.public%}Public:{%else%}Private:{%endif%}{{note.name|capfirst}}</a></li>
+<tr>
+    <td>{%if note.public%}<img src="/site_media/img/public.png" title="This is public note"/>{%else%}<img title="This is private note" src="/site_media/img/private.png"/>{%endif%}</td>
+    <td><a class="file_link" target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></td>
+</tr>
 {%empty%}
-<li>You have not saved any notes yet!</li>
+<tr><td colspan="2">You have not saved any notes yet!</td></tr>
 {%endfor%}
-</ul>
+</table>
 </div>
 {%endblock%}

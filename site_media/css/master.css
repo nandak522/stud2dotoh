@@ -17,9 +17,9 @@ ul.errorlist li{display:inline;padding:2px 4px;margin:0;background:#C00;color:#F
 input[type="text"], input[type="password"], input.text, input.title, textarea, select{padding:4px;margin:0.5em 0 0 0;}
 input[readonly]{background:#CCC;}
 select{padding:0;}
-input[type="text"], input[type="password"], input.text, input.title, textarea{padding:4px;margin:0.5em 0 0 0;border-width:1px;border-style:solid;border-top-color:#CCC;border-left-color:#CCC;border-right-color:#EFEFEF;border-bottom-color:#EFEFEF;}
+input[type="text"], input[type="password"], input.text, input.title, textarea{padding:4px;margin:0.5em 0 0 0;border:2px solid #CCC;}
 input[type=text]:focus, input[type=password]:focus, input.text:focus, input.title:focus, textarea:focus {border-color:#105FB6;}
-textarea{width:auto;border:2px solid #CCC;width:765px;}
+textarea{width:auto;border:2px solid #CCC;}
 .leftalign{text-align:left;}
 .rightalign{text-align:right;}
 .centeralign{text-align:center;}
@@ -95,7 +95,7 @@ hr{margin:0;padding:0;}
 #question_body h2{margin-bottom:0.5em;}
 #all_answers{margin:16px 0 0 0;}
 #give_answer_section table{background:#EEE;}
-#give_answer_section textarea{margin-top:0.25em;}
+#give_answer_section textarea{margin-top:0.25em;width:765px;}
 #give_answer_section h3{color:#105FB6;background:#FFF;margin-bottom:4px;}
 #share_question_links{margin-bottom:6px;}
 
