@@ -16,7 +16,7 @@ function ajaxCall(url, params, callType){
             	}
             }
             $('#ajax_status_header').text('Done');
-            //$('#ajax_status_header').fadeOut(5000);
+            $('#ajax_status_header').fadeOut(5000);
         },
         beforeSend:function(){
         	if(callType === 'GET'){

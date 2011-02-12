@@ -13,6 +13,15 @@
 <body>
     <div id="container" class='container'>
         <div id='header' class='column span-24 last'>
+            {%block messages%}
+                {% if messages %}
+                    <ul class="messages span-24 last">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {%endblock%}
             {%block header%}
                 {%include 'header.html'%}        
             {%endblock%}
@@ -31,15 +40,6 @@
         {%endif%}
         <div id='content' class='column span-24 last'>
             <div id='ajax_status_header'></div>
-            {%block messages%}
-	            {% if messages %}
-					<ul class="messages">
-					    {% for message in messages %}
-					    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
-					    {% endfor %}
-					</ul>
-				{% endif %}
-            {%endblock%}
             {%block content%}
             {%endblock%}
         </div><!-- end of content -->
