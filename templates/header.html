@@ -1,7 +1,7 @@
 <div id='logo' class='column span-10'>
     <a href="{%url homepage%}"><h1>Stud2.0</h1></a>
 </div>
-<div id='header_toplinks' class='column span-10'>
+<div id='header_toplinks' class='column span-6'>
     <ul class='rightalign'>
         {%if user.is_authenticated%}
            <li><a href="{%url settings%}" title='Account Settings'>Hi {%firstof userprofile.name|title userprofile.username|title%}</a>&nbsp;<img class='dropdown' src="/site_media/img/dropdown.png"/></li>

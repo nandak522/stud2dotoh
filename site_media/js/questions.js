@@ -12,7 +12,7 @@ function accept_answer(question_id, answer_id){
 function show_closed_answering(response){
     $('#give_answer_section').html(response);
     $('#ajax_status_header').text('Closed Answering!');
-    $('#ajax_status_header').fadeOut(5000);
+    //$('#ajax_status_header').fadeOut(5000);
 }
 
 function show_accepted_answer(response){

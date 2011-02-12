@@ -1,18 +1,15 @@
 {%for answer in all_answers%}
-    <div class='answer_block'>
-        {%if answer.accepted%}
-            <div id="accepted_answer">This is the Accepted Answer</div>
-            {%autoescape off%}
-	            {{answer.description|removetags:"script button input marquee"}}<br/>
-	        {%endautoescape%}
-        {%else%}
-            {%autoescape off%}
-	            {{answer.description|removetags:"script button input marquee"}}<br/>
-	        {%endautoescape%}
+    {%with answer.accepted as accepted_answer%}
+    <div class='answer_block {%if accepted_answer%}accepted_answer{%endif%}' {%if accepted_answer%}title='This is the Final Answer'{%endif%}>
+        {%autoescape off%}
+            {{answer.description|removetags:"script button input marquee"}}<br/>
+        {%endautoescape%}
+        <span class='small_text'>Posted by {%with answer.given_by as given_by%}<a href="{%url user_profile given_by.id given_by.slug%}">{{given_by.name|title}}</a>{%endwith%} on {{answer.created_on|date:"dS M Y g:i A"}}</span>
+        {%if not accepted_answer%}
             {%ifequal question.raised_by.id userprofile.id%}
-                <input type="button" value="Make this as final answer" name="accept_answer" onClick="javascript:accept_answer('{{question.id}}','{{answer.id}}');"/><br/>
+                <br/><br/><input type="button" value="Make this as final answer" name="accept_answer" onClick="javascript:accept_answer('{{question.id}}','{{answer.id}}');"/><br/>
             {%endifequal%}
         {%endif%}
-        <span class='small_text'>Posted by {%with answer.given_by as given_by%}<a href="{%url user_profile given_by.id given_by.slug%}">{{given_by.name|title}}</a>{%endwith%} on {{answer.created_on|date:"dS M Y g:i A"}}</span>
     </div>
+    {%endwith%}
 {%endfor%}
