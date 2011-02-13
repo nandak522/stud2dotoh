@@ -12,14 +12,17 @@ from users.models import UserProfile, College, Company, Group
 from utils.decorators import is_post
 from utils.emailer import new_anwer_emailer
 
-def view_all_questions(request, all_questions_template):
-    questions = Question.objects.all().order_by('-modified_on')
+def get_stats():
     stats = {'colleges_count':College.objects.count(),
              'students_count':Group.objects.get(name='Student').user_set.count(),
              'companies_count':Company.objects.count(),
              'employees_count':Group.objects.get(name='Employee').user_set.count()}
+    return stats
+
+def view_all_questions(request, all_questions_template):
+    questions = Question.objects.all().order_by('-modified_on')
     return response(request, all_questions_template, {'questions':questions,
-                                                      'stats':stats})
+                                                      'stats':get_stats()})
 
 def view_question(request, question_id, question_slug, question_template):
     question = get_object_or_404(Question, id=int(question_id))#question_slug is for SEO
@@ -137,4 +140,5 @@ def view_tagged_questions(request, tag_name, tagged_questions_template):
     except (EmptyPage, InvalidPage):
         questions = paginator.page(paginator.num_pages)
     return response(request, tagged_questions_template, {'questions': questions.object_list,
-                                                        'tag': tag})
+                                                        'tag': tag,
+                                                        'stats':get_stats()})
