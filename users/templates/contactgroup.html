@@ -5,8 +5,15 @@
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{contactgroupform.to}}</td></tr>
     <tr><td class='rightalign'><label for="id_subject">Subject :</label></td><td class='leftalign'>{{contactgroupform.subject}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 100 characters)</span><br/>{{contactgroupform.subject.errors}}</td></tr>
-    <tr><td class='rightalign'><label for="id_message">Message :</label></td><td class='form-row'>{{contactgroupform.message}}<span class='help_text'>(<span class='required'>Required</span>. Max of 500 characters)</span><br/>{{contactgroupform.message.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_message">Message :</label></td><td class='form-row'>{{contactgroupform.message}}<span class='help_text'>(<span class='required'>Required</span>. Max of 500 characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{contactgroupform.message.errors}}</td></tr>
     <tr><td>&nbsp;</td><td><input type='submit' value='Send Message'/></td></tr>
 </table>
 </form>
+{%endblock%}
+{%block extrajs%}
+<script type="text/javascript">
+$('#id_message').keyup(function(e){
+    charCounter({{contactgroupform.fields.message.max_length}}, 'id_message', 'status_meter_id');
+});
+</script>
 {%endblock%}

@@ -18,7 +18,7 @@
     <table>
         <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of <span class='black_stress'>30</span> characters)</span><br/>{{form.name.errors}}</td></tr>
         <tr><td><label for="id_name">Short Description:</label></td><td>{{form.short_description}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of <span class='black_stress'>50</span> characters)</span><br/>{{form.short_description.errors}}</td></tr>
-        <tr><td><label for="id_name">Content:</label></td><td>{{form.content}}<span class='help_text'><br/>(<span class='required'>Required</span>. Max of <span class='black_stress'>7000</span> characters)</span><br/>{{form.content.errors}}</td></tr>
+        <tr><td><label for="id_name">Content:</label></td><td>{{form.content}}<span class='help_text'><br/>(<span class='required'>Required</span>. Max of <span class='black_stress'>7000</span> characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{form.content.errors}}</td></tr>
         <tr><td><label for="id_public">&nbsp;</label></td><td>{{form.public}}Make the Note Public? (Everyone can see this)</td></tr>
         <tr><td>&nbsp;</td><td><input type="submit" value="Save this"/></td></tr>
     </table>
@@ -37,4 +37,12 @@
 {%endfor%}
 </table>
 </div>
+{%endblock%}
+{%block extrajs%}
+<script type='text/javascript'>
+document.forms[0].name.focus();
+$('#id_content').keyup(function(e){
+    charCounter({{form.fields.content.max_length}}, 'id_content', 'status_meter_id');
+});
+</script>
 {%endblock%}

@@ -40,4 +40,9 @@
 <script type='text/javascript' src='/site_media/js/questions.js'></script>
 <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=madhavbnk"></script>
+<script type="text/javascript">
+$('#id_description').keyup(function(e){
+    charCounter({{give_answer_form.fields.description.max_length}}, 'id_description', 'status_meter_id');
+});
+</script>
 {%endblock%}
