@@ -1,4 +1,4 @@
-<ul class="messages" id="personal_settings_messages">
+<ul id="personal_settings_messages">
 {% for message in messages %}
 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
 {% endfor %}

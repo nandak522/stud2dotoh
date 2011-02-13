@@ -1,8 +1,9 @@
-<div id='logo' class='column span-10'>
-    <a href="{%url homepage%}"><h1>Stud2.0</h1></a>
-</div>
-<div id='header_toplinks' class='column span-6'>
-    <ul class='rightalign'>
+<div id='header_top_ribbon' class='span-24'>
+    <ul id='header_toplinks_left' class='column span-12 leftalign left'>
+        <li><a href='/site_media/html/aboutus.html'>About</a></li>
+        <li><a href='{%url contactus%}'>Contact</a></li>
+    </ul>
+    <ul id='header_toplinks_right' class='column span-11 rightalign right'>
         {%if user.is_authenticated%}
            <li><a href="{%url settings%}" title='Account Settings'>Hi {%firstof userprofile.name|title userprofile.username|title%}</a>&nbsp;<img class='dropdown' src="/site_media/img/dropdown.png"/></li>
            <li><a href='{%url logout%}'>Logout</a></li>
@@ -12,4 +13,9 @@
         {%endif%}
            <li><a href="{%url invite%}">Invite</a></li>
     </ul>
-</div>
+</div><!-- end of header_ribbon -->
+<div id='header_middle_ribbon' class='span-24'>
+	<div id='logo' class='column span-10'>
+	    <a href="{%url homepage%}"><h1>Stud2.0</h1></a>
+	</div><!-- end of logo -->
+</div><!-- end of header_middle_ribbon -->
