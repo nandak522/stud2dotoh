@@ -20,7 +20,7 @@
 </div>
 <!-- AddThis Button END -->
 <span class='small_text'>Posted in </span>&nbsp;&nbsp;{%for tag in question.tags.all%}
-<a class="tag" title="Browse {{tag.name|title}} snippets" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a>
+<a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a>
 {%endfor%}
 <br/>
 </div>
