@@ -1,32 +1,46 @@
 <h2 class='droid'>Hi {{userprofile.name|title}}, This is your Dashboard</h2>
-<div id='notepad_widget' class='column prepend-5 span-4'>
-	<h3 class='dashboard_widget_header'>Notepad</h3>
-	<div class='dashboard_widget_content'>
-	<a href="{%url notepad%}">Notepad</a>
-	</div>
+<div id='notepad_widget' class='dashboard_widget push-4 column span-8'>
+    <div class='icon left'></div>
+    <div class='content'>
+       <h3 class='header'><a href="{%url notepad%}">Notepad</a></h3>
+       <ul>
+           <li>Store anything quickly. Like assignments or articles</li>
+           <li>Notes can be made private</li>
+           <li>Share your notes online. Let anybody discover your writing skills</li>
+       </ul>
+    </div><!-- end of notepad_widget_content -->
 </div><!-- end of notepad_widget -->
-<div id='public_profile_widget' class='column span-4'>
-	<h3 class='dashboard_widget_header'>Public Profile</h3>
-	<div class='dashboard_widget_content'>
-	<a href="{%url user_profile userprofile.id userprofile.slug%}">Public Profile</a>
-	</div>
-</div><!-- end of public_profile_widget -->
-<div id='ask_question_widget' class='column span-4 clearfix'>
-	<h3 class='dashboard_widget_header'>Ask a Question</h3>
-	<div class='dashboard_widget_content'>
-	<a href="{%url ask_question%}">Ask a Question ?</a>
-	</div>
-</div><!-- end of ask_question_widget -->
-<br/><br/>
-<div id='answer_question_widget' class='column prepend-7 span-4'>
-	<h3 class='dashboard_widget_header'>Answer a Question</h3>
-	<div class='dashboard_widget_content'>
-	<a href="{%url all_questions%}">Answer a Question ?</a>
-	</div>
-</div><!-- end of answer_question_widget -->
-<div id='account_settings_widget' class='column span-4'>
-	<h3 class='dashboard_widget_header'>Account Settings</h3>
-	<div class='dashboard_widget_content'>
-	<a href="{%url settings%}">Account Settings</a>
-	</div>
-</div><!-- end of account_settings_widget -->
+<div id='webresume_widget' class='dashboard_widget column span-8'>
+    <div class='icon left'></div>
+    <div class='content'>
+       <h3 class='header'><a href="{%url user_profile userprofile.id userprofile.slug%}">Public Profile</a></h3>
+       <ul>
+           <li>This this this</li>
+           <li>This this this</li>
+           <li>This this this</li>
+       </ul>
+    </div><!-- end of webresume_widget_content -->
+</div><!-- end of webresume_widget -->
+<div class='clearfix'></div>
+<div id='questions_widget' class='dashboard_widget push-4 column span-8'>
+    <div class='icon left'></div>
+    <div class='content'>
+       <h3 class='header'><a href="{%url ask_question%}">Ask a Question</a></h3>
+       <ul>
+           <li>This this this</li>
+           <li>This this this</li>
+           <li>This this this</li>
+       </ul>
+    </div><!-- end of questions_widget_content -->
+</div><!-- end of questions_widget -->
+<div id='answers_widget' class='dashboard_widget column span-8'>
+    <div class='icon left'></div>
+    <div class='content'>
+       <h3 class='header'><a href="{%url all_questions%}">Answer a Question</a></h3>
+       <ul>
+           <li>This this this</li>
+           <li>This this this</li>
+           <li>This this this</li>
+       </ul>
+    </div><!-- end of answers_widget_content -->
+</div><!-- end of answers_widget -->

@@ -114,6 +114,11 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #share_question_links{margin-bottom:6px;}
 
 /*Dashboard Page Styles*/
-.dashboard_widget_header{background:#0b5394;margin:0;padding:4px 6px;color:#FFF;text-align:center;}
-.dashboard_widget_content{border:1px solid #0b5394;text-align:center;min-height:40px;padding-top:2em;}
-#notepad_widget,#public_profile_widget,#ask_question_widget,#answer_question_widget,#account_settings_widget{width:170px;}
+.dashboard_widget_header{color:#105FB6;margin:0;padding:4px 6px;color:#FFF;text-align:center;}
+.dashboard_widget{margin-right:10px;}
+.dashboard_widget .icon{width:65px;height:100px;padding:10px;}
+.dashboard_widget .content{background:#EFEFEF;padding:10px;height:100px;overflow:hidden;}
+#notepad_widget .icon{background:#EFEFEF url(/site_media/img/notepad.png) no-repeat;}
+#questions_widget .icon{background:#EFEFEF url(/site_media/img/questions.png) no-repeat;}
+#answers_widget .icon{background:#EFEFEF url(/site_media/img/answers.png) no-repeat;}
+#webresume_widget .icon{background:#EFEFEF url(/site_media/img/webresume.png) no-repeat;}
