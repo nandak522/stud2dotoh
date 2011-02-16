@@ -1,13 +1,13 @@
 {%extends 'singlepane_base.html'%}
 {%block title%}Account Settings{%endblock%}
 {%block content%}
-	<div id='personal_settings'>
+	<div id='personal_settings' class='settings'>
 		{%include 'personal_settings.html'%}
 	</div><!-- end of personal_settings -->
-	<div id="acad_settings">
+	<div id="acad_settings" class='settings'>
 		{%include 'acad_settings.html'%}				
 	</div><!-- end of acad_settings -->
-	<div id="workinfo_settings">
+	<div id="workinfo_settings" class='settings'>
 		{%if workinfo_form%}
 			{%include 'workinfo_settings.html'%}
 		{%else%}

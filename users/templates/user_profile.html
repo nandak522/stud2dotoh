@@ -13,8 +13,8 @@
     <li>As this is an <span class='black_stress'>Online Resume</span>, You can pass it along to any body at <span class='black_stress'>zero cost</span> and Your <span class='black_stress'>Resume/CV</span> is searchable <span class='black_stress'>Globally</span></li>
 </ul>
 </div>
-<h3 class='droid'>{{userprofile.name|title}} ( member since {{userprofile.created_on|date:"dS M Y"}} )</h3>
-<div id='personal_details'>
+<h3 class='droid content_header'>{{userprofile.name|title}} ( member since {{userprofile.created_on|date:"dS M Y"}} )</h3>
+<div id='personal_details' class='webresume_section'>
 <table>
 <tr><td class='column span-3'>Email:</td><td>{{userprofile.user.email|emailify}}</td></tr>
 <tr><td class='column span-3'>Web Resume:</td><td><a class='domain bold' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a></td></tr>
@@ -36,7 +36,7 @@
 <tr><td><h3><a id='contactuser' href="{%url contactuser userprofile.id%}">Contact {{userprofile.name|title}}</a></h3></td></tr>
 </table>
 </div><!-- end of personal_details -->
-<div id='uploaded_files' class='widget'>
+<div id='uploaded_files' class='widget webresume_section'>
 <h4 class='droid widget_header leftalign'>Saved Notes</h4>
 <ul>
 {%for note in public_notes%}
@@ -46,7 +46,7 @@
 {%endfor%}
 </ul>
 </div><!-- end of uploaded_files -->
-<div id='asked_questions' class='widget'>
+<div id='asked_questions' class='widget webresume_section'>
 <h4 class='droid widget_header leftalign'>Asked Questions</h4>
 {%if asked_questions%}
 	<ul>
@@ -58,7 +58,7 @@
 	<ul><li>{{userprofile.name|title}} didn't ask any questions yet!</li></ul>
 {%endif%}
 </div><!-- end of asked_questions -->
-<div id='answered_questions' class='widget'>
+<div id='answered_questions' class='widget webresume_section'>
 <h4 class='droid widget_header leftalign'>Answers Given For</h4>
 {%if answered_questions%}
 	<ul>

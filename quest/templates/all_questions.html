@@ -14,13 +14,13 @@
 </ul>
 
 </div>
-<div class='span-20 column'>
-<h2 class='droid'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
+<div id='all_questions' class='column span-18'>
+<h2 class='droid content_header'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
 {%for question in questions%}
 <h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h3>
 {%endfor%}
 </div>
-<div class='span-4 column last'>
+<div id='all_questions_sidebar' class='span-4 column last'>
 <input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <br/><br/><br/>
 <ul id='stats' class='board'>

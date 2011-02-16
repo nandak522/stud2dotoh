@@ -2,7 +2,7 @@
 {%block title%}{{question.title}}{%endblock%}
 {%block questionstab%}activetab{%endblock%}
 {%block content%}
-<div id='question_body' class='span-20 column'>
+<div id='question_body' class='span-19 column'>
 <h2><a href="{%url question question.id question.slug%}">{{question.title}}</a></h2>
 <span class='small_text'>Posted by {%with question.raised_by as raised_by%}<a href="{%url user_profile raised_by.id raised_by.slug%}">{{raised_by.name|title}}</a>{%endwith%} on {{question.modified_on|date:"dS M Y g:i A"}}</span>
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>

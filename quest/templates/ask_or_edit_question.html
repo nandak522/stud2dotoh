@@ -1,7 +1,8 @@
 {%extends 'singlepane_base.html'%}
 {%block title%}{%if question%}Edit{%else%}Ask{%endif%} a Question{%endblock%}
 {%block content%}
-<div id='ask_or_edit_question' class='span-17 column'>
+<h3 class='droid content_header'>{%if question%}Edit{%else%}Ask{%endif%} a Question</h3>
+<div id='ask_or_edit_question' class='span-16 column'>
     <form action="{%if question%}{%url edit_question question.id question.slug%}{%else%}{%url ask_question%}{%endif%}" method='POST'>{% csrf_token %}
     <table class='form-table'>
         <tr><td class='rightalign'><label for="id_title">Question :</label></td><td class='leftalign'>{{form.title}}<span class='help_text'>(<span class='required'>Required</span>. Max of 80 characters)</span><br/>{{form.title.errors}}</td></tr>
@@ -11,9 +12,9 @@
     </table>
     </form>
 </div>
-<div id='previous_questions' class='span-7 column last'>
+<div id='previous_questions' class='widget span-7 column last'>
 {%if question%}
-    <h4 class='droid'>Your previous questions</h4>
+    <h4 class='droid widget_header'>Your previous questions</h4>
     {%if previous_questions%}
         <ul>
         {%for pquestion in previous_questions%}
@@ -24,7 +25,7 @@
         No other Questions asked yet!
     {%endif%}
 {%else%}
-    <h4 class='droid'>Your previous questions</h4>
+    <h4 class='droid widget_header'>Your previous questions</h4>
     {%if asked_questions%}
         <ul>
         {%for pquestion in asked_questions%}
