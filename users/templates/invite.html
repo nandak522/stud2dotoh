@@ -1,8 +1,8 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}Invite somebody you know{% endblock %}
 {%block content%}
-<br/>
-<div class='span-12 column'>
+<h3 class='droid content_header'>Invite somebody you know!</h3>
+<div class='column span-12'>
 <form action="{%url invite %}" method='POST'>{% csrf_token %}
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{form.to_emails}}<span class='help_text'>(Mention multiple emails separated by commas.)</span>{{form.to_emails.errors}}</td></tr>
