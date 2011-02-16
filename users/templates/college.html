@@ -2,12 +2,12 @@
 {% block title %}{{college.name|title}}{% endblock %}
 {%block content%}
 {%with college.name as college_name%}
-<h2 class='droid'>{{college_name|title}}</h2>
+<h2 class='droid content_header'>{{college_name|title}}</h2>
 {%if students%}
-<h3><a id='contactgroup' href="{%url contactgroup 'college' college.id%}">Contact All {{college_name|title}} Students</a></h3>
-<ul>
+<h3 class='droid content_header'><a id='contactgroup' href="{%url contactgroup 'college' college.id%}">Contact All {{college_name|title}} Students</a></h3>
+<ul id='colleges_list' class='prepend-1'>
 {%for student in students%}
-<li><a href="{%url user_profile student.id student.slug%}">{{student.name}}</a></li>
+<li><a href="{%url user_profile student.id student.slug%}">{{student.name|title}}</a></li>
 {%empty%}
 No Students Yet!
 {%endfor%}
