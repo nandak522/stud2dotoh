@@ -1,7 +1,7 @@
 {%extends 'singlepane_base.html'%}
-{% block title %}Contact the People behind Stud2.0{% endblock %}
+{% block title %}Contact Stud2.0 Team{% endblock %}
 {%block content%}
-<h3 class='droid content_header'>Contact the People behind Stud2.0</h3>
+<h3 class='droid content_header'>Contact Stud2.0 Team</h3>
 <form action="{%url contactus%}" method="POST">{% csrf_token %}
 <table>
 	<tr><td class='rightalign'><label for="id_from_name">Your Name:</label></td><td class='leftalign'>{{form.from_name}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 50 characters)</span></td></tr>

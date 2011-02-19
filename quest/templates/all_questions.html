@@ -2,8 +2,8 @@
 {%block title%}All Questions{%endblock%}
 {%block questionstab%}activetab{%endblock%}
 {%block content%}
-<div id='questions_usage' class='feature_usage info'>
-<div id='close' onClick='javascript:$("#questions_usage").fadeOut();'>Close</div>
+<div id='questions_usage' class='feature_usage'>
+<div id='close' onClick='javascript:$("#questions_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
 <h3><span class='black_stress'>Questions</span> is a Bank of Questions and Answers. Here you can&nbsp;:</h3>
 <ul>
     <li><span class='black_stress'>Clearly know</span> about things you are facing difficulty in <span class='black_stress'>understanding</span> from the text book.</li>
@@ -12,7 +12,6 @@
     <li>If you are a <span class='black_stress'>Senior student</span>, You can <span class='black_stress'>help</span> out <span class='black_stress'>juniors</span> by advising on the questions he/she raised</li>
     {%endif%} 
 </ul>
-
 </div>
 <div id='all_questions' class='column span-18'>
 <h2 class='droid content_header'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
@@ -20,7 +19,7 @@
 <h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h3>
 {%endfor%}
 </div>
-<div id='all_questions_sidebar' class='span-4 column last'>
+<div id='questions_sidebar' class='span-4 column last'>
 <input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <br/><br/><br/>
 <ul id='stats' class='board'>
