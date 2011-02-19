@@ -5,7 +5,7 @@
 {%if user.is_authenticated%}
 {%include 'dashboard.html'%}
 {%else%}
-<h1 id='vision_banner'>Making Academic Life more <span class='orange_underline'>open and lively</span></h1>
+<h1 id='vision_banner'>Connecting Students and Industry <span class='orange_underline'>in open ways</span></h1>
 <div id='slideshow' class='span-24'>
 	<div id="slides" class='prepend-1 span-22'>
 	    <a href="#" class="prev"><img src="/site_media/img/slideshow_pix/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
@@ -18,6 +18,7 @@
 		              <li>Store any assignment <span class='orange_underline'>online</span></li>
 		              <li>Use it to write an article/blog/thesis-paper</li>
 		           </ul>
+		           <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 	           </div><!-- end of slideshow_content_area -->
 	           <div class='span-10 slideshow_pic_area'>
 	               <a href="{%url notepad%}" title="Notepad Page" target="_blank"><img src="/site_media/img/slideshow_pix/notepad.png" alt="Notepad Page"/></a>
@@ -31,6 +32,7 @@
                       <li>Get <span class='orange_underline'>Industry Experts</span> help you</li>
                       <li>College <span class='orange_underline'>Seniors</span> can help their <span class='orange_underline'>juniors</span></li>
                    </ul>
+                   <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
                </div><!-- end of slideshow_content_area -->
                <div class='span-10 slideshow_pic_area'>
                    <a href="{%url all_questions%}" title="Questions Page" target="_blank"><img src="/site_media/img/slideshow_pix/all_questions.png" alt="Questions Page"/></a>
@@ -44,6 +46,7 @@
                       <li><span class='orange_underline'>Online</span> and Impressive</li>
                       <li><span class='orange_underline'>Zero Cost</span>. Searchable globally</li>
                    </ul>
+                   <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
                </div><!-- end of slideshow_content_area -->
                <div class='span-10 slideshow_pic_area'>
                    <a href="{%url webresume%}" title="Web Resume Page" target="_blank"><img src="/site_media/img/slideshow_pix/web_resume.png" alt="Web Resume Page"/></a>
