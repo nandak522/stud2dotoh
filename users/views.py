@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
-from users.decorators import anonymoususer
+from users.decorators import anonymoususer, is_admin
 from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
@@ -18,6 +18,7 @@ import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer
 
 @login_required
+@is_admin
 def view_all_users(request, all_users_template):
     from django.core.paginator import Paginator, EmptyPage, InvalidPage
     paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__email', 'created_on'), 2)
