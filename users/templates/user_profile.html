@@ -2,7 +2,7 @@
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block webresumetab%}activetab{%endblock%}
 {%block content%}
-<div id='webresume_usage' class='feature_usage info'>
+<div id='webresume_usage' class='feature_usage'>
 <div id='close' onClick='javascript:$("#webresume_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
 <h3><span class='black_stress'>Gone are the days</span> where you prepare 2 page word resumes &nbsp;:</h3>
 <ul>
@@ -12,39 +12,45 @@
     {%endif%}    
     <li>As this is an <span class='black_stress'>Online Resume</span>, You can pass it along to any body at <span class='black_stress'>zero cost</span> and Your <span class='black_stress'>Resume/CV</span> is searchable <span class='black_stress'>Globally</span></li>
 </ul>
-</div>
-<h3 class='droid content_header'>{{userprofile.name|title}} ( member since {{userprofile.created_on|date:"dS M Y"}} )</h3>
-<div id='personal_details' class='webresume_section'>
-<table>
-<tr><td class='column span-3'>Email:</td><td>{{userprofile.user.email|emailify}}</td></tr>
-<tr><td class='column span-3'>Web Resume:</td><td><a class='domain bold' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a></td></tr>
+</div><!-- end of webresume_usage -->
+<input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%url contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>
+<h2 id='user_profile_header' class='droid content_header'>{{userprofile.name|title}}</h2>
 {%load users_tags%}
-{%ifequal userprofilegroup 'Student'%}
-{%with userprofile.acad_details as acad_details%}
-<tr><td class='column span-3'>College:</td><td>{%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%}</td></tr>
-<tr><td class='column span-3'>Specialization:</td><td>{{acad_details.0}}</td></tr>
-{%endwith%}
-{%else%}
-{%with userprofile.work_details as work_details%}
-<tr><td class='column span-3'>Work-Place:</td><td>{%autoescape off%}{{work_details.0.id|workplace_url}}{%endautoescape%}</td></tr>
-<tr><td class='column span-3'>as:</td><td>{%if work_details.1%}{{work_details.1}}{%endif%}</td></tr>
-<tr><td class='column span-3'>Has:</td><td>{%if work_details.2%}{{work_details.2}} Years of Experience{%endif%}</td></tr>
-{%endwith%}
-{%endifequal%}
-</table>
-<table>
-<tr><td><h3><a id='contactuser' href="{%url contactuser userprofile.id%}">Contact {{userprofile.name|title}}</a></h3></td></tr>
-</table>
+<div id='personal_details'>
+<ul>
+    <li>{{userprofile.user.email|emailify}}&nbsp;&nbsp;|&nbsp;&nbsp;<a class='domain' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a></li>
+    <li>
+        {%if userprofile.is_student%}
+            {%with userprofile.acad_details as acad_details%}
+                Studying {%if acad_details.0%}{{acad_details.0}} (&nbsp;{{acad_details.2}} - {{acad_details.3}} Batch&nbsp;){%endif%} in {%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%} College.</td>
+            {%endwith%}
+        {%else%}
+            {%with userprofile.work_details as work_details%}
+                {%if work_details.2%}Has{{work_details.2}} Years of Experience, {%endif%}Currently works at {%autoescape off%}{{work_details.0.id|workplace_url}}{%endautoescape%}{%if work_details.1%}, as{{work_details.1}}{%endif%}
+            {%endwith%}
+        {%endif%}
+    </li>
+    <li>
+        Has strong interest in {%for tag in userprofile.interested_tags%}<a class="tag" title="Browse All {{tag|title}} Questions" href="{%url tagged_questions tag_name=tag%}">{{tag}}</a>&nbsp;&nbsp;{%endfor%}
+    </li>
+    {%with userprofile.helped_persons as helped_persons%}
+    {%if helped_persons%}
+    <li>
+        Helped {%for person in helped_persons%}<a href="{%url user_profile person.0 person.1%}">{{person.2|title}}</a>, {%endfor%}
+    </li>
+    {%endif%}
+    {%endwith%}
+</ul>
 </div><!-- end of personal_details -->
 <div id='uploaded_files' class='widget webresume_section'>
-<h4 class='droid widget_header leftalign'>Saved Notes</h4>
-<ul>
-{%for note in public_notes%}
-<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
-{%empty%}
-<li>{{userprofile.name|title}} has not saved any notes yet!</li>
-{%endfor%}
-</ul>
+	<h4 class='droid widget_header leftalign'>Saved Notes</h4>
+	<ul>
+	{%for note in public_notes%}
+	<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
+	{%empty%}
+	<li>{{userprofile.name|title}} has not saved any notes yet!</li>
+	{%endfor%}
+	</ul>
 </div><!-- end of uploaded_files -->
 <div id='asked_questions' class='widget webresume_section'>
 <h4 class='droid widget_header leftalign'>Asked Questions</h4>

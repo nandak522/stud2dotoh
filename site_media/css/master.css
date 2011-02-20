@@ -42,9 +42,9 @@ a.tag{border-bottom:0;}
 .bold{font-weight:bold;}
 .domain{font-size:120%;}
 .droid{font-family:"Droid Sans",Arial, Sans-serif;padding-bottom:4px;color:#073763;}
-.widget{margin-top:2em;border:2px solid #CFE2F3;}
+.widget{margin-top:2em;border:1px solid #CCC;}
 .widget ul{padding-left:10px;}
-.widget_header{font-weight:normal;background:#CFE2F3;padding:4px;color:#0b5394;font-weight:bold;}
+.widget_header{font-weight:normal;background:#F6F6F6;padding:4px;color:#073763;font-weight:bold;}
 .widget li{list-style-type:none;margin-bottom:4px;font-size:1.2em;}
 .black_stress{color:#000;}
 .special_blue{color:#0b5394;}
@@ -60,7 +60,7 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 .main_tabs li.activetab{background:#FFF;color:#0b5394;}
 .main_tabs li.activetab a{color:#0b5394;border:0;}
 .dropdown{vertical-align:middle;}
-.board{background:#F6F6F6;border:1px solid #CCC;padding:10px;margin-bottom:4px;}
+.board{cccccpadding:10px;margin-bottom:4px;}
 .board li{font-size:1.2em;list-style:none;font-family:"Droid Sans", Arial, Sans-serif;}
 #explain_invite li{list-style-type:disc;list-style-position:inside;}
 #explain_invite h4{margin-bottom:0;}
@@ -68,7 +68,7 @@ hr{margin:0;padding:0;}
 .feature_usage{color:#666;padding:0.875em;margin:10px auto 10px;width:80%;background:#F6F6F6;border:1px solid #CCC;}
 .feature_usage #close{cursor:pointer;text-align:right;background:url(/site_media/css/blueprint/plugins/buttons/icons/cross.png) no-repeat;width:16px;}
 .feature_usage h3{font-size:2em;color:#666;}
-.feature_usage li{font:bold 1.1em Arial,sans-serif;padding-bottom:0.5em;}
+.feature_usage li{font:bold 1.1em Arial,sans-serif;padding:0 0 0.5em 1em;}
 #header_top_ribbon{background:#053B76;height:25px;border-bottom:1px solid #105Fb6;font-size:0.875em;padding-top:4px;}
 #header_toplinks_left li,#header_toplinks_right li{display:inline;font-size:1.2em;padding:2px 10px;}
 #header_toplinks_left a,#header_toplinks_right a{tex-decoration:none;border:0;color:#FFF;}
@@ -108,9 +108,14 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #account_settings h3{margin-top:1em;}
 .webresume_section{margin:10px;}
 .webresume_section ul{padding:10px;}
+.webresume_section h3, .webresume_section h4{font-weight:bold;font-size:1.2em;}
+#personal_details{margin:0 1em 1em 1em;padding:1em;background:#F6F6F6;}
+#personal_details li{padding-bottom:0.875em;font:bold 1.1em Arial,sans-serif;}
+#contact_button{padding:0.5em;font-size:1.2em;font-weight:bold;margin-top:10px;margin-right:10px;}
+#user_profile_header{padding-left:0.5em;margin-bottom:0;}
 
 /*Question Page Styles*/
-#all_questions,#question_body{border-right:1px solid #EFEFEF;}
+#all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
 #all_questions,#questions_sidebar{padding:1em;}
 #questions_sidebar input[type="button"]{padding:0.875em;font-size:1.2em;font-weight:bold;}
 #all_questions .content_header{padding-left:0;}
@@ -122,7 +127,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #question_body h2{margin-bottom:0.5em;}
 #all_answers{margin:16px 0 0 0;}
 #give_answer_section table{background:#EEE;}
-#give_answer_section textarea{margin-top:0.25em;width:724px;}
+#give_answer_section textarea{margin-top:0.25em;width:685px;}
 #give_answer_section h3{color:#105FB6;background:#FFF;margin-bottom:4px;}
 #share_question_links{margin-bottom:6px;}
 

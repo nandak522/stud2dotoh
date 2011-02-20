@@ -4,7 +4,7 @@
 {%block content%}
 <div id='question_body' class='span-18 column'>
 <h2><a href="{%url question question.id question.slug%}">{{question.title}}</a></h2>
-<span class='small_text'>Posted by {%with question.raised_by as raised_by%}<a href="{%url user_profile raised_by.id raised_by.slug%}">{{raised_by.name|title}}</a>{%endwith%} on {{question.modified_on|date:"dS M Y g:i A"}}</span>
+<span class='small_text'>Posted by {%with question.raised_by as raised_by%}<a href="{%url user_profile raised_by.id raised_by.slug%}">{{raised_by.name|title}}</a>{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
 <div id='question_action_links'>
 <!-- AddThis Button BEGIN -->
@@ -19,9 +19,13 @@
 <a class="addthis_button_preferred_4"></a>
 </div>
 <!-- AddThis Button END -->
-<span class='small_text'>Posted in </span>&nbsp;&nbsp;{%for tag in question.tags.all%}
-<a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a>
-{%endfor%}
+{%with question.tags as tags %}
+{%if tags.count%}
+	<span class='small_text'>Posted in </span>&nbsp;&nbsp;{%for tag in tags.all%}
+	<a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a>
+	{%endfor%}
+{%endif%}
+{%endwith%}
 <br/>
 </div>
     {%if not question.closed and userprofile.id == question.owner.id %}

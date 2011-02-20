@@ -148,7 +148,29 @@ class UserProfile(BaseModel):
             work_details = work_details.values('content_type', 'object_id', 'designation', 'years_of_exp')[0]
             content_type = ContentType.objects.get(id=work_details['content_type'])
             return (content_type.get_object_for_this_type(id=work_details['object_id']), work_details['designation'], work_details['years_of_exp'] if work_details['years_of_exp'] else '')
-        return (None,'', '')
+        return (None, '', '')
+    
+    @property
+    def interested_tags(self):
+        #NOTE:For now, all Q&A tags related to this user are pulled up. 
+        all_qa_tags = []
+        all_raised_questions = self.question_set.all()
+        for question in all_raised_questions:
+            all_qa_tags.extend([tag['name'] for tag in question.tags.values('name')])
+        all_given_answers = self.answer_set.all()
+        for answer in all_given_answers:
+            question_tags = [tag['name'] for tag in answer.question.tags.values('name')]
+            all_qa_tags.extend(question_tags)
+        return tuple(set(all_qa_tags))
+    
+    @property
+    def helped_persons(self):
+        persons = []
+        all_given_answers = self.answer_set.all()
+        for answer in all_given_answers:
+            person = answer.question.raised_by
+            persons.append((person.id, person.slug, person.name))
+        return persons
         
     def update(self, **kwargs):
         if 'password' in kwargs.keys():
