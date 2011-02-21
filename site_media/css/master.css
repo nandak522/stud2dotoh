@@ -23,7 +23,7 @@ textarea{width:auto;border:2px solid #CCC;}
 .previous_page, .next_page{padding:4px;border:1px solid #CCC;font-weight:bold;}
 .previous_page:hover, .next_page:hover{padding:4px;border:1px solid #00223B;color:#FFF;background:#00223B;}
 .current_page{padding:4px;font-weight:bold;background:#00223B;color:#FFF;}
-.tag{background:url(/site_media/img/tag.png) no-repeat transparent;color:#105FB6;padding:4px 10px 4px 20px;background-color:#EFEFEF;-moz-border-radius:2px 2px 2px 2px;}
+.tag{background:url(/site_media/img/tag.png) no-repeat transparent;color:#105FB6;padding:4px 10px 4px 20px;background-color:#DFDFDF;-moz-border-radius:2px 2px 2px 2px;}
 a.tag{border-bottom:0;}
 .messages{margin:0 auto;list-style-type:none;padding:0;text-align:center;font:bold 1.2em "Droid sans",Monospace,Arial,sans-serif;position:fixed;background:#FFF;color:#105FB6;top:0;}
 #personal_settings_messages,#acad_settings_messages,#workinfo_settings_messages{list-style-type:none;font:bold 1.1em "Droid sans",Monospace,Arial,sans-serif;text-align:center;}

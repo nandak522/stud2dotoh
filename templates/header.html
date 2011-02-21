@@ -6,7 +6,7 @@
     </ul>
     <ul id='header_toplinks_right' class='column span-11 rightalign right'>
         {%if user.is_authenticated%}
-           <li><a href="{%url settings%}" title='Account Settings'>Hi {%firstof userprofile.name|title userprofile.username|title%}</a>&nbsp;<img class='dropdown' src="/site_media/img/dropdown.png"/></li>
+           <li><a href="{%url settings%}" title='Account Settings'>Account Settings</a>&nbsp;<img class='dropdown' src="/site_media/img/dropdown.png"/></li>
            <li><a href='{%url logout%}'>Logout</a></li>
         {%else%}
            <li><a href='{%url register%}'>Join</a></li>

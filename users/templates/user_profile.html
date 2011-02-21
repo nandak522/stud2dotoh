@@ -18,7 +18,9 @@
 {%load users_tags%}
 <div id='personal_details'>
 <ul>
-    <li>{{userprofile.user.email|emailify}}&nbsp;&nbsp;|&nbsp;&nbsp;<a class='domain' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a></li>
+    <li>
+        Can be reached at: {{userprofile.user.email|emailify}}&nbsp;&nbsp;|&nbsp;&nbsp;<a class='domain' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
+    </li>
     <li>
         {%if userprofile.is_student%}
             {%with userprofile.acad_details as acad_details%}
@@ -30,9 +32,13 @@
             {%endwith%}
         {%endif%}
     </li>
+    {%with userprofile.interested_tags as interested_tags%}
+    {%if interested_tags%}
     <li>
-        Has strong interest in {%for tag in userprofile.interested_tags%}<a class="tag" title="Browse All {{tag|title}} Questions" href="{%url tagged_questions tag_name=tag%}">{{tag}}</a>&nbsp;&nbsp;{%endfor%}
+        Has strong interest in {%for tag in interested_tags%}<a class="tag" target="_blank" title="Browse All {{tag|title}} Questions" href="{%url tagged_questions tag_name=tag%}">{{tag}}</a>&nbsp;&nbsp;{%endfor%}
     </li>
+    {%endif%}
+    {%endwith%}
     {%with userprofile.helped_persons as helped_persons%}
     {%if helped_persons%}
     <li>
