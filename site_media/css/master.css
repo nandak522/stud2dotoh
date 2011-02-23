@@ -149,3 +149,10 @@ ul#colleges_list li a{font-size:1.6em;}
 
 /*Login Page Styles*/
 #login_pane h3{color:#666;margin-top:1em;}
+
+/*About Page Styles*/
+#aboutus h2{margin-bottom:0.25em;}
+#aboutus ul li{list-style:none;}
+#aboutus div{margin:0 0 0 1em;padding:0 0 0 1em;font-size:1.2em;}
+#aboutus div ul{list-style-type:disc;list-style-position:inside;}
+#aboutus div ul li{font-size:1.2em;}
