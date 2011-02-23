@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404
@@ -129,8 +130,8 @@ def view_give_answer(request, question_id, give_answer_template, question_templa
 
 def view_tagged_questions(request, tag_name, tagged_questions_template):
     tag = get_object_or_404(Tag, name=tag_name)
-    questions = Question.objects.filter(tags__name__in=[tag_name])
-    paginator = Paginator(questions, 1)
+    questions = Question.objects.filter(tags__name__in=[tag_name]).values('id', 'slug', 'title')
+    paginator = Paginator(questions, settings.DEFAULT_PAGINATION_COUNT)
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:

@@ -21,7 +21,7 @@ from utils.emailer import default_emailer, mail_admins, mail_group, invitation_e
 @is_admin
 def view_all_users(request, all_users_template):
     from django.core.paginator import Paginator, EmptyPage, InvalidPage
-    paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__email', 'created_on'), 2)
+    paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__email', 'created_on'), settings.DEFAULT_PAGINATION_COUNT)
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:
