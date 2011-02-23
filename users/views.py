@@ -154,7 +154,7 @@ def view_notepad(request, notepad_template):
                              note=form.cleaned_data.get('content'),
                              public=form.cleaned_data.get('public'))
     from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
-    messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % form.cleaned_data.get('name'))
+    messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE)
     return response(request, notepad_template, {'form':SaveNoteForm(),
                                                 'all_notes':all_notes})
 
@@ -187,7 +187,7 @@ def view_edit_note(request, note_id, notepad_template):
                         note=form.cleaned_data.get('content'),
                         public=form.cleaned_data.get('public'))
             from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
-            messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % form.cleaned_data.get('name'))
+            messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE)
         return response(request, notepad_template, {'form':SaveNoteForm(),
                                                     'all_notes':all_notes})
     raise Http404
