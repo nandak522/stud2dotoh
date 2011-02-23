@@ -15,7 +15,7 @@
 </div>
 <div id='notepad' class="column span-18">
 <h3 class='droid'>Want to save something quickly ?</h3>
-<form action='{%url notepad%}' method="POST">{% csrf_token %}
+<form action='{%if note%}{%url edit_note note_id=note.id%}{%else%}{%url notepad%}{%endif%}' method="POST">{% csrf_token %}
     <table>
         <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of <span class='black_stress'>30</span> characters)</span><br/>{{form.name.errors}}</td></tr>
         <tr><td><label for="id_name">Short Description:</label></td><td>{{form.short_description}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of <span class='black_stress'>50</span> characters)</span><br/>{{form.short_description.errors}}</td></tr>
@@ -31,7 +31,7 @@
 {%for note in all_notes%}
 <tr>
     <td>{%if note.public%}<img src="/site_media/img/public.png" title="This is public note"/>{%else%}<img title="This is private note" src="/site_media/img/private.png"/>{%endif%}</td>
-    <td><a class="file_link" target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></td>
+    <td><a class="file_link" target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a>&nbsp;&nbsp;<a href="{%url edit_note note_id=note.id%}">Edit Note</a></td>
 </tr>
 {%empty%}
 <tr><td colspan="2">You have not saved any notes yet!</td></tr>

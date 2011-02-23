@@ -167,6 +167,32 @@ def view_note(request, note_id):
     raise Http404
 
 @login_required
+def view_edit_note(request, note_id, notepad_template):
+    userprofile = loggedin_userprofile(request)
+    all_notes = userprofile.all_notes
+    note = get_object_or_404(Note, id=int(note_id))
+    if userprofile.is_my_note(note):
+        if request.method == 'GET':
+            form = SaveNoteForm({'name':note.name,
+                                 'short_description':note.short_description,
+                                 'content':note.note,
+                                 'public':note.public})
+            return response(request, notepad_template, {'form':form,
+                                                        'note':note,
+                                                        'all_notes':all_notes})
+        form = SaveNoteForm(post_data(request))
+        if form.is_valid():
+            note.update(name=form.cleaned_data.get('name'),
+                        short_description=form.cleaned_data.get('short_description'),
+                        note=form.cleaned_data.get('content'),
+                        public=form.cleaned_data.get('public'))
+            from users.messages import SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE
+            messages.success(request, SAVED_NOTEPAD_SUCCESSFULLY_MESSAGE % form.cleaned_data.get('name'))
+        return response(request, notepad_template, {'form':SaveNoteForm(),
+                                                    'all_notes':all_notes})
+    raise Http404
+
+@login_required
 def view_account_settings(request, settings_template):
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':
