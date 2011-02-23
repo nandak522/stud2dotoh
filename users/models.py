@@ -169,7 +169,8 @@ class UserProfile(BaseModel):
         all_given_answers = self.answer_set.all()
         for answer in all_given_answers:
             person = answer.question.raised_by
-            persons.append((person.id, person.slug, person.name))
+            if person.id != self.id:
+                persons.append((person.id, person.slug, person.name))
         return persons
         
     def update(self, **kwargs):

@@ -28,7 +28,7 @@
             {%endwith%}
         {%else%}
             {%with userprofile.work_details as work_details%}
-                {%if work_details.2%}Has{{work_details.2}} Years of Experience, {%endif%}Currently works at {%autoescape off%}{{work_details.0.id|workplace_url}}{%endautoescape%}{%if work_details.1%}, as{{work_details.1}}{%endif%}
+                {%if work_details.2%}Has {{work_details.2}} Years of Experience, {%endif%}Currently works at {%autoescape off%}{{work_details.0.id|workplace_url}}{%endautoescape%}{%if work_details.1%}, as {{work_details.1}}{%endif%}
             {%endwith%}
         {%endif%}
     </li>
