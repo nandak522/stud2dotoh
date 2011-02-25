@@ -1,4 +1,7 @@
 USER_SIGNUP_SUCCESSFUL = 'Congratulations! You have signed up!'
+STUDENT_SIGNUP_GREETING = 'You are Signing Up as a Student'
+PROFESSOR_SIGNUP_GREETING = 'You are Signing Up as a Professor'
+EMPLOYEE_SIGNUP_GREETING = 'You are Signing Up as an Employee'
 USER_LOGIN_SUCCESSFUL = 'Welcome Back!'
 USER_LOGOUT_SUCCESSFUL = 'You have been logged out!' 
 USER_LOGIN_FAILURE = 'Invalid email and/or password combination'

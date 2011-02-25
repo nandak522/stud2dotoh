@@ -1,9 +1,37 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}Registration{% endblock %}
 {%block content%}
-<div style="text-align:center;min-height:200px;padding-top:4em;">
-<input class='big_button' type="button" value="Are you a Student ?" onClick="javascript:document.location.href='{%url student_register%}';">
-<input class='big_button' type="button" value="Are you a Professor ?" onClick="javascript:document.location.href='{%url professor_register%}';">
-<input class='big_button' type="button" value="Are you an Employee ?" onClick="javascript:document.location.href='{%url employee_register%}';">
-</div>
+<style>
+#student_signup_pane,#professor_signup_pane,#employee_signup_pane{margin-top:2em;border-right:1px solid #EFEFEF;height:200px;overflow:hidden;text-align:center;}
+#student_signup_pane h3,#professor_signup_pane h3,#employee_signup_pane h3{background:#EFEFEF;color:#105FB6;padding:0.5em;}
+#student_signup_pane a,#professor_signup_pane a,#employee_signup_pane a{border-bottom:0;}
+.signup_notes{text-align:left;padding-left:1em;padding-top:1em;}
+</style>
+<div id="student_signup_pane" class='prepend-2 column span-7'>
+<h3>Are you a Student ?</h3>
+<ul class='signup_notes'>
+<li>Something Something Something</li>
+<li>Something Something Something</li>
+<li>Something Something Something</li>
+</ul>
+<a href="{%url student_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+</div><!-- end of student_signup_pane -->
+<div id="professor_signup_pane" class='column span-7'>
+<h3>Are you a Professor ?</h3>
+<ul class='signup_notes'>
+<li>Something Something Something</li>
+<li>Something Something Something</li>
+<li>Something Something Something</li>
+</ul>
+<a href="{%url professor_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+</div><!-- end of professor_signup_pane -->
+<div id="employee_signup_pane" class='column span-7'>
+<h3>Are you an Employee ?</h3>
+<ul class='signup_notes'>
+<li>Something Something Something</li>
+<li>Something Something Something</li>
+<li>Something Something Something</li>
+</ul>
+<a href="{%url employee_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+</div><!-- end of employee_signup_pane -->
 {%endblock%}

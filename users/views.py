@@ -38,10 +38,16 @@ def view_register(request, registration_template, user_type='', next=''):
         return response(request, registration_template, {'next':next})
     form_to_be_loaded = ''
     if user_type == 'S':
+        from users.messages import STUDENT_SIGNUP_GREETING
+        messages.success(request, STUDENT_SIGNUP_GREETING)
         form_to_be_loaded = StudentSignupForm
     elif user_type == 'P':
+        from users.messages import PROFESSOR_SIGNUP_GREETING
+        messages.success(request, PROFESSOR_SIGNUP_GREETING)
         form_to_be_loaded = ProfessorSignupForm
     elif user_type == 'E':
+        from users.messages import EMPLOYEE_SIGNUP_GREETING
+        messages.success(request, EMPLOYEE_SIGNUP_GREETING)
         form_to_be_loaded = EmployeeSignupForm
     if request.method == 'GET':
         return response(request, registration_template, {'form':form_to_be_loaded(), 'next':next})
