@@ -2,15 +2,15 @@
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block webresumetab%}activetab{%endblock%}
 {%block content%}
-<div id='webresume_usage' class='feature_usage'>
+<div id='webresume_usage' class='feature_usage prepend-top box'>
 <div id='close' onClick='javascript:$("#webresume_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
-<h3><span class='black_stress'>Gone are the days</span> where you prepare 2 page word resumes &nbsp;:</h3>
+<h3>Gone are the days where you prepare 2 page word resumes &nbsp;:</h3>
 <ul>
-    <li>Web Resume <span class='black_stress'>aggregates</span> all your activity from the system and Helps any <span class='black_stress'>Company/Industry person</span> in getting a <span class='black_stress'>Multi-Dimensional</span> view of your skills.</li>
+    <li>Web Resume aggregates all your activity from the system and Helps any Company/Industry person in getting a Multi-Dimensional view of your skills.</li>
     {%if userprofile.is_student%}
-    <li>If you are a <span class='black_stress'>final year</span> Student, A <span class='black_stress'>Recruiter/Company</span> person can easily <span class='black_stress'>select you</span> as he/she has ready view of your accomplishments</li>
+    <li>If you are a final year Student, A Recruiter/Company person can easily select you as he/she has ready view of your accomplishments</li>
     {%endif%}    
-    <li>As this is an <span class='black_stress'>Online Resume</span>, You can pass it along to any body at <span class='black_stress'>zero cost</span> and Your <span class='black_stress'>Resume/CV</span> is searchable <span class='black_stress'>Globally</span></li>
+    <li>As this is an Online Resume, You can pass it along to any body at zero cost and Your Resume/CV is searchable Globally</li>
 </ul>
 </div><!-- end of webresume_usage -->
 <input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%url contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>

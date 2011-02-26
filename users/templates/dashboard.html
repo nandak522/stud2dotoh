@@ -1,5 +1,5 @@
 <h2 class='droid content_header centeralign'>Hi {{userprofile.name|title}}, This is your Dashboard</h2>
-<div id='notepad_widget' class='dashboard_widget push-4 column span-8'>
+<div id='notepad_widget' class='dashboard_widget prepend-4 column span-8 append-bottom append-1'>
     <div class='icon left'></div>
     <div class='content'>
        <h3 class='header'><a href="{%url notepad%}">Notepad</a></h3>
@@ -10,7 +10,7 @@
        </ul>
     </div><!-- end of notepad_widget_content -->
 </div><!-- end of notepad_widget -->
-<div id='webresume_widget' class='dashboard_widget column span-8'>
+<div id='webresume_widget' class='dashboard_widget column span-8 append-bottom last'>
     <div class='icon left'></div>
     <div class='content'>
        <h3 class='header'><a href="{%url user_profile userprofile.id userprofile.slug%}">Web Resume</a></h3>
@@ -22,7 +22,7 @@
     </div><!-- end of webresume_widget_content -->
 </div><!-- end of webresume_widget -->
 <div class='clearfix'></div>
-<div id='questions_widget' class='dashboard_widget push-4 column span-8'>
+<div id='questions_widget' class='dashboard_widget prepend-4 column span-8 append-bottom append-1'>
     <div class='icon left'></div>
     <div class='content'>
        <h3 class='header'><a href="{%url ask_question%}">Ask a Question</a></h3>
@@ -33,7 +33,7 @@
        </ul>
     </div><!-- end of questions_widget_content -->
 </div><!-- end of questions_widget -->
-<div id='answers_widget' class='dashboard_widget column span-8'>
+<div id='answers_widget' class='dashboard_widget column span-8 append-bottom last'>
     <div class='icon left'></div>
     <div class='content'>
        <h3 class='header'><a href="{%url all_questions%}">Answer a Question</a></h3>

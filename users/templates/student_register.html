@@ -1,7 +1,7 @@
 {%extends 'singlepane_base.html'%}
 {% block title %}Create a Student Account{% endblock %}
 {%block content%}
-<div class='prepend-6'>
+<div class='prepend-6 prepend-top'>
     <form action="{%url student_register%}" method='POST'>{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
