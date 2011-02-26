@@ -17,7 +17,8 @@ from users.models import UserProfile, College, Company, Note
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
-from utils.decorators import is_get, is_post
+from utils.decorators import is_get, is_post, is_ajax
+from django.utils import simplejson
 
 @login_required
 @is_admin
@@ -472,3 +473,16 @@ def view_reset_my_password(request, reset_my_password_template):
                                    password=password)
         return response(request, reset_my_password_template, {'form':form,
                                                               'email':data.get('email')})
+@is_ajax
+def view_colleges_list(request, search_name):
+    colleges = College.objects.filter(name__icontains=search_name).values('id', 'name')
+    colleges = [(college_info['id'], college_info['name']) for college_info in colleges]
+    json = simplejson.dumps(colleges)
+    return HttpResponse(json, mimetype='application/json')
+
+@is_ajax
+def view_companies_list(request, search_name):
+    companies = Company.objects.filter(name__icontains=search_name).values('id', 'name')
+    companies = [(company_info['id'], company_info['name']) for company_info in companies]
+    json = simplejson.dumps(companies)
+    return HttpResponse(json, mimetype='application/json')

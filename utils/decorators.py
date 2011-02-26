@@ -13,3 +13,10 @@ def is_get(view_function):
             return view_function(request, *args, **kwargs)
         raise Http404 
     return inner
+
+def is_ajax(the_function):
+    def _is_ajax(request, *args, **kwargs):
+        if request.is_ajax():
+            return the_function(request, *args, **kwargs)
+        raise Http404
+    return _is_ajax
