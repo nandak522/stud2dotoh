@@ -9,7 +9,6 @@ a{text-decoration:none;border-bottom:1px solid #06C;}
 .small_text{color:#777;}
 .required{color:#F00;}
 .optional{color:#105Cb6;}
-li{list-style-type:disc;list-style-position:inside;}
 ul.errorlist{font-size:12px;margin:0;list-style-type:none;padding:0.2em;}
 ul.errorlist li{display:inline;padding:2px 4px;margin:0;background:#C00;color:#FFF;}
 input[type="text"], input[type="password"], input.text, input.title, textarea, select{padding:4px;margin:0.5em 0 0 0;}
@@ -49,7 +48,7 @@ a.tag{border-bottom:0;}
 .black_stress{color:#000;}
 .special_blue{color:#0b5394;}
 #ajax_status_header{display:none;margin:0 auto;width:150px;background:#FFD354;text-align:center;padding:2px;top:0px;left:45%;position:fixed;z-index:10000;color:#000;}
-input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #CCCCCC;background:#0b5394;color:#FFF;border:0;cursor:pointer;padding:2px;}
+input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-moz-box-shadow:0 1px 3px #CCCCCC;background:#0b5394;color:#FFF;border:0;cursor:pointer;padding:4px;}
 .roundcorner{-moz-border-radius:2px 2px 2px 2px;}
 .big_button{padding:10px;font-size:1.5em;-moz-border-radius:6px 6px 6px 6px;margin-right:1em;}
 .main_tabs{padding-top:0.875em;text-align:center;margin:0;background:#2B5789;height:24px;}

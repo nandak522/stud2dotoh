@@ -2,13 +2,13 @@
 {% block title %}Registration{% endblock %}
 {%block content%}
 <style>
-#student_signup_pane,#professor_signup_pane,#employee_signup_pane{margin-top:2em;border-right:1px solid #EFEFEF;height:200px;overflow:hidden;text-align:center;}
-#student_signup_pane h3,#professor_signup_pane h3,#employee_signup_pane h3{background:#EFEFEF;color:#105FB6;padding:0.5em;}
+#student_signup_pane,#professor_signup_pane,#employee_signup_pane{margin-top:2em;height:200px;overflow:hidden;text-align:center;}
+#student_signup_pane h3,#professor_signup_pane h3,#employee_signup_pane h3{background:#EFEFEF;color:#105FB6;padding:0.5em;margin:0;}
 #student_signup_pane a,#professor_signup_pane a,#employee_signup_pane a{border-bottom:0;}
-.signup_notes{text-align:left;padding-left:1em;padding-top:1em;}
+.signup_notes{text-align:left;padding-left:1em;padding:1em;border:1px solid #EFEFEF;}
 </style>
 <div class='prepend-top'>
-<div id="student_signup_pane" class='prepend-2 column span-7'>
+<div id="student_signup_pane" class='prepend-1 column span-7 append-1'>
 <h3>Are you a Student ?</h3>
 <ul class='signup_notes'>
 <li>Something Something Something</li>
@@ -17,7 +17,7 @@
 </ul>
 <a href="{%url student_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of student_signup_pane -->
-<div id="professor_signup_pane" class='column span-7'>
+<div id="professor_signup_pane" class='column span-7 append-1'>
 <h3>Are you a Professor ?</h3>
 <ul class='signup_notes'>
 <li>Something Something Something</li>
@@ -26,7 +26,7 @@
 </ul>
 <a href="{%url professor_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of professor_signup_pane -->
-<div id="employee_signup_pane" class='column span-7'>
+<div id="employee_signup_pane" class='column span-7 last'>
 <h3>Are you an Employee ?</h3>
 <ul class='signup_notes'>
 <li>Something Something Something</li>
