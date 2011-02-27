@@ -31,7 +31,9 @@ urlpatterns += patterns('users.views',
     (r'^accounts/logout/$', 'view_logout', {'logout_template': 'logout.html'}, 'logout'),
     (r'^contactuser/(?P<user_id>\d+)/$', 'view_contactuser', {'contactuser_template':'contactuser.html'}, 'contactuser'),
     (r'^contactgroup/(?P<group_type>\w+)/(?P<group_id>\d+)/$', 'view_contactgroup', {'contactgroup_template':'contactgroup.html'}, 'contactgroup'),
-    (r'^contactus/$', 'view_contactus', {'contactus_template':'contactus.html'}, 'contactus')
+    (r'^contactus/$', 'view_contactus', {'contactus_template':'contactus.html'}, 'contactus'),
+    (r'^forgot_password/$', 'view_forgot_password', {'forgot_password_template':'forgot_password.html'}, 'forgot_password'),
+    (r'^reset_my_password/$', 'view_reset_my_password', {'reset_my_password_template':'reset_my_password.html'}, 'reset_my_password'),
 )
 
 urlpatterns += patterns('users.views',

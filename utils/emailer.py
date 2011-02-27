@@ -62,7 +62,14 @@ def new_anwer_emailer(question, new_answer):
     message = render_template('emails/new_answer.html', {'question':question,
                                                          'new_answer':new_answer})
     all_related_users_emails = question.all_related_users_emails()
-    print 'all_related_users_emails:%s' % all_related_users_emails
     for email in all_related_users_emails:
         messages_info.append((subject, message, DEFAULT_FROM_EMAIL, [email]))
     send_mass_mail(messages_info)
+    
+def forgot_password_emailer(email, hash_key):
+    message = render_template('emails/forgot_password.html', {'email':email,
+                                                              'hash_key':hash_key}) 
+    default_emailer(from_email=DEFAULT_FROM_EMAIL,
+                    to_emails=[email],
+                    message=message,
+                    subject='Reset my Password')

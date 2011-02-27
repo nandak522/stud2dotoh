@@ -8,7 +8,9 @@ def anonymoususer(the_function):
         user = request.user
         if user.is_authenticated():
             return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
-        kwargs['next'] = get_data(request).get('next', '')
+        next = get_data(request).get('next', '')
+        if next:
+            kwargs['next'] = next        
         return the_function(request, *args, **kwargs)
     return _anonymoususer
 
