@@ -475,6 +475,7 @@ def view_reset_my_password(request, reset_my_password_template):
                                                               'email':data.get('email')})
 @is_ajax
 def view_colleges_list(request, search_name):
+    print 'search_name:%s' % search_name
     colleges = College.objects.filter(name__icontains=search_name).values('id', 'name')
     colleges = [(college_info['id'], college_info['name']) for college_info in colleges]
     json = simplejson.dumps(colleges)

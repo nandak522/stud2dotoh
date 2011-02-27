@@ -8,3 +8,8 @@ class MultipleEmailsField(forms.CharField):
         if not value and self.required:
             raise ValidationError(self.error_messages['required'])
         return value
+    
+class AutocompleteWidget(forms.TextInput):
+    class Media:
+        css = {'all':('/site_media/js/jquery/plugins/autocomplete/jquery-autocomplete/jquery.autocomplete.css',)}
+        js = ('/site_media/js/jquery/plugins/autocomplete/jquery-autocomplete/jquery.autocomplete-min.js',)    

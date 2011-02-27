@@ -2,17 +2,27 @@
 {% block title %}Create a Student Account{% endblock %}
 {%block content%}
 <div class='prepend-6 prepend-top'>
-    <form action="{%url student_register%}" method='POST'>{% csrf_token %}
+    <form action="{%url student_register%}" method='POST' autocomplete="off">{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
 	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Min of 6 characters. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_college">College :</label></td><td class='leftalign'>{{form.college}}<span class='help_text'>(<span class='required'>Required</span>. Max of 100 characters)</span><br/>{{form.college.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_college">College ID :</label></td><td class='leftalign'>{{form.college_id}}<span class='help_text'>(<span class='required'>Required</span>. Max of 100 characters)</span><br/>{{form.college.errors}}</td></tr>
 	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
 	</table>
 	</form>
 	<h3 class='prepend-2'>Already have an Account ? <a href="{%url login%}">Please Login</a></h3>
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}
+{%block extrajs%}
+<script type='text/javascript'>document.forms[0].email.focus();</script>
+<script type='text/javascript' src="/site_media/js/jquery/plugins/jquery.autocomplete-1.1.3/jquery.autocomplete-min.js"></script>
+<script type='text/javascript'>
+$('#id_college').autocomplete('/colleges_ajax/')
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery/plugins/autocomplete/jquery-autocomplete/jquery.autocomplete.css" />
+{%endblock%}
