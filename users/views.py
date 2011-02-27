@@ -12,10 +12,12 @@ from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
 from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNoteForm
+from users.forms import ForgotPasswordForm, ResetMyPasswordForm
 from users.models import UserProfile, College, Company, Note
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
-from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer
+from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
+from utils.decorators import is_get, is_post
 
 @login_required
 @is_admin
@@ -415,3 +417,58 @@ def view_invite(request, invite_template):
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, invite_template, {'form':form})
+
+@anonymoususer
+def view_forgot_password(request, forgot_password_template):
+    if request.method == 'GET':
+        form = ForgotPasswordForm()
+        return response(request, forgot_password_template, {'form':form})
+    form = ForgotPasswordForm(post_data(request))
+    if not form.is_valid():
+        return response(request, forgot_password_template, {'form':form})
+    email = form.cleaned_data.get('email')
+    try:
+        from django.contrib.auth.models import get_hexdigest
+        hash_key = get_hexdigest('md5', '', email)
+        forgot_password_emailer(email, hash_key)
+        from users.messages import SENT_FORGOT_PASSWORD_EMAIL_SUCCESSFULLY
+        messages.success(request, SENT_FORGOT_PASSWORD_EMAIL_SUCCESSFULLY)
+    except:
+        from users.messages import CONTACTING_FAILED
+        messages.error(request, CONTACTING_FAILED)
+    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+
+@anonymoususer
+def view_reset_my_password(request, reset_my_password_template):
+    if request.method == 'GET':
+        if request.GET.has_key('email') and request.GET.has_key('hash_key'):
+            email = request.GET.get('email')
+            userprofile = get_object_or_404(UserProfile, user__email=email)
+            retrieved_hash_key = request.GET.get('hash_key')
+            from django.contrib.auth.models import get_hexdigest
+            computed_hash_key = get_hexdigest('md5', '', email)
+            if retrieved_hash_key == computed_hash_key:
+                form = ResetMyPasswordForm()
+                return response(request, reset_my_password_template, {'form':form,
+                                                                      'email':email})
+            from users.messages import INVALID_PASSWORD_RESET_HASH_KEY
+            messages.error(request, INVALID_PASSWORD_RESET_HASH_KEY)
+            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+        else:
+            raise Http404
+    else:
+        data = post_data(request)
+        form = ResetMyPasswordForm(data)
+        if form.is_valid():
+            email = data.get('email')
+            userprofile = get_object_or_404(UserProfile, user__email=email)
+            password = form.cleaned_data.get('password')
+            userprofile.set_password(password)
+            from users.messages import PASSWORD_RESET_SUCCESSFULLY
+            messages.success(request, PASSWORD_RESET_SUCCESSFULLY)
+            return _let_user_login(request,
+                                   userprofile.user,
+                                   email=email,
+                                   password=password)
+        return response(request, reset_my_password_template, {'form':form,
+                                                              'email':data.get('email')})

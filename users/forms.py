@@ -127,3 +127,9 @@ class ContactUsForm(ContactForm):
     
 class InvitationForm(forms.Form):
     to_emails = MultipleEmailsField(max_length=500, required=True)
+    
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(required=True, max_length=50)
+    
+class ResetMyPasswordForm(forms.Form):
+    password = forms.CharField(min_length=6, max_length=50, required=True, widget=forms.PasswordInput())
