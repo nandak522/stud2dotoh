@@ -115,6 +115,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #personal_details li{padding-bottom:0.875em;font:bold 1.1em Arial,sans-serif;}
 #contact_button{padding:0.5em;font-size:1.2em;font-weight:bold;margin-top:10px;margin-right:10px;}
 #user_profile_header{padding-left:0.5em;margin-bottom:0;}
+#answered_questions li,#asked_questions li{padding-bottom:0.875em;}
 
 /*Question Page Styles*/
 #all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
