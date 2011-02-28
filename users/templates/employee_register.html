@@ -8,10 +8,28 @@
 	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Min of 6 characters. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_name">Company :</label></td><td class='leftalign'>{{form.company}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.company.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_company">Company :</label></td><td class='leftalign'>{{form.company}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.company.errors}}</td></tr>
 	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
 	</table>
 	</form>
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}
+{%block extrajs%}
+<script type='text/javascript'>document.forms[0].email.focus();</script>
+<script type='text/javascript' src="/site_media/js/jquery/plugins/autocomplete/jquery.autocomplete.js"></script>
+<script type='text/javascript'>
+$('#id_company').autocomplete({
+                                url:'/companies_ajax/',
+                                showResult:function(value, data){
+                                    return '<span style="color:red">value:' + value + ' data:'+data+'</span>';
+                                },
+                                onItemSelect:function(item){
+                                    alert('You have selected:'+item);
+                                    $('#id_company').value = item;
+                                }
+})
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery/plugins/autocomplete/jquery.autocomplete.css" />
+{%endblock%}

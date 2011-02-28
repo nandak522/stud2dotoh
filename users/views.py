@@ -474,15 +474,16 @@ def view_reset_my_password(request, reset_my_password_template):
         return response(request, reset_my_password_template, {'form':form,
                                                               'email':data.get('email')})
 @is_ajax
-def view_colleges_list(request, search_name):
-    print 'search_name:%s' % search_name
+def view_colleges_list(request):
+    search_name = request.GET.get('q')
     colleges = College.objects.filter(name__icontains=search_name).values('id', 'name')
     colleges = [(college_info['id'], college_info['name']) for college_info in colleges]
     json = simplejson.dumps(colleges)
     return HttpResponse(json, mimetype='application/json')
 
 @is_ajax
-def view_companies_list(request, search_name):
+def view_companies_list(request):
+    search_name = request.GET.get('q')
     companies = Company.objects.filter(name__icontains=search_name).values('id', 'name')
     companies = [(company_info['id'], company_info['name']) for company_info in companies]
     json = simplejson.dumps(companies)

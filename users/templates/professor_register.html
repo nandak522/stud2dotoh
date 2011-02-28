@@ -14,4 +14,22 @@
 	</form>
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}
+{%block extrajs%}
+<script type='text/javascript'>document.forms[0].email.focus();</script>
+<script type='text/javascript' src="/site_media/js/jquery/plugins/autocomplete/jquery.autocomplete.js"></script>
+<script type='text/javascript'>
+$('#id_college').autocomplete({
+                                url:'/colleges_ajax/',
+                                showResult:function(value, data){
+                                    return '<span style="color:red">value:' + value + ' data:'+data+'</span>';
+                                },
+                                onItemSelect:function(item){
+                                    alert('You have selected:'+item);
+                                    $('#id_college').value = item;
+                                }
+})
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery/plugins/autocomplete/jquery.autocomplete.css" />
+{%endblock%}
