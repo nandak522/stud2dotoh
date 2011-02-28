@@ -160,3 +160,9 @@ ul#colleges_list li a{font-size:1.6em;}
 
 /*Forgot Password Page Styles*/
 #forgot_password .content_header{padding-left:0;margin-top:0;}
+
+/*500 Page Styles*/
+#500_page{background:#2B5789;color:#FFF;}
+
+/*404 Page Styles*/
+#404_page{background:#2B5789;color:#FFF;}
