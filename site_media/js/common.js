@@ -1,4 +1,4 @@
-function ajaxCall(url, params, callType){
+function ajaxCall(url, params, callType, dataType){
 	var successCallback = params['successCallback'];
 	var successCallbackParams = params['successCallbackParams'];
 	delete params.successCallbackParams;
@@ -6,6 +6,7 @@ function ajaxCall(url, params, callType){
 	return $.ajax({
         url:url,
         data:params,
+        dataType:dataType,
         type:callType,
         success: function(response){
             if(successCallback){
@@ -37,12 +38,18 @@ function ajaxCall(url, params, callType){
     });
 }
 
-function ajaxPost(url,params){
-	return ajaxCall(url, params, 'POST');    
+function ajaxPost(url, params, dataType){
+    if(!dataType){
+       dataType = 'html';
+    }
+	return ajaxCall(url, params, 'POST', dataType);    
 }
 
-function ajaxGet(url, params){
-	return ajaxCall(url, params, 'GET');
+function ajaxGet(url, params, dataType){
+    if(!dataType){
+       dataType = 'html';
+    }
+	return ajaxCall(url, params, 'GET', dataType);
 }
 
 function charCounter(max_count, field_id, status_meter_id){

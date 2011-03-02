@@ -33,15 +33,12 @@ class UserSignupForm(forms.Form):
         
 class StudentSignupForm(UserSignupForm):
     college = forms.CharField(required=True, max_length=100, widget=AutocompleteWidget())
-    college_id = forms.IntegerField(required=True, widget=AutocompleteWidget())
     
 class EmployeeSignupForm(UserSignupForm):
     company = forms.CharField(required=True, max_length=50)
-    company_id = forms.IntegerField(required=True, widget=forms.HiddenInput())
     
 class ProfessorSignupForm(UserSignupForm):
     college = forms.CharField(required=True, max_length=100)
-    college_id = forms.IntegerField(required=True, widget=forms.HiddenInput())
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField(max_length=50, required=True)

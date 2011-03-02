@@ -167,3 +167,6 @@ ul#colleges_list li a{font-size:1.6em;}
 
 /*404 Page Styles*/
 #404_page{background:#2B5789;color:#FFF;}
+
+/*Autocomplete Styles*/
+.ui-menu-item a{border-bottom:1px solid #EFEFEF;}

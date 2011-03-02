@@ -1,8 +1,3 @@
-<ul id="workinfo_settings_messages">
-{% for message in messages %}
-<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
-{% endfor %}
-</ul>
 <h3 class='droid leftalign'>Work Place Settings</h3>
 <form name="workplace_settings_form">{% csrf_token %}
 <table class='form-table'>

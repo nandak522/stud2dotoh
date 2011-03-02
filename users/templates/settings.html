@@ -18,4 +18,21 @@
 {%block extrajs%}
 <script type='text/javascript'>document.forms[0].name.focus();</script>
 <script type='text/javascript' src="/site_media/js/users.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $('#id_college').autocomplete({
+        dataType:'json',
+        source:'{%url ajax_colleges_list%}',
+        minLength:1,
+    });
+    $('#id_workplace').autocomplete({
+        dataType:'json',
+        source:'{%url ajax_companies_list%}',
+        minLength:1,
+    });
+});
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css" />
 {%endblock%}

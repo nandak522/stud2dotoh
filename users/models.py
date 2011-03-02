@@ -52,7 +52,7 @@ class UserProfileManager(BaseModelManager):
 class UserProfile(BaseModel):
     user = models.OneToOneField(User)
     name = models.CharField(max_length=50, null=True, blank=True)
-    slug = models.SlugField(max_length=50, db_index=True, unique=True)#this will be used as his unique url identifier
+    slug = models.SlugField(max_length=50, db_index=True)#this will be used as his unique url identifier
     objects = UserProfileManager()
     
     def __unicode__(self):
