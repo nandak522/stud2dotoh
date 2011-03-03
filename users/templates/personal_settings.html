@@ -1,10 +1,5 @@
-<ul id="personal_settings_messages">
-{% for message in messages %}
-<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
-{% endfor %}
-</ul>
 <h3 class='droid leftalign'>Personal Settings</h3>
-<form name="personal_settings_form">{% csrf_token %}
+<form name="personal_settings_form" autocomplete="off">{% csrf_token %}
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{personal_form.name}}<br/>{{personal_form.name.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_slug">Web Resume :</label></td><td class='leftalign'>{%if userprofile.can_update_slug%}{{personal_form.slug}}.{{site.domain}}<span class='help_text'>(This will become your public resume page)</span><br/>{{personal_form.slug.errors}}{%else%}<a class='domain bold' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>{%endif%}</td></tr>

@@ -2,16 +2,32 @@
 {% block title %}Create a Employee Account{% endblock %}
 {%block content%}
 <div class='prepend-6 prepend-top'>
-    <form action="{%url employee_register%}" method='POST'>{% csrf_token %}
+    <form action="{%url employee_register%}" method='POST' autocomplete="off">{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
 	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_password">Password :</label></td><td class='leftalign'>{{form.password}}<span class='help_text'>(<span class='required'>Required</span>. Min of 6 characters. Max of 50 characters)</span><br/>{{form.password.errors}}</td></tr>
 	    <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.name.errors}}</td></tr>
-	    <tr><td class='rightalign'><label for="id_name">Company :</label></td><td class='leftalign'>{{form.company}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.company.errors}}</td></tr>
+	    <tr><td class='rightalign'><label for="id_company">Company :</label></td><td class='leftalign'>{{form.company}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.company.errors}}</td></tr>
 	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
 	</table>
 	</form>
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}
+{%block extrajs%}
+<script type='text/javascript'>document.forms[0].email.focus();</script>
+<script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+    var array = new Array();
+    $('#id_company').autocomplete({
+        dataType:'json',
+        source:'{%url ajax_companies_list%}',
+        minLength:1,
+    });
+});
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css" />
+{%endblock%}

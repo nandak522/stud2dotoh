@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
-from users.decorators import anonymoususer, is_admin
+from users.decorators import anonymoususer, is_admin, is_domain_slug_picked
 from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
@@ -17,7 +17,8 @@ from users.models import UserProfile, College, Company, Note
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
-from utils.decorators import is_get, is_post
+from utils.decorators import is_get, is_post, is_ajax
+from django.utils import simplejson
 
 @login_required
 @is_admin
@@ -130,6 +131,7 @@ def view_logout(request, logout_template):
     messages.info(request, USER_LOGOUT_SUCCESSFUL)
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
 
+@is_domain_slug_picked
 def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
     public_notes = userprofile.public_notes
@@ -472,3 +474,18 @@ def view_reset_my_password(request, reset_my_password_template):
                                    password=password)
         return response(request, reset_my_password_template, {'form':form,
                                                               'email':data.get('email')})
+@is_ajax
+def view_colleges_list(request):
+    search_name = request.GET.get('term')
+    colleges = College.objects.filter(name__icontains=search_name).values('id', 'name')
+    colleges = [{'id':college_info['id'], 'value':college_info['name']} for college_info in colleges]
+    json = simplejson.dumps(colleges)
+    return HttpResponse(json, mimetype='application/json')
+
+@is_ajax
+def view_companies_list(request):
+    search_name = request.GET.get('term')
+    companies = Company.objects.filter(name__icontains=search_name).values('id', 'name')
+    companies = [{'id':company_info['id'], 'value':company_info['name']} for company_info in companies]
+    json = simplejson.dumps(companies)
+    return HttpResponse(json, mimetype='application/json')

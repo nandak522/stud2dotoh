@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from users.models import UserProfile, branches
 import re
 from users.messages import USER_LOGIN_FAILURE
-from utils.formfields import MultipleEmailsField
+from utils.formfields import MultipleEmailsField, AutocompleteWidget
 
 USER_NAME_CLEANUP_REGEX_PATTERN = re.compile(r'[^\w.&\s-]+', re.IGNORECASE)
 USER_SLUG_DOMAIN_CLEANUP_REGEX_PATTERN = re.compile(r'stud2dotoh.com', re.IGNORECASE)
@@ -32,7 +32,7 @@ class UserSignupForm(forms.Form):
             return email
         
 class StudentSignupForm(UserSignupForm):
-    college = forms.CharField(required=True, max_length=100)
+    college = forms.CharField(required=True, max_length=100, widget=AutocompleteWidget())
     
 class EmployeeSignupForm(UserSignupForm):
     company = forms.CharField(required=True, max_length=50)

@@ -2,7 +2,7 @@
 {% block title %}Create a Student Account{% endblock %}
 {%block content%}
 <div class='prepend-6 prepend-top'>
-    <form action="{%url student_register%}" method='POST'>{% csrf_token %}
+    <form action="{%url student_register%}" method='POST' autocomplete="off">{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
 	    <tr><td class='rightalign'><label for="id_email">Email :</label></td><td class='leftalign'>{{form.email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.email.errors}}</td></tr>
@@ -15,4 +15,20 @@
 	<h3 class='prepend-2'>Already have an Account ? <a href="{%url login%}">Please Login</a></h3>
 </div>
 {%endblock%}
-{%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}
+{%block extrajs%}
+<script type='text/javascript'>document.forms[0].email.focus();</script>
+<script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+    var array = new Array();
+    $('#id_college').autocomplete({
+        dataType:'json',
+        source:'{%url ajax_colleges_list%}',
+        minLength:1,
+    });
+});
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css" />
+{%endblock%}
