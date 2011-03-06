@@ -477,7 +477,7 @@ def view_reset_my_password(request, reset_my_password_template):
 @is_ajax
 def view_colleges_list(request):
     search_name = request.GET.get('term')
-    colleges = College.objects.filter(name__icontains=search_name).values('id', 'name')
+    colleges = College.objects.filter(name__istartswith=search_name).values('id', 'name')
     colleges = [{'id':college_info['id'], 'value':college_info['name']} for college_info in colleges]
     json = simplejson.dumps(colleges)
     return HttpResponse(json, mimetype='application/json')
@@ -485,7 +485,7 @@ def view_colleges_list(request):
 @is_ajax
 def view_companies_list(request):
     search_name = request.GET.get('term')
-    companies = Company.objects.filter(name__icontains=search_name).values('id', 'name')
+    companies = Company.objects.filter(name__istartswith=search_name).values('id', 'name')
     companies = [{'id':company_info['id'], 'value':company_info['name']} for company_info in companies]
     json = simplejson.dumps(companies)
     return HttpResponse(json, mimetype='application/json')
