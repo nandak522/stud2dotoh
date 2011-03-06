@@ -56,7 +56,7 @@ class SaveNoteForm(forms.Form):
 class PersonalSettingsForm(forms.Form):
     name = forms.CharField(max_length=50, required=True)
     slug = forms.CharField(max_length=50, required=False)
-    new_password = forms.CharField(max_length=50, required=False, widget=forms.PasswordInput())
+    new_password = forms.CharField(min_length=6, max_length=50, required=False, widget=forms.PasswordInput())
     
     def clean_name(self):
         name = self.cleaned_data.get('name')
