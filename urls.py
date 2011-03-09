@@ -20,6 +20,7 @@ urlpatterns += patterns('users.views',
     (r'^notepad/$', 'view_notepad', {'notepad_template':'notepad.html'}, 'notepad'),
     (r'^webresume/$', 'view_webresume', {}, 'webresume'),
     (r'^invite/$', 'view_invite', {'invite_template':'invite.html'}, 'invite'),
+    (r'^achievements/$', 'view_all_achievements', {'achievements_template':'achievements.html'}, 'achievements'),
 )
 
 urlpatterns += patterns('users.views',
@@ -34,6 +35,8 @@ urlpatterns += patterns('users.views',
     (r'^contactus/$', 'view_contactus', {'contactus_template':'contactus.html'}, 'contactus'),
     (r'^forgot_password/$', 'view_forgot_password', {'forgot_password_template':'forgot_password.html'}, 'forgot_password'),
     (r'^reset_my_password/$', 'view_reset_my_password', {'reset_my_password_template':'reset_my_password.html'}, 'reset_my_password'),
+    (r'^add_achievement/$', 'view_add_achievement', {'add_achievement_template':'add_or_edit_achievement.html'}, 'add_achievement'),
+    (r'^edit_achievement/(?P<achievement_id>\d+)/$', 'view_edit_achievement', {'edit_achievement_template':'add_or_edit_achievement.html'}, 'edit_achievement'),
 )
 
 urlpatterns += patterns('users.views',

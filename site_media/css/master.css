@@ -116,6 +116,8 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #contact_button{padding:0.5em;font-size:1.2em;font-weight:bold;margin-top:10px;margin-right:10px;}
 #user_profile_header{padding-left:0.5em;margin-bottom:0;}
 #answered_questions li,#asked_questions li{padding-bottom:0.875em;}
+.widget_toplinks{width:400px;font-size:12px;border:0;text-decoration:none;}
+.widget_toplinks a{border:0;}
 
 /*Question Page Styles*/
 #all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
@@ -170,3 +172,7 @@ ul#colleges_list li a{font-size:1.6em;}
 
 /*Autocomplete Styles*/
 .ui-menu-item a{border-bottom:1px solid #EFEFEF;}
+
+/*Achievements Page Styles*/
+#all_achievements h3{padding-left:1em;}
+#add_or_edit_achievement{border-right:1px solid #EFEFEF;}

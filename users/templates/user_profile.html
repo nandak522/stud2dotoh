@@ -48,8 +48,8 @@
     {%endwith%}
 </ul>
 </div><!-- end of personal_details -->
-<div id='uploaded_files' class='widget webresume_section'>
-	<h4 class='droid widget_header leftalign'>Saved Notes</h4>
+<div id='saved_notes' class='widget webresume_section'>
+	<h4 class='droid widget_header leftalign'>Saved Notes{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url notepad%}">Add Note ?</a></span>{%endif%}</h4>
 	<ul>
 	{%for note in public_notes%}
 	<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
@@ -57,9 +57,21 @@
 	<li>{{userprofile.name|title}} has not saved any notes yet!</li>
 	{%endfor%}
 	</ul>
-</div><!-- end of uploaded_files -->
+</div><!-- end of saved_notes -->
+<div id='achievements' class='widget webresume_section'>
+<h4 class='droid widget_header leftalign'>Achievements{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url add_achievement%}">Add Achievement ?</a></span>{%endif%}</h4>
+{%if achievements%}
+    <ul>
+    {%for achievement in achievements%}
+    <li>{{achievement.title|title}}</h3></li>
+    {%endfor%}
+    </ul>
+{%else%}
+    <ul><li>{{userprofile.name|title}} didn't have any achievements yet!</li></ul>
+{%endif%}
+</div><!-- end of achievements -->
 <div id='asked_questions' class='widget webresume_section'>
-<h4 class='droid widget_header leftalign'>Asked Questions</h4>
+<h4 class='droid widget_header leftalign'>Asked Questions{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url ask_question%}">Ask Question ?</a></span>{%endif%}</h4>
 {%if asked_questions%}
 	<ul>
 	{%for question in asked_questions%}
@@ -71,7 +83,7 @@
 {%endif%}
 </div><!-- end of asked_questions -->
 <div id='answered_questions' class='widget webresume_section'>
-<h4 class='droid widget_header leftalign'>Answers Given For</h4>
+<h4 class='droid widget_header leftalign'>Answers Given For{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url all_questions%}">Give Answer ?</a></span>{%endif%}</h4>
 {%if answered_questions%}
 	<ul>
 	{%for question in answered_questions%}

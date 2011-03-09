@@ -12,8 +12,8 @@ from users.forms import ContactUserForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
 from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupForm
 from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNoteForm
-from users.forms import ForgotPasswordForm, ResetMyPasswordForm
-from users.models import UserProfile, College, Company, Note
+from users.forms import ForgotPasswordForm, ResetMyPasswordForm, AddAchievementForm
+from users.models import UserProfile, College, Company, Note, Achievement
 from utils import response, post_data, loggedin_userprofile, slugify
 import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
@@ -137,10 +137,14 @@ def view_userprofile(request, user_id, user_slug_name, userprofile_template):
     public_notes = userprofile.public_notes
     asked_questions = userprofile.asked_questions
     answered_questions = userprofile.answered_questions
+    achievements = userprofile.achievements
+    can_edit = is_owner(request, userprofile)
     return response(request, userprofile_template, {'userprofile': userprofile,
                                                     'public_notes': public_notes,
                                                     'asked_questions':asked_questions,
-                                                    'answered_questions':answered_questions})
+                                                    'answered_questions':answered_questions,
+                                                    'achievements':achievements,
+                                                    'can_edit':can_edit})
 
 def view_homepage(request, homepage_template):
     #TODO:Homepage layout showing message, screenshots, latest updates across the system
@@ -489,3 +493,68 @@ def view_companies_list(request):
     companies = [{'id':company_info['id'], 'value':company_info['name']} for company_info in companies]
     json = simplejson.dumps(companies)
     return HttpResponse(json, mimetype='application/json')
+
+@login_required
+def view_all_achievements(request, achievements_template):
+    userprofile = loggedin_userprofile(request)
+    achievements = userprofile.achievements
+    return response(request, achievements_template, {'achievements':achievements})
+
+@login_required
+def view_add_achievement(request, add_achievement_template):
+    userprofile = loggedin_userprofile(request)
+    achievements = userprofile.achievements
+    if request.method == 'GET':
+        form = AddAchievementForm()
+        return response(request, add_achievement_template, {'form':form,
+                                                            'achievements':achievements})
+    form = AddAchievementForm(post_data(request))
+    if form.is_valid():
+        Achievement.objects.create_achievement(userprofile,
+                                               title=form.cleaned_data.get('title'),
+                                               description=form.cleaned_data.get('description'))
+        from users.messages import ACHIEVEMENT_ADDED_SUCCESSFULLY
+        messages.success(request, ACHIEVEMENT_ADDED_SUCCESSFULLY)
+        return HttpResponseRedirect(url_reverse('users.views.view_all_achievements'))
+    return response(request, add_achievement_template, {'form':form,
+                                                        'achievements':achievements})
+
+@login_required
+def view_edit_achievement(request, achievement_id, edit_achievement_template):
+    userprofile = loggedin_userprofile(request)
+    achievement = get_object_or_404(Achievement, id=int(achievement_id))
+    achievements = list(userprofile.achievements)
+    for achievment_info in achievements:
+        if achievment_info['id'] == int(achievement_id):
+            achievements.remove({'title':achievement.title,
+                                    'id':int(achievement_id),
+                                    'description':achievement.description})
+            break
+    if request.method == 'GET':
+        form = AddAchievementForm({'title':achievement.title,
+                                   'description':achievement.description})
+        return response(request, edit_achievement_template, {'achievement':achievement,
+                                                             'form':form,
+                                                             'previous_achievements':achievements})
+    form = AddAchievementForm(post_data(request))
+    if form.is_valid():
+        achievement.update(title=form.cleaned_data.get('title'),
+                           description=form.cleaned_data.get('description'),)
+        from users.messages import ACHIEVEMENT_UPDATED_SUCCESSFULLY
+        messages.success(request, ACHIEVEMENT_UPDATED_SUCCESSFULLY)
+        return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_all_achievements'))
+    return response(request, edit_achievement_template, {'achievement':achievement,
+                                                         'form':form,
+                                                         'previous_achievements':achievements})
+    
+def is_owner(request, visitor_userprofile):
+    '''If page you are visiting, like Web-Resume belongs to the same person
+    who is currently logged in then return True else False '''
+    user = request.user
+    if user.is_authenticated():
+       loggedin_userprofile = user.get_profile()
+       if loggedin_userprofile.id == visitor_userprofile.id:
+           return True
+       return False
+    else:
+        return False
