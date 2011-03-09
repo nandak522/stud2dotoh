@@ -133,3 +133,7 @@ class ForgotPasswordForm(forms.Form):
     
 class ResetMyPasswordForm(forms.Form):
     password = forms.CharField(min_length=6, max_length=50, required=True, widget=forms.PasswordInput())
+    
+class AddAchievementForm(forms.Form):
+    title = forms.CharField(required=True, max_length=100)
+    description = forms.CharField(required=True, max_length=7000, widget=forms.Textarea(attrs={'rows':10, 'cols':50}))

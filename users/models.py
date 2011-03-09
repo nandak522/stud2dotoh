@@ -185,7 +185,7 @@ class UserProfile(BaseModel):
         self.save()
     
     def can_update_slug(self):
-        if self.modified_on <= (self.created_on+timedelta(minutes=1)):
+        if self.modified_on <= (self.created_on + timedelta(minutes=1)):
             return True
         return False
     
@@ -223,15 +223,19 @@ class UserProfile(BaseModel):
             return ''
         return ".".join([self.slug, Site.objects.get(id=settings.SITE_ID).domain])
     
+    @property
+    def achievements(self):
+        return self.achievement_set.values('id', 'title', 'description')
+    
 class CollegeAlreadyExistsException(Exception):
     pass
 
 class CollegeManager(BaseModelManager):
     def create_college(self, name):
-        slug=slugify(name)
+        slug = slugify(name)
         if self.exists(slug=slug):
             raise CollegeAlreadyExistsException
-        college = College(name=name,slug=slug)
+        college = College(name=name, slug=slug)
         college.save()
         return college 
             
@@ -271,7 +275,7 @@ class Company(BaseModel):
     @property
     def employees(self):
         content_type = ContentType.objects.get(name='company')
-        userprofiles_ids = WorkInfo.objects.filter(content_type=content_type,object_id=self.id).values('userprofile')
+        userprofiles_ids = WorkInfo.objects.filter(content_type=content_type, object_id=self.id).values('userprofile')
         return UserProfile.objects.filter(id__in=[id['userprofile'] for id in userprofiles_ids]).values('id', 'slug', 'name')
     
 class WorkInfoAlreadyExistsException(Exception):
@@ -347,3 +351,25 @@ class Note(BaseModel):
     
     def __unicode__(self):
         return "%s..." % self.note[:10]
+    
+class AchievementAlreadyExistsException(Exception):
+    pass
+
+class AchievementManager(BaseModelManager):
+    def create_achievement(self, userprofile, title, description=''):
+        if self.exists(userprofile=userprofile, title=title):
+            raise AchievementAlreadyExistsException
+        achievement = Achievement(userprofile=userprofile,
+                                  title=title,
+                                  description=description)
+        achievement.save()
+        return achievement
+    
+class Achievement(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=7000)
+    objects = AchievementManager()
+    
+    def __unicode__(self):
+        return "%s..." % self.title[:10]
