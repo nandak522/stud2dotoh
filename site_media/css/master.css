@@ -144,6 +144,8 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #questions_widget .icon{background:#EFEFEF url(/site_media/img/questions.png) no-repeat;}
 #answers_widget .icon{background:#EFEFEF url(/site_media/img/answers.png) no-repeat;}
 #webresume_widget .icon{background:#EFEFEF url(/site_media/img/webresume.png) no-repeat;}
+#achievements_widget .icon{background:#EFEFEF url(/site_media/img/achievements.png) no-repeat;}
+#settings_widget .icon{background:#EFEFEF url(/site_media/img/settings.png) no-repeat;}
 
 /*Colleges Page Styles*/
 #colleges{padding-left:1em;}
