@@ -1,6 +1,6 @@
 /*Global Styles*/
-body{background:#F9F9F9;}
-#container{background:#FFF;}
+body{background:#F4F4F4;}
+#container{background:#FFF;border-right:1px solid #EDEDED;border-left:1px solid #EDEDED;}
 a{text-decoration:none;border-bottom:1px solid #06C;}
 #content{background:#FFF;color:#09222F;}
 .content_header{padding-left:1em;margin-top:1em;}
