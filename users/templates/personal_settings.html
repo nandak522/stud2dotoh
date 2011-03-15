@@ -1,4 +1,4 @@
-<h3 class='droid leftalign'>Personal Settings</h3>
+<h3 class='georgia leftalign'>Personal Settings</h3>
 <form name="personal_settings_form" autocomplete="off">{% csrf_token %}
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_name">Name :</label></td><td class='leftalign'>{{personal_form.name}}&nbsp;(<span class='required'>Required</span>. Max of <span class='black_stress'>50</span> characters)</span><br/>{{personal_form.name.errors}}</td></tr>

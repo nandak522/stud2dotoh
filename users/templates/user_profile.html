@@ -2,24 +2,17 @@
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block webresumetab%}activetab{%endblock%}
 {%block content%}
-<div id='webresume_usage' class='feature_usage prepend-top box'>
-<div id='close' onClick='javascript:$("#webresume_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
-<h3>Gone are the days where you prepare 2 page word resumes &nbsp;:</h3>
-<ul>
-    <li>Web Resume aggregates all your activity from the system and Helps any Company/Industry person in getting a Multi-Dimensional view of your skills.</li>
-    {%if userprofile.is_student%}
-    <li>If you are a final year Student, A Recruiter/Company person can easily select you as he/she has ready view of your accomplishments</li>
-    {%endif%}    
-    <li>As this is an Online Resume, You can pass it along to any body at zero cost and Your Resume/CV is searchable Globally</li>
-</ul>
-</div><!-- end of webresume_usage -->
+<div id='webresume_content'>
 <input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%url contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>
-<h2 id='user_profile_header' class='droid content_header'>{{userprofile.name|title}}</h2>
+<h2 id='user_profile_header' class='georgia maincontent_header'>{{userprofile.name|title}}</h2>
 {%load users_tags%}
 <div id='personal_details'>
-<ul>
+<ul class='webresume_section emboss'>
     <li>
-        Can be reached at: {{userprofile.user.email|emailify}}&nbsp;&nbsp;|&nbsp;&nbsp;<a class='domain' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
+        Can be reached at: {{userprofile.user.email|emailify}}
+    </li>
+    <li>
+        Website: <a target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
     </li>
     <li>
         {%if userprofile.is_student%}
@@ -48,20 +41,20 @@
     {%endwith%}
 </ul>
 </div><!-- end of personal_details -->
-<div id='saved_notes' class='widget webresume_section'>
-	<h4 class='droid widget_header leftalign'>Saved Notes{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url notepad%}">Add Note ?</a></span>{%endif%}</h4>
-	<ul>
-	{%for note in public_notes%}
-	<li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
-	{%empty%}
-	<li>{{userprofile.name|title}} has not saved any notes yet!</li>
-	{%endfor%}
-	</ul>
+<div id='saved_notes'>
+    <h4 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="help" title="These Notes are helpful in knowing more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url notepad%}">Add Note ?</a></span>{%endif%}</h4>
+    <ol class='webresume_section emboss'>
+    {%for note in public_notes%}
+    <li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
+    {%empty%}
+    <li>{{userprofile.name|title}} has not saved any notes yet!</li>
+    {%endfor%}
+    </ol>
 </div><!-- end of saved_notes -->
-<div id='achievements' class='widget webresume_section'>
-<h4 class='droid widget_header leftalign'>Achievements{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url add_achievement%}">Add Achievement ?</a></span>{%endif%}</h4>
+<div id='achievements'>
+<h4 class='georgia leftalign'>Achievements&nbsp;&nbsp;<span class="help" title="These Achievements make me unique">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url add_achievement%}">Add Achievement ?</a></span>{%endif%}</h4>
 {%if achievements%}
-    <ul>
+    <ul class='webresume_section emboss'>
     {%for achievement in achievements%}
     <li>{{achievement.title|title}}</h3></li>
     {%endfor%}
@@ -70,28 +63,29 @@
     <ul><li>{{userprofile.name|title}} didn't have any achievements yet!</li></ul>
 {%endif%}
 </div><!-- end of achievements -->
-<div id='asked_questions' class='widget webresume_section'>
-<h4 class='droid widget_header leftalign'>Asked Questions{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url ask_question%}">Ask Question ?</a></span>{%endif%}</h4>
+<div id='asked_questions'>
+<h4 class='georgia leftalign'>Asked Questions&nbsp;&nbsp;<span class="help" title="These Questions show my strong interest in respective areas">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url ask_question%}">Ask Question ?</a></span>{%endif%}</h4>
 {%if asked_questions%}
-	<ul>
-	{%for question in asked_questions%}
-	<li><h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h3></li>
-	{%endfor%}
-	</ul>
+    <ul class='webresume_section emboss'>
+    {%for question in asked_questions%}
+    <li><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></li>
+    {%endfor%}
+    </ul>
 {%else%}
-	<ul><li>{{userprofile.name|title}} didn't ask any questions yet!</li></ul>
+    <ul><li>{{userprofile.name|title}} didn't ask any questions yet!</li></ul>
 {%endif%}
 </div><!-- end of asked_questions -->
-<div id='answered_questions' class='widget webresume_section'>
-<h4 class='droid widget_header leftalign'>Answers Given For{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url all_questions%}">Give Answer ?</a></span>{%endif%}</h4>
+<div id='answered_questions'>
+<h4 class='georgia leftalign'>Answers Given For&nbsp;&nbsp;<span class="help" title="These Answers show that I am ready to help">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url all_questions%}">Give Answer ?</a></span>{%endif%}</h4>
 {%if answered_questions%}
-	<ul>
-	{%for question in answered_questions%}
-	<li><h4><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h4></li>
-	{%endfor%}
-	</ul>
+    <ul class='webresume_section emboss'>
+    {%for question in answered_questions%}
+    <li><h4><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h4></li>
+    {%endfor%}
+    </ul>
 {%else%}
-	<ul><li>{{userprofile.name|title}} didn't answer for any questions yet!</li></ul>
+    <ul class='webresume_section emboss'><li>{{userprofile.name|title}} didn't answer for any questions yet!</li></ul>
 {%endif%}
 </div><!-- end of answered_questions -->
+</div><!-- end of webresume -->
 {%endblock%}

@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/blueprint/liquid.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/master.css" />
 <!--[if lt IE 8]><link rel="stylesheet" href="/site_media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" href="/site_media/js/jquery/plugins/tooltip/tipsy-0.1.7/src/stylesheets/tipsy.css" type="text/css" />
 {%endblock%}
 {%block extrastyle%}
 {%endblock%}
@@ -54,6 +55,10 @@
     {%endif%}
     <script type='text/javascript' src='/site_media/js/common.js'></script>
     <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(6000);}</script>
+    <script type='text/javascript' src='/site_media/js/jquery/plugins/tooltip/tipsy-0.1.7/src/javascripts/jquery.tipsy.js'></script>
+    <script type='text/javascript'>
+	    $(function(){help_icons = $('.help').tipsy({title:'title', gravity:'s'});});
+	</script>
     {%block extrajs%}{%endblock%}
 </body>
 </html>

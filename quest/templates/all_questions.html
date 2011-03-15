@@ -14,7 +14,7 @@
 </ul>
 </div>
 <div id='all_questions' class='column span-18'>
-<h2 class='droid content_header'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
+<h2 class='georgia maincontent_header'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
 {%for question in questions%}
 <h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h3>
 {%endfor%}
@@ -22,12 +22,12 @@
 <div id='questions_sidebar' class='span-4 column last'>
 <input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <br/><br/><br/>
-<ul id='stats' class='board'>
+<ul id='stats' class='board emboss'>
 <li><a href="{%url colleges%}" target='_blank'>{{stats.colleges_count}} Colleges</a></li>
 <li>{{stats.students_count}} Students</li>
 <li><a href="{%url companies%}" target='_blank'>{{stats.companies_count}} Companies</a></li>
 <li>{{stats.employees_count}} Employees</li>
 </ul>
-<h4 class='droid'>Joined Stud2.0 till now</h4>
+<h4 class='georgia'>Joined Stud2.0 till now</h4>
 </div>
 {%endblock%}

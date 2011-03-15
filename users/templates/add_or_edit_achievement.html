@@ -9,7 +9,7 @@
     <li>Showing off all your cool projects will boost your career</li>
 </ul>
 </div><!-- end of add_achievement_benifits -->
-<h3 class='droid content_header'>{%if achievement%}Edit{%else%}Add{%endif%} an Achievement</h3>
+<h3 class='georgia maincontent_header'>{%if achievement%}Edit{%else%}Add{%endif%} an Achievement</h3>
 <div id='add_or_edit_achievement' class='span-16 column'>
     <form action="{%if achievement%}{%url edit_achievement achievement.id%}{%else%}{%url add_achievement%}{%endif%}" method='POST'>{% csrf_token %}
     <table class='form-table'>
@@ -21,7 +21,7 @@
 </div>
 <div id='previous_achievements' class='widget push-1 span-6 column last'>
 {%if achievement%}
-    <h4 class='droid widget_header'>Your previous achievements</h4>
+    <h4 class='georgia widget_header'>Your previous achievements</h4>
     {%if previous_achievements%}
         <ul>
         {%for pachievement in previous_achievements%}
@@ -32,7 +32,7 @@
         Nothing Achieved Yet!
     {%endif%}
 {%else%}
-    <h4 class='droid widget_header'>Your previous achievements</h4>
+    <h4 class='georgia widget_header'>Your previous achievements</h4>
     {%if achievements%}
         <ul>
         {%for achievement in achievements%}

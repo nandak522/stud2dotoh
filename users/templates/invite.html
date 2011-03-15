@@ -2,7 +2,7 @@
 {% block title %}Invite somebody you know{% endblock %}
 {%block content%}
 <div class='column span-13'>
-    <h3 class='droid content_header'>Invite somebody you know!</h3>
+    <h3 class='georgia maincontent_header'>Invite somebody you know!</h3>
     <form action="{%url invite %}" method='POST'>{% csrf_token %}
     <table class='form-table'>
         <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{form.to_emails}}<span class='help_text'>(Mention multiple emails separated by commas.)</span>{{form.to_emails.errors}}</td></tr>
@@ -11,7 +11,7 @@
     </form>
 </div>
 <div id="explain_invite" class='column span-10 last box'>
-	<h4 class='droid'>Multiple ways to use Invitation Form</h4>
+	<h4 class='georgia'>Multiple ways to use Invitation Form</h4>
 	<ul class='board'>
 	<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Senior</span> and get help on your studies</li>
 	<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Branch mate</span> and interact with him/her</li>
