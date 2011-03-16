@@ -39,10 +39,19 @@
         <hr class='special_blue'/>
         <div id='content' class='column span-24 prepend-top append-bottom last'>
             <div id='ajax_status_header'></div>
-            <div class='singlepane_maincontent_area'>
-            {%block content%}
+            <div class='feature_usage prepend-top box'>
+            <div id='close' onClick='javascript:$(".feature_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+            {%block feature_usage%}
             {%endblock%}
-            </div><!-- end of singlepane_maincontent_area -->
+            </div><!-- end of feature_usage -->
+            <div class='maincontent column span-17'>
+            {%block maincontent%}
+            {%endblock%}
+            </div><!-- end of maincontent -->
+            <div class='sidebar column span-6 last'>
+            {%block sidebar%}
+            {%endblock%}
+            </div><!-- end of sidebar -->
         </div><!-- end of content -->
         <div id='footer' class='column span-24 last'>
             {%block footer%}

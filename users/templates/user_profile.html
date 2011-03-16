@@ -2,7 +2,6 @@
 {% block title %}{{userprofile.name|title}} - Profile Information{% endblock %}
 {%block webresumetab%}activetab{%endblock%}
 {%block content%}
-<div id='webresume_content'>
 <input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%url contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>
 <h2 id='user_profile_header' class='georgia maincontent_header'>{{userprofile.name|title}}</h2>
 {%load users_tags%}
@@ -87,5 +86,4 @@
     <ul class='webresume_section emboss'><li>{{userprofile.name|title}} didn't answer for any questions yet!</li></ul>
 {%endif%}
 </div><!-- end of answered_questions -->
-</div><!-- end of webresume -->
 {%endblock%}

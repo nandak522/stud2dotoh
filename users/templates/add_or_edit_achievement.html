@@ -1,25 +1,23 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'doublepane_base.html'%}
 {%block title%}{%if achievement%}Edit{%else%}Add{%endif%} an Achievement{%endblock%}
-{%block content%}
-<div id='add_achievement_benifits' class='feature_usage prepend-top box'>
-<div id='close' onClick='javascript:$("#add_achievement_benifits").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+{%block feature_usage%}
 <h3>Benifits of Adding an Achievement:</h3>
 <ul>
     <li>Makes your profile rich. Separates you from the herd</li>
     <li>Showing off all your cool projects will boost your career</li>
 </ul>
-</div><!-- end of add_achievement_benifits -->
+{%endblock%}
+{%block maincontent%}
 <h3 class='georgia maincontent_header'>{%if achievement%}Edit{%else%}Add{%endif%} an Achievement</h3>
-<div id='add_or_edit_achievement' class='span-16 column'>
-    <form action="{%if achievement%}{%url edit_achievement achievement.id%}{%else%}{%url add_achievement%}{%endif%}" method='POST'>{% csrf_token %}
-    <table class='form-table'>
-        <tr><td class='rightalign'><label for="id_title">Short Title of your achievement :</label></td><td class='leftalign'>{{form.title}}<span class='help_text'>(<span class='required'>Required</span>. Max of {{form.fields.title.max_length}} characters)</span><br/>{{form.title.errors}}</td></tr>
-        <tr><td class='rightalign'><label for="id_description">Full Description :</label></td><td class='leftalign'>{{form.description}}<br/><span class='help_text'>(<span class='required'>Required</span>. Max of {{form.fields.description.max_length}} characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{form.description.errors}}</td></tr>
-        <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="{%if achievement%}Save{%else%}Submit{%endif%} Achievement"/></td></tr>
-    </table>
-    </form>
-</div>
-<div id='previous_achievements' class='widget push-1 span-6 column last'>
+<form action="{%if achievement%}{%url edit_achievement achievement.id%}{%else%}{%url add_achievement%}{%endif%}" method='POST'>{% csrf_token %}
+<table class='form-table'>
+    <tr><td class='rightalign'><label for="id_title">Short Title of your achievement :</label></td><td class='leftalign'>{{form.title}}<span class='help_text'>(<span class='required'>Required</span>. Max of {{form.fields.title.max_length}} characters)</span><br/>{{form.title.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_description">Full Description :</label></td><td class='leftalign'>{{form.description}}<br/><span class='help_text'>(<span class='required'>Required</span>. Max of {{form.fields.description.max_length}} characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{form.description.errors}}</td></tr>
+    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="{%if achievement%}Save{%else%}Submit{%endif%} Achievement"/></td></tr>
+</table>
+</form>
+{%endblock%}
+{%block sidebar%}
 {%if achievement%}
     <h4 class='georgia widget_header'>Your previous achievements</h4>
     {%if previous_achievements%}
@@ -43,7 +41,6 @@
         Nothing Achieved Yet!
     {%endif%}
 {%endif%}
-</div>
 {%endblock%}
 {%block extrajs%}
 <script type='text/javascript'>

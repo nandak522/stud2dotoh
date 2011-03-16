@@ -2,7 +2,7 @@
 {% block title %}All Companies{% endblock %}
 {%block content%}
 <h2 class='georgia maincontent_header'>All Companies</h2>
-<ul class='prepend-1'>
+<ul id="companies">
 {%for company in companies%}
 <li><h3><a href="{%url company_profile company.id company.slug%}">{{company.name|title}}</a></h3></li>
 {%empty%}

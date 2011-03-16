@@ -1,9 +1,7 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'doublepane_base.html'%}
 {% block title %}Notepad{% endblock %}
 {%block notepadtab%}activetab{%endblock%}
-{%block content%}
-<div id='notepad_usage' class='feature_usage prepend-top box'>
-<div id='close' onClick='javascript:$("#notepad_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+{%block feature_usage%}
 <h3>Notepad is quite useful to you in these ways &nbsp;:</h3>
 <ul>
     <li>Save something, for further reference and can keep it private also.</li>
@@ -13,20 +11,21 @@
     <li>Write an article about an interesting topic and share it with your friends, collegues, world</li>
     <li>Show off your writing skills</li>
 </ul>
-</div>
-<div id='notepad' class="column span-18">
-<h3 class='georgia maincontent_header'>Want to save something quickly ?</h3>
+{%endblock%}
+{%block maincontent%}
+<h3 class='georgia maincontent_header blue_underline'>Want to save something quickly ?</h3>
 <form action='{%if note%}{%url edit_note note_id=note.id%}{%else%}{%url notepad%}{%endif%}' method="POST">{% csrf_token %}
-    <table>
-        <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 30</span> characters)<br/>{{form.name.errors}}</td></tr>
-        <tr><td><label for="id_name">Short Description:</label></td><td>{{form.short_description}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 50</span> characters)<br/>{{form.short_description.errors}}</td></tr>
-        <tr><td><label for="id_name">Content:</label></td><td>{{form.content}}<span class='help_text'><br/>(<span class='required'>Required</span>. Max of 7000</span> characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'><br/>{{form.content.errors}}</td></tr>
-        <tr><td><label for="id_public">&nbsp;</label></td><td>{{form.public}}Make the Note Public? (Everyone can see this)</td></tr>
-        <tr><td>&nbsp;</td><td><input type="submit" value="Save this"/></td></tr>
-    </table>
-   </form>
-</div>
-<div id='uploaded_files' class="widget push-1 span-5 column last">
+<table>
+    <tr><td><label for="id_name">Name:</label></td><td>{{form.name}}<span class='help_text'>(<span class='required'>Required</span>. Max of 30</span> characters)<br/>{{form.name.errors}}</td></tr>
+    <tr><td><label for="id_name">Short Description:</label></td><td>{{form.short_description}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 50</span> characters)<br/>{{form.short_description.errors}}</td></tr>
+    <tr><td><label for="id_name">Content:</label></td><td>{{form.content}}<span class='help_text'><br/>(<span class='required'>Required</span>. Max of 7000</span> characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'><br/>{{form.content.errors}}</td></tr>
+    <tr><td><label for="id_public">&nbsp;</label></td><td>{{form.public}}Make the Note Public? (Everyone can see this)</td></tr>
+    <tr><td>&nbsp;</td><td><input type="submit" value="Save this"/></td></tr>
+</table>
+</form>
+{% endblock %}
+{%block sidebar%}
+<div class='widget'>
 <h4 class='widget_header centeralign'>My Saved Notes</h4>
 <table>
 {%for note in all_notes%}
@@ -38,7 +37,7 @@
 <tr><td colspan="2">You have not saved any notes yet!</td></tr>
 {%endfor%}
 </table>
-</div>
+</div><!-- end of widget -->
 {%endblock%}
 {%block extrajs%}
 <script type='text/javascript'>

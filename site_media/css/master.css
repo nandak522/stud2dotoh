@@ -26,6 +26,7 @@ textarea{width:auto;border:2px solid #CCC;}
 a.tag{border-bottom:0;}
 .messages{margin:0 auto;list-style-type:none;padding:0;text-align:center;font:bold 1.2em "Droid Sans","Helvetica",Monospace,Arial,sans-serif;position:absolute;color:#105FB6;top:0;left:10%;width:80%;}
 #personal_settings_messages,#acad_settings_messages,#workinfo_settings_messages{list-style-type:none;font:bold 1.1em "Droid Sans","Helvetica",Monospace,Arial,sans-serif;text-align:center;}
+#personal_settings h3,#acad_settings h3,#workinfo_settings h3{padding-bottom:4px;color:#073763;}
 .error, .info, .success {padding:4px;margin-bottom:1em;border:2px solid #ddd;}
 .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .info,.success {background:#FFF6BF;color:#514721;border-color:#FFD324;}
@@ -42,7 +43,9 @@ a.tag{border-bottom:0;}
 .helvetica{font-family:"Helvetica",Arial, Sans-serif;}
 .georgia{font-family:"Droid Serif",Georgia, Sans-serif;}
 .droid{font-family:"Helvetica",Arial, Sans-serif;}
-.maincontent_header{padding-bottom:4px;color:#073763;font-size:2em;margin-top:1em;}
+.maincontent_header{padding-bottom:4px;color:#073763;font-size:2em;}
+.maincontent{border-right:1px solid #EFEFEF;}
+.maincontent,.sidebar{padding:1em;}
 .widget{margin-top:2em;border:1px solid #CCC;}
 .widget ul{padding-left:10px;}
 .widget_header{font-weight:normal;background:#F6F6F6;padding:4px;color:#073763;font-weight:bold;}
@@ -79,6 +82,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
 .help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
 .emboss{border:1px solid #CCC;border-top:0;border-left:0;background:#F6F6F6;}
+.singlepane_maincontent_area{padding:1em;}
 
 /*Homepage Styles*/
 #vision_banner{text-align:center;color:#2B5789;padding:0.5em 0 1em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:3.7em;margin:0;}
@@ -102,7 +106,6 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #features_blocks #notepad,#webresume,#questions,#answers{border:1px solid #CCC;padding-top:8px;height:40px;margin-right:10px;}
 
 /*Notepad Page Styles*/
-#notepad{padding-top:2em;padding-left:1em;}
 #notepad h3, #account_settings h3{padding-bottom:0.4em;border-bottom:2px solid #CFE2F3;}
 
 /*Account Settings Page Styles*/
@@ -110,7 +113,6 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 .settings h3{padding-bottom:0.4em;border-bottom:2px solid #CFE2F3;}
 
 /*User Profile Page Styles*/
-#webresume_content{padding:2em 1em 1em 1em;}
 #webresume_content h4{color:#073763;margin-bottom:0.25em;font-size:1.7em;}
 #account_settings h3{margin-top:1em;}
 .webresume_section{margin:10px 10px 18px 10px;}
@@ -153,7 +155,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #settings_widget .icon{background:#EFEFEF url(/site_media/img/settings.png) no-repeat;}
 
 /*Colleges Page Styles*/
-#colleges{padding-left:1em;}
+ul#colleges li,ul#companies li{list-style-type:none;}
 
 /*College Page Styles*/
 ul#colleges_list li a{font-size:1.6em;}
@@ -163,10 +165,9 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 
 /*About Page Styles*/
 #aboutus h2{margin-bottom:0.25em;}
-#aboutus ul li{list-style:none;}
-#aboutus div{margin:0 0 0 1em;padding:0 0 0 1em;font-size:1.2em;}
+#aboutus div{margin:0 0 0 1em;padding:0 0 0 1em;}
 #aboutus div ul{list-style-type:disc;list-style-position:inside;}
-#aboutus div ul li{font-size:1.2em;}
+.about_explanation{font-size:1.4em;}
 
 /*Forgot Password Page Styles*/
 #forgot_password .content_header{padding-left:0;margin-top:0;}
@@ -181,5 +182,6 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 .ui-menu-item a{border-bottom:1px solid #EFEFEF;}
 
 /*Achievements Page Styles*/
+#all_achievements{padding:1em;}
 #all_achievements h3{padding-left:1em;}
 #add_or_edit_achievement{border-right:1px solid #EFEFEF;}

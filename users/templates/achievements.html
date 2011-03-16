@@ -1,9 +1,7 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'doublepane_base.html'%}
 {% block title %}Achievements{% endblock %}
 {%block achievementstab%}activetab{%endblock%}
-{%block content%}
-<div id='achievements_usage' class='feature_usage prepend-top box'>
-<div id='close' onClick='javascript:$("#achievements_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+{%block feature_usage%}
 <h3>Achievements will tell the world what you are capable of &nbsp;:</h3>
 <ul>
     <li>An award, you won</li>
@@ -11,14 +9,13 @@
     <li>A Thesis paper, you presented</li>
     <li>A Patent, you submitted</li>
 </ul>
-</div>
-<div id='all_achievements' class='column span-18'>
-<h2 class='georgia maincontent_header'>My Achievements</h2>
+{%endblock%}
+{%block maincontent%}
+<h2 class='georgia maincontent_header blue_underline'>My Achievements</h2>
 {%for achievement in achievements%}
 <h3>{{achievement.title}}&nbsp;&nbsp;<a href="{%url edit_achievement achievement.id%}">Edit</a></h3>
 {%endfor%}
-</div>
-<div id='achievements_sidebar' class='span-4 column last'>
+{%endblock%}
+{%block sidebar%}
 <input type='button' name='submit' value="Add an Achievement" onClick="javascript:document.location.href='{%url add_achievement%}'"/>
-</div>
 {%endblock%}
