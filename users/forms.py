@@ -41,8 +41,8 @@ class ProfessorSignupForm(UserSignupForm):
     college = forms.CharField(required=True, max_length=100)
 
 class UserLoginForm(forms.Form):
-    email = forms.EmailField(max_length=50, required=True)
-    password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput())
+    email = forms.EmailField(max_length=50, required=True, widget=forms.TextInput(attrs={'tabindex':1}))
+    password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput(attrs={'tabindex':2}))
     
 class SaveNoteForm(forms.Form):
     name = forms.CharField(max_length=30, required=True)
@@ -81,7 +81,7 @@ class PersonalSettingsForm(forms.Form):
         raise NotImplementedError
 
 class AcadSettingsForm(forms.Form):
-    branch = forms.ChoiceField(required=True, choices=branches)
+    branch = forms.ChoiceField(required=True, choices=(('', '-- Select --'),)+branches)
     college = forms.CharField(required=True, max_length=100)
     start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE, initial=(2007, 2007))
     end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE, initial='2011')

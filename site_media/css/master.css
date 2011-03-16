@@ -159,7 +159,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 ul#colleges_list li a{font-size:1.6em;}
 
 /*Login Page Styles*/
-#login_pane h3{color:#666;padding-left:6em;margin-top:1em;}
+h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-size:2em;}
 
 /*About Page Styles*/
 #aboutus h2{margin-bottom:0.25em;}

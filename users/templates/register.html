@@ -2,7 +2,7 @@
 {% block title %}Registration{% endblock %}
 {%block content%}
 <style>
-#student_signup_pane,#professor_signup_pane,#employee_signup_pane{margin-top:2em;height:200px;overflow:hidden;text-align:center;}
+#student_signup_pane,#professor_signup_pane,#employee_signup_pane{margin-top:2em;height:400px;overflow:hidden;text-align:center;}
 #student_signup_pane h3,#professor_signup_pane h3,#employee_signup_pane h3{background:#EFEFEF;color:#105FB6;padding:0.5em;margin:0;}
 #student_signup_pane a,#professor_signup_pane a,#employee_signup_pane a{border-bottom:0;}
 .signup_notes{text-align:left;padding-left:1em;padding:1em;border:1px solid #EFEFEF;}
@@ -11,27 +11,30 @@
 <div id="student_signup_pane" class='prepend-1 column span-7 append-1'>
 <h3>Are you a Student ?</h3>
 <ul class='signup_notes'>
-<li>Something Something Something</li>
-<li>Something Something Something</li>
-<li>Something Something Something</li>
+<li>Save your college Assignments online</li>
+<li>Find answers to thousands of Questions related to subjects of your interest</li>
+<li>You get an online resume at zero effort and zero cost</li>
+<li>Help juniors not only from your college but across the globe</li>
 </ul>
 <a href="{%url student_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of student_signup_pane -->
 <div id="professor_signup_pane" class='column span-7 append-1'>
 <h3>Are you a Professor ?</h3>
 <ul class='signup_notes'>
-<li>Something Something Something</li>
-<li>Something Something Something</li>
-<li>Something Something Something</li>
+<li>View your Students' notes online</li>
+<li>Share your views/answers to thousands of Questions</li>
+<li>You can always be helpful to Students, even outside the college</li>
+<li>Expand your network by connecting to Industry Employees</li>
 </ul>
 <a href="{%url professor_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of professor_signup_pane -->
 <div id="employee_signup_pane" class='column span-7 last'>
 <h3>Are you an Employee ?</h3>
 <ul class='signup_notes'>
-<li>Something Something Something</li>
-<li>Something Something Something</li>
-<li>Something Something Something</li>
+<li>You can contact a Student</li>
+<li>Share your expertise by answering the Questions of your interest</li>
+<li>Show off your talents by helping others</li>
+<li>Expand your network by connecting to other Employees</li>
 </ul>
 <a href="{%url employee_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of employee_signup_pane -->

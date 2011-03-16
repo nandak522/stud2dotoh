@@ -35,24 +35,33 @@ def view_all_users(request, all_users_template):
         users = paginator.page(paginator.num_pages)
     return response(request, all_users_template, {'users': users})
 
+def _get_signup_form_for_usertype(user_type):
+    if user_type == 'S':
+        form_to_be_loaded = StudentSignupForm
+    elif user_type == 'P':
+        form_to_be_loaded = ProfessorSignupForm
+    elif user_type == 'E':
+        form_to_be_loaded = EmployeeSignupForm
+    return form_to_be_loaded
+
+def _set_signup_greeting_for_usertype(user_type):
+    if user_type == 'S':
+        from users.messages import STUDENT_SIGNUP_GREETING
+        messages.success(request, STUDENT_SIGNUP_GREETING)
+    elif user_type == 'P':
+        from users.messages import PROFESSOR_SIGNUP_GREETING
+        messages.success(request, PROFESSOR_SIGNUP_GREETING)
+    elif user_type == 'E':
+        from users.messages import EMPLOYEE_SIGNUP_GREETING
+        messages.success(request, EMPLOYEE_SIGNUP_GREETING)
+
 @anonymoususer
 def view_register(request, registration_template, user_type='', next=''):
     if not user_type:
         return response(request, registration_template, {'next':next})
-    form_to_be_loaded = ''
-    if user_type == 'S':
-        from users.messages import STUDENT_SIGNUP_GREETING
-        messages.success(request, STUDENT_SIGNUP_GREETING)
-        form_to_be_loaded = StudentSignupForm
-    elif user_type == 'P':
-        from users.messages import PROFESSOR_SIGNUP_GREETING
-        messages.success(request, PROFESSOR_SIGNUP_GREETING)
-        form_to_be_loaded = ProfessorSignupForm
-    elif user_type == 'E':
-        from users.messages import EMPLOYEE_SIGNUP_GREETING
-        messages.success(request, EMPLOYEE_SIGNUP_GREETING)
-        form_to_be_loaded = EmployeeSignupForm
+    form_to_be_loaded = _get_signup_form_for_usertype(user_type)
     if request.method == 'GET':
+        _set_signup_greeting_for_usertype(user_type)
         return response(request, registration_template, {'form':form_to_be_loaded(), 'next':next})
     form = form_to_be_loaded(post_data(request))
     if form.is_valid():
@@ -105,7 +114,7 @@ def view_login(request, login_template, next=''):
         form = UserLoginForm(data)
         if form.is_valid():
             try:
-                userprofile = UserProfile.objects.get(user__email=form.cleaned_data.get('email'))
+                userprofile = UserProfile.objects.get(user__email=form.cleaned_data.get('email'), user__is_active=True)
             except UserProfile.DoesNotExist:
                 from users.messages import USER_LOGIN_FAILURE
                 messages.error(request, USER_LOGIN_FAILURE)
