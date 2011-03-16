@@ -1,7 +1,7 @@
 /*Global Styles*/
 body{background:#F4F4F4;}
 #container{background:#FFF;border-right:1px solid #EDEDED;border-left:1px solid #EDEDED;}
-a{text-decoration:none;border-bottom:1px solid #06C;}
+a{text-decoration:none;border-bottom:1px solid #06C;border-style:dotted;}
 #content{background:#FFF;color:#09222F;}
 #footer{background:#053B76;border-top:1px solid #105FB6;color:#FFF;font:bold 14px sans-serif,Arial;text-align:center;padding:6px 0;}
 .help_text{color:#333;padding-left:4px;font-size:0.875em;}
@@ -36,7 +36,7 @@ a.tag{border-bottom:0;}
 .orange{color:#FF6633;}
 .orange_underline{text-decoration:none;border-bottom:2px solid #FF6633;}
 .blue_underline{text-decoration:none;border-bottom:2px solid #E5ECF9;}
-.file_link{font-size:1em;border:0;}
+.file_link{font-size:1em;}
 .italic{font-style:italic;}
 .bold{font-weight:bold;}
 .helvetica{font-family:"Helvetica",Arial, Sans-serif;}
@@ -77,7 +77,7 @@ hr{margin:0;padding:0;}
 ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo{padding-top:1em;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
-.help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;}
+.help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
 .emboss{border:1px solid #CCC;border-top:0;border-left:0;background:#F6F6F6;}
 
 /*Homepage Styles*/

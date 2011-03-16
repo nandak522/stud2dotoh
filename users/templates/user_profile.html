@@ -80,7 +80,7 @@
 {%if answered_questions%}
     <ul class='webresume_section emboss'>
     {%for question in answered_questions%}
-    <li><h4><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></h4></li>
+    <li><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></li>
     {%endfor%}
     </ul>
 {%else%}
