@@ -44,7 +44,7 @@ def _get_signup_form_for_usertype(user_type):
         form_to_be_loaded = EmployeeSignupForm
     return form_to_be_loaded
 
-def _set_signup_greeting_for_usertype(user_type):
+def _set_signup_greeting_for_usertype(request, user_type):
     if user_type == 'S':
         from users.messages import STUDENT_SIGNUP_GREETING
         messages.success(request, STUDENT_SIGNUP_GREETING)
@@ -61,7 +61,7 @@ def view_register(request, registration_template, user_type='', next=''):
         return response(request, registration_template, {'next':next})
     form_to_be_loaded = _get_signup_form_for_usertype(user_type)
     if request.method == 'GET':
-        _set_signup_greeting_for_usertype(user_type)
+        _set_signup_greeting_for_usertype(request, user_type)
         return response(request, registration_template, {'form':form_to_be_loaded(), 'next':next})
     form = form_to_be_loaded(post_data(request))
     if form.is_valid():
