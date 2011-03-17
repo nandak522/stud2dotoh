@@ -2,7 +2,7 @@
 {% block title %}Invite somebody you know{% endblock %}
 {%block content%}
 <div class='column span-13'>
-    <h3 class='georgia maincontent_header'>Invite somebody you know!</h3>
+    <h3 class='georgia maincontent_header blue_underline'>Invite somebody you know!</h3>
     <form action="{%url invite %}" method='POST'>{% csrf_token %}
     <table class='form-table'>
         <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{form.to_emails}}<span class='help_text'>(Mention multiple emails separated by commas.)</span>{{form.to_emails.errors}}</td></tr>
