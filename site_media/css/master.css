@@ -132,7 +132,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 /*Question Page Styles*/
 #all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
 #all_questions,#questions_sidebar{padding:1em;}
-#questions_sidebar input[type="button"]{padding:0.875em;font-size:1.2em;font-weight:bold;}
+#questions_sidebar input[type="button"],#ask_question_button{padding:0.875em;font-size:1.2em;font-weight:bold;}
 #all_questions .content_header{padding-left:0;}
 .answer_block{margin-bottom:1em;padding:8px 0 8px 4px;border-bottom:1px solid #CCC;background:#F6F6F6;font:normal 1.1em sans-serif;}
 .accepted_answer{background:#FFD354;}

@@ -18,7 +18,7 @@
 {%endfor%}
 {%endblock%}
 {%block sidebar%}
-<input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
+<input id="ask_question_button" type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <br/><br/><br/>
 <ul id='stats' class='board emboss'>
 <li><a href="{%url colleges%}" target='_blank'>{{stats.colleges_count}} Colleges</a></li>

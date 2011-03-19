@@ -8,7 +8,7 @@
 </ul>
 {%endblock%}
 {%block maincontent%}
-<h3 class='georgia maincontent_header'>{%if achievement%}Edit{%else%}Add{%endif%} an Achievement</h3>
+<h3 class='georgia maincontent_header blue_underline'>{%if achievement%}Edit{%else%}Add{%endif%} an Achievement</h3>
 <form action="{%if achievement%}{%url edit_achievement achievement.id%}{%else%}{%url add_achievement%}{%endif%}" method='POST'>{% csrf_token %}
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_title">Short Title of your achievement :</label></td><td class='leftalign'>{{form.title}}<span class='help_text'>(<span class='required'>Required</span>. Max of {{form.fields.title.max_length}} characters)</span><br/>{{form.title.errors}}</td></tr>
