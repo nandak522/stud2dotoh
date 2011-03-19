@@ -212,7 +212,7 @@ class UserProfile(BaseModel):
     
     @property
     def public_notes(self):
-        return self.note_set.filter(public=True).values('id', 'name').all()
+        return self.note_set.filter(public=True).values('id', 'name', 'note').all()
     
     def is_my_note(self, note):
         return bool(self.note_set.filter(id=note.id).count())

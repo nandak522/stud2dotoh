@@ -44,7 +44,10 @@
     <h4 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="help" title="These Notes are helpful in knowing more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url notepad%}">Add Note ?</a></span>{%endif%}</h4>
     <ol class='webresume_section emboss'>
     {%for note in public_notes%}
-    <li><a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a></li>
+    <li>
+        <a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a>&nbsp;&nbsp;<span class="spanlink" onClick="javascript:$('#{{note.id}}_note_desc').slideToggle();">View Full Note</span>
+        <div class='hide full_description' id="{{note.id}}_note_desc">{{note.note}}</div>
+    </li>
     {%empty%}
     <li>{{userprofile.name|title}} has not saved any notes yet!</li>
     {%endfor%}
@@ -56,8 +59,8 @@
     <ul class='webresume_section emboss'>
     {%for achievement in achievements%}
     <li>
-        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='spanlink' title="Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">Full Description</span></h6>
-        <div class='hide webresume_achievement_desc' id="{{achievement.id}}_achievement_desc">{{achievement.description}}</div>
+        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='spanlink' title="Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">View Full Description</span></h6>
+        <div class='hide full_description' id="{{achievement.id}}_achievement_desc">{{achievement.description}}</div>
     </li>
     {%endfor%}
     </ul>

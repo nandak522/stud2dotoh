@@ -126,7 +126,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #answered_questions li,#asked_questions li{font-size:110%;}
 .widget_toplinks{width:400px;font-size:12px;border:0;text-decoration:none;}
 .widget_toplinks a{border:0;}
-.webresume_achievement_desc{background:#FFF;border:1px solid #CCC;padding:0.5em;margin-top:4px;}
+.full_description{background:#FFF;border:1px solid #CCC;padding:0.5em;margin-top:4px;}
 #personal_details h4, #achievements h4, #saved_notes h4, #asked_questions h4, #answered_questions h4{margin-bottom:0.6em;}
 
 /*Question Page Styles*/
