@@ -92,7 +92,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #slideshow ul li{font-size:1.8em;font-weight:normal;}
 .slideshow_content_area li{font:bold 1.2em "Droid Sans","Helvetica", Arial, Sans-serif;padding-bottom:0.5em;border-right:1px solid #EFEFEF;}
 .slideshow_content_area a{border:0;}
-.slideshow_pic_area{height:380px;}
+.slideshow_pic_area{height:380px;padding-left:10px;}
 #slides{position:relative;}
 #slides .next,#slides .prev{position:absolute;top:30%;}
 #slides .next,#slides .prev {width:24px;height:43px;display:block;z-index:101;border-bottom:0;}
