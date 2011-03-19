@@ -55,7 +55,10 @@
 {%if achievements%}
     <ul class='webresume_section emboss'>
     {%for achievement in achievements%}
-    <li>{{achievement.title|title}}</h3></li>
+    <li>
+        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='spanlink' title="Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">Full Description</span></h6>
+        <div class='hide webresume_achievement_desc' id="{{achievement.id}}_achievement_desc">{{achievement.description}}</div>
+    </li>
     {%endfor%}
     </ul>
 {%else%}

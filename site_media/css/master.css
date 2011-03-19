@@ -1,7 +1,8 @@
 /*Global Styles*/
 body{background:#F4F4F4;}
 #container{background:#FFF;border-right:1px solid #EDEDED;border-left:1px solid #EDEDED;}
-a{text-decoration:none;border-bottom:1px solid #06C;border-style:dotted;}
+a,.spanlink{text-decoration:none;border-bottom:1px solid #06C;border-style:dotted;}
+.spanlink{color:#06C;cursor:pointer;}
 #content{background:#FFF;color:#09222F;}
 #footer{background:#053B76;border-top:1px solid #105FB6;color:#FFF;font:bold 14px sans-serif,Arial;text-align:center;padding:6px 0;}
 .help_text{color:#333;padding-left:4px;font-size:0.875em;}
@@ -125,6 +126,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #answered_questions li,#asked_questions li{font-size:110%;}
 .widget_toplinks{width:400px;font-size:12px;border:0;text-decoration:none;}
 .widget_toplinks a{border:0;}
+.webresume_achievement_desc{background:#FFF;border:1px solid #CCC;padding:0.5em;margin-top:4px;}
 
 /*Question Page Styles*/
 #all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
