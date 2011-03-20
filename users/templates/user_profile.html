@@ -34,7 +34,7 @@
     {%with userprofile.helped_persons as helped_persons%}
     {%if helped_persons%}
     <li>
-        Helped {%for person in helped_persons%}<a href="{%url user_profile person.0 person.1%}">{{person.2|title}}</a>&nbsp;{%endfor%}
+        Helped {%for person in helped_persons%}{%render_user_domain person %}&nbsp;{%endfor%}
     </li>
     {%endif%}
     {%endwith%}

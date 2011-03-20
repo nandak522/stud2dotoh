@@ -5,9 +5,10 @@
 <h2 class='georgia maincontent_header'>{{college_name|title}}</h2>
 {%if students%}
 <h3 class='georgia maincontent_header'><a id='contactgroup' href="{%url contactgroup 'college' college.id%}">Contact All {{college_name|title}} Students</a></h3>
+{%load users_tags%}
 <ul id='colleges_list' class='prepend-1'>
 {%for student in students%}
-<li><a href="{%url user_profile student.id student.slug%}">{{student.name|title}}</a></li>
+<li>{%render_user_domain student %}</li>
 {%empty%}
 No Students Yet!
 {%endfor%}

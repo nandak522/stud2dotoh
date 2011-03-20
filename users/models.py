@@ -189,6 +189,12 @@ class UserProfile(BaseModel):
             return True
         return False
     
+    @property
+    def is_domain_enabled(self):
+        if self.can_update_slug():
+            return False
+        return True
+    
     def update_slug(self, new_slug_name):
         '''Ensuring slug cant be updated more than once'''
         if self.can_update_slug():

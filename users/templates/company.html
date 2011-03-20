@@ -4,7 +4,7 @@
 <h2 class='georgia maincontent_header'>{{company.name|title}} Employees</h2>
 <ul id='companies'>
 {%for employee in employees%}
-<li><h3><a href="{%url user_profile employee.id employee.slug%}">{{employee.name}}</a></h3></li>
+<li><h3>{%render_user_domain employee %}</h3></li>
 {%empty%}
 No Employees Yet!
 {%endfor%}

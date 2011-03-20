@@ -161,7 +161,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 ul#colleges li,ul#companies li{list-style-type:none;}
 
 /*College Page Styles*/
-ul#colleges_list li a{font-size:1.6em;}
+ul#colleges_list li{font-size:1.6em;}
 
 /*Login Page Styles*/
 h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-size:2em;}

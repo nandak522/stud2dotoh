@@ -1,5 +1,6 @@
 from django import template
 from users.models import College, Company
+from users.models import UserProfile
 from django.core.urlresolvers import reverse as url_reverse
 
 register = template.Library()
@@ -17,3 +18,18 @@ def workplace_url(company_id):
         return ''
     company_details = Company.objects.filter(id=int(company_id)).values('id', 'slug', 'name')[0]
     return "<a href='%(url)s'>%(name)s</a>" % {'name':company_details['name'], 'url':url_reverse('users.views.view_company', args=(company_details['id'], company_details['slug']))}  
+
+@register.inclusion_tag('domain_url.html')
+def render_user_domain(userprofile):
+    if userprofile:
+        if isinstance(userprofile, dict):
+            user_id = userprofile.get('id')
+            slug = userprofile.get('slug')
+            userprofile = UserProfile.objects.get(id=user_id, slug=slug)
+        elif isinstance(userprofile, tuple):
+            user_id = userprofile[0]
+            slug = userprofile[1]
+            userprofile = UserProfile.objects.get(id=user_id, slug=slug)
+    if userprofile.is_domain_enabled:
+        return {'domain_or_name': "<a class='profile_link' href='%(url)s'>%(name)s</a>" % {'name':userprofile.name, 'url':url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug))}}
+    return {'domain_or_name': userprofile.name}
