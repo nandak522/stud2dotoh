@@ -7,7 +7,6 @@ from django.template.defaultfilters import slugify
 from django.test import TestCase
 import os
 import shutil
-from users.models import College, Group, Company
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))
@@ -47,6 +46,9 @@ def useful_params_in_context(request):
     return params
 
 def get_stats():
+    #TODO:This import is not moved to the global level, as there is a
+    #circular import problem. But for every page this import will be happening :'(
+    from users.models import College, Group, Company
     stats = {'colleges_count':College.objects.count(),
              'students_count':Group.objects.get(name='Student').user_set.count(),
              'companies_count':Company.objects.count(),
