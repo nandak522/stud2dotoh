@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 from django.test import TestCase
 import os
 import shutil
+from users.models import College, Group, Company
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))
@@ -44,3 +45,10 @@ def useful_params_in_context(request):
         params['userprofilegroup'] = request.user.get_profile().group_name
     #TODO:the entire params dict needs to be cached
     return params
+
+def get_stats():
+    stats = {'colleges_count':College.objects.count(),
+             'students_count':Group.objects.get(name='Student').user_set.count(),
+             'companies_count':Company.objects.count(),
+             'employees_count':Group.objects.get(name='Employee').user_set.count()}
+    return stats
