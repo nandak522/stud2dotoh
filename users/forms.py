@@ -55,7 +55,7 @@ class SaveNoteForm(forms.Form):
     
 class PersonalSettingsForm(forms.Form):
     name = forms.CharField(max_length=50, required=True)
-    slug = forms.CharField(max_length=50, required=False)
+    slug = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={'title':"Online Resumes are always impressive! If you want your online resume at MADDY.stud2dotoh.com, please enter MADDY here. You can distribute this url to anyone."}))
     new_password = forms.CharField(min_length=6, max_length=50, required=False, widget=forms.PasswordInput())
     
     def clean_name(self):
