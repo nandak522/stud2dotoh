@@ -7,10 +7,3 @@
     <tr><td>&nbsp;</td><td><input type='button' id="save_workinfo_settings_button" name='save_workinfo_settings_button' value="Save my WorkPlace Settings" onClick="javascript:save_workinfo_settings(this.form.name);"/></td></tr>
 </table>
 </form>
-<script type='text/javascript'>
-$('#id_workplace').autocomplete({
-        dataType:'json',
-        source:'{%url ajax_companies_list%}',
-        minLength:1,
-    });
-</script>

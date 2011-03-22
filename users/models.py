@@ -29,6 +29,8 @@ branches = (('CSE', 'Computers'),
             ('PTE', 'Printing'),
             )
 
+SLUG_UPDATE_TIME_THRESHOLD_IN_SECONDS = 2
+
 class UserProfileAlreadyExistsException(Exception):
     pass
 
@@ -185,9 +187,14 @@ class UserProfile(BaseModel):
         self.save()
     
     def can_update_slug(self):
-        if self.modified_on <= (self.created_on + timedelta(minutes=1)):
+        if self.modified_on <= (self.created_on + timedelta(seconds=SLUG_UPDATE_TIME_THRESHOLD_IN_SECONDS)):
             return True
         return False
+    
+    def reset_slug_time(self):
+        #NOTE:This should only be used in error debugging situations
+        self.modified_on = self.created_on
+        self.save()
     
     @property
     def is_domain_enabled(self):
