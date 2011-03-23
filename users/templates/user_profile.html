@@ -14,7 +14,7 @@
         Website: <a target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
     </li>
     {%with userprofile.acad_details as acad_details%}
-        <li>Secured an Aggregate Score of <span class="special_blue">{{acad_details.4}}</span></li>
+        {%if acad_details.4%}<li>Secured an Aggregate Score of <span class="special_blue">{{acad_details.4}}</span></li>{%endif%}
         <li>
         {%if userprofile.is_student%}Studying{%else%}Studied{%endif%}
         {%if acad_details.0%} {{acad_details.0}}{%endif%} in {%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%} College (&nbsp;{{acad_details.2}} - {{acad_details.3}} Batch&nbsp;).
