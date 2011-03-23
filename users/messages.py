@@ -17,3 +17,4 @@ NEED_TO_PICK_A_WEBRESUME_URL_MESSAGE = 'Web-Resume will be enabled only if you p
 ACHIEVEMENT_ADDED_SUCCESSFULLY = 'Achievement Added Successfully'
 ACHIEVEMENT_UPDATED_SUCCESSFULLY = 'Achievement Updated Successfully'
 WEBRESUME_FIELD_HOVER = "Online Resumes are always impressive! If you want your online resume at MADDY.stud2dotoh.com, please enter MADDY here. You can distribute this url to anyone."
+AGGREGATE_HOVER = "A Honest score will always boost impression on you"

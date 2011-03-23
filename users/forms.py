@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from users.models import UserProfile, branches
 import re
 from users.messages import USER_LOGIN_FAILURE, WEBRESUME_FIELD_HOVER
+from users.messages import AGGREGATE_HOVER
 from utils.formfields import MultipleEmailsField, AutocompleteWidget
 
 USER_NAME_CLEANUP_REGEX_PATTERN = re.compile(r'[^\w.&\s-]+', re.IGNORECASE)
@@ -85,6 +86,7 @@ class AcadSettingsForm(forms.Form):
     college = forms.CharField(required=True, max_length=100)
     start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE, initial=(2007, 2007))
     end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE, initial='2011')
+    aggregate = forms.DecimalField(required=False, max_digits=3, decimal_places=1, widget=forms.TextInput(attrs={'title':AGGREGATE_HOVER}))
     
     def clean_college(self):
         college = self.cleaned_data.get('college')

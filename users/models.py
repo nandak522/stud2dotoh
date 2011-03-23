@@ -108,14 +108,14 @@ class UserProfile(BaseModel):
     def is_employee(self):
         return Group.objects.get(name="Employee") in self.user.groups.all()
     
-    def join_college(self, college_name, branch='', start_year=None, end_year=None):
+    def join_college(self, college_name, branch='', start_year=None, end_year=None, aggregate=''):
         AcadInfo.objects.filter(userprofile=self).delete()
         college_slug = slugify(college_name)
         if College.objects.exists(slug=college_slug):
             college = College.objects.get(slug=college_slug)
         else:
             college = College.objects.create_college(name=college_name)
-        AcadInfo.objects.create_acadinfo(self, branch=branch, college=college, start_year=start_year, end_year=end_year)
+        AcadInfo.objects.create_acadinfo(self, branch=branch, college=college, start_year=start_year, end_year=end_year, aggregate=aggregate)
         
     def join_workplace(self, workplace_name, workplace_type, designation='', years_of_exp=''):
         workplace_slug = slugify(workplace_name)
@@ -139,9 +139,9 @@ class UserProfile(BaseModel):
     def acad_details(self):
         acad_details = self.acadinfo_set
         if acad_details.count():
-            acad_details = acad_details.values('branch', 'college', 'start_year', 'end_year')[0]
-            return (acad_details['branch'], College.objects.get(id=acad_details['college']), acad_details['start_year'], acad_details['end_year'])
-        return ('', None, '', '')
+            acad_details = acad_details.values('branch', 'college', 'start_year', 'end_year', 'aggregate')[0]
+            return (acad_details['branch'], College.objects.get(id=acad_details['college']), acad_details['start_year'], acad_details['end_year'], acad_details['aggregate'])
+        return ('', None, '', '', '')
         
     @property
     def work_details(self):
@@ -190,11 +190,6 @@ class UserProfile(BaseModel):
         if self.modified_on <= (self.created_on + timedelta(seconds=SLUG_UPDATE_TIME_THRESHOLD_IN_SECONDS)):
             return True
         return False
-    
-    def reset_slug_time(self):
-        #NOTE:This should only be used in error debugging situations
-        self.modified_on = self.created_on
-        self.save()
     
     @property
     def is_domain_enabled(self):
@@ -321,15 +316,16 @@ class AcadInfoAlreadyExistsException(Exception):
     pass
     
 class AcadInfoManager(BaseModelManager):
-    def create_acadinfo(self, userprofile, branch, college, start_year, end_year):
+    def create_acadinfo(self, userprofile, branch, college, start_year, end_year, aggregate):
         if self.exists(userprofile=userprofile):
             raise AcadInfoAlreadyExistsException
-        if branch or college or start_year or end_year:
+        if branch or college or start_year or end_year or aggregate:
             acadinfo = AcadInfo(userprofile=userprofile,
                                     branch=branch,
                                     college=college,
                                     start_year=start_year,
-                                    end_year=end_year)
+                                    end_year=end_year,
+                                    aggregate=aggregate)
             acadinfo.save()
             return acadinfo
 
@@ -339,10 +335,11 @@ class AcadInfo(BaseModel):
     college = models.ForeignKey(College)
     start_year = YearField(max_length=4, blank=True, null=True)
     end_year = YearField(max_length=4, blank=True, null=True)
+    aggregate = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
     objects = AcadInfoManager()
     
     def __unicode__(self):
-        return "%s-(%s-%s-%s)" % (self.userprofile, self.branch, self.start_year, self.end_year)
+        return "%s-(%s-%s-%s)-%s" % (self.userprofile, self.branch, self.start_year, self.end_year, self.aggregate)
     
 class NoteManager(BaseModelManager):
     def create_note(self, userprofile, name, note, short_description='', public=True):

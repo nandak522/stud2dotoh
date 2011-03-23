@@ -221,11 +221,12 @@ def view_account_settings(request, settings_template):
     if request.method == 'GET':
         personal_form = PersonalSettingsForm({'name':userprofile.name,
                                               'slug':userprofile.slug})
-        (branch, college, start_year, end_year) = userprofile.acad_details
+        (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
         acad_form = AcadSettingsForm({'branch':branch,
                                       'college':college.name if college else '',
                                       'start_year':start_year if start_year else 2007,#TODO:hardcoding year is not good
-                                      'end_year':end_year if end_year else 2011})#TODO:hardcoding year is not good
+                                      'end_year':end_year if end_year else 2011,
+                                      'aggregate':aggregate})#TODO:hardcoding year is not good
         if userprofile.is_student:
             return response(request, settings_template, {'personal_form':personal_form,
                                                          'acad_form':acad_form})
@@ -281,11 +282,12 @@ def view_save_acad_settings(request, acad_settings_template):
         return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
     if request.method == 'GET':
-        (branch, college, start_year, end_year) = userprofile.acad_details 
+        (branch, college, start_year, end_year, aggregate) = userprofile.acad_details 
         acad_form = AcadSettingsForm({'branch':branch,
-                                              'college':college.name,
-                                              'start_year':start_year,
-                                              'end_year':end_year})
+                                      'college':college.name,
+                                      'start_year':start_year,
+                                      'end_year':end_year,
+                                      'aggregate':aggregate})
         return response(request, acad_settings_template, {'acad_form':acad_form})
     acad_form = AcadSettingsForm(post_data(request))
     if acad_form.is_valid():
@@ -293,7 +295,12 @@ def view_save_acad_settings(request, acad_settings_template):
         college = acad_form.cleaned_data.get('college')
         start_year = acad_form.cleaned_data.get('start_year')
         end_year = acad_form.cleaned_data.get('end_year')
-        userprofile.join_college(college_name=college, branch=branch, start_year=start_year, end_year=end_year)
+        aggregate = acad_form.cleaned_data.get('aggregate')
+        userprofile.join_college(college_name=college,
+                                 branch=branch,
+                                 start_year=start_year,
+                                 end_year=end_year,
+                                 aggregate=aggregate)
         from users.messages import ACCOUNT_SETTINGS_SAVED
         messages.success(request, ACCOUNT_SETTINGS_SAVED)
     return response(request, acad_settings_template, {'acad_form':acad_form})
