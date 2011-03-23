@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from users.models import UserProfile, branches
 import re
-from users.messages import USER_LOGIN_FAILURE
+from users.messages import USER_LOGIN_FAILURE, WEBRESUME_FIELD_HOVER
 from utils.formfields import MultipleEmailsField, AutocompleteWidget
 
 USER_NAME_CLEANUP_REGEX_PATTERN = re.compile(r'[^\w.&\s-]+', re.IGNORECASE)
@@ -55,7 +55,7 @@ class SaveNoteForm(forms.Form):
     
 class PersonalSettingsForm(forms.Form):
     name = forms.CharField(max_length=50, required=True)
-    slug = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={'title':"Online Resumes are always impressive! If you want your online resume at MADDY.stud2dotoh.com, please enter MADDY here. You can distribute this url to anyone."}))
+    slug = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={'title':WEBRESUME_FIELD_HOVER}))
     new_password = forms.CharField(min_length=6, max_length=50, required=False, widget=forms.PasswordInput())
     
     def clean_name(self):
