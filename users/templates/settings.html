@@ -16,7 +16,6 @@
 	</div><!-- end of workinfo_settings -->
 {%endblock%}
 {%block extrajs%}
-<script type='text/javascript'>{%if userprofile.can_update_slug%}document.forms[0].slug.focus();{%else%}document.forms[0].name.focus();{%endif%}</script>
 <script type='text/javascript' src="/site_media/js/users.js"></script>
 <script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type='text/javascript'>
@@ -31,6 +30,7 @@ $(document).ready(function(){
         source:'{%url ajax_companies_list%}',
         minLength:1,
     });
+    {%if userprofile.can_update_slug%}document.forms[0].slug.focus();{%else%}document.forms[0].name.focus();{%endif%}    
 });
 </script>
 {%endblock%}
