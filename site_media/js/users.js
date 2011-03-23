@@ -15,7 +15,7 @@ function save_personal_settings(form_name){
 function save_acad_settings(form_name){
 	var form = document.forms[form_name];
 	form.save_acad_settings_button.value = 'Saved';
-	ajaxPost('/settings/acad/', {'branch':form.branch.value, 'college':form.college.value, 'start_year':form.start_year.value, 'end_year':form.end_year.value, 'successCallback':settings, 'successCallbackParams':'acad'});
+	ajaxPost('/settings/acad/', {'branch':form.branch.value, 'college':form.college.value, 'start_year':form.start_year.value, 'end_year':form.end_year.value, 'aggregate':form.aggregate.value, 'successCallback':settings, 'successCallbackParams':'acad'});
 }
 
 function save_workinfo_settings(form_name){
