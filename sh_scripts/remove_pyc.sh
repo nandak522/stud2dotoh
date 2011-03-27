@@ -1,0 +1,1 @@
+find $1 -name "*.pyc" -exec rm -rf {} \;
