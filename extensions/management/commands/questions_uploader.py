@@ -5,12 +5,12 @@ import csv
 from quest.models import Question, QuestionAlreadyExistsException
 from users.models import UserProfile
 from taggit.managers import TaggableManager
-from .common import Spec, SpecColumn
+from .common import Spec, SpecColumn, SpecMisMatchException
 
 class QuestionsSpec(Spec):
-    SERIAL = SpecColumn(header_name='Serial No.', length=10, data_type=int, required=False)
-    TITLE = SpecColumn(header_name='Question Title', length=80, data_type=str, required=True)
-    TAGS = SpecColumn(header_name='Tags', length=100, data_type=int, required=False)
+    SERIAL = SpecColumn(header_name='SERIAL', length=10, data_type=int, required=False)
+    TITLE = SpecColumn(header_name='TITLE', length=80, data_type=str, required=True)
+    TAGS = SpecColumn(header_name='TAGS', length=100, data_type=str, required=False)
 
 FIELD_LENGTHS = {'Question Title':80, 'Tags':100}
 
@@ -33,30 +33,28 @@ class Command(BaseCommand):
         end = options['end']
         end = int(end) if end else -1
         self.userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
-        spec = QuestionsSpec(csv_file_path)
+        spec = QuestionsSpec(csv_file_path, ('SERIAL', 'TITLE', 'TAGS'))
         spec.validate()
-        cleaned_data = spec.cleaned_data
-        import pdb
-        pdb.set_trace()
+        cleaned_data = spec.clean()
         counter = 0
         if start:
             for record_number in range(start-1):
                 cleaned_data.next()
                 counter += 1
-        import pdb
-        pdb.set_trace()
         while end == -1 or counter < end:
             try:
                 question_details = cleaned_data.next()
             except StopIteration:
                 break
             self.creation_question(question_details)
+            counter += 1
 
     def creation_question(self, questions_details):
-        title = questions_details['Question Title']
-        tags_names = [tag_name.strip() for tag_name in questions_details['Tags'].split(',')] if questions_details['Tags'] else ()
+        title = questions_details['TITLE']
+        tags_names = [tag_name.strip() for tag_name in questions_details['TAGS'].split(',')] if questions_details['TAGS'] else ()
         try:
             Question.objects.create_question(title, '', self.userprofile, tags_names)
-            print 'Question %s saved' % question_details['Serial No']
+            print 'Question %s saved' % questions_details['SERIAL']
         except QuestionAlreadyExistsException:
+            print 'Question %s already exists' % questions_details['SERIAL']
             pass
