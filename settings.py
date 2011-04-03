@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'extensions',
     'debug_toolbar',
     'users',
     'quest',
@@ -107,3 +108,5 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_PAGINATION_COUNT = 25
+
+

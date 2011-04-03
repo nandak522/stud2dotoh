@@ -1,6 +1,9 @@
 from users.models import User
 
 class EmailAuthBackend(object):
+    
+    supports_object_permissions = False
+    
     def get_user(self, user_id):
         try:
             return User.objects.get(id=user_id)
