@@ -1,7 +1,7 @@
 from django import forms
 from django.template.defaultfilters import removetags
 from django.conf import settings
-from taggit.forms import TagField
+from utils.formfields import TagField
 
 class AskQuestionForm(forms.Form):
     title = forms.CharField(max_length=80, required=True)

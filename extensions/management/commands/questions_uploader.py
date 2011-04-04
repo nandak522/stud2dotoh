@@ -6,6 +6,7 @@ from quest.models import Question, QuestionAlreadyExistsException
 from users.models import UserProfile
 from taggit.managers import TaggableManager
 from .common import Spec, SpecColumn, SpecMisMatchException
+from utils.formfields import tags_cleanup
 
 class QuestionsSpec(Spec):
     SERIAL = SpecColumn(header_name='SERIAL', length=10, data_type=int, required=False)
@@ -51,7 +52,7 @@ class Command(BaseCommand):
 
     def creation_question(self, questions_details):
         title = questions_details['TITLE']
-        tags_names = [tag_name.strip() for tag_name in questions_details['TAGS'].split(',')] if questions_details['TAGS'] else ()
+        tags_names = tags_cleanup(questions_details['TAGS']) if questions_details['TAGS'] else ()
         try:
             Question.objects.create_question(title, '', self.userprofile, tags_names)
             print 'Question %s saved' % questions_details['SERIAL']
