@@ -108,7 +108,7 @@ class UserProfile(BaseModel):
     def is_employee(self):
         return Group.objects.get(name="Employee") in self.user.groups.all()
     
-    def join_college(self, college_name, branch='', start_year=None, end_year=None, aggregate=''):
+    def join_college(self, college_name, branch='', start_year=None, end_year=None, aggregate=None):
         AcadInfo.objects.filter(userprofile=self).delete()
         college_slug = slugify(college_name)
         if College.objects.exists(slug=college_slug):
