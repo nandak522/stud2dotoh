@@ -44,7 +44,7 @@
     <ol class='webresume_section emboss'>
     {%for note in public_notes%}
     <li>
-        <a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a>&nbsp;&nbsp;<span class="spanlink" onClick="javascript:$('#{{note.id}}_note_desc').slideToggle();">View Full Note</span>
+        <a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a>&nbsp;&nbsp;<span class="spanlink" onClick="javascript:$('#{{note.id}}_note_desc').slideToggle();">[+]</span>
         <div class='hide full_description' id="{{note.id}}_note_desc">{{note.note}}</div>
     </li>
     {%empty%}
@@ -58,7 +58,7 @@
     <ul class='webresume_section emboss'>
     {%for achievement in achievements%}
     <li>
-        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='spanlink' title="Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">View Full Description</span></h6>
+        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='spanlink' title="Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">[+]</span></h6>
         <div class='hide full_description' id="{{achievement.id}}_achievement_desc">{{achievement.description}}</div>
     </li>
     {%endfor%}

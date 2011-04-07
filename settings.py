@@ -6,15 +6,13 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('NandaKishore', 'madhav.bnk@gmail.com'),
-    ('Thilak', 'thilak.nar@gmail.com'),
-    ('Raja', 'raja.tkm@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'stud2dotoh',                      # Or path to database file if using sqlite3.
         'USER': 'stud2dotoh',                      # Not used with sqlite3.
         'PASSWORD': 'stud2dotoh',                  # Not used with sqlite3.
@@ -108,5 +106,3 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_PAGINATION_COUNT = 25
-
-
