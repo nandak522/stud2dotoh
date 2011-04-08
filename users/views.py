@@ -141,8 +141,8 @@ def view_logout(request, logout_template):
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
 
 @is_domain_slug_picked
-def view_userprofile(request, user_id, user_slug_name, userprofile_template):
-    userprofile = get_object_or_404(UserProfile, id=int(user_id), slug=user_slug_name)
+def view_userprofile(request, user_slug_name, userprofile_template):
+    userprofile = get_object_or_404(UserProfile, slug=user_slug_name)
     public_notes = userprofile.public_notes
     asked_questions = userprofile.asked_questions
     answered_questions = userprofile.answered_questions
@@ -375,7 +375,7 @@ def view_contactuser(request, user_id, contactuser_template):
 @login_required
 def view_webresume(request):
     userprofile = loggedin_userprofile(request)
-    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.slug,)))
 
 @login_required
 def view_contactgroup(request, group_type, group_id, contactgroup_template):

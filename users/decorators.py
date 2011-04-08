@@ -29,8 +29,8 @@ def is_admin(the_function):
 
 def is_domain_slug_picked(the_function):
     def _is_domain_slug_picked(request, *args, **kwargs):
-        user_id = kwargs['user_id']
-        userprofile = get_object_or_404(UserProfile, id=int(user_id))
+        user_slug_name = kwargs['user_slug_name']
+        userprofile = get_object_or_404(UserProfile, slug=user_slug_name)
         user = request.user
         if user.is_authenticated():
             if user.get_profile().id == userprofile.id:
