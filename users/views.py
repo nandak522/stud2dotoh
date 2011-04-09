@@ -366,7 +366,7 @@ def view_contactuser(request, user_id, contactuser_template):
                             message=form.cleaned_data.get('message'))
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
-            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(user_id, to_userprofile.slug)))
+            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(to_userprofile.slug,)))
         except Exception,e:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)

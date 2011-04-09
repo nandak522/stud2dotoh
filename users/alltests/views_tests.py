@@ -265,7 +265,7 @@ class UserProfilePageTests(TestCase):
     
     def test_userprofilepage_success_response(self):
         userprofile = UserProfile.objects.get(user__email='somerandomuser@gmail.com')
-        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.slug,)))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'user_profile.html')
@@ -282,7 +282,7 @@ class UserProfilePageTests(TestCase):
         response = self.client.post(path=url_reverse('users.views.view_notepad'),
                                     data=form_data)
         self.logout()
-        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug)))
+        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.slug,)))
         context = response.context[0]
         all_notes = context.get('all_notes')
         self.assertTrue(all_notes)
@@ -293,7 +293,7 @@ class UserProfilePageTests(TestCase):
     
     def test_invalidlink_for_userprofilepage(self):
         userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
-        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.id, 'madness')))
+        response = self.client.get(path=url_reverse('users.views.view_userprofile', args=('madness',)))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
 

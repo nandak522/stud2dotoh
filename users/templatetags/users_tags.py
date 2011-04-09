@@ -31,5 +31,5 @@ def render_user_domain(userprofile):
             slug = userprofile[1]
             userprofile = UserProfile.objects.get(id=user_id, slug=slug)
     if userprofile.is_domain_enabled:
-        return {'domain_or_name': "<a class='profile_link' href='%(url)s'>%(name)s</a>" % {'name':userprofile.name, 'url':url_reverse('users.views.view_userprofile', args=(userprofile.id, userprofile.slug))}}
+        return {'domain_or_name': "<a class='profile_link' href='%(url)s'>%(name)s</a>" % {'name':userprofile.name, 'url':url_reverse('users.views.view_userprofile', args=(userprofile.slug,))}}
     return {'domain_or_name': userprofile.name}
