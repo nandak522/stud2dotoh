@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.template import add_to_builtins
+from django.views.generic.simple import direct_to_template
 
 from django.contrib import admin
 admin.autodiscover()
@@ -16,7 +17,7 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('users.views',
-    (r'^$', 'view_homepage', {'homepage_template':'homepage.html'}, 'homepage'),
+    (r'^$', direct_to_template, {'template':'homepage.html'}, 'homepage'),
     (r'^notepad/$', 'view_notepad', {'notepad_template':'notepad.html'}, 'notepad'),
     (r'^webresume/$', 'view_webresume', {}, 'webresume'),
     (r'^invite/$', 'view_invite', {'invite_template':'invite.html'}, 'invite'),
@@ -53,9 +54,9 @@ urlpatterns += patterns('users.views',
 )
 
 urlpatterns += patterns('users.views',
-    (r'^companies/$', 'view_companies', {'companies_template':'companies.html'}, 'companies'),
+    (r'^companies/$', 'view_all_companies', {'companies_template':'companies.html'}, 'companies'),
     (r'^companies/(?P<company_id>\d+)/(?P<company_slug>[\w\s-]+)/$', 'view_company', {'company_template':'company.html'}, 'company_profile'),
-    (r'^companies_ajax/$', 'view_companies_list', {}, 'ajax_companies_list'),                    
+    (r'^companies_ajax/$', 'view_ajax_companies_list', {}, 'ajax_companies_list'),                    
 )
 
 add_to_builtins('utils.templateutils')

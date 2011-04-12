@@ -21,7 +21,9 @@
         </li>
     {%endwith%}
     {%with userprofile.work_details as work_details%}
-        <li>{%if work_details.2%}Has {{work_details.2}} Years of Experience, {%endif%}Currently works at {%autoescape off%}{{work_details.0.id|workplace_url}}{%endautoescape%}{%if work_details.1%}, as {{work_details.1}}{%endif%}</li>
+        {%if work_details.0%}
+            <li>{%if work_details.2%}Has {{work_details.2}} Years of Experience, {%endif%}Currently works at {%autoescape off%}{{work_details.0.id|workplace_url}}{%endautoescape%}{%if work_details.1%}, as {{work_details.1}}{%endif%}</li>
+        {%endif%}
     {%endwith%}
     {%with userprofile.interested_tags as interested_tags%}
     {%if interested_tags%}

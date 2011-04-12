@@ -44,7 +44,7 @@ class UserProfileManager(BaseModelManager):
         user = User.objects.create_user(username=self._compute_username(email),
                                         email=email,
                                         password=password)
-        userprofile = UserProfile(user=user, name=name, slug=slugify(name))
+        userprofile = UserProfile(user=user, name=name)
         userprofile.save()
         return userprofile
     
@@ -54,7 +54,7 @@ class UserProfileManager(BaseModelManager):
 class UserProfile(BaseModel):
     user = models.OneToOneField(User)
     name = models.CharField(max_length=50, null=True, blank=True)
-    slug = models.SlugField(max_length=50, db_index=True)#this will be used as his unique url identifier
+    slug = models.SlugField(max_length=50, db_index=True, null=True, blank=True)#this will be used as his unique url identifier
     objects = UserProfileManager()
     
     def __unicode__(self):
@@ -187,10 +187,10 @@ class UserProfile(BaseModel):
         self.save()
     
     def can_update_slug(self):
-        if self.modified_on <= (self.created_on + timedelta(seconds=SLUG_UPDATE_TIME_THRESHOLD_IN_SECONDS)):
-            return True
-        return False
-    
+        if self.slug:
+            return False
+        return True
+
     @property
     def is_domain_enabled(self):
         if self.can_update_slug():
