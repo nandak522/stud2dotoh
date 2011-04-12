@@ -14,11 +14,9 @@ def is_get(view_function):
         raise Http404 
     return inner
 
-def is_ajax(the_function, redirect_url=''):
+def is_ajax(the_function):
     def _is_ajax(request, *args, **kwargs):
         if request.is_ajax():
             return the_function(request, *args, **kwargs)
-        if redirect_url:
-            return HttpResponseRedirect(redirect_url)
         raise Http404
     return _is_ajax

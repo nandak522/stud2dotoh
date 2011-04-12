@@ -26,11 +26,3 @@ function save_workinfo_settings(form_name){
 	var csrfmiddlewaretoken = form.csrfmiddlewaretoken.value;
 	ajaxPost('/settings/workinfo/', {'workplace':form.workplace.value, 'designation':form.designation.value, 'years_of_exp':form.years_of_exp.value, 'csrfmiddlewaretoken':csrfmiddlewaretoken, 'successCallback':settings, 'successCallbackParams':'workinfo'});
 }
-
-function get_acad_settings(){
-	ajaxGet('/settings/acad/', {'successCallback':settings, 'successCallbackParams':'acad'});
-}
-
-function get_workinfo_settings(){
-	ajaxGet('/settings/workinfo/', {'successCallback':settings, 'successCallbackParams':'workinfo'});
-}

@@ -154,11 +154,6 @@ def view_userprofile(request, user_slug_name, userprofile_template):
                                                     'answered_questions':answered_questions,
                                                     'achievements':achievements,
                                                     'can_edit':can_edit})
-
-def view_homepage(request, homepage_template):
-    #TODO:Homepage layout showing message, screenshots, latest updates across the system
-    return response(request, homepage_template, {})
-
 @login_required
 def view_notepad(request, notepad_template):
     userprofile = loggedin_userprofile(request)
@@ -216,57 +211,47 @@ def view_edit_note(request, note_id, notepad_template):
     raise Http404
 
 @login_required
+@is_get
 def view_account_settings(request, settings_template):
     userprofile = loggedin_userprofile(request)
-    if request.method == 'GET':
-        personal_form = PersonalSettingsForm({'name':userprofile.name,
-                                              'slug':userprofile.slug})
-        (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
-        acad_form = AcadSettingsForm({'branch':branch,
-                                      'college':college.name if college else '',
-                                      'start_year':start_year if start_year else 2007,#TODO:hardcoding year is not good
-                                      'end_year':end_year if end_year else 2011,
-                                      'aggregate':aggregate})#TODO:hardcoding year is not good
-        if userprofile.is_student:
-            return response(request, settings_template, {'personal_form':personal_form,
-                                                         'acad_form':acad_form})
-        else:
-            (workplace, designation, years_of_exp) = userprofile.work_details
-            workinfo_form = WorkInfoSettingsForm({'workplace':workplace.name if workplace else '', 'designation':designation, 'years_of_exp':years_of_exp})
-            return response(request, settings_template, {'personal_form':personal_form,
-                                                         'acad_form':acad_form,
-                                                         'workinfo_form':workinfo_form})
-        
-    form = PersonalSettingsForm(post_data(request))
-    if form.is_valid():
-        name = form.cleaned_data.get('name')
-        slug = form.cleaned_data.get('slug')
-        new_password = form.cleaned_data.get('new_password')
-        userprofile.update(name=name, slug=slug, password=new_password)
-        from users.messages import ACCOUNT_SETTINGS_SAVED
-        messages.success(request, ACCOUNT_SETTINGS_SAVED)
-    return response(request, settings_template, {'form':form})  
+    personal_form = PersonalSettingsForm({'name':userprofile.name,
+                                          'slug':userprofile.slug})
+    (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
+    acad_form = AcadSettingsForm({'branch':branch,
+                                  'college':college.name if college else '',
+                                  'start_year':start_year if start_year else 1984,#TODO:hardcoding year is not good
+                                  'end_year':end_year if end_year else 2016,#TODO:hardcoding year is not good
+                                  'aggregate':aggregate})
+    if userprofile.is_student:
+        return response(request, settings_template, {'personal_form':personal_form,
+                                                     'acad_form':acad_form})
+    else:
+        (workplace, designation, years_of_exp) = userprofile.work_details
+        workinfo_form = WorkInfoSettingsForm({'workplace':workplace.name if workplace else '', 'designation':designation, 'years_of_exp':years_of_exp})
+        return response(request, settings_template, {'personal_form':personal_form,
+                                                     'acad_form':acad_form,
+                                                     'workinfo_form':workinfo_form})
 
 @login_required
+@is_post
+@is_ajax
 def view_save_personal_settings(request, personal_settings_template):
-    if not request.is_ajax():#TODO:This has to go in a decorator
-        return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
-    if request.method == 'GET':
-        form = PersonalSettingsForm({'name':userprofile.name,
-                                     'slug':userprofile.slug,
-                                     'new_password':''})
-        return response(request, personal_settings_template, {'personal_form':form})
     form = PersonalSettingsForm(post_data(request))
     if form.is_valid():
         name = form.cleaned_data.get('name')
         new_password = form.cleaned_data.get('new_password')
         slug = form.cleaned_data.get('slug')
+        import pdb;pdb.set_trace()
         if userprofile.can_update_slug():
             if slug:
-                userprofile.update(name=name, slug=slug, password=new_password)
-                from users.messages import ACCOUNT_SETTINGS_SAVED
-                messages.success(request, ACCOUNT_SETTINGS_SAVED)
+                if UserProfile.objects.filter(slug=slug).count():
+                    from users.messages import WEB_RESUME_URL_ALREADY_PICKED
+                    form._errors['slug'] = WEB_RESUME_URL_ALREADY_PICKED
+                else:
+                    userprofile.update(name=name, slug=slug, password=new_password)
+                    from users.messages import ACCOUNT_SETTINGS_SAVED
+                    messages.success(request, ACCOUNT_SETTINGS_SAVED)
             else:
                 from users.messages import INVALID_WEB_RESUME_URL
                 messages.error(request, INVALID_WEB_RESUME_URL)
@@ -277,18 +262,10 @@ def view_save_personal_settings(request, personal_settings_template):
     return response(request, personal_settings_template, {'personal_form':form})
 
 @login_required
+@is_post
+@is_ajax
 def view_save_acad_settings(request, acad_settings_template):
-    if not request.is_ajax():#TODO:This has to go in a decorator
-        return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
-    if request.method == 'GET':
-        (branch, college, start_year, end_year, aggregate) = userprofile.acad_details 
-        acad_form = AcadSettingsForm({'branch':branch,
-                                      'college':college.name,
-                                      'start_year':start_year,
-                                      'end_year':end_year,
-                                      'aggregate':aggregate})
-        return response(request, acad_settings_template, {'acad_form':acad_form})
     acad_form = AcadSettingsForm(post_data(request))
     if acad_form.is_valid():
         branch = acad_form.cleaned_data.get('branch')
@@ -306,16 +283,10 @@ def view_save_acad_settings(request, acad_settings_template):
     return response(request, acad_settings_template, {'acad_form':acad_form})
 
 @login_required
+@is_post
+@is_ajax
 def view_save_workinfo_settings(request, workinfo_settings_template):
-    if not request.is_ajax():#TODO:This has to go in a decorator
-        return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     userprofile = loggedin_userprofile(request)
-    if request.method == 'GET':
-        (workplace, designation, years_of_exp) = userprofile.work_details
-        form = WorkInfoSettingsForm({'workplace':workplace if workplace else '',
-                                     'designation':designation,
-                                     'years_of_exp':years_of_exp})
-        return response(request, workinfo_settings_template, {'workinfo_form':form})
     form = WorkInfoSettingsForm(post_data(request))
     if form.is_valid():
         workplace = form.cleaned_data.get('workplace')
@@ -342,7 +313,7 @@ def view_college(request, college_id, college_slug, college_template):
     college = get_object_or_404(College, id=int(college_id), slug=college_slug)
     return response(request, college_template, {'college':college, 'students':college.students})
 
-def view_companies(request, companies_template):
+def view_all_companies(request, companies_template):
     return response(request, companies_template, {'companies':Company.objects.values('id', 'name', 'slug')})
 
 def view_company(request, company_id, company_slug, company_template):
@@ -503,7 +474,7 @@ def view_colleges_list(request):
     return HttpResponse(json, mimetype='application/json')
 
 @is_ajax
-def view_companies_list(request):
+def view_ajax_companies_list(request):
     search_name = request.GET.get('term')
     companies = Company.objects.filter(name__istartswith=search_name).values('id', 'name')
     companies = [{'id':company_info['id'], 'value':company_info['name']} for company_info in companies]
