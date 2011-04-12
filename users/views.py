@@ -103,7 +103,7 @@ def _let_user_login(request, user, email, password, next=''):
     django_login(request, user)
     if next:
         return HttpResponseRedirect(redirect_to=next)
-    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+    return HttpResponseRedirect(redirect_to='/')
 
 @anonymoususer
 def view_login(request, login_template, next=''):
@@ -138,7 +138,7 @@ def view_logout(request, logout_template):
     django_logout(request)
     from users.messages import USER_LOGOUT_SUCCESSFUL
     messages.info(request, USER_LOGOUT_SUCCESSFUL)
-    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+    return HttpResponseRedirect(redirect_to='/')
 
 @is_domain_slug_picked
 def view_userprofile(request, user_slug_name, userprofile_template):
@@ -242,7 +242,6 @@ def view_save_personal_settings(request, personal_settings_template):
         name = form.cleaned_data.get('name')
         new_password = form.cleaned_data.get('new_password')
         slug = form.cleaned_data.get('slug')
-        import pdb;pdb.set_trace()
         if userprofile.can_update_slug():
             if slug:
                 if UserProfile.objects.filter(slug=slug).count():
@@ -346,6 +345,10 @@ def view_contactuser(request, user_id, contactuser_template):
 @login_required
 def view_webresume(request):
     userprofile = loggedin_userprofile(request)
+    if userprofile.can_update_slug():
+        from users.messages import NEED_TO_PICK_A_WEBRESUME_URL_MESSAGE
+        messages.error(request, NEED_TO_PICK_A_WEBRESUME_URL_MESSAGE)
+        return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
     return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(userprofile.slug,)))
 
 @login_required
@@ -389,7 +392,7 @@ def view_contactus(request, contactus_template):
                     message=form.cleaned_data.get('message'))
         from users.messages import CONTACTED_SUCCESSFULLY
         messages.success(request, CONTACTED_SUCCESSFULLY)
-        return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+        return HttpResponseRedirect(redirect_to='/')
     return response(request, contactus_template, {'form':form})
 
 @login_required
@@ -405,7 +408,7 @@ def view_invite(request, invite_template):
                                from_name=userprofile.name)
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
-            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+            return HttpResponseRedirect(redirect_to='/')
         except Exception,e:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
@@ -429,7 +432,7 @@ def view_forgot_password(request, forgot_password_template):
     except:
         from users.messages import CONTACTING_FAILED
         messages.error(request, CONTACTING_FAILED)
-    return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+    return HttpResponseRedirect(redirect_to='/')
 
 @anonymoususer
 def view_reset_my_password(request, reset_my_password_template):
@@ -446,7 +449,7 @@ def view_reset_my_password(request, reset_my_password_template):
                                                                       'email':email})
             from users.messages import INVALID_PASSWORD_RESET_HASH_KEY
             messages.error(request, INVALID_PASSWORD_RESET_HASH_KEY)
-            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_homepage'))
+            return HttpResponseRedirect(redirect_to='/')
         else:
             raise Http404
     else:

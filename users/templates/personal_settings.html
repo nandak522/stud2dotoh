@@ -6,7 +6,7 @@
         <td class='leftalign'>
         {%if userprofile.can_update_slug%}
             {{personal_form.slug}}.{{site.domain}}<span class='help_text'>(This will be the url of your Public Resume page. Can't be changed, once picked)</span>
-            <br/>{{personal_form.slug.errors}}
+            <br/>{%autoescape off%}{{personal_form.slug.errors}}{%endautoescape%}
         {%else%}
             <a class='domain bold' target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
         {%endif%}
