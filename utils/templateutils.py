@@ -3,10 +3,14 @@ import re
 import urlparse
 from django.template.defaulttags import URLNode, url
 from django.contrib.sites.models import Site
+from django.conf import settings
 
 register = template.Library()
 
-domain = "http://%s" % Site.objects.get_current().domain
+if not settings.DEBUG:
+    domain = "http://%s" % Site.objects.get_current().domain
+else:
+    domain = ''
 
 @register.filter
 def emailify(email):
