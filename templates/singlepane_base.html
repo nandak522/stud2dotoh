@@ -27,6 +27,7 @@
                 {%include 'header.html'%}        
             {%endblock%}
         </div><!-- end of header -->
+        {%block main_tabs%}
         <div id='maintabs' class='column span-24 last'>
 	        <ul class='main_tabs'>
 				<li class='{%block hometab%}{%endblock%} roundcorner'><a href='{%url homepage%}'>Home</a></li>
@@ -37,6 +38,7 @@
 			</ul>        
         </div><!-- end of maintabs -->
         <hr class='special_blue'/>
+        {%endblock%}
         <div id='content' class='column span-24 prepend-top append-bottom last'>
             <div id='ajax_status_header'></div>
             <div class='singlepane_maincontent_area'>
