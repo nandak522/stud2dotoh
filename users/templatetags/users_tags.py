@@ -2,6 +2,7 @@ from django import template
 from users.models import College, Company
 from users.models import UserProfile
 from django.core.urlresolvers import reverse as url_reverse
+from django.template.defaultfilters import capfirst
 
 register = template.Library()
 
@@ -10,14 +11,14 @@ def college_url(college_id):
     if not college_id:
         return ''
     college_details = College.objects.filter(id=int(college_id)).values('id', 'slug', 'name')[0]
-    return "<a href='%(url)s'>%(name)s</a>" % {'name':college_details['name'], 'url':url_reverse('users.views.view_college', args=(college_details['id'], college_details['slug']))}
+    return "<a href='%(url)s'>%(name)s</a>" % {'name':capfirst(college_details['name']), 'url':url_reverse('users.views.view_college', args=(college_details['id'], college_details['slug']))}
 
 @register.filter
 def workplace_url(company_id):
     if not company_id:
         return ''
     company_details = Company.objects.filter(id=int(company_id)).values('id', 'slug', 'name')[0]
-    return "<a href='%(url)s'>%(name)s</a>" % {'name':company_details['name'], 'url':url_reverse('users.views.view_company', args=(company_details['id'], company_details['slug']))}  
+    return "<a href='%(url)s'>%(name)s</a>" % {'name':capfirst(company_details['name']), 'url':url_reverse('users.views.view_company', args=(company_details['id'], company_details['slug']))}  
 
 @register.inclusion_tag('domain_url.html')
 def render_user_domain(userprofile):
