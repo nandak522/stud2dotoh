@@ -22,7 +22,9 @@ def get_data(request):
     return request.GET.copy()
 
 class TestCase(TestCase):
-    settings.DEBUG = True
+    def setUp(self):
+        settings.DEBUG = True
+    
     def tearDown(self):
         del self.client
         

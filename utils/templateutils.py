@@ -7,10 +7,10 @@ from django.conf import settings
 
 register = template.Library()
 
-if not settings.DEBUG:
-    domain = "http://%s" % Site.objects.get_current().domain
-else:
+if settings.DEBUG:
     domain = ''
+else:
+    domain = "http://%s" % Site.objects.get_current().domain
 
 @register.filter
 def emailify(email):
