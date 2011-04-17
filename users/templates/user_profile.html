@@ -14,7 +14,7 @@
 {% block title %}{%if can_edit%}Your{%else%}{{userprofile.name|title}}{%endif%} - Profile Information{% endblock %}
 {%block webresumetab%}{%if can_edit%}activetab{%endif%}{%endblock%}
 {%block content%}
-<input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%url contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>
+<input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%absurl contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>
 <h2 id='user_profile_header' class='georgia maincontent_header'>{{userprofile.name|title}}</h2>
 {%load users_tags%}
 <div id='personal_details'>
@@ -23,14 +23,16 @@
         Can be reached at: {{userprofile.user.email|emailify}}
     </li>
     <li>
-        Website: <a target='_blank' href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
+        Website: <a href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
     </li>
     {%with userprofile.acad_details as acad_details%}
         {%if acad_details.4%}<li>Secured an Aggregate Score of <span class="special_blue">{{acad_details.4}}</span></li>{%endif%}
-        <li>
-        {%if userprofile.is_student%}Studying{%else%}Studied{%endif%}
-        {%if acad_details.0%} {{acad_details.0}}{%endif%} in {%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%} College (&nbsp;{{acad_details.2}} - {{acad_details.3}} Batch&nbsp;).
-        </li>
+        {%if acad_details.1%}
+            <li>
+	        {%if userprofile.is_student%}Studying{%else%}Studied{%endif%}
+	        {%if acad_details.0%} {{acad_details.0}}{%endif%} in {%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%} College (&nbsp;{{acad_details.2}} - {{acad_details.3}} Batch&nbsp;).
+	        </li>
+        {%endif%}
     {%endwith%}
     {%with userprofile.work_details as work_details%}
         {%if work_details.0%}
@@ -40,7 +42,7 @@
     {%with userprofile.interested_tags as interested_tags%}
     {%if interested_tags%}
     <li>
-        Has strong interest in {%for tag in interested_tags%}<a class="tag" target="_blank" title="Browse All {{tag|title}} Questions" href="{%url tagged_questions tag_name=tag%}">{{tag}}</a>&nbsp;&nbsp;{%endfor%}
+        Has strong interest in {%for tag in interested_tags%}<a class="tag" target="_blank" title="Browse All {{tag|title}} Questions" href="{%absurl tagged_questions tag_name=tag%}">{{tag}}</a>&nbsp;&nbsp;{%endfor%}
     </li>
     {%endif%}
     {%endwith%}
@@ -54,11 +56,11 @@
 </ul>
 </div><!-- end of personal_details -->
 <div id='saved_notes'>
-    <h4 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="help" title="These Notes are helpful in knowing more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url notepad%}">Add Note ?</a></span>{%endif%}</h4>
+    <h4 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="help" title="These Notes are helpful in knowing more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl notepad%}">Add Note ?</a></span>{%endif%}</h4>
     <ol class='webresume_section emboss'>
     {%for note in public_notes%}
     <li>
-        <a class='file_link' target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|capfirst}}</a>&nbsp;&nbsp;<span class="spanlink" onClick="javascript:$('#{{note.id}}_note_desc').slideToggle();">[+]</span>
+        <a class='file_link' target='_blank' href="{%absurl show_note note_id=note.id%}">{{note.name|capfirst}}</a>&nbsp;&nbsp;<span class="spanlink" onClick="javascript:$('#{{note.id}}_note_desc').slideToggle();">[+]</span>
         <div class='hide full_description' id="{{note.id}}_note_desc">{{note.note}}</div>
     </li>
     {%empty%}
@@ -67,12 +69,12 @@
     </ol>
 </div><!-- end of saved_notes -->
 <div id='achievements'>
-<h4 class='georgia leftalign'>Achievements&nbsp;&nbsp;<span class="help" title="These Achievements make me unique">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url add_achievement%}">Add Achievement ?</a></span>{%endif%}</h4>
+<h4 class='georgia leftalign'>Achievements&nbsp;&nbsp;<span class="help" title="These Achievements make me unique">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl add_achievement%}">Add Achievement ?</a></span>{%endif%}</h4>
 {%if achievements%}
     <ul class='webresume_section emboss'>
     {%for achievement in achievements%}
     <li>
-        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='spanlink' title="Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">[+]</span></h6>
+        <h6>{{achievement.title|title}}&nbsp;&nbsp;<span class='help spanlink' title="View Full Description" onClick="javascript:$('#{{achievement.id}}_achievement_desc').slideToggle();">[+]</span></h6>
         <div class='hide full_description' id="{{achievement.id}}_achievement_desc">{{achievement.description}}</div>
     </li>
     {%endfor%}
@@ -82,11 +84,11 @@
 {%endif%}
 </div><!-- end of achievements -->
 <div id='asked_questions'>
-<h4 class='georgia leftalign'>Asked Questions&nbsp;&nbsp;<span class="help" title="These Questions show my strong interest in respective areas">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url ask_question%}">Ask Question ?</a></span>{%endif%}</h4>
+<h4 class='georgia leftalign'>Asked Questions&nbsp;&nbsp;<span class="help" title="These Questions show my strong interest in respective areas">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl ask_question%}">Ask Question ?</a></span>{%endif%}</h4>
 {%if asked_questions%}
     <ul class='webresume_section emboss'>
     {%for question in asked_questions%}
-    <li><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></li>
+    <li><a href="{%absurl question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></li>
     {%endfor%}
     </ul>
 {%else%}
@@ -94,11 +96,11 @@
 {%endif%}
 </div><!-- end of asked_questions -->
 <div id='answered_questions'>
-<h4 class='georgia leftalign'>Answers Given For&nbsp;&nbsp;<span class="help" title="These Answers show that I am ready to help">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%url all_questions%}">Give Answer ?</a></span>{%endif%}</h4>
+<h4 class='georgia leftalign'>Answers Given For&nbsp;&nbsp;<span class="help" title="These Answers show that I am ready to help">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl all_questions%}">Give Answer ?</a></span>{%endif%}</h4>
 {%if answered_questions%}
     <ul class='webresume_section emboss'>
     {%for question in answered_questions%}
-    <li><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></li>
+    <li><a href="{%absurl question question.id question.slug%}" target='_blank'>{{question.title|title}}</a></li>
     {%endfor%}
     </ul>
 {%else%}
