@@ -6,6 +6,8 @@ from django.contrib.sites.models import Site
 
 register = template.Library()
 
+domain = "http://%s" % Site.objects.get_current().domain
+
 @register.filter
 def emailify(email):
     return " at ".join(email.split('@'))
@@ -19,7 +21,6 @@ def domainify(domain):
 class AbsoluteURLNode(URLNode):
     def render(self, context):
         path = super(AbsoluteURLNode, self).render(context)
-        domain = "http://%s" % Site.objects.get_current().domain
         return urlparse.urljoin(domain, path)
 
 def absurl(parser, token, node_cls=AbsoluteURLNode):
