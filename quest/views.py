@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from users.models import UserProfile, College, Company, Group
 from utils.decorators import is_post
 from utils.emailer import new_anwer_emailer
+from utils import get_stats
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')

@@ -23,6 +23,7 @@ class TagField(DefaultTagField):
     def clean(self, value):
         tags = super(TagField, self).clean(value)
         cleaned_tags = tags_cleanup(tags)
+        return cleaned_tags
 
 def tags_cleanup(tags):
     if isinstance(tags, str):
