@@ -12,7 +12,6 @@ from django.core.paginator import Paginator
 from users.models import UserProfile, College, Company, Group
 from utils.decorators import is_post
 from utils.emailer import new_anwer_emailer
-from utils import get_stats
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')
@@ -134,5 +133,4 @@ def view_tagged_questions(request, tag_name, tagged_questions_template):
     except (EmptyPage, InvalidPage):
         questions = paginator.page(paginator.num_pages)
     return response(request, tagged_questions_template, {'questions': questions.object_list,
-                                                        'tag': tag,
-                                                        'stats':get_stats()})
+                                                        'tag': tag})

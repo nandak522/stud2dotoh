@@ -233,9 +233,43 @@ def view_account_settings(request, settings_template):
                                                      'workinfo_form':workinfo_form})
 
 @login_required
-@is_post
+@is_get
+@is_ajax
+def view_get_personal_settings(request, personal_settings_template):
+    userprofile = loggedin_userprofile(request)
+    form = PersonalSettingsForm({'name':userprofile.name,
+                                 'slug':userprofile.slug,
+                                 'new_password':''})
+    return response(request, personal_settings_template, {'personal_form':form})
+
+@login_required
+@is_get
+@is_ajax
+def view_get_acad_settings(request, acad_settings_template):
+    userprofile = loggedin_userprofile(request)
+    (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
+    acad_form = AcadSettingsForm({'branch':branch,
+                                  'college':college.name,
+                                  'start_year':start_year,
+                                  'end_year':end_year,
+                                  'aggregate':aggregate})
+    return response(request, acad_settings_template, {'acad_form':acad_form})
+
+@login_required
+@is_get
+@is_ajax
+def view_get_workinfo_settings(request, workinfo_settings_template):
+    (workplace, designation, years_of_exp) = userprofile.work_details
+    form = WorkInfoSettingsForm({'workplace':workplace if workplace else '',
+                                 'designation':designation,
+                                 'years_of_exp':years_of_exp})
+    return response(request, workinfo_settings_template, {'workinfo_form':form})
+
+@login_required
 @is_ajax
 def view_save_personal_settings(request, personal_settings_template):
+    if request.method == 'GET':
+        return view_get_personal_settings(request, personal_settings_template)
     userprofile = loggedin_userprofile(request)
     form = PersonalSettingsForm(post_data(request))
     if form.is_valid():
@@ -264,6 +298,8 @@ def view_save_personal_settings(request, personal_settings_template):
 @is_post
 @is_ajax
 def view_save_acad_settings(request, acad_settings_template):
+    if request.method == 'GET':
+        return view_get_acad_settings(request, acad_settings_template)
     userprofile = loggedin_userprofile(request)
     acad_form = AcadSettingsForm(post_data(request))
     if acad_form.is_valid():
@@ -282,9 +318,20 @@ def view_save_acad_settings(request, acad_settings_template):
     return response(request, acad_settings_template, {'acad_form':acad_form})
 
 @login_required
+@is_get
+@is_ajax
+def view_get_workinfo_settings(request, workinfo_settings_template):
+    form = PersonalSettingsForm({'name':userprofile.name,
+                                 'slug':userprofile.slug,
+                                 'new_password':''})
+    return response(request, personal_settings_template, {'personal_form':form})
+
+@login_required
 @is_post
 @is_ajax
 def view_save_workinfo_settings(request, workinfo_settings_template):
+    if request.method == 'GET':
+        return view_get_workinfo_settings(request, workinfo_settings_template)
     userprofile = loggedin_userprofile(request)
     form = WorkInfoSettingsForm(post_data(request))
     if form.is_valid():

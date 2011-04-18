@@ -19,15 +19,21 @@ def college_url(college_id):
                                                                                   college_details['slug']))}
 
 @register.filter
-def workplace_url(company_id):
-    if not company_id:
+def workplace_url(workplace):
+    if not workplace:
         return ''
-    company_details = Company.objects.filter(id=int(company_id)).values('id', 'slug', 'name')[0]
+    if isinstance(workplace, Company):
+        workplace_type = 'company'
+    else:
+        workplace_type = 'college'
+    workplace_id = workplace.id
+    workplace_info = {'company':Company, 'college':College}
+    workplace_details = workplace_info[workplace_type].objects.filter(id=int(workplace_id)).values('id', 'slug', 'name')[0]
     return "<a href='%(domain)s%(url)s'>%(name)s</a>" % {'domain':domain,
-                                                          'name':capfirst(company_details['name']),
+                                                          'name':capfirst(workplace_details['name']),
                                                           'url':url_reverse('users.views.view_company',
-                                                                            args=(company_details['id'],
-                                                                                  company_details['slug']))}  
+                                                                            args=(workplace_details['id'],
+                                                                                  workplace_details['slug']))}
 
 @register.inclusion_tag('domain_url.html')
 def render_user_domain(userprofile):
