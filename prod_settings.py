@@ -52,3 +52,5 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 MEDIA_ROOT = '/home/madhavbnk/webapps/stud2dotoh/stud2dotoh/site_media/'
 
 SEND_BROKEN_LINK_EMAILS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
