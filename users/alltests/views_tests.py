@@ -3,6 +3,11 @@ from django.conf import settings
 from django.core.urlresolvers import reverse as url_reverse
 from users.models import UserProfile
 
+__all__ = ['MainSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
+           'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
+           'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
+           'HomepageSignupTests']
+
 class MainSignupPageTests(TestCase):
     def test_fresh_anonymous_access(self):
         raise NotImplementedError
@@ -553,3 +558,7 @@ class AccountSettingsPageTests(TestCase):
         self.assertRaises(CantUpdateSlugAgainException,
                           userprofile.update_slug,
                           new_slug_name='newslug')
+        
+class HomepageSignupTests(TestCase):
+    def test_fresh_access_to_homepage(self):
+        raise NotImplementedError
