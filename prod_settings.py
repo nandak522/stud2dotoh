@@ -1,6 +1,6 @@
 from settings import *
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = False
 
 DATABASES = {
@@ -22,7 +22,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'utils.middlewares.StatsMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 INSTALLED_APPS = (
