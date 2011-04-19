@@ -1,7 +1,7 @@
 from settings import *
 
-DEBUG = True
-TEMPLATE_DEBUG = False
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
@@ -22,7 +22,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'utils.middlewares.StatsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+#    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 INSTALLED_APPS = (
@@ -34,10 +34,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'users',
     'quest',
-    'taggit'
+    'taggit',
+#    'debug_toolbar'
 )
 
-EMAIL_SUBJECT_PREFIX = '[Stud2.0]'
+EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'donot-reply@stud2dotoh.com'
