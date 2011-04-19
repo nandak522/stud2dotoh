@@ -1,4 +1,4 @@
-from django.core.mail import send_mail, send_mass_mail
+from django.core.mail import send_mass_mail, EmailMultiAlternatives
 from django.conf import settings
 from users.models import UserProfile
 from django.template.loader import render_to_string as render_template
@@ -9,7 +9,9 @@ EMAIL_REGEX = '[\w\.-]+@[a-zA-Z0-9]+[\.][a-zA-Z]{2,4}'
 DEFAULT_FROM_EMAIL = 'do-not-reply@stud2dotoh.com'
 
 def default_emailer(from_email, to_emails, message, from_name='', subject=''):
-    send_mail(subject, message, address_email_with_name(from_email, from_name), to_emails)
+    email_message = EmailMultiAlternatives(subject, '', address_email_with_name(from_email, from_name), to_emails)
+    email_message.attach_alternative(message, 'text/html')
+    email_message.send()
     
 def mail_admins(from_email, message, from_name='', subject=''):
     messages_info = []
