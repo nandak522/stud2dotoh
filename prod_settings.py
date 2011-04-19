@@ -39,7 +39,14 @@ INSTALLED_APPS = (
 
 EMAIL_SUBJECT_PREFIX = '[Stud2.0]'
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'donot-reply@stud2dotoh.com'
+EMAIL_HOST_PASSWORD = '1c7bac12'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 MEDIA_ROOT = '/home/madhavbnk/webapps/stud2dotoh/stud2dotoh/site_media/'
 
+SEND_BROKEN_LINK_EMAILS = True
