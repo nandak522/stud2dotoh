@@ -1,4 +1,4 @@
-rom settings import *
+from settings import *
 
 DEBUG = False
 TEMPLATE_DEBUG = False
@@ -44,6 +44,8 @@ EMAIL_HOST_USER = 'donot-reply@stud2dotoh.com'
 EMAIL_HOST_PASSWORD = '1c7bac12'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
