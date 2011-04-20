@@ -61,3 +61,7 @@ ROOT_URLCONF = 'urls'
 USE_I18N = False
 
 USE_L10N = False
+
+TEMPLATE_DIRS = (
+                 '/home/madhavbnk/webapps/stud2dotoh/stud2dotoh/templates',
+)
