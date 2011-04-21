@@ -20,6 +20,10 @@ from utils.emailer import default_emailer, mail_admins, mail_group, invitation_e
 from utils.decorators import is_get, is_post, is_ajax
 from django.utils import simplejson
 
+def view_homepage(request, homepage_template):
+    #TODO:Homepage layout showing message, screenshots, latest updates across the system
+    return response(request, homepage_template, {})
+
 @login_required
 @is_admin
 def view_all_users(request, all_users_template):
