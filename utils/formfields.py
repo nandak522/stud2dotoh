@@ -10,7 +10,7 @@ class MultipleEmailsField(forms.CharField):
         value = super(MultipleEmailsField, self).to_python(value)
         if not value and self.required:
             raise ValidationError(self.error_messages['required'])
-        return value
+        return tuple(value.split(','))
     
 class AutocompleteWidget(forms.TextInput):
     class Media:
