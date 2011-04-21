@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.template import add_to_builtins
-from django.views.generic.simple import direct_to_template
 
 from django.contrib import admin
 admin.autodiscover()
@@ -17,7 +16,7 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('users.views',
-    (r'^$', direct_to_template, {'template':'homepage.html'}, 'homepage'),
+    (r'^$', 'view_homepage', {'homepage_template':'homepage.html'}, 'homepage'),
     (r'^notepad/$', 'view_notepad', {'notepad_template':'notepad.html'}, 'notepad'),
     (r'^webresume/$', 'view_webresume', {}, 'webresume'),
     (r'^invite/$', 'view_invite', {'invite_template':'invite.html'}, 'invite'),
