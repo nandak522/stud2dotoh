@@ -10,20 +10,24 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'stud2dotoh',                      # Or path to database file if using sqlite3.
-        'USER': 'stud2dotoh',                      # Not used with sqlite3.
-        'PASSWORD': 'stud2dotoh',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
 if 'test' in sys.argv:
-    DATABASES['default']['ENGINE'] = 'sqlite3' 
-    DATABASES['default']['NAME'] = 'stud2dotoh.db'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'stud2dotoh.db',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'stud2dotoh',                      # Or path to database file if using sqlite3.
+            'USER': 'stud2dotoh',                      # Not used with sqlite3.
+            'PASSWORD': 'stud2dotoh',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 TIME_ZONE = 'Asia/Calcutta'
 

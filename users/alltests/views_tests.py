@@ -1,7 +1,13 @@
 from utils import TestCase
 from django.conf import settings
 from django.core.urlresolvers import reverse as url_reverse
+from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
+
+__all__ = ['MainSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
+           'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
+           'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
+           'HomepageTests']
 
 class MainSignupPageTests(TestCase):
     def test_fresh_anonymous_access(self):
@@ -553,3 +559,19 @@ class AccountSettingsPageTests(TestCase):
         self.assertRaises(CantUpdateSlugAgainException,
                           userprofile.update_slug,
                           new_slug_name='newslug')
+        
+class HomepageTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_anonymous_or_fresh_access_to_homepage(self):
+        response = self.client.get(url_reverse('users.views.view_homepage'))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'homepage.html')
+    
+    def test_login_access_to_homepage(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get(path=url_reverse('users.views.view_homepage'))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'homepage.html')
