@@ -66,7 +66,9 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 .main_tabs li.activetab a{color:#0b5394;border:0;}
 .dropdown{vertical-align:middle;}
 .board{padding:2px;margin-bottom:4px;}
-.board li{font-size:1.2em;list-style:none;font-family:"Droid Sans","Helvetica",Arial, Sans-serif;margin-top:6px;display:inline;margin-right:10px;}
+.stats{margin-bottom:4px;}
+.stats li,.board li{font-size:1.2em;list-style:none;font-family:"Droid Sans","Helvetica",Arial, Sans-serif;margin-top:6px;margin-right:10px;}
+.stats li{display:inline;}
 #explain_invite li{list-style-type:disc;list-style-position:inside;}
 #explain_invite h4{margin-bottom:0;}
 hr{margin:0;padding:0;}

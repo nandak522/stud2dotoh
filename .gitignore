@@ -2,6 +2,3 @@
 *~
 .project
 .pydevproject
-.settings
-prod_settings.py
-local_settings.py
