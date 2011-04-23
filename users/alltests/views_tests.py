@@ -52,6 +52,7 @@ class StudentSignupTests(TestCase):
         self.assertTrue(form.errors.get('email'))
         self.assertTrue(form.errors.get('password'))
         self.assertTrue(form.errors.get('name'))
+        self.assertTrue(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
     
@@ -70,6 +71,9 @@ class StudentSignupTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.get('email'))
+        self.assertFalse(form.errors.get('password'))
+        self.assertFalse(form.errors.get('name'))
+        self.assertFalse(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
         
@@ -77,7 +81,7 @@ class ProfessorSignupTests(TestCase):
     fixtures = ['users.json']
     
     def test_valid_signup(self):
-        form_data = {'email': 'someprof@gmail.com',
+        form_data = {'email': 'someprofessor@gmail.com',
                      'password': 'abc123',
                      'name': 'someprof',
                      'college':'CBIT, Hyderabad.'}
@@ -116,11 +120,12 @@ class ProfessorSignupTests(TestCase):
         self.assertTrue(form.errors.get('email'))
         self.assertTrue(form.errors.get('password'))
         self.assertTrue(form.errors.get('name'))
+        self.assertTrue(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
     
     def test_duplicate_signup(self):
-        form_data = {'email': 'madhav.bnk@gmail.com',
+        form_data = {'email': 'someprof@gmail.com',
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'college': 'SomeOtherCollege'}
@@ -134,6 +139,9 @@ class ProfessorSignupTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.get('email'))
+        self.assertFalse(form.errors.get('password'))
+        self.assertFalse(form.errors.get('name'))
+        self.assertFalse(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
         
@@ -141,7 +149,7 @@ class EmployeeSignupTests(TestCase):
     fixtures = ['users.json']
     
     def test_valid_signup(self):
-        form_data = {'email': 'someemployee@gmail.com',
+        form_data = {'email': 'someemp@gmail.com',
                      'password': 'abc123',
                      'name': 'someemployee',
                      'company':'Infosys'}
@@ -180,11 +188,12 @@ class EmployeeSignupTests(TestCase):
         self.assertTrue(form.errors.get('email'))
         self.assertTrue(form.errors.get('password'))
         self.assertTrue(form.errors.get('name'))
+        self.assertTrue(form.errors.get('company'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
     
     def test_duplicate_signup(self):
-        form_data = {'email': 'madhav.bnk@gmail.com',
+        form_data = {'email': 'someemployee@gmail.com',
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'company': 'SomeOtherCollege'}
@@ -198,6 +207,9 @@ class EmployeeSignupTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.get('email'))
+        self.assertFalse(form.errors.get('password'))
+        self.assertFalse(form.errors.get('name'))
+        self.assertFalse(form.errors.get('company'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
 
