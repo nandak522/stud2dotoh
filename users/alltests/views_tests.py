@@ -4,17 +4,10 @@ from django.core.urlresolvers import reverse as url_reverse
 from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
 
-__all__ = ['MainSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
+__all__ = ['StudentSignupTests', 'ProfessorSignupTests',
            'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
            'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
            'HomepageTests']
-
-class MainSignupPageTests(TestCase):
-    def test_fresh_anonymous_access(self):
-        raise NotImplementedError
-    
-    def test_fresh_authenticated_access(self):
-        raise NotImplementedError
 
 class StudentSignupTests(TestCase):
     fixtures = ['users.json']
