@@ -4,10 +4,30 @@ from django.core.urlresolvers import reverse as url_reverse
 from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
 
-__all__ = ['StudentSignupTests', 'ProfessorSignupTests',
+__all__ = ['CommonSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
            'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
            'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
            'HomepageTests']
+
+class CommonSignupPageTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_fresh_access_as_anonymous_user(self):
+        response = self.client.get('/accounts/register/')
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'register.html')
+        context = response.context[0]
+        self.assertFalse(context.has_key('userprofile'))
+        self.assertFalse(context.has_key('userprofilegroup'))
+    
+    def test_fresh_access_as_authenticated_user(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get('/accounts/register/')
+        self.assertRedirects(response,
+                             expected_url=url_reverse('users.views.view_homepage'),
+                             status_code=302,
+                             target_status_code=200)
 
 class StudentSignupTests(TestCase):
     fixtures = ['users.json']
