@@ -56,7 +56,7 @@
 </ul>
 </div><!-- end of personal_details -->
 <div id='saved_notes'>
-    <h4 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="help" title="These Notes are helpful in knowing more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl notepad%}">Add Note ?</a></span>{%endif%}</h4>
+    <h3 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="help" title="These Notes are helpful in knowing more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl notepad%}">Add Note ?</a></span>{%endif%}</h3>
     <ol class='webresume_section emboss'>
     {%for note in public_notes%}
     <li>
@@ -69,7 +69,7 @@
     </ol>
 </div><!-- end of saved_notes -->
 <div id='achievements'>
-<h4 class='georgia leftalign'>Achievements&nbsp;&nbsp;<span class="help" title="These Achievements make me unique">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl add_achievement%}">Add Achievement ?</a></span>{%endif%}</h4>
+<h3 class='georgia leftalign'>Achievements&nbsp;&nbsp;<span class="help" title="These Achievements make me unique">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl add_achievement%}">Add Achievement ?</a></span>{%endif%}</h3>
 {%if achievements%}
     <ul class='webresume_section emboss'>
     {%for achievement in achievements%}
@@ -84,7 +84,7 @@
 {%endif%}
 </div><!-- end of achievements -->
 <div id='asked_questions'>
-<h4 class='georgia leftalign'>Asked Questions&nbsp;&nbsp;<span class="help" title="These Questions show my strong interest in respective areas">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl ask_question%}">Ask Question ?</a></span>{%endif%}</h4>
+<h3 class='georgia leftalign'>Asked Questions&nbsp;&nbsp;<span class="help" title="These Questions show my strong interest in respective areas">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl ask_question%}">Ask Question ?</a></span>{%endif%}</h3>
 {%if asked_questions%}
     <ul class='webresume_section emboss'>
     {%for question in asked_questions%}
@@ -96,7 +96,7 @@
 {%endif%}
 </div><!-- end of asked_questions -->
 <div id='answered_questions'>
-<h4 class='georgia leftalign'>Answers Given For&nbsp;&nbsp;<span class="help" title="These Answers show that I am ready to help">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl all_questions%}">Give Answer ?</a></span>{%endif%}</h4>
+<h3 class='georgia leftalign'>Answers Given For&nbsp;&nbsp;<span class="help" title="These Answers show that I am ready to help">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl all_questions%}">Give Answer ?</a></span>{%endif%}</h3>
 {%if answered_questions%}
     <ul class='webresume_section emboss'>
     {%for question in answered_questions%}

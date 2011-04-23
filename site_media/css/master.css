@@ -84,7 +84,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo{padding-top:1em;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
 .help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
-.emboss{border:1px solid #CCC;border-top:0;border-left:0;background:#F6F6F6;}
+.emboss{background:#F9F9F9;}
 .singlepane_maincontent_area{padding:1em;}
 
 /*Homepage Styles*/
@@ -129,7 +129,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 .widget_toplinks{width:400px;font-size:12px;border:0;text-decoration:none;}
 .widget_toplinks a{border:0;}
 .full_description{background:#FFF;border:1px solid #CCC;padding:0.5em;margin-top:4px;}
-#personal_details h4, #achievements h4, #saved_notes h4, #asked_questions h4, #answered_questions h4{margin-bottom:0.6em;}
+#personal_details h3, #achievements h3, #saved_notes h3, #asked_questions h3, #answered_questions h3{margin-bottom:0.4em;color:#073763;}
 
 /*Question Page Styles*/
 #all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
