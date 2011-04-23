@@ -4,17 +4,30 @@ from django.core.urlresolvers import reverse as url_reverse
 from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
 
-__all__ = ['MainSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
+__all__ = ['CommonSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
            'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
            'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
            'HomepageTests']
 
-class MainSignupPageTests(TestCase):
-    def test_fresh_anonymous_access(self):
-        raise NotImplementedError
+class CommonSignupPageTests(TestCase):
+    fixtures = ['users.json']
     
-    def test_fresh_authenticated_access(self):
-        raise NotImplementedError
+    def test_fresh_access_as_anonymous_user(self):
+        response = self.client.get('/accounts/register/')
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'register.html')
+        context = response.context[0]
+        self.assertFalse(context.has_key('userprofile'))
+        self.assertFalse(context.has_key('userprofilegroup'))
+    
+    def test_fresh_access_as_authenticated_user(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get('/accounts/register/')
+        self.assertRedirects(response,
+                             expected_url=url_reverse('users.views.view_homepage'),
+                             status_code=302,
+                             target_status_code=200)
 
 class StudentSignupTests(TestCase):
     fixtures = ['users.json']
@@ -59,6 +72,7 @@ class StudentSignupTests(TestCase):
         self.assertTrue(form.errors.get('email'))
         self.assertTrue(form.errors.get('password'))
         self.assertTrue(form.errors.get('name'))
+        self.assertTrue(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
     
@@ -77,6 +91,9 @@ class StudentSignupTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.get('email'))
+        self.assertFalse(form.errors.get('password'))
+        self.assertFalse(form.errors.get('name'))
+        self.assertFalse(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
         
@@ -84,7 +101,7 @@ class ProfessorSignupTests(TestCase):
     fixtures = ['users.json']
     
     def test_valid_signup(self):
-        form_data = {'email': 'someprof@gmail.com',
+        form_data = {'email': 'someprofessor@gmail.com',
                      'password': 'abc123',
                      'name': 'someprof',
                      'college':'CBIT, Hyderabad.'}
@@ -123,11 +140,12 @@ class ProfessorSignupTests(TestCase):
         self.assertTrue(form.errors.get('email'))
         self.assertTrue(form.errors.get('password'))
         self.assertTrue(form.errors.get('name'))
+        self.assertTrue(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
     
     def test_duplicate_signup(self):
-        form_data = {'email': 'madhav.bnk@gmail.com',
+        form_data = {'email': 'someprof@gmail.com',
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'college': 'SomeOtherCollege'}
@@ -141,6 +159,9 @@ class ProfessorSignupTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.get('email'))
+        self.assertFalse(form.errors.get('password'))
+        self.assertFalse(form.errors.get('name'))
+        self.assertFalse(form.errors.get('college'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
         
@@ -148,7 +169,7 @@ class EmployeeSignupTests(TestCase):
     fixtures = ['users.json']
     
     def test_valid_signup(self):
-        form_data = {'email': 'someemployee@gmail.com',
+        form_data = {'email': 'someemp@gmail.com',
                      'password': 'abc123',
                      'name': 'someemployee',
                      'company':'Infosys'}
@@ -187,11 +208,12 @@ class EmployeeSignupTests(TestCase):
         self.assertTrue(form.errors.get('email'))
         self.assertTrue(form.errors.get('password'))
         self.assertTrue(form.errors.get('name'))
+        self.assertTrue(form.errors.get('company'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
     
     def test_duplicate_signup(self):
-        form_data = {'email': 'madhav.bnk@gmail.com',
+        form_data = {'email': 'someemployee@gmail.com',
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'company': 'SomeOtherCollege'}
@@ -205,6 +227,9 @@ class EmployeeSignupTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
         self.assertTrue(form.errors.get('email'))
+        self.assertFalse(form.errors.get('password'))
+        self.assertFalse(form.errors.get('name'))
+        self.assertFalse(form.errors.get('company'))
         self.assertFalse(context.has_key('userprofile'))
         self.assertFalse(context.has_key('userprofilegroup'))
 
