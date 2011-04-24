@@ -110,3 +110,9 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_PAGINATION_COUNT = 25
+
+NOTE_POINTS = 3
+
+QUESTION_POINTS = 3
+
+ANSWER_POINTS = 5

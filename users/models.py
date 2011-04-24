@@ -11,6 +11,8 @@ from utils import slugify
 from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
 import os
+from django.db.models.signals import post_save
+from django.dispatch import Signal
 
 branches = (('CSE', 'Computers'),
             ('ME', 'Mechanical'),
@@ -251,7 +253,7 @@ class UserProfile(BaseModel):
         user_score = Score.objects.get(userprofile=self)
         user_score.points = points
         user_score.save()
-    
+        
 class CollegeAlreadyExistsException(Exception):
     pass
 
@@ -428,4 +430,16 @@ class Score(BaseModel):
     objects = ScoreManager()
     
     def __unicode__(self):
-        return "%s ==> %s" % (self.userprofile.name, points)
+        return "%s ==> %s" % (self.userprofile.name, self.points)
+    
+#TODO:Implementing Signals to increment score for user, for each save of a 
+#Note, Question, Answer, Achievement model objects. For Achievement its gonna be
+#aggregate
+
+def increment_note_points(sender, instance, **kwargs):
+    if 'created' in kwargs:
+        userprofile=instance.userprofile
+        userprofile.add_points(settings.NOTE_POINTS)
+    
+#post_init.connect(increment_note_points, Note, dispatch_uid='increment_note_signal')
+post_save.connect(increment_note_points, Note, dispatch_uid='increment_note_signal')

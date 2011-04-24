@@ -1,23 +1,28 @@
 from utils import TestCase
 from users.models import UserProfile
 from quest.models import Question, Answer, QuestionAlreadyExistsException, AnswerCantBeAcceptedException, AnsweringIsClosedException,EmptyQuestionCantBeSavedException
+from django.conf import settings
 
 class QuestionCreationTests(TestCase):
     fixtures = ['users.json']
 
     def test_question_valid_creation(self):
+        raised_by = UserProfile.objects.latest()
         question_data = {'title':'What are the best companies working on Python ?',
                          'description':'<a href="http://google.com/">Google</a>, <a href="http://hp.com/">HP</a>',
-                         'raised_by':UserProfile.objects.latest()}
+                         'raised_by':raised_by}
         Question.objects.create_question(title=question_data['title'],
                                          description=question_data['description'],
-                                         userprofile=question_data['raised_by'])
+                                         userprofile=question_data['raised_by'],
+                                         tags='')
+        #TODO:Tagged questions should also be checked
         question = Question.objects.latest()
         self.assertTrue(question)
         self.assertEquals(question.title, question_data['title'])
         self.assertEquals(question.description, question_data['description'])
         self.assertEquals(question.raised_by.id, question_data['raised_by'].id)
         self.assertFalse(question.closed)
+        self.assertEquals(raised_by.score, settings.QUESTION_POINTS)
     
     def test_creating_duplicate_questions(self):
         question_data = {'title':'What are the best companies working on Python ?',
@@ -25,14 +30,16 @@ class QuestionCreationTests(TestCase):
                          'raised_by':UserProfile.objects.latest()}
         Question.objects.create_question(title=question_data['title'],
                                          description=question_data['description'],
-                                         userprofile=question_data['raised_by'])
+                                         userprofile=question_data['raised_by'],
+                                         tags='')
         question = Question.objects.latest()
         self.assertTrue(question)
         self.assertRaises(QuestionAlreadyExistsException,
                           Question.objects.create_question,
                           title=question_data['title'],
                           description=question_data['description'],
-                          userprofile=question_data['raised_by'])
+                          userprofile=question_data['raised_by'],
+                          tags='')
     
     def test_close_answering(self):
         question_data = {'title':'What are the best companies working on Python ?',
@@ -40,7 +47,8 @@ class QuestionCreationTests(TestCase):
                          'raised_by':UserProfile.objects.latest()}
         Question.objects.create_question(title=question_data['title'],
                                          description=question_data['description'],
-                                         userprofile=question_data['raised_by'])
+                                         userprofile=question_data['raised_by'],
+                                         tags='')
         question = Question.objects.latest()
         self.assertTrue(question)
         self.assertFalse(question.closed)
@@ -82,10 +90,11 @@ class AnswerCreationTests(TestCase):
     
     def test_valid_answer_creation(self):
         question = Question.objects.latest()
+        given_by = UserProfile.objects.latest()
         answer_data = {'question':question,
                        'description':'There are many ways to handle recursion',
                        'accepted':False,
-                       'given_by':UserProfile.objects.latest()}
+                       'given_by':given_by}
         Answer.objects.create_answer(question=answer_data['question'],
                                      description=answer_data['description'],
                                      accepted=answer_data['accepted'],
@@ -97,6 +106,7 @@ class AnswerCreationTests(TestCase):
         self.assertFalse(answer.accepted)
         self.assertEquals(answer.given_by.id, answer_data['given_by'].id)
         self.assertTrue(answer in question.answers)
+        self.assertEquals(given_by.score, settings.ANSWER_POINTS)
     
     def test_creating_duplicate_answers(self):
         question = Question.objects.latest()

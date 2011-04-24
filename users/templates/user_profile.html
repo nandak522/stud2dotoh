@@ -15,7 +15,7 @@
 {%block webresumetab%}{%if can_edit%}activetab{%endif%}{%endblock%}
 {%block content%}
 <input id='contact_button' class="right" type='button' onClick="javascript:document.location.href='{%absurl contactuser userprofile.id%}';" value="Contact {{userprofile.name|title}}"/>
-<h2 id='user_profile_header' class='georgia maincontent_header'>{{userprofile.name|title}}</h2>
+<h2 id='user_profile_header' class='georgia maincontent_header'>{{userprofile.name|title}}&nbsp;&nbsp;<span class='orange'>{&nbsp;{{userprofile.score}}&nbsp;}</span></h2>
 {%load users_tags%}
 <div id='personal_details'>
 <ul class='webresume_section emboss'>
