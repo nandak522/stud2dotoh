@@ -235,6 +235,23 @@ class UserProfile(BaseModel):
     def achievements(self):
         return self.achievement_set.values('id', 'title', 'description')
     
+    def add_points(self, points):
+        Score.objects.add_points(self, points)
+        
+    def subtract_points(self, points):
+        Score.objects.subtract_points(self, points)
+        
+    @property
+    def score(self):
+        if Score.objects.filter(userprofile=self).count():
+            return Score.objects.get(userprofile=self).points
+        return 0
+    
+    def set_score(self, points):
+        user_score = Score.objects.get(userprofile=self)
+        user_score.points = points
+        user_score.save()
+    
 class CollegeAlreadyExistsException(Exception):
     pass
 
@@ -383,3 +400,32 @@ class Achievement(BaseModel):
     
     def __unicode__(self):
         return "%s..." % self.title[:10]
+    
+class ScoreManager(BaseModelManager):
+    def add_points(self, userprofile, points):
+        user_score = self.exists(userprofile)
+        if user_score:
+            user_score.points += points
+        else:
+            user_score = Score(userprofile=userprofile, points=points)
+        user_score.save()
+        return
+    
+    def subtract_points(self, userprofile, points):
+        user_score = self.get(userprofile=userprofile)
+        user_score.points -= points
+        user_score.save()
+        return
+
+    def exists(self, userprofile):
+        if self.filter(userprofile=userprofile).count():
+            return self.get(userprofile=userprofile)
+        return None
+    
+class Score(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    points = models.IntegerField(default=0)
+    objects = ScoreManager()
+    
+    def __unicode__(self):
+        return "%s ==> %s" % (self.userprofile.name, points)
