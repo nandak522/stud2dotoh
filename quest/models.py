@@ -3,6 +3,8 @@ from utils.models import BaseModel, BaseModelManager
 from utils import slugify
 from users.models import UserProfile
 from taggit.managers import TaggableManager
+from django.db.models.signals import post_save
+from django.conf import settings
 
 class QuestionAlreadyExistsException(Exception):
     pass
@@ -123,3 +125,16 @@ class Answer(BaseModel):
                 answer.unaccept()
             self.accepted = True
             self.save()
+            
+def increment_question_points(sender, instance, **kwargs):
+    if 'created' in kwargs:
+        userprofile=instance.raised_by
+        userprofile.add_points(settings.QUESTION_POINTS)
+
+def increment_answer_points(sender, instance, **kwargs):
+    if 'created' in kwargs:
+        userprofile=instance.given_by 
+        userprofile.add_points(settings.ANSWER_POINTS)
+            
+post_save.connect(increment_question_points, Question, dispatch_uid='increment_question_signal')
+post_save.connect(increment_answer_points, Answer, dispatch_uid='increment_answer_signal')

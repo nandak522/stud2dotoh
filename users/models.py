@@ -11,6 +11,8 @@ from utils import slugify
 from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
 import os
+from django.db.models.signals import post_save
+from django.dispatch import Signal
 
 branches = (('CSE', 'Computers'),
             ('ME', 'Mechanical'),
@@ -235,6 +237,23 @@ class UserProfile(BaseModel):
     def achievements(self):
         return self.achievement_set.values('id', 'title', 'description')
     
+    def add_points(self, points):
+        Score.objects.add_points(self, points)
+        
+    def subtract_points(self, points):
+        Score.objects.subtract_points(self, points)
+        
+    @property
+    def score(self):
+        if Score.objects.filter(userprofile=self).count():
+            return Score.objects.get(userprofile=self).points
+        return 0
+    
+    def set_score(self, points):
+        user_score = Score.objects.get(userprofile=self)
+        user_score.points = points
+        user_score.save()
+        
 class CollegeAlreadyExistsException(Exception):
     pass
 
@@ -383,3 +402,44 @@ class Achievement(BaseModel):
     
     def __unicode__(self):
         return "%s..." % self.title[:10]
+    
+class ScoreManager(BaseModelManager):
+    def add_points(self, userprofile, points):
+        user_score = self.exists(userprofile)
+        if user_score:
+            user_score.points += points
+        else:
+            user_score = Score(userprofile=userprofile, points=points)
+        user_score.save()
+        return
+    
+    def subtract_points(self, userprofile, points):
+        user_score = self.get(userprofile=userprofile)
+        user_score.points -= points
+        user_score.save()
+        return
+
+    def exists(self, userprofile):
+        if self.filter(userprofile=userprofile).count():
+            return self.get(userprofile=userprofile)
+        return None
+    
+class Score(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    points = models.IntegerField(default=0)
+    objects = ScoreManager()
+    
+    def __unicode__(self):
+        return "%s ==> %s" % (self.userprofile.name, self.points)
+    
+#TODO:Implementing Signals to increment score for user, for each save of a 
+#Note, Question, Answer, Achievement model objects. For Achievement its gonna be
+#aggregate
+
+def increment_note_points(sender, instance, **kwargs):
+    if 'created' in kwargs:
+        userprofile=instance.userprofile
+        userprofile.add_points(settings.NOTE_POINTS)
+    
+#post_init.connect(increment_note_points, Note, dispatch_uid='increment_note_signal')
+post_save.connect(increment_note_points, Note, dispatch_uid='increment_note_signal')

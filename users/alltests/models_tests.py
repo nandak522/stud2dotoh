@@ -1,6 +1,7 @@
 from utils import TestCase
 from utils import slugify
-from users.models import UserProfile, AcadInfo, College, WorkInfo, Company
+from users.models import UserProfile, AcadInfo, College, WorkInfo, Company, Score, Note
+from django.conf import settings
 
 class UserProfileCreationTests(TestCase):
     fixtures = ['users.json']
@@ -139,3 +140,55 @@ class WorkInfoCreationTests(TestCase):
         self.assertRaises(WorkInfoAlreadyExistsException,
                           WorkInfo.objects.create_workinfo,
                           **data)
+        
+class ScoreModelTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_adding_score_for_existing_userprofile(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        self.assertFalse(Score.objects.count())
+        self.assertFalse(userprofile.score)
+        set_score = 10
+        userprofile.add_points(set_score)
+        self.assertTrue(Score.objects.count())
+        score = userprofile.score
+        self.assertTrue(score)
+        self.assertEquals(score, set_score)
+        
+    def test_subtracting_score_for_existing_userprofile(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        userprofile.add_points(100)
+        set_score = 10
+        userprofile.subtract_points(set_score)
+        user_score = Score.objects.get(userprofile=userprofile)
+        self.assertEquals(user_score.points, 90)
+        
+    def test_set_score_for_existing_userprofile(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        userprofile.add_points(100)
+        points = 10
+        userprofile.set_score(points)
+        user_score = Score.objects.get(userprofile=userprofile)
+        self.assertEquals(user_score.points, points)
+        
+    def tearDown(self):
+        Score.objects.all().delete()
+        
+class NoteModelTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_add_note(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        self.assertFalse(userprofile.score)
+        note_info = {'name':"Some Note", 'note':'Some Description'}
+        Note.objects.create_note(userprofile, name=note_info['name'], note=note_info['note'])
+        all_notes = userprofile.all_notes
+        self.assertTrue(all_notes)
+        self.assertEquals(len(all_notes), 1)
+        note = all_notes[0]
+        self.assertEquals(note['id'], userprofile.id)
+        self.assertEquals(note['name'], note_info['name'])
+        self.assertEquals(Note.objects.get(id=note['id']).note, note_info['note'])
+        self.assertEquals(note['public'], True)
+        self.assertTrue(userprofile.score)
+        self.assertEquals(userprofile.score, settings.NOTE_POINTS)
