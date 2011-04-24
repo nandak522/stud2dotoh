@@ -65,3 +65,9 @@ USE_L10N = False
 TEMPLATE_DIRS = (
                  '/home/madhavbnk/webapps/stud2dotoh/stud2dotoh/templates',
 )
+
+NOTE_POINTS = 3
+
+QUESTION_POINTS = 3
+
+ANSWER_POINTS = 5
