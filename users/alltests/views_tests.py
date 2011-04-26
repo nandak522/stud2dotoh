@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse as url_reverse
 from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
 import re
+from utils import slugify
+from users.models import Note
 
 __all__ = ['CommonSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
            'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
@@ -388,8 +390,8 @@ class UserNotepadSavingTests(TestCase):
         self.assertTrue(context.has_key('all_notes'))
         all_notes = context.get('all_notes')
         self.assertTrue(all_notes)
-        from utils import slugify
-        self.assertTrue(slugify(form_data['name']) in all_notes)
+        self.assertEquals(len(all_notes), 1)
+        self.assertEquals(all_notes[0]['name'], form_data['name'])
         
     def test_viewing_saved_notepad_content(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
@@ -400,17 +402,14 @@ class UserNotepadSavingTests(TestCase):
         response = self.client.post(path=url_reverse('users.views.view_notepad'),
                                     data=data)
         self.assertTrue(response)
-        from utils import slugify
-        response = self.client.get(url_reverse('users.views.view_file_content_view', args=(slugify(data['name']),)))
+        response = self.client.get(url_reverse('users.views.view_note', args=(Note.objects.get(name=data['name']).id,)))
         self.assertTrue(response)
         self.assertEquals(response['Content-Type'], 'text/plain')
         self.assertEquals(response.content, data['content'])
         
     def test_viewing_invalid_notepad_file_content(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
-        data = {'name':'some_non_existing_filename'}
-        from utils import slugify 
-        response = self.client.get(url_reverse('users.views.view_file_content_view', args=(slugify(data['name']),)))
+        response = self.client.get(url_reverse('users.views.view_note', args=(8989,)))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
         

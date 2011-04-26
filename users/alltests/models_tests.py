@@ -1,6 +1,6 @@
 from utils import TestCase
 from utils import slugify
-from users.models import UserProfile, AcadInfo, College, WorkInfo, Company
+from users.models import UserProfile, AcadInfo, College, WorkInfo, Company, Note
 
 class UserProfileCreationTests(TestCase):
     fixtures = ['users.json']
@@ -140,3 +140,45 @@ class WorkInfoCreationTests(TestCase):
         self.assertRaises(WorkInfoAlreadyExistsException,
                           WorkInfo.objects.create_workinfo,
                           **data)
+        
+class NoteCreationTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_note_valid_creation(self):
+        data = {'userprofile':UserProfile.objects.get(user__email='madhav.bnk@gmail.com'),
+                'name':'My Latest Python Assignment',
+                'short_description':'',
+                'note':'Some Text Goes here.Some Text Goes here.',
+                'public':True}
+        note = Note.objects.create_note(userprofile=data['userprofile'],
+                                        name=data['name'],
+                                        note=data['note'],
+                                        short_description=data['short_description'],
+                                        public=data['public'])
+        self.assertTrue(note)
+        note = Note.objects.latest()
+        self.assertEquals(note.userprofile, data['userprofile'])
+        self.assertEquals(note.name, data['name'])
+        self.assertEquals(note.note, data['note'])
+        self.assertEquals(note.short_description, data['short_description'])
+        self.assertEquals(note.public, data['public'])
+    
+    def test_duplicate_valid_creation(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        data = {'userprofile':userprofile,
+                'name':'My Latest Python Assignment',
+                'short_description':'',
+                'note':'Some Text Goes here.Some Text Goes here.',
+                'public':True}
+        for i in range(2):
+            Note.objects.create_note(userprofile=data['userprofile'],
+                                     name=data['name'],
+                                     note=data['note'],
+                                     short_description=data['short_description'],
+                                     public=data['public'])
+        self.assertEquals(2, Note.objects.count())
+        self.assertEquals(2, Note.objects.filter(userprofile=userprofile).count())
+        self.assertEquals(2, Note.objects.filter(name=data['name']).count())
+        self.assertEquals(2, Note.objects.filter(note=data['note']).count())
+        self.assertEquals(2, Note.objects.filter(short_description=data['short_description']).count())
+        self.assertEquals(2, Note.objects.filter(public=data['public']).count())
