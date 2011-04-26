@@ -3,11 +3,12 @@ from django.conf import settings
 from django.core.urlresolvers import reverse as url_reverse
 from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
+import re
 
 __all__ = ['CommonSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
            'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
            'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
-           'HomepageTests']
+           'HomepageTests', 'DashboardPageTests']
 
 class CommonSignupPageTests(TestCase):
     fixtures = ['users.json']
@@ -600,3 +601,22 @@ class HomepageTests(TestCase):
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'homepage.html')
+        
+class DashboardPageTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_anonymous_or_fresh_access_to_dashboard(self):
+        response = self.client.get(url_reverse('users.views.view_homepage'))
+        self.assertTrue(response)
+        context = response.context[0]
+        self.assertFalse(context.has_key('userprofile'))
+        self.assertNotContains(response, "This is your dashboard")
+        
+    def test_authenticated_access_to_dashboard(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get(url_reverse('users.views.view_homepage'))
+        self.assertTrue(response)
+        context = response.context[0]
+        self.assertTrue(context.has_key('userprofile'))
+        userprofile = context.get('userprofile')
+        self.assertTrue(re.search(r"Hi %s, This is your dashboard" % userprofile.name, response.content, re.IGNORECASE))
