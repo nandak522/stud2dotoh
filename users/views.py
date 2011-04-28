@@ -223,8 +223,8 @@ def view_account_settings(request, settings_template):
     (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
     acad_form = AcadSettingsForm({'branch':branch,
                                   'college':college.name if college else '',
-                                  'start_year':start_year if start_year else 1984,#TODO:hardcoding year is not good
-                                  'end_year':end_year if end_year else 2016,#TODO:hardcoding year is not good
+                                  'start_year':start_year if start_year else 1984, #TODO:hardcoding year is not good
+                                  'end_year':end_year if end_year else 2016, #TODO:hardcoding year is not good
                                   'aggregate':aggregate})
     if userprofile.is_student:
         return response(request, settings_template, {'personal_form':personal_form,
@@ -388,7 +388,7 @@ def view_contactuser(request, user_id, contactuser_template):
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(to_userprofile.slug,)))
-        except Exception,e:
+        except Exception, e:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, contactuser_template, {'contactuserform':form, 'to_userprofile':to_userprofile})
@@ -460,7 +460,7 @@ def view_invite(request, invite_template):
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to='/')
-        except Exception,e:
+        except Exception, e:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, invite_template, {'form':form})

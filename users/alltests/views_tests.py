@@ -40,7 +40,7 @@ class StudentSignupTests(TestCase):
                      'password': 'abc123',
                      'name': 'somename',
                      'college':'CBIT, Hyderabad.'}
-        response = self.client.post(path='/accounts/studentregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/studentregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertRedirects(response,
                              expected_url=url_reverse('users.views.view_homepage'),
@@ -63,7 +63,7 @@ class StudentSignupTests(TestCase):
                      'password': '',
                      'name': '',
                      'college': ''}
-        response = self.client.post(path='/accounts/studentregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/studentregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -84,7 +84,7 @@ class StudentSignupTests(TestCase):
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'college': 'SomeOtherCollege'}
-        response = self.client.post(path='/accounts/studentregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/studentregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -108,7 +108,7 @@ class ProfessorSignupTests(TestCase):
                      'password': 'abc123',
                      'name': 'someprof',
                      'college':'CBIT, Hyderabad.'}
-        response = self.client.post(path='/accounts/professorregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/professorregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertRedirects(response,
                              expected_url=url_reverse('users.views.view_homepage'),
@@ -131,7 +131,7 @@ class ProfessorSignupTests(TestCase):
                      'password': '',
                      'name': '',
                      'college': ''}
-        response = self.client.post(path='/accounts/professorregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/professorregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -152,7 +152,7 @@ class ProfessorSignupTests(TestCase):
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'college': 'SomeOtherCollege'}
-        response = self.client.post(path='/accounts/professorregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/professorregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -176,7 +176,7 @@ class EmployeeSignupTests(TestCase):
                      'password': 'abc123',
                      'name': 'someemployee',
                      'company':'Infosys'}
-        response = self.client.post(path='/accounts/employeeregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/employeeregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertRedirects(response,
                              expected_url=url_reverse('users.views.view_homepage'),
@@ -199,7 +199,7 @@ class EmployeeSignupTests(TestCase):
                      'password': '',
                      'name': '',
                      'company': ''}
-        response = self.client.post(path='/accounts/employeeregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/employeeregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)
@@ -220,7 +220,7 @@ class EmployeeSignupTests(TestCase):
                      'password': 'somepassword',
                      'name': 'NandaKishore',
                      'company': 'SomeOtherCollege'}
-        response = self.client.post(path='/accounts/employeeregister/',#TODO:url hardcoding is bad.
+        response = self.client.post(path='/accounts/employeeregister/', #TODO:url hardcoding is bad.
                                     data=form_data)
         self.assertTrue(response)
         self.assertEquals(response.status_code, 200)

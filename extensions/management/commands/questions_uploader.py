@@ -32,14 +32,14 @@ class Command(BaseCommand):
         start = options['start']
         start = int(start) if start else 0
         end = options['end']
-        end = int(end) if end else -1
+        end = int(end) if end else - 1
         self.userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
         spec = QuestionsSpec(csv_file_path, ('SERIAL', 'TITLE', 'TAGS'))
         spec.validate()
         cleaned_data = spec.clean()
         counter = 0
         if start:
-            for record_number in range(start-1):
+            for record_number in range(start - 1):
                 cleaned_data.next()
                 counter += 1
         while end == -1 or counter < end:

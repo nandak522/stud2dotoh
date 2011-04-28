@@ -438,7 +438,7 @@ class Score(BaseModel):
 
 def increment_note_points(sender, instance, **kwargs):
     if 'created' in kwargs:
-        userprofile=instance.userprofile
+        userprofile = instance.userprofile
         userprofile.add_points(settings.NOTE_POINTS)
     
 #post_init.connect(increment_note_points, Note, dispatch_uid='increment_note_signal')

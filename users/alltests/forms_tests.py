@@ -137,7 +137,7 @@ class UserLoginFormTests(TestCase):
         
 class SaveNotepadFormTests(TestCase):
     def test_empty_form_submission(self):
-        data = {'name':'','short_description':'','content':'', 'public':''}
+        data = {'name':'', 'short_description':'', 'content':'', 'public':''}
         form = SaveNoteForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
@@ -147,7 +147,7 @@ class SaveNotepadFormTests(TestCase):
         self.assertFalse(form.errors.has_key('public'))
         
     def test_empty_content_submission(self):
-        data = {'name':'My C Assignment','short_description':'','content':'', 'public':True}
+        data = {'name':'My C Assignment', 'short_description':'', 'content':'', 'public':True}
         form = SaveNoteForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors)
@@ -216,7 +216,7 @@ class AcadSettingsFormTests(TestCase):
             form = AcadSettingsForm(data)
             self.assertTrue(form.is_valid())
             self.assertFalse(form.errors)
-            for key,val in data.items():
+            for key, val in data.items():
                 self.assertEquals(data[key], form.cleaned_data.get(key))
     
 class WorkInfoSettingsFormTests(TestCase):

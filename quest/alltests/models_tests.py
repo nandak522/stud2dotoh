@@ -1,6 +1,6 @@
 from utils import TestCase
 from users.models import UserProfile
-from quest.models import Question, Answer, QuestionAlreadyExistsException, AnswerCantBeAcceptedException, AnsweringIsClosedException,EmptyQuestionCantBeSavedException
+from quest.models import Question, Answer, QuestionAlreadyExistsException, AnswerCantBeAcceptedException, AnsweringIsClosedException, EmptyQuestionCantBeSavedException
 from django.conf import settings
 
 class QuestionCreationTests(TestCase):

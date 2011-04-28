@@ -15,8 +15,8 @@ MIN_COLLEGE_START_YEAR = 1910
 MIN_COLLEGE_END_YEAR = 1912
 MAX_COLLEGE_START_YEAR = 2011
 MAX_COLLEGE_END_YEAR = 2015
-COLLEGE_START_YEAR_RANGE = tuple([(year, year) for year in range(MIN_COLLEGE_START_YEAR, MAX_COLLEGE_START_YEAR+1)]) 
-COLLEGE_END_YEAR_RANGE = tuple([(year, year) for year in range(MIN_COLLEGE_END_YEAR, MAX_COLLEGE_END_YEAR+1)])
+COLLEGE_START_YEAR_RANGE = tuple([(year, year) for year in range(MIN_COLLEGE_START_YEAR, MAX_COLLEGE_START_YEAR + 1)]) 
+COLLEGE_END_YEAR_RANGE = tuple([(year, year) for year in range(MIN_COLLEGE_END_YEAR, MAX_COLLEGE_END_YEAR + 1)])
 YEARS_OF_EXP_CLEANUP_REGEX_PATTERN = re.compile(r'^\d+([\.]\d[\d]*)*$')
 
 class UserSignupForm(forms.Form):
@@ -48,7 +48,7 @@ class UserLoginForm(forms.Form):
 class SaveNoteForm(forms.Form):
     name = forms.CharField(max_length=30, required=True)
     short_description = forms.CharField(max_length=50, required=False)
-    content = forms.CharField(max_length=7000, required=True,widget=forms.Textarea())
+    content = forms.CharField(max_length=7000, required=True, widget=forms.Textarea())
     public = forms.BooleanField(required=False, initial=True)
     
     def clean_content(self):
@@ -82,7 +82,7 @@ class PersonalSettingsForm(forms.Form):
         raise NotImplementedError
 
 class AcadSettingsForm(forms.Form):
-    branch = forms.ChoiceField(required=True, choices=(('', '-- Select --'),)+branches)
+    branch = forms.ChoiceField(required=True, choices=(('', '-- Select --'),) + branches)
     college = forms.CharField(required=True, max_length=100)
     start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE, initial=(2007, 2007))
     end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE, initial='2011')
@@ -114,8 +114,8 @@ class WorkInfoSettingsForm(forms.Form):
         raise ValidationError('Please enter Valid years of Experience. It should be of the format YY.MM')
     
 class ContactForm(forms.Form):
-    subject = forms.CharField(required=False,max_length=100)
-    message = forms.CharField(max_length=500, required=True,widget=forms.Textarea())
+    subject = forms.CharField(required=False, max_length=100)
+    message = forms.CharField(max_length=500, required=True, widget=forms.Textarea())
     
 class ContactUserForm(ContactForm):
     to = forms.EmailField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
@@ -124,7 +124,7 @@ class ContactGroupForm(ContactForm):
     to = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
     
 class ContactUsForm(ContactForm):
-    from_name = forms.CharField(required=False,max_length=50)
+    from_name = forms.CharField(required=False, max_length=50)
     from_email = forms.EmailField(max_length=50, required=True)
     
 class InvitationForm(forms.Form):
