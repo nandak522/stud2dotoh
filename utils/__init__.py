@@ -7,6 +7,10 @@ from django.template.defaultfilters import slugify
 from django.test import TestCase
 import os
 import shutil
+from django.db import transaction
+from django.core.management import call_command
+from django.core.urlresolvers import clear_url_caches
+from django.core import mail
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))

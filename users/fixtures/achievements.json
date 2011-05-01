@@ -1,0 +1,24 @@
+[
+    {
+        "pk": 1, 
+        "model": "users.achievement", 
+        "fields": {
+            "modified_on": "2011-04-29 23:32:08", 
+            "created_on": "2011-04-19 23:32:08", 
+            "title": "I achievement 50% marks in my 8th Grade", 
+            "description": "Yes Thats a real achievement", 
+            "userprofile": 1
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "users.achievement", 
+        "fields": {
+            "modified_on": "2011-04-30 23:32:08", 
+            "created_on": "2011-04-30 23:32:08", 
+            "title": "I won best speaker award", 
+            "description": "For bashing my professor", 
+            "userprofile": 1
+        }
+    }
+]
