@@ -118,7 +118,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 /*User Profile Page Styles*/
 #webresume_content h4{color:#073763;margin-bottom:0.25em;font-size:1.7em;}
 #account_settings h3{margin-top:1em;}
-.webresume_section{margin:10px 10px 18px 10px;}
+.webresume_section{margin:10px 10px 18px 10px;border:2px solid #EFEFEF;}
 .webresume_section ul{padding:10px;}
 .webresume_section h3, .webresume_section h4{font-weight:normal;font-size:1.8em;margin-bottom:0;}
 .webresume_section{margin:0 0 2em 0;padding:1em;}
@@ -136,7 +136,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #all_questions,#questions_sidebar{padding:1em;}
 #questions_sidebar input[type="button"],#ask_question_button{padding:0.875em;font-size:1.2em;font-weight:bold;}
 #all_questions .content_header{padding-left:0;}
-.answer_block{margin-bottom:1em;padding:8px 0 8px 4px;border-bottom:1px solid #CCC;background:#F6F6F6;font:normal 1.1em sans-serif;}
+.answer_block{margin-bottom:1em;padding:8px 0 8px 4px;border:2px solid #EFEFEF;background:#F6F6F6;font:normal 1.1em sans-serif;line-height:1.5em;}
 .accepted_answer{background:#FFD354;}
 #question_description{font:normal 1.1em sans-serif;margin:16px 0 16px;}
 .addthis_toolbox a{text-decoration:none;border-bottom:0;}
