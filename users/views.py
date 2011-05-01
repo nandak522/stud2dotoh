@@ -191,9 +191,9 @@ def view_note(request, note_id):
 @login_required
 def view_edit_note(request, note_id, notepad_template):
     userprofile = loggedin_userprofile(request)
-    all_notes = userprofile.all_notes
     note = get_object_or_404(Note, id=int(note_id))
     if userprofile.is_my_note(note):
+        all_notes = userprofile.all_notes
         if request.method == 'GET':
             form = SaveNoteForm({'name':note.name,
                                  'short_description':note.short_description,
@@ -223,8 +223,8 @@ def view_account_settings(request, settings_template):
     (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
     acad_form = AcadSettingsForm({'branch':branch,
                                   'college':college.name if college else '',
-                                  'start_year':start_year if start_year else 1984, #TODO:hardcoding year is not good
-                                  'end_year':end_year if end_year else 2016, #TODO:hardcoding year is not good
+                                  'start_year':start_year,
+                                  'end_year':end_year,
                                   'aggregate':aggregate})
     if userprofile.is_student:
         return response(request, settings_template, {'personal_form':personal_form,
@@ -564,30 +564,32 @@ def view_add_achievement(request, add_achievement_template):
 def view_edit_achievement(request, achievement_id, edit_achievement_template):
     userprofile = loggedin_userprofile(request)
     achievement = get_object_or_404(Achievement, id=int(achievement_id))
-    achievements = list(userprofile.achievements)
-    for achievment_info in achievements:
-        if achievment_info['id'] == int(achievement_id):
-            achievements.remove({'title':achievement.title,
-                                    'id':int(achievement_id),
-                                    'description':achievement.description})
-            break
-    if request.method == 'GET':
-        form = AddAchievementForm({'title':achievement.title,
-                                   'description':achievement.description})
+    if userprofile.is_my_achievement(achievement):
+        achievements = list(userprofile.achievements)
+        for achievment_info in achievements:
+            if achievment_info['id'] == int(achievement_id):
+                achievements.remove({'title':achievement.title,
+                                        'id':int(achievement_id),
+                                        'description':achievement.description})
+                break
+        if request.method == 'GET':
+            form = AddAchievementForm({'title':achievement.title,
+                                       'description':achievement.description})
+            return response(request, edit_achievement_template, {'achievement':achievement,
+                                                                 'form':form,
+                                                                 'previous_achievements':achievements})
+        form = AddAchievementForm(post_data(request))
+        if form.is_valid():
+            achievement.update(title=form.cleaned_data.get('title'),
+                               description=form.cleaned_data.get('description'),)
+            from users.messages import ACHIEVEMENT_UPDATED_SUCCESSFULLY
+            messages.success(request, ACHIEVEMENT_UPDATED_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_all_achievements'))
         return response(request, edit_achievement_template, {'achievement':achievement,
                                                              'form':form,
                                                              'previous_achievements':achievements})
-    form = AddAchievementForm(post_data(request))
-    if form.is_valid():
-        achievement.update(title=form.cleaned_data.get('title'),
-                           description=form.cleaned_data.get('description'),)
-        from users.messages import ACHIEVEMENT_UPDATED_SUCCESSFULLY
-        messages.success(request, ACHIEVEMENT_UPDATED_SUCCESSFULLY)
-        return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_all_achievements'))
-    return response(request, edit_achievement_template, {'achievement':achievement,
-                                                         'form':form,
-                                                         'previous_achievements':achievements})
-    
+    raise Http404
+        
 def is_owner(request, visitor_userprofile):
     '''If page you are visiting, like Web-Resume belongs to the same person
     who is currently logged in then return True else False '''

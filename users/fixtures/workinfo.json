@@ -24,14 +24,5 @@
             "object_id": 2, 
             "userprofile": 4
         }
-    },
-    {
-        "pk": 14, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "workinfo", 
-            "name": "work info", 
-            "app_label": "users"
-        }
     }
 ]

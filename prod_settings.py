@@ -22,7 +22,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'utils.middlewares.StatsMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 INSTALLED_APPS = (
@@ -35,7 +34,6 @@ INSTALLED_APPS = (
     'users',
     'quest',
     'taggit',
-#    'debug_toolbar'
 )
 
 EMAIL_SUBJECT_PREFIX = '[Stud2.0] '

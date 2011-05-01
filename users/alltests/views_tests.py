@@ -5,12 +5,7 @@ from django.core.urlresolvers import resolve as url_resolve
 from users.models import UserProfile
 import re
 from utils import slugify
-from users.models import Note
-
-__all__ = ['CommonSignupPageTests', 'StudentSignupTests', 'ProfessorSignupTests',
-           'EmployeeSignupTests', 'UserLoginTests', 'UserLogoutTests',
-           'UserProfilePageTests', 'UserNotepadSavingTests', 'AccountSettingsPageTests',
-           'HomepageTests', 'DashboardPageTests']
+from users.models import Note, Achievement
 
 class CommonSignupPageTests(TestCase):
     fixtures = ['users.json']
@@ -307,7 +302,7 @@ class UserProfilePageTests(TestCase):
         self.assertTrue(context.has_key('userprofile'))
         userprofile = context.get('userprofile')
         self.assertEquals(userprofile.user.email, UserProfile.objects.get(user__email='somerandomuser@gmail.com').user.email)
-        self.assertTrue(context.has_key('all_notes'))
+        self.assertTrue(context.has_key('public_notes'))
         self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         form_data = {'name': 'My Python Assignment',
                      'short_description': 'Hello World',
@@ -318,10 +313,10 @@ class UserProfilePageTests(TestCase):
         self.logout()
         response = self.client.get(path=url_reverse('users.views.view_userprofile', args=(userprofile.slug,)))
         context = response.context[0]
-        all_notes = context.get('all_notes')
-        self.assertTrue(all_notes)
-        from utils import slugify
-        self.assertTrue(slugify(form_data['name']) in all_notes)
+        public_notes = context.get('public_notes')
+        self.assertTrue(public_notes)
+        self.assertEquals(len(public_notes), 1)
+        self.assertEquals(form_data['name'], public_notes[0]['name'])
         self.assertTrue(context.has_key('asked_questions'))
         self.assertTrue(context.has_key('answered_questions'))
     
@@ -405,13 +400,22 @@ class UserNotepadSavingTests(TestCase):
         response = self.client.get(url_reverse('users.views.view_note', args=(Note.objects.get(name=data['name']).id,)))
         self.assertTrue(response)
         self.assertEquals(response['Content-Type'], 'text/plain')
-        self.assertEquals(response.content, data['content'])
+        self.assertEquals(str(response.content).strip(), str(data['content']).strip())
         
     def test_viewing_invalid_notepad_file_content(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         response = self.client.get(url_reverse('users.views.view_note', args=(8989,)))
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
+        
+    def test_editing_existing_note_content(self):
+        raise NotImplementedError
+    
+    def test_editing_other_persons_note_content(self):
+        raise NotImplementedError
+    
+    def test_deleting_note(self):
+        raise NotImplementedError
         
 class AccountSettingsPageTests(TestCase):
     fixtures = ['users.json', 'colleges.json', 'acadinfo.json']
@@ -619,3 +623,111 @@ class DashboardPageTests(TestCase):
         self.assertTrue(context.has_key('userprofile'))
         userprofile = context.get('userprofile')
         self.assertTrue(re.search(r"Hi %s, This is your dashboard" % userprofile.name, response.content, re.IGNORECASE))
+
+class AchievementsPageTests(TestCase):
+    fixtures = ['users.json', 'achievements.json']
+    
+    def test_anonymous_access_to_achievements_page(self):
+        response = self.client.get(url_reverse("users.views.view_all_achievements"))
+        self.assertTrue(response)
+        self.assertRedirects(response,
+                             expected_url='/accounts/login/?next=/achievements/',
+                             status_code=302,
+                             target_status_code=200)
+    
+    def test_authenticated_access_to_achievements_page(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get(url_reverse("users.views.view_all_achievements"))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'achievements.html')
+        context = response.context[0]
+        self.assertTrue(context.has_key('achievements'))
+        achievements = context.get('achievements')
+        self.assertTrue(achievements)
+        userprofile = context.get('userprofile')
+        for achievement in userprofile.achievements:
+            self.assertTrue(achievement in achievements)
+    
+class AddAchievementPageTests(TestCase):
+    fixtures = ['users.json', 'achievements.json']
+    
+    def test_anonymous_access_to_add_achievement_page(self):
+        response = self.client.get(url_reverse("users.views.view_add_achievement"))
+        self.assertRedirects(response,
+                             expected_url='/accounts/login/?next=/add_achievement/',
+                             status_code=302,
+                             target_status_code=200)
+    
+    def test_authenticated_access_to_add_achievement_page(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get(url_reverse("users.views.view_add_achievement"))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'add_or_edit_achievement.html')
+        context = response.context[0]
+        self.assertFalse(context.has_key('achievement'))
+        self.assertTrue(context.has_key('form'))
+        self.assertTrue(context.has_key('achievements'))
+        self.assertTrue(context.get('achievements'))
+    
+    def test_creating_achievement_as_loggedin_user(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        data = {'title':2*'I did this this this',
+                'description':50*'blah'}
+        response = self.client.post(url_reverse('users.views.view_add_achievement'),
+                                    data=data)
+        self.assertRedirects(response,
+                             expected_url=url_reverse('users.views.view_all_achievements'),
+                             status_code=302,
+                             target_status_code=200)
+        latest_achievement = Achievement.objects.latest()
+        response = self.client.get(url_reverse("users.views.view_all_achievements"))
+        context = response.context[0]
+        userprofile = context.get('userprofile')
+        self.assertTrue(userprofile.is_my_achievement(latest_achievement))
+    
+class EditAchievementPageTests(TestCase):
+    fixtures = ['users.json', 'achievements.json']
+    
+    def test_editing_achievement_as_anonymous_user(self):
+        achievement = Achievement.objects.latest()
+        response = self.client.get(url_reverse('users.views.view_edit_achievement', args=(achievement.id,)))
+        self.assertRedirects(response,
+                             expected_url='/accounts/login/?next=/edit_achievement/%s/' % achievement.id,
+                             status_code=302,
+                             target_status_code=200)
+        
+    def test_editing_other_persons_achievement_content(self):
+        self.login_as(email='someemployee@gmail.com', password='nopassword')
+        achievement = Achievement.objects.latest()
+        response = self.client.get(url_reverse('users.views.view_edit_achievement', args=(achievement.id,)))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 404)
+    
+    def test_editing_achievement_as_loggedin_user(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        achievement = Achievement.objects.latest()
+        response = self.client.get(url_reverse('users.views.view_edit_achievement', args=(achievement.id,)))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'add_or_edit_achievement.html')
+        context = response.context[0]
+        self.assertTrue(context.has_key('achievement'))
+        self.assertTrue(context.has_key('previous_achievements'))
+        self.assertTrue(context.has_key('form'))
+        self.assertFalse(context.get('form').errors)
+    
+    def test_saving_modified_achievement_as_loggedin_user(self):
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        achievement = Achievement.objects.latest()
+        data = {'title':achievement.title.replace('real', 'fake'),
+                'description':2*achievement.description}
+        response = self.client.post(path=url_reverse('users.views.view_edit_achievement', args=(achievement.id,)), data=data)
+        self.assertRedirects(response,
+                             expected_url=url_reverse('users.views.view_all_achievements'),
+                             status_code=302,
+                             target_status_code=200)
+        achievement = Achievement.objects.latest()
+        self.assertEquals(achievement.title, data['title'])
+        self.assertEquals(achievement.description, data['description'])

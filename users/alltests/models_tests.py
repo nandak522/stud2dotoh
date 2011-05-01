@@ -1,6 +1,8 @@
 from utils import TestCase
 from utils import slugify
-from users.models import UserProfile, AcadInfo, College, WorkInfo, Company, Score, Note
+from users.models import UserProfile, AcadInfo, College, WorkInfo, Company, Score, Note,\
+    Achievement
+from users.models import AchievementAlreadyExistsException
 from django.conf import settings
 
 class UserProfileCreationTests(TestCase):
@@ -29,6 +31,7 @@ class UserProfileCreationTests(TestCase):
         
     def test_make_student(self):
         userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        userprofile.user.groups.clear()
         self.assertFalse(userprofile.is_student)
         userprofile.make_student()
         self.assertTrue(UserProfile.objects.get(user__email='madhav.bnk@gmail.com').is_student)
@@ -54,22 +57,25 @@ class AcadInfoCreationTests(TestCase):
                 'branch':'CSE',
                 'college':College.objects.latest(),
                 'start_year':2006,
-                'end_year':2010}
+                'end_year':2010,
+                'aggregate':89}
         AcadInfo.objects.create_acadinfo(**data)
         acad_details = userprofile.acad_details
         self.assertTrue(acad_details)
         self.assertEquals(AcadInfo.objects.latest().userprofile, data['userprofile'])
-        self.assertEquals(acad_details.branch, data['branch'])
-        self.assertEquals(acad_details.college.slug, data['college'].slug)
-        self.assertEquals(acad_details.start_year, data['start_year'])
-        self.assertEquals(acad_details.end_year, data['end_year'])
+        self.assertEquals(acad_details[0], data['branch'])
+        self.assertEquals(acad_details[1].slug, data['college'].slug)
+        self.assertEquals(acad_details[2], data['start_year'])
+        self.assertEquals(acad_details[3], data['end_year'])
+        self.assertEquals(acad_details[4], data['aggregate'])
     
     def test_acadinfo_duplicate_creation(self):
         data = {'userprofile':UserProfile.objects.get(slug='somerandomuser'),
                 'branch':'CSE',
                 'college':College.objects.latest(),
                 'start_year':2006,
-                'end_year':2010}
+                'end_year':2010,
+                'aggregate':89}
         from users.models import AcadInfoAlreadyExistsException
         self.assertRaises(AcadInfoAlreadyExistsException,
                           AcadInfo.objects.create_acadinfo,
@@ -193,29 +199,7 @@ class NoteModelTests(TestCase):
         self.assertEquals(note['public'], True)
         self.assertTrue(userprofile.score)
         self.assertEquals(userprofile.score, settings.NOTE_POINTS)
-
-class NoteCreationTests(TestCase):
-    fixtures = ['users.json']
-    
-    def test_note_valid_creation(self):
-        data = {'userprofile':UserProfile.objects.get(user__email='madhav.bnk@gmail.com'),
-                'name':'My Latest Python Assignment',
-                'short_description':'',
-                'note':'Some Text Goes here.Some Text Goes here.',
-                'public':True}
-        note = Note.objects.create_note(userprofile=data['userprofile'],
-                                        name=data['name'],
-                                        note=data['note'],
-                                        short_description=data['short_description'],
-                                        public=data['public'])
-        self.assertTrue(note)
-        note = Note.objects.latest()
-        self.assertEquals(note.userprofile, data['userprofile'])
-        self.assertEquals(note.name, data['name'])
-        self.assertEquals(note.note, data['note'])
-        self.assertEquals(note.short_description, data['short_description'])
-        self.assertEquals(note.public, data['public'])
-    
+        
     def test_duplicate_valid_creation(self):
         userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
         data = {'userprofile':userprofile,
@@ -235,3 +219,34 @@ class NoteCreationTests(TestCase):
         self.assertEquals(2, Note.objects.filter(note=data['note']).count())
         self.assertEquals(2, Note.objects.filter(short_description=data['short_description']).count())
         self.assertEquals(2, Note.objects.filter(public=data['public']).count())
+        self.assertTrue(userprofile.score)
+        self.assertEquals(userprofile.score, 2*settings.NOTE_POINTS)
+
+class AchievementCreationTests(TestCase):
+    fixtures = ['users.json']
+    
+    def test_achievement_valid_creation(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        data = {'userprofile':UserProfile.objects.get(user__email='madhav.bnk@gmail.com'),
+                'title':'I was awarded as best peanut eater in my 10th Grade',
+                'description':'God it was so awesome'}
+        Achievement.objects.create_achievement(userprofile=data['userprofile'],
+                                               title=data['title'],
+                                               description=data['description'])
+        achievement = Achievement.objects.latest()
+        self.assertEquals(achievement.userprofile, userprofile)
+        self.assertEquals(achievement.title, data['title'])
+        self.assertEquals(achievement.description, data['description'])
+    
+    def test_achievement_duplicate_creation(self):
+        userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
+        data = {'userprofile':UserProfile.objects.get(user__email='madhav.bnk@gmail.com'),
+                'title':'I was awarded as best peanut eater in my 10th Grade',
+                'description':'God it was so awesome'}
+        Achievement.objects.create_achievement(userprofile=data['userprofile'],
+                                               title=data['title'],
+                                               description=data['description'])
+        self.assertRaises(AchievementAlreadyExistsException,
+                          Achievement.objects.create_achievement,
+                          userprofile=data['userprofile'],
+                          title=data['title'])

@@ -227,6 +227,15 @@ class UserProfile(BaseModel):
     def is_my_note(self, note):
         return bool(self.note_set.filter(id=note.id).count())
     
+    def is_my_achievement(self, achievement):
+        return bool(self.achievement_set.filter(id=achievement.id).count())
+    
+    def is_my_question(self, question):
+        return bool(self.question_set.filter(id=question.id).count())
+    
+    def is_my_answer(self, answer):
+        return bool(self.answer_set.filter(id=answer.id).count())
+    
     @property
     def domain(self):
         if not self.slug:
@@ -335,7 +344,7 @@ class AcadInfoAlreadyExistsException(Exception):
     pass
     
 class AcadInfoManager(BaseModelManager):
-    def create_acadinfo(self, userprofile, branch, college, start_year, end_year, aggregate):
+    def create_acadinfo(self, userprofile, branch, college, start_year, end_year, aggregate=None):
         if self.exists(userprofile=userprofile):
             raise AcadInfoAlreadyExistsException
         if branch or college or start_year or end_year or aggregate:

@@ -100,6 +100,9 @@ class QuestionPageTests(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'answers.html')
         self.assertTrue(Answer.objects.get(id=answer.id).accepted)
+        
+    def test_deleting_question(self):
+        raise NotImplementedError
 
 class AskQuestionTests(TestCase):
     fixtures = ['users.json']
@@ -189,11 +192,8 @@ class EditQuestionTests(TestCase):
         self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         question = Question.objects.latest()
         response = self.client.get(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)))
-        self.assertRedirects(response,
-                             expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
-                             status_code=302,
-                             target_status_code=200)
-        #TODO:Should check the "Not-Allowed" message
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 404)
 
     def test_edit_question_page_fresh_access_by_question_owner(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
@@ -296,3 +296,6 @@ class GiveAnswerTests(TestCase):
             self.assertNotEquals(answer.description, data['description'])
             for tag in settings.FILTER_HTML_TAGS.split(" "):
                 self.assertFalse(tag in answer.description)
+                
+    def test_deleting_answer(self):
+        raise NotImplementedError

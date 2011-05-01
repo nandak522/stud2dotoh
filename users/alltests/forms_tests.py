@@ -2,6 +2,7 @@ from utils import TestCase
 from users.forms import StudentSignupForm, ProfessorSignupForm, EmployeeSignupForm
 from users.forms import UserLoginForm, SaveNoteForm
 from users.forms import PersonalSettingsForm, AcadSettingsForm, WorkInfoSettingsForm
+from users.forms import AddAchievementForm
 from django.conf import settings
 
 class StudentSignupFormTests(TestCase):
@@ -246,3 +247,26 @@ class WorkInfoSettingsFormTests(TestCase):
             self.assertTrue(form.errors.has_key('workplace'))
             self.assertFalse(form.errors.has_key('designation'))
             self.assertFalse(form.errors.has_key('years_of_exp'))
+
+class AchievementCreationFormTests(TestCase):
+    def test_empty_form_submission(self):
+        data = {'title':'', 'description':''}
+        form = AddAchievementForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.errors)
+    
+    def test_valid_form_submission(self):
+        data = {'title':'I achieved 67% in my 8th Grade. Believe me. Thats one of my achievements',
+                'description':'Thank God. Thank God. Thank God. Thank God. Thank God. Thank God. Thank God. Thank God. Thank God. Thank God. '}
+        form = AddAchievementForm(data)
+        self.assertTrue(form.is_valid())
+        self.assertFalse(form.errors)
+        
+    def test_invalid_form_submission(self):
+        data = {'title':1000*'I achieved 67% in my 8th Grade. Believe me',
+                'description':1000*'Thank God. Thank God. Thank God. '}
+        form = AddAchievementForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.errors)
+        self.assertTrue(form.errors.has_key('title'))
+        self.assertTrue(form.errors.has_key('description'))

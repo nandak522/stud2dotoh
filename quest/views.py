@@ -70,37 +70,35 @@ def view_ask_question(request, ask_question_template):
 def view_edit_question(request, question_id, question_slug, edit_question_template):
     userprofile = loggedin_userprofile(request)
     question = get_object_or_404(Question, id=int(question_id))
-    if question.owner.id != loggedin_userprofile(request).id:
-        from quest.messages import QUESTION_UPDATION_DISALLOWED
-        messages.success(request, QUESTION_UPDATION_DISALLOWED)
-        return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
-    asked_questions = list(userprofile.asked_questions)
-    for question_info in asked_questions:
-        if question_info['id'] == int(question_id):
-            asked_questions.remove({'title':question.title,
-                                    'id':int(question_id),
-                                    'slug':question_slug})
-    
-    if request.method == 'GET':
-        question_data = {'title':question.title,
-                         'description':question.description,
-                         'tags':",".join([tag['name'] for tag in question.tags.values('name')])}
-        form = AskQuestionForm(question_data)
+    if userprofile.is_my_question(question):
+        asked_questions = userprofile.asked_questions
+        for question_info in asked_questions:
+            if question_info['id'] == int(question_id):
+                asked_questions.remove({'title':question.title,
+                                        'id':int(question_id),
+                                        'slug':question_slug})
+        
+        if request.method == 'GET':
+            question_data = {'title':question.title,
+                             'description':question.description,
+                             'tags':",".join([tag['name'] for tag in question.tags.values('name')])}
+            form = AskQuestionForm(question_data)
+            return response(request, edit_question_template, {'form':form,
+                                                              'question':question,
+                                                              'previous_questions':asked_questions})
+        form = AskQuestionForm(post_data(request))
+        if form.is_valid():
+            Question.objects.update_question(question,
+                                             title=form.cleaned_data.get('title'),
+                                             description=form.cleaned_data.get('description'),
+                                             tags=form.cleaned_data.get('tags'))
+            from quest.messages import QUESTION_UPDATED_SUCCESSFULLY
+            messages.success(request, QUESTION_UPDATED_SUCCESSFULLY)
+            return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
         return response(request, edit_question_template, {'form':form,
                                                           'question':question,
                                                           'previous_questions':asked_questions})
-    form = AskQuestionForm(post_data(request))
-    if form.is_valid():
-        Question.objects.update_question(question,
-                                         title=form.cleaned_data.get('title'),
-                                         description=form.cleaned_data.get('description'),
-                                         tags=form.cleaned_data.get('tags'))
-        from quest.messages import QUESTION_UPDATED_SUCCESSFULLY
-        messages.success(request, QUESTION_UPDATED_SUCCESSFULLY)
-        return HttpResponseRedirect(redirect_to=url_reverse('quest.views.view_question', args=(question.id, question.slug)))
-    return response(request, edit_question_template, {'form':form,
-                                                      'question':question,
-                                                      'previous_questions':asked_questions})
+    raise Http404
 
 @login_required
 def view_give_answer(request, question_id, give_answer_template, question_template):
