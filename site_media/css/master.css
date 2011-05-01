@@ -5,6 +5,7 @@ a,.spanlink{text-decoration:none;border-bottom:1px solid #06C;border-style:dotte
 .spanlink{color:#06C;cursor:pointer;border:0;}
 #content{background:#FFF;color:#09222F;}
 #footer{background:#053B76;border-top:1px solid #105FB6;color:#FFF;font:bold 14px sans-serif,Arial;text-align:center;padding:6px 0;}
+#footer a{color:#FFF;border-bottom-color:#FFF;}
 .help_text{color:#333;padding-left:4px;font-size:0.875em;}
 .small_text{color:#777;}
 .required{color:#F00;}
@@ -84,6 +85,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo{padding-top:1em;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
 .help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
+
 .emboss{background:#F9F9F9;}
 .singlepane_maincontent_area{padding:1em;}
 
@@ -110,6 +112,8 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 
 /*Notepad Page Styles*/
 #notepad h3, #account_settings h3{padding-bottom:0.4em;border-bottom:2px solid #CFE2F3;}
+.public_note{background:url(/site_media/img/public.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
+.private_note{background:url(/site_media/img/private.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
 
 /*Account Settings Page Styles*/
 .settings{padding:10px;}

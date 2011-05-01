@@ -2,8 +2,9 @@ from django import template
 from users.models import College, Company
 from users.models import UserProfile
 from django.core.urlresolvers import reverse as url_reverse
-from django.template.defaultfilters import capfirst
+from django.template.defaultfilters import capfirst, title
 from utils.templateutils import domain
+
 
 register = template.Library()
 
@@ -47,5 +48,5 @@ def render_user_domain(userprofile):
             slug = userprofile[1]
             userprofile = UserProfile.objects.get(id=user_id, slug=slug)
     if userprofile.is_domain_enabled:
-        return {'domain_or_name': "<a class='profile_link' href='%(url)s'>%(name)s</a>" % {'name':userprofile.name, 'url':url_reverse('users.views.view_userprofile', args=(userprofile.slug,))}}
-    return {'domain_or_name': userprofile.name}
+        return {'domain_or_name': "<a class='profile_link' href='%(url)s'>%(name)s</a>" % {'name':title(userprofile.name), 'url':url_reverse('users.views.view_userprofile', args=(userprofile.slug,))}}
+    return {'domain_or_name': title(userprofile.name)}
