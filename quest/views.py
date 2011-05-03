@@ -71,7 +71,7 @@ def view_edit_question(request, question_id, question_slug, edit_question_templa
     userprofile = loggedin_userprofile(request)
     question = get_object_or_404(Question, id=int(question_id))
     if userprofile.is_my_question(question):
-        asked_questions = userprofile.asked_questions
+        asked_questions = list(userprofile.asked_questions)
         for question_info in asked_questions:
             if question_info['id'] == int(question_id):
                 asked_questions.remove({'title':question.title,
