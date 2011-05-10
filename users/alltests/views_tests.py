@@ -327,7 +327,7 @@ class UserProfilePageTests(TestCase):
         self.assertEquals(response.status_code, 404)
 
 class UserNotepadSavingTests(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['users.json', 'notes.json']
     
     def test_access_to_notepad_page(self):
         response = self.client.get(path=url_reverse('users.views.view_notepad'))
@@ -347,7 +347,7 @@ class UserNotepadSavingTests(TestCase):
         self.assertTrue(context.has_key('all_notes'))
 
     def test_empty_notepad_saving(self):
-        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        self.login_as(email='somerandomuser@gmail.com', password='nopassword')
         form_data = {'name': '',
                      'short_description': '',
                      'content': '',
@@ -372,6 +372,7 @@ class UserNotepadSavingTests(TestCase):
                      'short_description': 'Hello World',
                      'content': 'print "Hello World"',
                      'public': True}
+        previous_count = Note.objects.filter(userprofile=UserProfile.objects.get(user__email='madhav.bnk@gmail.com')).count()
         response = self.client.post(path=url_reverse('users.views.view_notepad'),
                                     data=form_data)
         self.assertTrue(response)
@@ -385,7 +386,7 @@ class UserNotepadSavingTests(TestCase):
         self.assertTrue(context.has_key('all_notes'))
         all_notes = context.get('all_notes')
         self.assertTrue(all_notes)
-        self.assertEquals(len(all_notes), 1)
+        self.assertEquals(len(all_notes), previous_count+1)
         self.assertEquals(all_notes[0]['name'], form_data['name'])
         
     def test_viewing_saved_notepad_content(self):
@@ -409,10 +410,27 @@ class UserNotepadSavingTests(TestCase):
         self.assertEquals(response.status_code, 404)
         
     def test_editing_existing_note_content(self):
-        raise NotImplementedError
+        self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
+        response = self.client.get(url_reverse('users.views.view_edit_note', args=(1,)))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'notepad.html')
+        context = response.context[0]
+        context.has_key('note')
+        note = context.get('note')
+        self.assertTrue(note)
+        latest_note = Note.objects.latest()
+        self.assertEquals(note.name, latest_note.name)
+        self.assertEquals(note.note, latest_note.note)
+        self.assertEquals(note.short_description, latest_note.short_description)
+        self.assertTrue(note.public)
+        self.assertEquals(note.userprofile, context.get('userprofile'))
     
     def test_editing_other_persons_note_content(self):
-        raise NotImplementedError
+        self.login_as(email='somerandomuser@gmail.com', password='nopassword')
+        response = self.client.get(url_reverse('users.views.view_edit_note', args=(1,)))
+        self.assertTrue(response)
+        self.assertEquals(response.status_code, 404)
     
     def test_deleting_note(self):
         raise NotImplementedError

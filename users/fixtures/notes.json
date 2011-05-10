@@ -1,0 +1,15 @@
+[
+    {
+        "pk": 1, 
+        "model": "users.note", 
+        "fields": {
+            "name": "my-python-app", 
+            "note": "print \"Hello World\"", 
+            "short_description": "", 
+            "created_on": "2011-05-10 22:54:55", 
+            "modified_on": "2011-05-10 22:54:55", 
+            "public": true, 
+            "userprofile": 1
+        }
+    }
+]
