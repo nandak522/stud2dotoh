@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
     (r'^users/', include('users.urls')),
     (r'^questions/', include('quest.urls')),
+    (r'^search/', include('haystack.urls')),
 )
 
 urlpatterns += patterns('users.views',

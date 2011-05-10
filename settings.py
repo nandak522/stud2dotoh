@@ -20,12 +20,12 @@ if 'test' in sys.argv:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'stud2dotoh',                      # Or path to database file if using sqlite3.
-            'USER': 'stud2dotoh',                      # Not used with sqlite3.
-            'PASSWORD': 'stud2dotoh',                  # Not used with sqlite3.
-            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'stud2dotoh',
+            'USER': 'stud2dotoh',
+            'PASSWORD': 'stud2dotoh',
+            'HOST': '',
+            'PORT': '',
         }
     }
 
@@ -73,18 +73,25 @@ TEMPLATE_DIRS = (
                  '%s/templates' % ROOT_PATH,
 )
 
-INSTALLED_APPS = (
+DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+)
+
+THIRD_PARTY_APPS = (
+    'debug_toolbar',#Ideally this should be a submodule
+    'taggit',#Ideally this should be a submodule
+    'haystack'#Ideally this should be a submodule
+)
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + (
     'extensions',
-    'debug_toolbar',
     'users',
     'quest',
-    'taggit'#Ideally this should be a submodule
 )
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
@@ -116,3 +123,7 @@ NOTE_POINTS = 3
 QUESTION_POINTS = 3
 
 ANSWER_POINTS = 5
+
+HAYSTACK_SITECONF = '%s.search_sites' % PROJECT_FOLDER_NAME
+HAYSTACK_SEARCH_ENGINE = 'solr'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
