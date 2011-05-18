@@ -34,6 +34,7 @@ def view_close_answering(request, question_template, close_answer_template):#Thi
     if userprofile.id == question.owner.id:
         question.close_answering()
         return response(request, close_answer_template, {'give_answer_form':None})
+    raise Http404
 
 @login_required
 @is_post
@@ -45,6 +46,7 @@ def view_accept_answer(request, question_id, answers_template):
         answer = get_object_or_404(Answer, id=int(answer_id))
         answer.accept(userprofile)
         return response(request, answers_template, {'question':question, 'all_answers':question.answers})
+    raise Http404
 
 @login_required
 def view_ask_question(request, ask_question_template):

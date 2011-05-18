@@ -10,28 +10,32 @@ class QuestionCreationTests(TestCase):
         raised_by = UserProfile.objects.latest()
         question_data = {'title':'What are the best companies working on Python ?',
                          'description':'<a href="http://google.com/">Google</a>, <a href="http://hp.com/">HP</a>',
-                         'raised_by':raised_by}
+                         'raised_by':raised_by,
+                         'tags':('python',)}
         Question.objects.create_question(title=question_data['title'],
                                          description=question_data['description'],
                                          userprofile=question_data['raised_by'],
-                                         tags='')
-        #TODO:Tagged questions should also be checked
+                                         tags=question_data['tags'])
         question = Question.objects.latest()
         self.assertTrue(question)
         self.assertEquals(question.title, question_data['title'])
         self.assertEquals(question.description, question_data['description'])
         self.assertEquals(question.raised_by.id, question_data['raised_by'].id)
         self.assertFalse(question.closed)
+        self.assertEquals(question.tags.count(), 1)
+        tag = question.tags.all()[0]
+        self.assertEquals(tag.name, question_data['tags'][0])
         self.assertEquals(raised_by.score, settings.QUESTION_POINTS)
     
     def test_creating_duplicate_questions(self):
         question_data = {'title':'What are the best companies working on Python ?',
                          'description':'<a href="http://google.com/">Google</a>, <a href="http://hp.com/">HP</a>',
-                         'raised_by':UserProfile.objects.latest()}
+                         'raised_by':UserProfile.objects.latest(),
+                         'tags':('python',)}
         Question.objects.create_question(title=question_data['title'],
                                          description=question_data['description'],
                                          userprofile=question_data['raised_by'],
-                                         tags='')
+                                         tags=question_data['tags'])
         question = Question.objects.latest()
         self.assertTrue(question)
         self.assertRaises(QuestionAlreadyExistsException,
@@ -39,16 +43,17 @@ class QuestionCreationTests(TestCase):
                           title=question_data['title'],
                           description=question_data['description'],
                           userprofile=question_data['raised_by'],
-                          tags='')
+                          tags=question_data['tags'])
     
     def test_close_answering(self):
         question_data = {'title':'What are the best companies working on Python ?',
                          'description':'<a href="http://google.com/">Google</a>, <a href="http://hp.com/">HP</a>',
-                         'raised_by':UserProfile.objects.latest()}
+                         'raised_by':UserProfile.objects.latest(),
+                         'tags':('python',)}
         Question.objects.create_question(title=question_data['title'],
                                          description=question_data['description'],
                                          userprofile=question_data['raised_by'],
-                                         tags='')
+                                         tags=question_data['tags'])
         question = Question.objects.latest()
         self.assertTrue(question)
         self.assertFalse(question.closed)
@@ -56,13 +61,15 @@ class QuestionCreationTests(TestCase):
         self.assertTrue(question.closed)
         
 class QuestionUpdatingTests(TestCase):
-    fixtures = ['questions.json']
+    fixtures = ['users.json', 'questions.json']
     
     def test_update_question_with_empty_content(self):
         question = Question.objects.latest()
         self.assertRaises(EmptyQuestionCantBeSavedException,
                           Question.objects.update_question,
-                          question)
+                          question,
+                          title='',
+                          description='')
         self.assertRaises(EmptyQuestionCantBeSavedException,
                           Question.objects.update_question,
                           question,

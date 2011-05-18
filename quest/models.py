@@ -35,7 +35,7 @@ class QuestionManager(BaseModelManager):
                     tags = attributes.get('tags')
                     question.tags.clear()
                     question.tags.add(*tags)
-                attributes.pop('tags')
+                    attributes.pop('tags')
                 for attr_label in attributes:
                     setattr(question, attr_label, attributes[attr_label])
                 question.save()
