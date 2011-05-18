@@ -35,7 +35,7 @@ class QuestionManager(BaseModelManager):
                     tags = attributes.get('tags')
                     question.tags.clear()
                     question.tags.add(*tags)
-                attributes.pop('tags')
+                    attributes.pop('tags')
                 for attr_label in attributes:
                     setattr(question, attr_label, attributes[attr_label])
                 question.save()
@@ -127,12 +127,12 @@ class Answer(BaseModel):
             self.save()
             
 def increment_question_points(sender, instance, **kwargs):
-    if 'created' in kwargs:
+    if kwargs['created']:
         userprofile = instance.raised_by
         userprofile.add_points(settings.QUESTION_POINTS)
 
 def increment_answer_points(sender, instance, **kwargs):
-    if 'created' in kwargs:
+    if kwargs['created']:
         userprofile = instance.given_by 
         userprofile.add_points(settings.ANSWER_POINTS)
             

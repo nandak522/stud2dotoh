@@ -50,7 +50,7 @@ class QuestionPageTests(TestCase):
     def test_close_answering_a_question_by_non_owner(self):
         question = Question.objects.latest()
         self.login_as(email='somerandomuser@gmail.com', password='nopassword')
-        response = self.client.post(url_reverse('quest.views.view_close_answering'), {'question_id':question.id})
+        response = self.client.post(url_reverse('quest.views.view_close_answering'), {'question_id':question.id}, **{'HTTP_X_REQUESTED_WITH':'XMLHttpRequest'})
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
 
@@ -70,7 +70,7 @@ class QuestionPageTests(TestCase):
         question = Question.objects.latest()
         answer = question.answers[0]
         self.login_as(email='somerandomuser@gmail.com', password='nopassword')
-        response = self.client.post(url_reverse('quest.views.view_accept_answer', args=(question.id,)), data={'question_id':question.id, 'answer_id':answer.id})
+        response = self.client.post(url_reverse('quest.views.view_accept_answer', args=(question.id,)), data={'question_id':question.id, 'answer_id':answer.id}, **{'HTTP_X_REQUESTED_WITH':'XMLHttpRequest'})
         self.assertTrue(response)
         self.assertEquals(response.status_code, 404)
         self.assertFalse(Answer.objects.get(id=answer.id).accepted)
@@ -129,7 +129,8 @@ class AskQuestionTests(TestCase):
     def test_asking_a_question(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
-                         'description':'Just interested in the process of hiring for Stud2dotoh'}
+                         'description':'Just interested in the process of hiring for Stud2dotoh',
+                         'tags':('hiring',)}
         old_questions_count = Question.objects.count()
         response = self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
         new_questions_count = Question.objects.count()
@@ -138,6 +139,9 @@ class AskQuestionTests(TestCase):
         self.assertTrue(question)
         self.assertEquals(question.title, question_data['title'])
         self.assertEquals(question.description, question_data['description'])
+        tags = question.tags.all()
+        self.assertEquals(tags.count(), 1)
+        self.assertEquals(tags[0].name, question_data['tags'][0])
         self.assertEquals(UserProfile.objects.get(user__email='madhav.bnk@gmail.com').id, question.raised_by.id)
         self.assertRedirects(response,
                              expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),
@@ -147,7 +151,8 @@ class AskQuestionTests(TestCase):
     def test_asking_a_question_with_xss(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
-                         'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script>'}
+                         'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script>',
+                         'tags':'sometag'}
         response = self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
         question = Question.objects.latest()
         self.assertRedirects(response,
@@ -163,10 +168,11 @@ class AskQuestionTests(TestCase):
         self.assertFalse(question_data['description'] in question_description)
         self.assertFalse('<script>' in question_description)
 
-    def test_asking_a_question_with_blocked_tags(self):
+    def test_asking_a_question_with_blocked_htmltags(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question_data = {'title':'How is Stud2dotoh Hiring ?',
-                         'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script><input type=\'text\' name=\'head_name\' value=\'Your Name\'/><marquee>I am big distracting rolling banner</marquee>'}
+                         'description':'Stud2dotoh! <script>alert("I will shoot you in the head")</script><input type=\'text\' name=\'head_name\' value=\'Your Name\'/><marquee>I am big distracting rolling banner</marquee>',
+                         'tags':'sometag'}
         self.client.post(url_reverse('quest.views.view_ask_question'), question_data)
         question = Question.objects.latest()
         response = self.client.get(url_reverse('quest.views.view_question', args=(question.id, question.slug)))
@@ -178,7 +184,7 @@ class AskQuestionTests(TestCase):
             self.assertFalse(tag in question_description)
 
 class EditQuestionTests(TestCase):
-    fixtures = ['questions.json', 'users.json']
+    fixtures = ['users.json', 'questions.json', 'tags.json']
 
     def test_edit_question_page_fresh_access_anonymous_user(self):
         question = Question.objects.latest()
@@ -206,6 +212,7 @@ class EditQuestionTests(TestCase):
         self.assertTrue(context.has_key('question'))
         self.assertTrue(context.has_key('form'))
         form = context.get('form')
+        self.assertFalse(form.errors)
         self.assertEquals(form.cleaned_data.get('title'), question.title)
         self.assertEquals(form.cleaned_data.get('description'), question.description)
 
@@ -230,7 +237,9 @@ class EditQuestionTests(TestCase):
     def test_edit_question_with_valid_content(self):
         self.login_as(email='madhav.bnk@gmail.com', password='nopassword')
         question = Question.objects.latest()
-        valid_question_data = {'title':"Some Valid title", 'description':'Some valid description'}
+        valid_question_data = {'title':"Some Valid title",
+                               'description':'Some valid description',
+                               'tags':'valid'}
         response = self.client.post(url_reverse('quest.views.view_edit_question', args=(question.id, question.slug)), data=valid_question_data)
         self.assertRedirects(response,
                              expected_url=url_reverse('quest.views.view_question', args=(question.id, question.slug)),

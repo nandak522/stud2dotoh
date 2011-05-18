@@ -34,6 +34,7 @@ def view_close_answering(request, question_template, close_answer_template):#Thi
     if userprofile.id == question.owner.id:
         question.close_answering()
         return response(request, close_answer_template, {'give_answer_form':None})
+    raise Http404
 
 @login_required
 @is_post
@@ -45,6 +46,7 @@ def view_accept_answer(request, question_id, answers_template):
         answer = get_object_or_404(Answer, id=int(answer_id))
         answer.accept(userprofile)
         return response(request, answers_template, {'question':question, 'all_answers':question.answers})
+    raise Http404
 
 @login_required
 def view_ask_question(request, ask_question_template):
@@ -71,7 +73,7 @@ def view_edit_question(request, question_id, question_slug, edit_question_templa
     userprofile = loggedin_userprofile(request)
     question = get_object_or_404(Question, id=int(question_id))
     if userprofile.is_my_question(question):
-        asked_questions = userprofile.asked_questions
+        asked_questions = list(userprofile.asked_questions)
         for question_info in asked_questions:
             if question_info['id'] == int(question_id):
                 asked_questions.remove({'title':question.title,

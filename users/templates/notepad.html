@@ -30,7 +30,7 @@
 <table>
 {%for note in all_notes%}
 <tr>
-    <td>{%if note.public%}<img src="/site_media/img/public.png" title="This is public note"/>{%else%}<img title="This is private note" src="/site_media/img/private.png"/>{%endif%}</td>
+    <td>{%if note.public%}<span class='tooltip public_note' title="This is Public note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{%else%}<span class='tooltip private_note' title="This is Private note">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{%endif%}</td>
     <td><a class="file_link" target='_blank' href="{%url show_note note_id=note.id%}">{{note.name|truncatewords:2|capfirst}}</a>&nbsp;&nbsp;<a title="Edit Note" href="{%url edit_note note_id=note.id%}">Edit</a></td>
 </tr>
 {%empty%}

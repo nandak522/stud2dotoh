@@ -7,10 +7,11 @@ import re
 
 EMAIL_REGEX = '[\w\.-]+@[a-zA-Z0-9]+[\.][a-zA-Z]{2,4}'
 DEFAULT_FROM_EMAIL = 'do-not-reply@stud2dotoh.com'
+DEFAULT_MAIL_CONTENT_TYPE = 'text/html'
 
 def default_emailer(from_email, to_emails, message, from_name='', subject=''):
     email_message = EmailMultiAlternatives(subject, '', address_email_with_name(from_email, from_name), to_emails)
-    email_message.attach_alternative(message, 'text/html')
+    email_message.attach_alternative(message, DEFAULT_MAIL_CONTENT_TYPE)
     email_message.send()
     
 def mail_admins(from_email, message, from_name='', subject=''):

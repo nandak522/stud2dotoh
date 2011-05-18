@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>{% block title %}{% endblock %} - Stud2.0</title>
@@ -53,19 +53,32 @@
         </div><!-- end of footer -->
     </div><!-- end of container -->
     {%if debug%}
-    <script type='text/javascript' src='/site_media/js/jquery/jquery-1.5.min.js'></script>
+    <script type='text/javascript' src='/site_media/js/jquery/jquery-1.6.min.js'></script>
     {%else%}
-    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js'></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js'></script>
     {%endif%}
     <script type='text/javascript' src='/site_media/js/common.js'></script>
     <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(8000);}</script>
     <script type='text/javascript' src='/site_media/js/jquery/plugins/tooltip/tipsy-1.0.0-a/src/javascripts/jquery.tipsy.js'></script>
     <script type='text/javascript'>
 	    $(function(){
-	       help_icons = $('.help').tipsy({title:'title', gravity:'s'});
+	       tooltip_icons = $('.tooltip').tipsy({title:'title', gravity:'s'});
 	       $('#id_slug').tipsy({trigger:'focus', title:'title', gravity:'n'});
 	    });
 	</script>
     {%block extrajs%}{%endblock%}
+    {%block google-analytics%}
+    <script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22325032-1']);
+	  _gaq.push(['_setDomainName', '.stud2dotoh.com']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+    {%endblock%}
 </body>
 </html>

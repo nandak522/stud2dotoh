@@ -4,7 +4,8 @@ from quest.forms import AskQuestionForm, GiveAnswerForm
 class AskQuestionFormTests(TestCase):
     def test_valid_ask_question(self):
         form_data = {'title':'How do we handle recursion in Python',
-                     'description':'I am a newbee to Python. Can you share me ways to handle recurion in python ?'}
+                     'description':'I am a newbee to Python. Can you share me ways to handle recurion in python ?',
+                     'tags':'recursion,python'}
         form = AskQuestionForm(form_data)
         self.assertTrue(form.is_valid())
         self.assertFalse(form.errors)

@@ -1,0 +1,19 @@
+[
+    {
+        "pk": 1, 
+        "model": "taggit.tag", 
+        "fields": {
+            "name": "python", 
+            "slug": "python"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "taggit.taggeditem", 
+        "fields": {
+            "tag": 1, 
+            "content_type": 17, 
+            "object_id": 3
+        }
+    }
+]
