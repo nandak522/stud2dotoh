@@ -41,7 +41,10 @@ class QuestionManager(BaseModelManager):
                 question.save()
                 return 
         raise EmptyQuestionCantBeSavedException
-    
+ 
+    def search(self, query):
+        return self.filter(title__icontains=query)
+   
 class Question(BaseModel):
     title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80, db_index=True)
@@ -53,6 +56,7 @@ class Question(BaseModel):
     
     def __unicode__(self):
         return "%s...." % self.title[:10]
+
     
     @property
     def answers(self):
