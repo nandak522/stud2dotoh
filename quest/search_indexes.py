@@ -1,9 +1,8 @@
-from haystack.indexes import *
+from haystack import indexes
 from haystack import site
 from quest.models import Question
 
-class QuestionIndex(SearchIndex):
-    title = CharField(document=True, use_template=True)
+class QuestionIndex(indexes.SearchIndex):
+    title = indexes.CharField(document=True, use_template=True, model_attr='title')
 
-    def index_queryset(self):
-       return Question.objects.all()
+site.register(Question, QuestionIndex)
