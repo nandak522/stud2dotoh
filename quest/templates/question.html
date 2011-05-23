@@ -4,13 +4,13 @@
 {%block content%}
 {%load users_tags%}
 <div id='question_body' class='span-18 column'>
-<h2><a href="{%url question question.id question.slug%}">{{question.title}}</a></h2>
+<h2><a href="{{question.get_absolute_url}}">{{question.title}}</a></h2>
 <span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
 <div id='question_action_links'>
 <!-- AddThis Button BEGIN -->
 <div id="share_question_links" class="addthis_toolbox addthis_default_style ">
-&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Link to this question" href="{%url question question.id question.slug%}">Link</a>&nbsp;&nbsp;
+&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Link to this question" href="{{question.get_absolute_url}}">Link</a>&nbsp;&nbsp;
 {%if userprofile.id == question.owner.id%}|&nbsp;&nbsp;<a title="Edit this question" href="{%url edit_question question.id question.slug%}">Edit</a>&nbsp;&nbsp;{%endif%}
 <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=madhavbnk" class="addthis_button_compact">Share</a>
 <span class="addthis_separator">|</span>

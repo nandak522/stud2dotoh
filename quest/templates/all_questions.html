@@ -14,7 +14,7 @@
 {%block maincontent%}
 <h2 class='georgia maincontent_header blue_underline'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
 {%for question in questions%}
-<h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h3>
+<h3><a href="{{question.get_absolute_url}}" target='_blank'>{{question.title}}</a></h3>
 {%endfor%}
 {%endblock%}
 {%block sidebar%}

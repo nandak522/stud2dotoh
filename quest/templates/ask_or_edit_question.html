@@ -24,7 +24,7 @@
     {%if previous_questions%}
         <ul>
         {%for pquestion in previous_questions%}
-        <li><a href="{%url question pquestion.id pquestion.slug%}" target='_blank'>{{pquestion.title|truncatewords:3}}</a></li>
+        <li><a href="{{pquestion.get_absolute_url}}" target='_blank'>{{pquestion.title|truncatewords:3}}</a></li>
         {%endfor%}
         </ul>
     {%else%}
@@ -35,7 +35,7 @@
     {%if asked_questions%}
         <ul>
         {%for pquestion in asked_questions%}
-        <li><a href="{%url question pquestion.id pquestion.slug%}" target='_blank'>{{pquestion.title|truncatewords:3}}</a></li>
+        <li><a href="{{question.get_absolute_url}}" target='_blank'>{{pquestion.title|truncatewords:3}}</a></li>
         {%endfor%}
         </ul>
     {%else%}
