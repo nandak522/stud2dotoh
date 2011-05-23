@@ -53,6 +53,9 @@ class Question(BaseModel):
     
     def __unicode__(self):
         return "%s...." % self.title[:10]
+
+    def get_absolute_url(self):
+        return "/questions/%s/%s/" % (self.id, self.slug)
     
     @property
     def answers(self):
