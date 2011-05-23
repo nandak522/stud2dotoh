@@ -62,6 +62,10 @@ class UserProfile(BaseModel):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('user_profile', (self.slug,))
+
     @property
     def asked_questions(self):
         return self.question_set.values('title', 'id', 'slug')
@@ -282,6 +286,10 @@ class College(BaseModel):
     
     def __unicode__(self):
         return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('college_profile', (self.id, self.slug))
     
     @property
     def students(self):
@@ -307,6 +315,10 @@ class Company(BaseModel):
     
     def __unicode__(self):
         return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('company_profile', (self.name, self.slug))
     
     @property
     def employees(self):

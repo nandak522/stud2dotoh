@@ -4,7 +4,7 @@
 <h2 class='georgia maincontent_header'>All Colleges</h2>
 <ul id='colleges'>
 {%for college in colleges%}
-<li><h3><a href="{%url college_profile college.id college.slug%}">{{college.name|title}}</a></h3></li>
+<li><h3><a href="{{college.get_absolute_url}}">{{college.name|title}}</a></h3></li>
 {%empty%}
 No Colleges Yet!
 {%endfor%}
