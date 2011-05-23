@@ -4,9 +4,9 @@
 {%block content%}
 {%load users_tags%}
 <div id='question_body' class='span-18 column'>
-<h2><a href="{{question.get_absolute_url}}">{{question.title}}</a></h2>
-<span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
+<h2><a href="{{question.get_absolute_url}}">{{question.title|title}}</a></h2>
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
+<span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
 <div id='question_action_links'>
 <!-- AddThis Button BEGIN -->
 <div id="share_question_links" class="addthis_toolbox addthis_default_style ">
@@ -33,9 +33,13 @@
         <br/><input type='button' onClick='javascript:close_answering("{{question.id}}")' value='Close Answering' name='close_answering'/>    
     {%endif%}
     {%include 'existing_answers.html'%}
+{%if userprofile%}    
 <div id='give_answer_section'>
     {%include 'give_answer.html'%}
 </div><!-- end of give_answer_section -->
+{%else%}
+<h3>Want to Suggest an Answer ? Please <a title="Signup, if you are a new member" href="{%url register%}">Sign Up</a> or <a title="Login, if you are already a member" href="{%url login%}">Login</a></h3>
+{%endif%}
 </div>
 <div id="questions_sidebar" class='span-4 column last'>
 <input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>

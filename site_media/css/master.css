@@ -142,7 +142,8 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #all_questions .content_header{padding-left:0;}
 .answer_block{margin-bottom:1em;padding:8px 0 8px 4px;border:2px solid #EFEFEF;background:#F6F6F6;font:normal 1.1em sans-serif;line-height:1.5em;}
 .accepted_answer{background:#FFD354;}
-#question_description{font:normal 1.1em sans-serif;margin:16px 0 16px;}
+#question_description{font:normal 1.1em sans-serif;margin:0 0 8px;}
+.addthis_toolbox{margin:4px 0;}
 .addthis_toolbox a{text-decoration:none;border-bottom:0;}
 #question_body{padding:10px;}
 #question_body h2{margin-bottom:0.5em;}
