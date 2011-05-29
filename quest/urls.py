@@ -8,5 +8,6 @@ urlpatterns = patterns('quest.views',
     (r'^(?P<question_id>\d+)/(?P<question_slug>[\w\s-]+)/$', 'view_question', {'question_template':'question.html'}, 'question'),
     (r'^(?P<question_id>\d+)/(?P<question_slug>[\w\s-]+)/edit/$', 'view_edit_question', {'edit_question_template':'ask_or_edit_question.html'}, 'edit_question'),
     (r'^ask/$', 'view_ask_question', {'ask_question_template':'ask_or_edit_question.html'}, 'ask_question'),
+    (r'^search/$', 'view_search_questions', {}, 'search_questions'),
     (r'^(?P<tag_name>[\w.-]+)/$', 'view_tagged_questions', {'tagged_questions_template':'all_questions.html'}, 'tagged_questions'),
 )

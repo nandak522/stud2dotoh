@@ -1,0 +1,7 @@
+<ul>
+{%for question in questions%}
+    <li class='ajax_search_result'><a href="{{question.object.get_absolute_url}}">{{question.object.title}}</a></li>
+{%empty%}
+<li>No Results Found</li>
+{%endfor%}
+</ul>

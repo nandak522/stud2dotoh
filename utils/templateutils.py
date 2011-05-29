@@ -4,13 +4,13 @@ import urlparse
 from django.template.defaulttags import URLNode, url
 from django.contrib.sites.models import Site
 from django.conf import settings
+from datetime import datetime,time
+from datetime import timedelta
+from django.utils.dateformat import DateFormat 
 
 register = template.Library()
 
-if settings.DEBUG:
-    domain = ''
-else:
-    domain = "http://%s" % Site.objects.get_current().domain
+domain = '' if settings.DEBUG else "http://%s" % Site.objects.get_current().domain
 
 @register.filter
 def emailify(email):
@@ -35,3 +35,20 @@ def absurl(parser, token, node_cls=AbsoluteURLNode):
         kwargs=node_instance.kwargs,
         asvar=node_instance.asvar)
 absurl = register.tag(absurl)
+
+@register.filter
+def humantime(t):
+    #TODO:need to come up with strings like:
+    #1)less than a minute ago
+    #2)X minutes ago(if its less than an hour)
+    #3)HH:MM a.m/p.m(if its on the same day)
+    #4)DD/MM/YYYY, for everything else
+    now = datetime.now()
+    if datetime.combine(now, time()) < t and t < datetime.combine(now + timedelta(1), time()):
+        f = 'g:i a'
+    elif now.year == t.year:
+        f = 'M j'
+    else:
+        f = 'n/j/y'
+    df = DateFormat(t)
+    return df.format(f).replace('.m.', 'm')

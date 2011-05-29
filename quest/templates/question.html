@@ -6,7 +6,7 @@
 <div id='question_body' class='span-18 column'>
 <h2><a href="{{question.get_absolute_url}}">{{question.title|title}}</a></h2>
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
-<span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
+<span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|humantime}}</span>
 <div id='question_action_links'>
 <!-- AddThis Button BEGIN -->
 <div id="share_question_links" class="addthis_toolbox addthis_default_style ">

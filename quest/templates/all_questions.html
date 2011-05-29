@@ -12,6 +12,9 @@
 </ul>
 {%endblock%}
 {%block maincontent%}
+<form action="{%url search_questions%}" method='post'>{% csrf_token %}
+<h3>Search Existing Questions: {{searchquestionform.q}}</h3>
+</form>
 <h2 class='georgia maincontent_header blue_underline'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
 {%for question in questions%}
 <h3><a href="{{question.get_absolute_url}}" target='_blank'>{{question.title}}</a></h3>
@@ -19,4 +22,28 @@
 {%endblock%}
 {%block sidebar%}
 <input id="ask_question_button" type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
+{%endblock%}
+{%block extrajs%}
+<script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+    var array = new Array();
+    $('#id_q').autocomplete({
+        dataType:'json',
+        source:'{%url search_questions%}',
+        minLength:1,
+        highlight:true,
+        select:function(e, ui){
+            alert(e);
+            alert(ui);
+        }
+        }).data("autocomplete")._renderItem = function(ul, item){
+    //$("<li class='ui-menu-item' role='menuitem'></li>").data("item.autocomplete",item).append(item.value).appendTo(ul);
+    ul.append($("<li class='ui-menu-item' role='menuitem'></li>").append(item.value));
+        };
+});
+</script>
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css" />
 {%endblock%}

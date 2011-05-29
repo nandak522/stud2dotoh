@@ -71,6 +71,7 @@
 	    $(function(){tooltip_icons = $('.tooltip').tipsy({title:'title', gravity:'s'});});
 	</script>
     {%block extrajs%}{%endblock%}
+    {%if not debug%}
     {%block google-analytics%}
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -84,5 +85,6 @@
       })();
     </script>
     {%endblock%}
+    {%endif%}
 </body>
 </html>

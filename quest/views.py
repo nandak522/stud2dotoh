@@ -1,21 +1,24 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as url_reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from utils import response, post_data, loggedin_userprofile
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from quest.models import Question, Answer
 from quest.forms import AskQuestionForm, GiveAnswerForm
-from taggit.models import Tag, TaggedItem
-from django.core.paginator import Paginator
-from users.models import UserProfile, College, Company, Group
-from utils.decorators import is_post
+from quest.forms import SearchQuestionForm
+from taggit.models import Tag 
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from utils.decorators import is_post, is_ajax, is_get
 from utils.emailer import new_anwer_emailer
+from django.utils import simplejson
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')
-    return response(request, all_questions_template, {'questions':questions})
+    searchquestionform = SearchQuestionForm()
+    return response(request, all_questions_template, {'questions':questions,
+                                                      'searchquestionform':searchquestionform})
 
 def view_question(request, question_id, question_slug, question_template):
     question = get_object_or_404(Question, id=int(question_id))#question_slug is for SEO
@@ -54,8 +57,10 @@ def view_ask_question(request, ask_question_template):
     asked_questions = userprofile.asked_questions
     if request.method == 'GET':
         form = AskQuestionForm()
+        searchquestionform = SearchQuestionForm()
         return response(request, ask_question_template, {'form':form,
-                                                         'asked_questions':asked_questions})
+                                                         'asked_questions':asked_questions,
+                                                         'searchquestionform':searchquestionform})
     form = AskQuestionForm(post_data(request))
     if form.is_valid():
         question = Question.objects.create_question(title=form.cleaned_data.get('title'),
@@ -134,3 +139,13 @@ def view_tagged_questions(request, tag_name, tagged_questions_template):
         questions = paginator.page(paginator.num_pages)
     return response(request, tagged_questions_template, {'questions': questions.object_list,
                                                         'tag': tag})
+@is_ajax
+@is_get
+def view_search_questions(request):
+    form = SearchQuestionForm({'q':request.GET.get('term')})
+    if form.is_valid():
+        questions = form.search()
+        questions = [{'id':question_info.object.id, 'value':"<a class='ui-corner-all' tabindex='-1' href='%s'>%s</a>" % (question_info.object.get_absolute_url(), question_info.object.title)} for question_info in questions]
+        json = simplejson.dumps(questions)
+        return HttpResponse(json, mimetype='application/json')
+    raise Http404
