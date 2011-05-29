@@ -48,6 +48,11 @@
 document.forms[0].title.focus();
 $('#id_description').keyup(function(e){
     charCounter({{form.fields.description.max_length}}, 'id_description', 'status_meter_id');
-});
+    });
+$('#id_tags').tagit();
+</script>
+<script type='text/javascript' src="/site_media/js/tagit.js"></script>
+<script type='text/javascript'>
+$('#id_tags').tagit();
 </script>
 {%endblock%}
