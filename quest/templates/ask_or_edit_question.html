@@ -13,7 +13,7 @@
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_title">Question :</label></td><td class='leftalign'>{{form.title}}<span class='help_text'>(<span class='required'>Required</span>. Max of 80 characters)</span><br/>{{form.title.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_description">Description :</label></td><td class='leftalign'>{{form.description}}<br/><span class='help_text'>(<span class='required'>Required</span>. Max of 1000 characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{form.description.errors}}</td></tr>
-    <tr><td class='rightalign'><label for="id_tags">Tags</label></td><td class='form-row'>{{form.tags}}<span class='help_text'>(<span class='required'>Required</span>. Mention multiple tags separated by commas. Avoid spaces in tags.)</span>{{form.tags.errors}}</td></tr>
+    <tr><td class='rightalign'><label for="id_tags">Tags</label></td><td class='form-row'>{{form.tags}}<br/><span class='help_text'>(<span class='required'>Required</span>. Mention multiple tags separated by commas. Avoid spaces in tags.)</span>{{form.tags.errors}}</td></tr>
     <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="{%if question%}Save{%else%}Submit{%endif%} Question"/></td></tr>
 </table>
 </form>
@@ -49,10 +49,46 @@ document.forms[0].title.focus();
 $('#id_description').keyup(function(e){
     charCounter({{form.fields.description.max_length}}, 'id_description', 'status_meter_id');
     });
-$('#id_tags').tagit();
 </script>
-<script type='text/javascript' src="/site_media/js/tagit.js"></script>
+<script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type='text/javascript'>
-$('#id_tags').tagit();
-</script>
+   function split(val) {
+        return val.split( /,\s*/ );
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    } 
+    $('#id_tags').bind("keydown", function(event){
+                    if(event.keyCode === $.ui.keyCode.TAB &&
+                        $(this).data("autocomplete").menu.active){
+                            event.preventDefault();
+                    }
+                  }).autocomplete({
+                    minLength:2,
+                    search: function(){
+                        // custom minLength
+                        var term = extractLast(this.value);
+                        if (term.length < 2){
+                            return false;
+                        }
+                    },
+                    source: function(request, response) {
+                        $.getJSON("{%url ajax_tags_list%}", {term:extractLast(request.term)}, response);
+                    },
+                    focus: function() {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select:function(event, ui){
+                        var terms = split(this.value);//split the existing tag items based on comma or space
+                        terms.pop();//pop the latest incompleted word
+                        terms.push(ui.item.value);//push the selected value for retrieved tags list
+                        terms.push("");
+                        this.value = terms.join(",");
+                        return false;
+    }});
+</script>    
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css" />
 {%endblock%}

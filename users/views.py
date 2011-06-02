@@ -14,11 +14,12 @@ from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupFo
 from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNoteForm
 from users.forms import ForgotPasswordForm, ResetMyPasswordForm, AddAchievementForm
 from users.models import UserProfile, College, Company, Note, Achievement
-from utils import response, post_data, loggedin_userprofile, slugify
+from utils import response, post_data, loggedin_userprofile 
 import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
 from utils.decorators import is_get, is_post, is_ajax
 from django.utils import simplejson
+from taggit.models import Tag
 
 def view_homepage(request, homepage_template):
     #TODO:Homepage layout showing message, screenshots, latest updates across the system
@@ -533,6 +534,14 @@ def view_ajax_companies_list(request):
     companies = Company.objects.filter(name__istartswith=search_name).values('id', 'name')
     companies = [{'id':company_info['id'], 'value':company_info['name']} for company_info in companies]
     json = simplejson.dumps(companies)
+    return HttpResponse(json, mimetype='application/json')
+
+@is_ajax
+def view_ajax_tags_list(request):
+    search_name = request.GET.get('term')
+    tags = Tag.objects.filter(name__istartswith=search_name).values('id', 'name')
+    tags = [{'id':tag_info['id'], 'value':tag_info['name']} for tag_info in tags]
+    json = simplejson.dumps(tags)
     return HttpResponse(json, mimetype='application/json')
 
 @login_required

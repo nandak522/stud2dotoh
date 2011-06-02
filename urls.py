@@ -58,4 +58,8 @@ urlpatterns += patterns('users.views',
     (r'^companies_ajax/$', 'view_ajax_companies_list', {}, 'ajax_companies_list'),                    
 )
 
+urlpatterns += patterns('users.views',
+    (r'^tags_ajax/$', 'view_ajax_tags_list', {}, 'ajax_tags_list'),
+)
+
 add_to_builtins('utils.templateutils')

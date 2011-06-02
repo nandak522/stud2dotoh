@@ -79,7 +79,7 @@ hr{margin:0;padding:0;}
 .feature_usage li{font:bold 1.1em Arial,sans-serif;padding:0 0 0.5em 1em;}
 #header_top_ribbon{background:#053B76;height:25px;border-bottom:1px solid #105Fb6;font-size:0.875em;padding-top:4px;}
 #header_toplinks_left li,#header_toplinks_right li{display:inline;font-size:1.2em;padding:2px 10px;}
-#header_toplinks_left a,#header_toplinks_right a{tex-decoration:none;border:0;color:#FFF;}
+#header_toplinks_left a,#header_toplinks_right a{text-decoration:none;border:0;color:#FFF;}
 #header_middle_ribbon{background:#2B5789;color:#FFF;}
 ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo{padding-top:1em;}
@@ -182,14 +182,14 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 #forgot_password .content_header{padding-left:0;margin-top:0;}
 
 /*500 Page Styles*/
-#500_page{background:#2B5789;color:#FFF;}
+#page500{background:#2B5789;color:#FFF;}
 
 /*404 Page Styles*/
-#404_page{background:#2B5789;color:#FFF;}
+#page404{background:#2B5789;color:#FFF;}
 
 /*Autocomplete Styles*/
 .ui-menu-item a{border-bottom:1px solid #EFEFEF;}
-
+.ui-menu-item{background:#F6F6F6;} 
 /*Achievements Page Styles*/
 #all_achievements{padding:1em;}
 #all_achievements h3{padding-left:1em;}

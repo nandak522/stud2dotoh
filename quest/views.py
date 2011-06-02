@@ -7,9 +7,9 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from quest.models import Question, Answer
 from quest.forms import AskQuestionForm, GiveAnswerForm
-from taggit.models import Tag, TaggedItem
+from taggit.models import Tag 
 from django.core.paginator import Paginator
-from users.models import UserProfile, College, Company, Group
+from users.models import UserProfile, Group
 from utils.decorators import is_post
 from utils.emailer import new_anwer_emailer
 
