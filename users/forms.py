@@ -2,7 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from users.models import UserProfile, branches
 import re
-from users.messages import USER_LOGIN_FAILURE, WEBRESUME_FIELD_HOVER
+from users.messages import WEBRESUME_FIELD_HOVER
+from users.messages import COLLEGE_FIELD_HOVER_FOR_EMP_SIGNUP
 from users.messages import AGGREGATE_HOVER
 from utils.formfields import MultipleEmailsField, AutocompleteWidget
 
@@ -37,6 +38,8 @@ class StudentSignupForm(UserSignupForm):
     
 class EmployeeSignupForm(UserSignupForm):
     company = forms.CharField(required=True, max_length=50)
+    college = forms.CharField(required=False, max_length=100,
+            widget=forms.TextInput(attrs={'title':COLLEGE_FIELD_HOVER_FOR_EMP_SIGNUP}))
     
 class ProfessorSignupForm(UserSignupForm):
     college = forms.CharField(required=True, max_length=100)
