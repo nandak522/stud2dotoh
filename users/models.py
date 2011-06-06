@@ -1,18 +1,14 @@
-from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-from django.db import connection
 from django.db import models
 from utils import slugify
 from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
-import os
 from django.db.models.signals import post_save
-from django.dispatch import Signal
 
 branches = (('CSE', 'Computers'),
             ('ME', 'Mechanical'),
@@ -111,13 +107,14 @@ class UserProfile(BaseModel):
         return Group.objects.get(name="Employee") in self.user.groups.all()
     
     def join_college(self, college_name, branch='', start_year=None, end_year=None, aggregate=None):
-        AcadInfo.objects.filter(userprofile=self).delete()
-        college_slug = slugify(college_name)
-        if College.objects.exists(slug=college_slug):
-            college = College.objects.get(slug=college_slug)
-        else:
-            college = College.objects.create_college(name=college_name)
-        AcadInfo.objects.create_acadinfo(self, branch=branch, college=college, start_year=start_year, end_year=end_year, aggregate=aggregate)
+        if college_name:
+            AcadInfo.objects.filter(userprofile=self).delete()
+            college_slug = slugify(college_name)
+            if College.objects.exists(slug=college_slug):
+                college = College.objects.get(slug=college_slug)
+            else:
+                college = College.objects.create_college(name=college_name)
+            AcadInfo.objects.create_acadinfo(self, branch=branch, college=college, start_year=start_year, end_year=end_year, aggregate=aggregate)
         
     def join_workplace(self, workplace_name, workplace_type, designation='', years_of_exp=''):
         workplace_slug = slugify(workplace_name)
