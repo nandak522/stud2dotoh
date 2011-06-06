@@ -1,6 +1,6 @@
 from django.db import models
 from utils.models import BaseModel, BaseModelManager
-from utils import slugify
+from django.template.defaultfilters import slugify
 from users.models import UserProfile
 from taggit.managers import TaggableManager
 from django.db.models.signals import post_save

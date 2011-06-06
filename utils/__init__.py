@@ -3,14 +3,7 @@ from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse as url_reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.template.defaultfilters import slugify
 from django.test import TestCase
-import os
-import shutil
-from django.db import transaction
-from django.core.management import call_command
-from django.core.urlresolvers import clear_url_caches
-from django.core import mail
 
 def response(request, template, context):
     return render_to_response(template, context, context_instance=RequestContext(request))
@@ -48,5 +41,6 @@ def useful_params_in_context(request):
     if request.user.is_authenticated():
         params['userprofile'] = request.user.get_profile()
         params['userprofilegroup'] = request.user.get_profile().group_name
+        params['is_premium'] = params['userprofile'].is_premium()
     #TODO:the entire params dict needs to be cached
     return params

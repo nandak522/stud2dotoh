@@ -1,8 +1,9 @@
+from datetime import datetime
 from django.conf import settings
 from django.core.urlresolvers import reverse as url_reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
-from utils import get_data
+from utils import get_data, loggedin_userprofile
 from users.models import UserProfile
 from django.contrib import messages
 
@@ -43,3 +44,14 @@ def is_domain_slug_picked(the_function):
             raise Http404
         return the_function(request, *args, **kwargs)
     return _is_domain_slug_picked
+
+def is_premium_user(the_function):
+    def _is_premium_user(request, *args, **kwargs):
+        userprofile = loggedin_userprofile(request)
+        if userprofile.is_premium:
+            return the_function(request, *args, **kwargs)
+        if datetime(datetime.now()-userprofile.created_on).days > settings.FREE_PERIOD:
+            from users.messages import NEED_TO_PICK_A_WEBRESUME_URL_MESSAGE
+            messages.error(request, NEED_TO_PICK_A_WEBRESUME_URL_MESSAGE)
+            return HttpResponseRedirect(url_reverse('users.views.view_account_settings'))
+    return _is_premium_user

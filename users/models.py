@@ -1,18 +1,14 @@
-from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-from django.db import connection
 from django.db import models
-from utils import slugify
+from django.template.defaultfilters import slugify
 from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
-import os
 from django.db.models.signals import post_save
-from django.dispatch import Signal
 
 branches = (('CSE', 'Computers'),
             ('ME', 'Mechanical'),
@@ -262,6 +258,10 @@ class UserProfile(BaseModel):
         user_score = Score.objects.get(userprofile=self)
         user_score.points = points
         user_score.save()
+
+    @property
+    def is_premium(self):
+        return bool(self.premiumplanmembership_set.count())
         
 class CollegeAlreadyExistsException(Exception):
     pass
@@ -440,7 +440,35 @@ class Score(BaseModel):
     
     def __unicode__(self):
         return "%s ==> %s" % (self.userprofile.name, self.points)
-    
+
+class MembershipAlreadyExistsException(Exception):
+    pass
+
+class PremiumPlans(BaseModel):
+    name = models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return self.name
+
+class PremiumPlansMembershipManager(BaseModelManager):
+    def create_membership(self, userprofile, plan):
+        if self.exists(userprofile=userprofile, plan=plan):
+            raise MembershipAlreadyExistsException
+        existing_memberships = self.filter(userprofile=userprofile)
+        if existing_memberships.count():
+            existing_memberships.delete()
+        membership = PremiumPlansMembership(userprofile=userprofile,
+                plan=plan)
+        membership.save()
+
+class PremiumPlansMembership(BaseModel):
+    userprofile = models.ForeignKey(UserProfile)
+    plan = models.ForeignKey(PremiumPlans)
+    objects = PremiumPlansMembershipManager()
+
+    def __unicode__(self):
+        return "%s ==> %s" % (self.userprofile, self.plan)
+
 #TODO:Implementing Signals to increment score for user, for each save of a 
 #Note, Question, Answer, Achievement model objects. For Achievement its gonna be
 #aggregate

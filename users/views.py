@@ -15,7 +15,6 @@ from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNot
 from users.forms import ForgotPasswordForm, ResetMyPasswordForm, AddAchievementForm
 from users.models import UserProfile, College, Company, Note, Achievement
 from utils import response, post_data, loggedin_userprofile 
-import os
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
 from utils.decorators import is_get, is_post, is_ajax
 from django.utils import simplejson
@@ -264,6 +263,7 @@ def view_get_acad_settings(request, acad_settings_template):
 @is_get
 @is_ajax
 def view_get_workinfo_settings(request, workinfo_settings_template):
+    userprofile = loggedin_userprofile(request)
     (workplace, designation, years_of_exp) = userprofile.work_details
     form = WorkInfoSettingsForm({'workplace':workplace if workplace else '',
                                  'designation':designation,
@@ -323,15 +323,6 @@ def view_save_acad_settings(request, acad_settings_template):
     return response(request, acad_settings_template, {'acad_form':acad_form})
 
 @login_required
-@is_get
-@is_ajax
-def view_get_workinfo_settings(request, workinfo_settings_template):
-    form = PersonalSettingsForm({'name':userprofile.name,
-                                 'slug':userprofile.slug,
-                                 'new_password':''})
-    return response(request, personal_settings_template, {'personal_form':form})
-
-@login_required
 @is_post
 @is_ajax
 def view_save_workinfo_settings(request, workinfo_settings_template):
@@ -389,7 +380,7 @@ def view_contactuser(request, user_id, contactuser_template):
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(to_userprofile.slug,)))
-        except Exception, e:
+        except Exception:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, contactuser_template, {'contactuserform':form, 'to_userprofile':to_userprofile})
@@ -461,7 +452,7 @@ def view_invite(request, invite_template):
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to='/')
-        except Exception, e:
+        except Exception:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, invite_template, {'form':form})
