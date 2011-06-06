@@ -5,6 +5,11 @@
 <ul>
     <li>Let your Senior or an Industry Expert help you in solving a problem</li>
     <li>Show your skills by asking questions on topics you know</li>
+    {%if question%}
+    <li>Answering a Question Gets you 5 points</li>
+    {%else%}
+    <li>Asking a Question Gets you 3 points</li>
+    {%endif%}
 </ul>
 {%endblock%}
 {%block maincontent%}
