@@ -2,6 +2,7 @@
 {% block title %}Create a Student Account{% endblock %}
 {%block content%}
 <div class='prepend-6 prepend-top'>
+    <h3 class='registration_or_login_header prepend-2 georgia'>Already have an Account ? <a href="{%url login%}">Please Login</a></h3>
     <form action="{%url student_register%}" method='POST' autocomplete="off">{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
@@ -12,7 +13,6 @@
 	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Create my Account"/></td></tr>
 	</table>
 	</form>
-	<h3 class='registration_or_login_header prepend-2 georgia'>Already have an Account ? <a href="{%url login%}">Please Login</a></h3>
 </div>
 {%endblock%}
 {%block extrajs%}

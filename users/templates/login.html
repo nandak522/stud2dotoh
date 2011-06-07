@@ -2,6 +2,8 @@
 {% block title %}Login with existing account details{% endblock %}
 {%block content%}
 <div id='login_pane' class='prepend-6 prepend-top'>
+<h3 class='registration_or_login_header georgia prepend-2'>Not a member already ? <a
+        href="{%url register%}">Please Sign Up</a></h3>
 	<form action="{%url login%}" method='POST'>{% csrf_token %}
 	<input type='hidden' name='next' value="{{next}}"/>
 	<table class='form-table'>
@@ -10,7 +12,6 @@
 	    <tr><td>&nbsp;</td><td><input type='submit' name='submit' value="Log in" tabindex="3"/></td></tr>
 	</table>
 	</form>
-	<h3 class='registration_or_login_header georgia prepend-2'>Not a member yet ? <a href="{%url register%}">Please Sign Up</a></h2>
-</div>
+	</div>
 {%endblock%}
 {%block extrajs%}<script type='text/javascript'>document.forms[0].email.focus();</script>{%endblock%}
