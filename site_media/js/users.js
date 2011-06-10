@@ -34,3 +34,18 @@ function get_acad_settings(){
 function get_workinfo_settings(){
        ajaxGet('/settings/workinfo/', {'successCallback':settings, 'successCallbackParams':'workinfo'});
 }
+function signup(form){
+	form.signup_button.value = 'Creating Account...';
+    form.signup_button.disabled = true;
+	var csrfmiddlewaretoken = form.csrfmiddlewaretoken.value;
+    form_data = {};
+    for(i=0;i<form.elements.length;i++){
+        element = form.elements[i];
+        form_data[element.name] = element.value;
+    }
+    form_data['successCallback'] = get_signupform;
+	ajaxPost(form.action, form_data);
+}
+function get_signupform(responseText){
+	$('#signup_form').html(responseText);
+}

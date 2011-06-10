@@ -25,7 +25,8 @@ urlpatterns += patterns('users.views',
 
 urlpatterns += patterns('users.views',
     (r'^accounts/register/$', 'view_register', {'registration_template': 'register.html'}, 'register'),
-    (r'^accounts/studentregister/$', 'view_register', {'registration_template': 'student_register.html', 'user_type':'S'}, 'student_register'),
+    (r'^accounts/studentregister/$', 'view_register', {'registration_template':
+        'student_register.html', 'ajax_registration_template':'render_student_registerform.html', 'user_type':'S'}, 'student_register'),
     (r'^accounts/employeeregister/$', 'view_register', {'registration_template': 'employee_register.html', 'user_type':'E'}, 'employee_register'),
     (r'^accounts/professorregister/$', 'view_register', {'registration_template': 'professor_register.html', 'user_type':'P'}, 'professor_register'),
     (r'^accounts/login/$', 'view_login', {'login_template': 'login.html'}, 'login'),

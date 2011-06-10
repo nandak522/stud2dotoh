@@ -60,7 +60,7 @@ def _set_signup_greeting_for_usertype(request, user_type):
         messages.success(request, EMPLOYEE_SIGNUP_GREETING)
 
 @anonymoususer
-def view_register(request, registration_template, user_type='', next=''):
+def view_register(request, registration_template, ajax_registration_template, user_type='', next=''):
     if not user_type:
         return response(request, registration_template, {'next':next})
     form_to_be_loaded = _get_signup_form_for_usertype(user_type)
@@ -77,7 +77,7 @@ def view_register(request, registration_template, user_type='', next=''):
                                email=form.cleaned_data.get('email'),
                                password=form.cleaned_data.get('password'),
                                next=form.cleaned_data.get('next'))
-    return response(request, registration_template, {'form': form, 'next': next})
+    return response(request, ajax_registration_template, {'form': form, 'next': next})
 
 def _handle_user_registration(registration_form, user_type):
     userprofile = UserProfile.objects.create_profile(email=registration_form.cleaned_data.get('email'),
