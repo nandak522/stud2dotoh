@@ -71,7 +71,13 @@
     <script type='text/javascript'>
 	    $(function(){
 	       tooltip_icons = $('.tooltip').tipsy({title:'title', gravity:'s'});
-	       $('#id_slug').tipsy({trigger:'focus', title:'title', gravity:'n'});
+           $('#id_slug').tipsy({trigger:'focus', title:'title', gravity:'n'});
+           $('form').submit(function(){
+               submit_button = $('input[type=submit]')[0];
+               submit_button.value = 'Please Wait...';
+               submit_button.disabled = true;
+               return true;
+               });
 	    });
 	</script>
     {%block extrajs%}{%endblock%}
