@@ -2,7 +2,15 @@
 {% block main_tabs%}
 <div id='maintabs' class='column span-24 last'>
     <ul class='main_tabs'>
-        <li class='roundcorner'><a href='{%absurl homepage%}'>Home</a></li>
+        <li class='{%block hometab%}{%endblock%} roundcorner'>
+            <a href='{%url homepage%}'>
+                {%if user.is_authenticated%}
+                Dashboard
+                {%else%}
+                Home
+                {%endif%}
+            </a>
+        </li>
         <li class='roundcorner'><a href="{%absurl notepad%}">Notepad</a></li>
         <li class='roundcorner'><a href='{%absurl achievements%}'>Achievements</a></li>
         <li class='roundcorner'><a href="{%absurl all_questions%}">Questions</a></li>
