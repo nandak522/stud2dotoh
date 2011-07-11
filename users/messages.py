@@ -17,6 +17,6 @@ PASSWORD_RESET_SUCCESSFULLY = 'Your password has been reset successfully. Enjoy!
 NEED_TO_PICK_A_WEBRESUME_URL_MESSAGE = 'Web-Resume will be enabled only if you pick a Web-Resume url'
 ACHIEVEMENT_ADDED_SUCCESSFULLY = 'Achievement Added Successfully'
 ACHIEVEMENT_UPDATED_SUCCESSFULLY = 'Achievement Updated Successfully'
-WEBRESUME_FIELD_HOVER = "Online Resumes are always impressive! If you want your online resume at MADDY.stud2dotoh.com, please enter MADDY here. You can distribute this url to anyone."
+WEBRESUME_FIELD_HOVER = "Online Resumes are always impressive! If you want your online resume at yourname.stud2dotoh.com, please enter your name here. You can distribute this url to anyone."
 AGGREGATE_HOVER = "A Honest score will always boost impression on you"
 COLLEGE_FIELD_HOVER_FOR_EMP_SIGNUP = 'This will be helpful in connecting you with your College Juniors'

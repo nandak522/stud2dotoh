@@ -87,8 +87,8 @@ class PersonalSettingsForm(forms.Form):
 class AcadSettingsForm(forms.Form):
     branch = forms.ChoiceField(required=True, choices=(('', '-- Select --'),) + branches)
     college = forms.CharField(required=True, max_length=100)
-    start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE, initial=(2007, 2007))
-    end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE, initial='2011')
+    start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE)
+    end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE)
     aggregate = forms.DecimalField(required=False, max_digits=3, decimal_places=1, widget=forms.TextInput(attrs={'title':AGGREGATE_HOVER}))
     
     def clean_college(self):

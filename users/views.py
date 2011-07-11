@@ -224,8 +224,8 @@ def view_account_settings(request, settings_template):
     (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
     acad_form = AcadSettingsForm({'branch':branch,
                                   'college':college.name if college else '',
-                                  'start_year':start_year,
-                                  'end_year':end_year,
+                                  'start_year':start_year if start_year else 2007,
+                                  'end_year':end_year if start_year else 2012,
                                   'aggregate':aggregate})
     if userprofile.is_student:
         return response(request, settings_template, {'personal_form':personal_form,

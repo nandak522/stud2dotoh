@@ -356,7 +356,7 @@ class AcadInfoManager(BaseModelManager):
 
 class AcadInfo(BaseModel):
     userprofile = models.ForeignKey(UserProfile)
-    branch = models.CharField(choices=branches, max_length=4, blank=True, null=True)
+    branch = models.CharField(choices=branches, max_length=40, blank=True, null=True)
     college = models.ForeignKey(College)
     start_year = YearField(max_length=4, blank=True, null=True)
     end_year = YearField(max_length=4, blank=True, null=True)
