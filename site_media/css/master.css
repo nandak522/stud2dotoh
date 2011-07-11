@@ -73,6 +73,7 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 #explain_invite li{list-style-type:disc;list-style-position:inside;}
 #explain_invite h4{margin-bottom:0;}
 hr{margin:0;padding:0;}
+.separate_ruler{margin:1em 0;}
 .feature_usage{padding:0.875em;margin-right:auto;margin-left:auto;width:80%;border:1px solid #CCC;}
 .feature_usage #close{cursor:pointer;text-align:right;background:url(/site_media/css/blueprint/plugins/buttons/icons/cross.png) no-repeat;width:16px;}
 .feature_usage h3{font-size:2em;color:#666;}
@@ -85,7 +86,6 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo{padding-top:1em;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
 .help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
-
 .emboss{background:#F9F9F9;}
 .singlepane_maincontent_area{padding:1em;}
 
@@ -102,7 +102,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #slides .next,#slides .prev {width:24px;height:43px;display:block;z-index:101;border-bottom:0;}
 #slides .prev {left:0.875%;}
 #slides .next {right:-4.4%;}
-.slides_container {height:270px;}
+#homepage_slides .slides_container {height:270px;}
 #slideshow .pagination {margin:4px auto 0;width:130px;}
 #slideshow .pagination li {float:left;margin:0 1px;list-style-type:none;padding-right:10px;}
 #slideshow .pagination li a {display:block;width:12px;height:0;padding-top:12px;background-image:url(/site_media/img/slideshow_pix/pagination.png);background-position:0 0;float:left;overflow:hidden;border:0px;}
@@ -182,10 +182,10 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 #forgot_password .content_header{padding-left:0;margin-top:0;}
 
 /*500 Page Styles*/
-#page500{background:#2B5789;color:#FFF;}
+#page500{}
 
 /*404 Page Styles*/
-#page404{background:#2B5789;color:#FFF;}
+#page404{}
 
 /*Autocomplete Styles*/
 .ui-menu-item a{border-bottom:1px solid #EFEFEF;}
@@ -194,3 +194,12 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 #all_achievements{padding:1em;}
 #all_achievements h3{padding-left:1em;}
 #add_or_edit_achievement{border-right:1px solid #EFEFEF;}
+
+/*Tour Styles*/
+#tour_slides .slides_container{margin-left:20px;}
+#tour_toc ul li{display:inline;padding:6px;border:2px solid #105EB6;}
+.tour_bigicon{border:1px solid #CCC;width:100px;height:100px;}
+.tour_bigheader{margin:0 auto;}
+.tour_subheader{margin:0;padding:0;}
+.tour_points{margin-left:2em;}
+.tour_points li{padding-top:6px;font-size:1.4em;color:#444;}

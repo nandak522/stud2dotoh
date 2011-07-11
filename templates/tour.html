@@ -1,0 +1,54 @@
+{%extends 'singlepane_base.html'%}
+{% block title %}Tour{% endblock %}
+{%block tourtab%}activetab{%endblock%}
+{%block content%}
+<div id='tour_content'>
+    <h1 class="georgia maincontent_header leftalign">Welcome to the Feature Tour</h1>
+    <div id='tour_slides'>
+        <div id='tour_toc'>
+            <ul class='pagination'>
+                <li><a href="#">Notepad</a></li>
+                <li><a href="#">Achievements</a></li>
+                <li><a href="#">Questions &amp; Answers</a></li>
+                <li><a href="#">Web-Resume</a></li>
+            </ul>
+        </div><!-- end of tour_toc -->
+        <div class='slides_container'>
+            <div>
+                {%include 'notepad_tour.html'%}
+            </div>
+            <div>
+                {%include 'achievements_tour.html'%}
+            </div>
+            <div>
+                {%include 'qanda_tour.html'%}
+            </div>
+            <div>
+                {%include 'webresume_tour.html'%}
+            </div>
+        </div><!--end of slides_container-->
+    </div><!-- end of tour_slides -->
+</div><!-- end of tour_content -->    
+{%endblock%}
+{%block extrajs%}
+<script type='text/javascript' src="/site_media/js/jquery/plugins/slideshow/slides.min.jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+            $('#tour_slides').slides({
+                preloadImage: '/site_media/img/slideshow_pix/loading.gif',
+                effect:'slide',
+                slideSpeed:500,
+                fadeSpeed:500,
+                play:0,
+                generateNextPrev:true,
+                generatePagination:false,
+            });
+            });
+</script>
+{%endblock%}
+{%block extrastyle%}
+<style type='text/css'>
+#tour_slides .prev{left:100px;}
+.slides_control > div{width:800px;}
+</style>
+{%endblock%}

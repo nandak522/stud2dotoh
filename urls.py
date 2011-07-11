@@ -6,6 +6,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^robots.txt$', 'django.views.generic.simple.direct_to_template', {
+            'template': 'robots.txt' }),
     (r'^admin/', include(admin.site.urls)),
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )
@@ -17,6 +19,7 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('users.views',
     (r'^$', 'view_homepage', {'homepage_template':'homepage.html'}, 'homepage'),
+    (r'^tour/$', 'view_tour', {'tour_template':'tour.html'}, 'tour'),
     (r'^notepad/$', 'view_notepad', {'notepad_template':'notepad.html'}, 'notepad'),
     (r'^webresume/$', 'view_webresume', {}, 'webresume'),
     (r'^invite/$', 'view_invite', {'invite_template':'invite.html'}, 'invite'),

@@ -24,6 +24,10 @@ def view_homepage(request, homepage_template):
     #TODO:Homepage layout showing message, screenshots, latest updates across the system
     return response(request, homepage_template, {})
 
+def view_tour(request, tour_template):
+    #TODO:Should be replaced with a generic view
+    return response(request, tour_template, {})
+
 @login_required
 @is_admin
 def view_all_users(request, all_users_template):

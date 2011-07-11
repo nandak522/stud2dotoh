@@ -30,6 +30,7 @@
         {%block main_tabs%}
         <div id='maintabs' class='column span-24 last'>
             <ul class='main_tabs'>
+				<li class='{%block tourtab%}{%endblock%} roundcorner'><a href="{%url tour%}">Tour</a></li>
                 <li class='{%block hometab%}{%endblock%} roundcorner'>
                     <a href='{%url homepage%}'>
                         {%if user.is_authenticated%}
@@ -66,7 +67,7 @@
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js'></script>
     {%endif%}
     <script type='text/javascript' src='/site_media/js/common.js'></script>
-    <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(8000);}</script>
+    <script type='text/javascript'>if($('.messages')){$('.messages').slideUp(8000);}</script>
     <script type='text/javascript' src='/site_media/js/jquery/plugins/tooltip/tipsy-1.0.0-a/src/javascripts/jquery.tipsy.js'></script>
     <script type='text/javascript'>
 	    $(function(){
