@@ -19,6 +19,11 @@ from utils.emailer import default_emailer, mail_admins, mail_group, invitation_e
 from utils.decorators import is_get, is_post, is_ajax
 from django.utils import simplejson
 from taggit.models import Tag
+from datetime import datetime
+
+TODAY = datetime.today()
+DEFAULT_COLLEGE_END_YEAR = TODAY.year + 1
+DEFAULT_COLLEGE_START_YEAR = DEFAULT_COLLEGE_END_YEAR - 4
 
 def view_homepage(request, homepage_template):
     #TODO:Homepage layout showing message, screenshots, latest updates across the system
@@ -224,15 +229,17 @@ def view_account_settings(request, settings_template):
     (branch, college, start_year, end_year, aggregate) = userprofile.acad_details
     acad_form = AcadSettingsForm({'branch':branch,
                                   'college':college.name if college else '',
-                                  'start_year':start_year if start_year else 2007,
-                                  'end_year':end_year if start_year else 2012,
-                                  'aggregate':aggregate})
+                                  'start_year':start_year if start_year else DEFAULT_COLLEGE_START_YEAR,
+                                  'end_year':end_year if start_year else DEFAULT_COLLEGE_END_YEAR,
+                                  'aggregate':aggregate if aggregate else ''})
     if userprofile.is_student:
         return response(request, settings_template, {'personal_form':personal_form,
                                                      'acad_form':acad_form})
     else:
         (workplace, designation, years_of_exp) = userprofile.work_details
-        workinfo_form = WorkInfoSettingsForm({'workplace':workplace.name if workplace else '', 'designation':designation, 'years_of_exp':years_of_exp})
+        workinfo_form = WorkInfoSettingsForm({'workplace':workplace.name if workplace else '',
+                                              'designation':designation,
+                                              'years_of_exp':years_of_exp})
         return response(request, settings_template, {'personal_form':personal_form,
                                                      'acad_form':acad_form,
                                                      'workinfo_form':workinfo_form})

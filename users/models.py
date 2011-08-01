@@ -10,22 +10,31 @@ from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
 from django.db.models.signals import post_save
 
-branches = (('CSE', 'Computers'),
-            ('ME', 'Mechanical'),
-            ('CVE', 'Civil'),
-            ('ECE', 'Electronics & Communications'),
-            ('EEE', 'Electrical & Electronics'),
-            ('IE', 'Instrumentation'),
-            ('CHE', 'Chemical'),
-            ('TXE', 'Textile'),
-            ('BTE', 'Bio-Tech'),
-            ('MNE', 'Mining'),
-            ('ENVE', 'Environmental'),
-            ('PYE', 'Polymer'),
-            ('BME', 'Bio-Medical'),
-            ('CCE', 'Ceramics & Cement'),
-            ('PTE', 'Printing'),
-            )
+branches = (
+    ('BCA', 'BCA'),
+    ('BME', 'Bio-Medical'),
+    ('BSc', 'BSc'),
+    ('BTE', 'Bio-Tech'),
+    ('CCE', 'Ceramics & Cement'),
+    ('CHE', 'Chemical'),
+    ('CSE', 'Computers'),
+    ('CVE', 'Civil'),
+    ('ECE', 'Electronics & Communications'),
+    ('EEE', 'Electrical & Electronics'),
+    ('ENVE', 'Environmental'),
+    ('IE', 'Instrumentation'),
+    ('MBA', 'MBA'),
+    ('MCA', 'MCA'),
+    ('ME', 'Mechanical'),
+    ('MNE', 'Mining'),
+    ('MSc', 'MSc'),
+    ('MTech', 'MTech'),
+    ('PGDBM', 'PGDBM'),
+    ('PGDCA', 'PGDCA'),
+    ('PTE', 'Printing'),
+    ('PYE', 'Polymer'),
+    ('TXE', 'Textile'),
+)
 
 SLUG_UPDATE_TIME_THRESHOLD_IN_SECONDS = 2
 
@@ -356,7 +365,7 @@ class AcadInfoManager(BaseModelManager):
 
 class AcadInfo(BaseModel):
     userprofile = models.ForeignKey(UserProfile)
-    branch = models.CharField(choices=branches, max_length=40, blank=True, null=True)
+    branch = models.CharField(choices=branches, max_length=5, blank=True, null=True)
     college = models.ForeignKey(College)
     start_year = YearField(max_length=4, blank=True, null=True)
     end_year = YearField(max_length=4, blank=True, null=True)

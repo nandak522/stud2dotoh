@@ -85,7 +85,8 @@ class PersonalSettingsForm(forms.Form):
         raise NotImplementedError
 
 class AcadSettingsForm(forms.Form):
-    branch = forms.ChoiceField(required=True, choices=(('', '-- Select --'),) + branches)
+    branch = forms.ChoiceField(required=True,
+                               choices=((('', '-- Select --'),) + branches + (('-', '-- Other --'),)))
     college = forms.CharField(required=True, max_length=100)
     start_year = forms.ChoiceField(required=False, choices=COLLEGE_START_YEAR_RANGE)
     end_year = forms.ChoiceField(required=False, choices=COLLEGE_END_YEAR_RANGE)

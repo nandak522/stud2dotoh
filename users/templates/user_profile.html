@@ -38,7 +38,7 @@
         {%if acad_details.1%}
             <li>
 	        {%if userprofile.is_student%}Studying{%else%}Studied{%endif%}
-	        {%if acad_details.0%} {{acad_details.0}}{%endif%} in {%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%} College {%if acad_details.2 and acad_details.3%}(&nbsp;{{acad_details.2}} - {{acad_details.3}} Batch&nbsp;){%endif%}.
+	        {%if acad_details.0 != '-'%} {{acad_details.0}}{%endif%} in {%autoescape off%}{{acad_details.1.id|college_url}}{%endautoescape%} College {%if acad_details.2 and acad_details.3%}(&nbsp;{{acad_details.2}} - {{acad_details.3}} Batch&nbsp;){%endif%}.
 	        </li>
         {%endif%}
     {%endwith%}
