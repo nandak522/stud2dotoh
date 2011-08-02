@@ -519,29 +519,18 @@ def view_reset_my_password(request, reset_my_password_template):
                                    password=password)
         return response(request, reset_my_password_template, {'form':form,
                                                               'email':data.get('email')})
-@is_ajax
-def view_colleges_list(request):
-    search_name = request.GET.get('term')
-    colleges = College.objects.filter(name__istartswith=search_name).values('id', 'name')
-    colleges = [{'id':college_info['id'], 'value':college_info['name']} for college_info in colleges]
-    json = simplejson.dumps(colleges)
-    return HttpResponse(json, mimetype='application/json')
 
 @is_ajax
-def view_ajax_companies_list(request):
-    search_name = request.GET.get('term')
-    companies = Company.objects.filter(name__istartswith=search_name).values('id', 'name')
-    companies = [{'id':company_info['id'], 'value':company_info['name']} for company_info in companies]
-    json = simplejson.dumps(companies)
-    return HttpResponse(json, mimetype='application/json')
-
-@is_ajax
-def view_ajax_tags_list(request):
-    search_name = request.GET.get('term')
-    tags = Tag.objects.filter(name__istartswith=search_name).values('id', 'name')
-    tags = [{'id':tag_info['id'], 'value':tag_info['name']} for tag_info in tags]
-    json = simplejson.dumps(tags)
-    return HttpResponse(json, mimetype='application/json')
+def view_ajax_objects_list(request, query_context):
+    term = request.GET.get('term')
+    if query_context == 'college':
+        objects = College.objects.filter(name__istartswith=term).values('id', 'name')
+    elif query_context == 'company':
+        objects = Company.objects.filter(name__istartswith=term).values('id', 'name')
+    elif query_context == 'tag':
+        objects = Tag.objects.filter(name__istartswith=term).values('id', 'name')
+    items = [{'id':object_info['id'], 'value':object_info['name']} for object_info in objects]
+    return HttpResponse(simplejson.dumps(items), mimetype='application/json')
 
 @login_required
 def view_all_achievements(request, achievements_template):
