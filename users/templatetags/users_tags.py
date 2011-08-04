@@ -5,8 +5,9 @@ from django.core.urlresolvers import reverse as url_reverse
 from django.template.defaultfilters import capfirst, title
 from utils.templateutils import domain
 
-
 register = template.Library()
+
+NUMBER_OF_VISIBLE_TAGS = 3
 
 @register.filter
 def college_url(college_id):
@@ -50,3 +51,13 @@ def render_user_domain(userprofile):
     if userprofile.is_domain_enabled:
         return {'domain_or_name': "<a class='profile_link' href='%(url)s'>%(name)s</a>" % {'name':title(userprofile.name), 'url':url_reverse('users.views.view_userprofile', args=(userprofile.slug,))}}
     return {'domain_or_name': title(userprofile.name)}
+
+@register.inclusion_tag('profile_tags.html')
+def render_user_tags(tags_list):
+    visible_tags = hidden_tags = []
+    if len(tags_list) > NUMBER_OF_VISIBLE_TAGS:
+        visible_tags = tags_list[:NUMBER_OF_VISIBLE_TAGS]
+        hidden_tags = tags_list[NUMBER_OF_VISIBLE_TAGS:]
+    else:
+        visible_tags = tags_list
+    return {'visible_tags':visible_tags, 'hidden_tags':hidden_tags} 

@@ -28,9 +28,6 @@
 <div id='personal_details'>
 <ul class='webresume_section emboss'>
     <li>
-        Can be reached at: {{userprofile.user.email|emailify}}
-    </li>
-    <li>
         Website: <a href='{{userprofile.domain|domainify}}'>{{userprofile.domain|domainify}}</a>
     </li>
     {%with userprofile.acad_details as acad_details%}
@@ -50,7 +47,7 @@
     {%with userprofile.interested_tags as interested_tags%}
     {%if interested_tags%}
     <li>
-        Has strong interest in {%for tag in interested_tags%}<a class="tag" target="_blank" title="Browse All {{tag|title}} Questions" href="{%absurl tagged_questions tag_name=tag%}">{{tag}}</a>&nbsp;&nbsp;{%endfor%}
+        Has strong interest in {%render_user_tags interested_tags%}
     </li>
     {%endif%}
     {%endwith%}
