@@ -2,9 +2,10 @@ from django import forms
 from django.template.defaultfilters import removetags
 from django.conf import settings
 from utils.formfields import TagField, TagWidget
+from utils.formfields import AutocompleteWidget
 
 class AskQuestionForm(forms.Form):
-    title = forms.CharField(max_length=80, required=True, widget=forms.TextInput(attrs={'size':'70'}))
+    title = forms.CharField(max_length=80, required=True, widget=AutocompleteWidget(attrs={'size':'70'}))
     description = forms.CharField(max_length=1000, required=True, widget=forms.Textarea(attrs={'rows':10, 'cols':50}))
     tags = TagField(required=True, max_length=100, widget=TagWidget(attrs={'size':'70'}))
     

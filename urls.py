@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
     (r'^users/', include('users.urls')),
     (r'^questions/', include('quest.urls')),
+    (r'^utils/', include('utils.urls')),
 )
 
 urlpatterns += patterns('users.views',
@@ -51,17 +52,11 @@ urlpatterns += patterns('users.views',
 urlpatterns += patterns('users.views',
     (r'^colleges/$', 'view_colleges', {'colleges_template':'colleges.html'}, 'colleges'),
     (r'^colleges/(?P<college_id>\d+)/(?P<college_slug>[\w\s-]+)/$', 'view_college', {'college_template':'college.html'}, 'college_profile'),
-    (r'^colleges_ajax/$', 'view_ajax_objects_list', {'query_context':'college'}, 'ajax_colleges_list'),                    
 )
 
 urlpatterns += patterns('users.views',
     (r'^companies/$', 'view_all_companies', {'companies_template':'companies.html'}, 'companies'),
     (r'^companies/(?P<company_id>\d+)/(?P<company_slug>[\w\s-]+)/$', 'view_company', {'company_template':'company.html'}, 'company_profile'),
-    (r'^companies_ajax/$', 'view_ajax_objects_list', {'query_context':'company'}, 'ajax_companies_list'),                    
-)
-
-urlpatterns += patterns('users.views',
-    (r'^tags_ajax/$', 'view_ajax_objects_list', {'query_context':'tag'}, 'ajax_tags_list'),
 )
 
 add_to_builtins('utils.templateutils')

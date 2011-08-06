@@ -14,7 +14,7 @@
 {%endblock%}
 {%block maincontent%}
 <h3 class='georgia maincontent_header blue_underline'>{%if question%}Edit{%else%}Ask{%endif%} a Question</h3>
-<form action="{%if question%}{%url edit_question question.id question.slug%}{%else%}{%url ask_question%}{%endif%}" method='POST'>{% csrf_token %}
+<form action="{%if question%}{%url edit_question question.id question.slug%}{%else%}{%url ask_question%}{%endif%}" method='POST' autocomplete='off'>{% csrf_token %}
 <table class='form-table'>
     <tr><td class='rightalign'><label for="id_title">Question :</label></td><td class='leftalign'>{{form.title}}<span class='help_text'>(<span class='required'>Required</span>. Max of 80 characters)</span><br/>{{form.title.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_description">Description :</label></td><td class='leftalign'>{{form.description}}<br/><span class='help_text'>(<span class='required'>Required</span>. Max of 1000 characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{form.description.errors}}</td></tr>
@@ -57,41 +57,8 @@ $('#id_description').keyup(function(e){
 </script>
 <script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type='text/javascript'>
-   function split(val) {
-        return val.split( /,\s*/ );
-    }
-    function extractLast(term) {
-        return split(term).pop();
-    } 
-    $('#id_tags').bind("keydown", function(event){
-                    if(event.keyCode === $.ui.keyCode.TAB &&
-                        $(this).data("autocomplete").menu.active){
-                            event.preventDefault();
-                    }
-                  }).autocomplete({
-                    minLength:2,
-                    search: function(){
-                        // custom minLength
-                        var term = extractLast(this.value);
-                        if (term.length < 2){
-                            return false;
-                        }
-                    },
-                    source: function(request, response) {
-                        $.getJSON("{%url ajax_tags_list%}", {term:extractLast(request.term)}, response);
-                    },
-                    focus: function() {
-                        // prevent value inserted on focus
-                        return false;
-                    },
-                    select:function(event, ui){
-                        var terms = split(this.value);//split the existing tag items based on comma or space
-                        terms.pop();//pop the latest incompleted word
-                        terms.push(ui.item.value);//push the selected value for retrieved tags list
-                        terms.push("");
-                        this.value = terms.join(",");
-                        return false;
-    }});
+    autocomplete_bind('#id_tags', '{%url ajax_tags_list%}');
+    autocomplete_bind('#id_title', '{%url ajax_questions_list%}', true);
 </script>    
 {%endblock%}
 {%block extrastyle%}

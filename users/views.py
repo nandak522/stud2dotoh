@@ -520,18 +520,6 @@ def view_reset_my_password(request, reset_my_password_template):
         return response(request, reset_my_password_template, {'form':form,
                                                               'email':data.get('email')})
 
-@is_ajax
-def view_ajax_objects_list(request, query_context):
-    term = request.GET.get('term')
-    if query_context == 'college':
-        objects = College.objects.filter(name__istartswith=term).values('id', 'name')
-    elif query_context == 'company':
-        objects = Company.objects.filter(name__istartswith=term).values('id', 'name')
-    elif query_context == 'tag':
-        objects = Tag.objects.filter(name__istartswith=term).values('id', 'name')
-    items = [{'id':object_info['id'], 'value':object_info['name']} for object_info in objects]
-    return HttpResponse(simplejson.dumps(items), mimetype='application/json')
-
 @login_required
 def view_all_achievements(request, achievements_template):
     userprofile = loggedin_userprofile(request)

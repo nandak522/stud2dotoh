@@ -14,8 +14,8 @@ class MultipleEmailsField(forms.CharField):
     
 class AutocompleteWidget(forms.TextInput):
     class Media:
-        css = {'all':('/site_media/js/jquery/plugins/autocomplete/jquery-autocomplete/jquery.autocomplete.css',)}
-        js = ('/site_media/js/jquery/plugins/autocomplete/jquery-autocomplete/jquery.autocomplete-min.js',)    
+        css = {'all':('/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css',)}
+        js = ('/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js',)    
         
 class TagField(DefaultTagField):
     widget = TagWidget
