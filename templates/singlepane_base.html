@@ -70,7 +70,7 @@
     <script type='text/javascript' src='/site_media/js/jquery/plugins/tooltip/tipsy-1.0.0-a/src/javascripts/jquery.tipsy.js'></script>
     <script type='text/javascript'>
 	    $(function(){
-	       tooltip_icons = $('.tooltip').tipsy({title:'title', gravity:'s'});
+	       tooltip_icons = $('.tooltip').tipsy({title:'title', gravity:'s',fade:true});
            $('#id_slug').tipsy({trigger:'focus', title:'title', gravity:'n'});
            $('form').submit(function(){
                submit_button = $('input[type=submit]')[0];
