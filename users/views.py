@@ -14,8 +14,7 @@ from users.forms import StudentSignupForm, EmployeeSignupForm, ProfessorSignupFo
 from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNoteForm
 from users.forms import ForgotPasswordForm, ResetMyPasswordForm, AddAchievementForm
 from users.models import UserProfile, College, Company, Note, Achievement
-from utils import response, post_data, loggedin_userprofile, slugify
-import os
+from utils import response, post_data, loggedin_userprofile 
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
 from utils.decorators import is_get, is_post, is_ajax
 from django.utils import simplejson
@@ -375,7 +374,7 @@ def view_contactuser(request, user_id, contactuser_template):
     userprofile = loggedin_userprofile(request)
     to_userprofile = get_object_or_404(UserProfile, id=int(user_id))
     if request.method == 'GET':
-        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to':to_userprofile.user.email,
+        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to':to_userprofile.name,
                                                                                            'message':'Hello,'}),
                                                         'to_userprofile':to_userprofile})
     form = ContactUserForm(post_data(request))
@@ -388,7 +387,7 @@ def view_contactuser(request, user_id, contactuser_template):
             from users.messages import CONTACTED_SUCCESSFULLY
             messages.success(request, CONTACTED_SUCCESSFULLY)
             return HttpResponseRedirect(redirect_to=url_reverse('users.views.view_userprofile', args=(to_userprofile.slug,)))
-        except Exception, e:
+        except Exception:
             from users.messages import CONTACTING_FAILED
             messages.error(request, CONTACTING_FAILED)
     return response(request, contactuser_template, {'contactuserform':form, 'to_userprofile':to_userprofile})

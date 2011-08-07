@@ -118,7 +118,7 @@ class ContactForm(forms.Form):
     message = forms.CharField(max_length=500, required=True, widget=forms.Textarea())
     
 class ContactUserForm(ContactForm):
-    to = forms.EmailField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
+    to = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
 
 class ContactGroupForm(ContactForm):
     to = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'readonly':True}))
