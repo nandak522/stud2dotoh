@@ -9,6 +9,7 @@ from utils import slugify
 from utils.models import BaseModel, BaseModelManager, YearField
 import hashlib
 from django.db.models.signals import post_save
+from taggit.models import Tag
 
 branches = (
     ('BCA', 'BCA'),
@@ -161,23 +162,32 @@ class UserProfile(BaseModel):
             return (content_type.get_object_for_this_type(id=work_details['object_id']), work_details['designation'], work_details['years_of_exp'] if work_details['years_of_exp'] else '')
         return (None, '', '')
     
+#    @property
+#    def interested_tags(self):
+#        #NOTE:For now, all Q&A tags related to this user are pulled up. 
+#        all_qa_tags = []
+#        all_raised_questions = self.question_set.select_related()
+#        for question in all_raised_questions:
+#            all_qa_tags.extend([tag['name'] for tag in question.tags.values('name')])
+#        all_given_answers = self.answer_set.all()
+#        for answer in all_given_answers:
+#            question_tags = [tag['name'] for tag in answer.question.tags.values('name')]
+#            all_qa_tags.extend(question_tags)
+#        return tuple(set(all_qa_tags))
+
+
     @property
     def interested_tags(self):
+        from quest.models import Question
         #NOTE:For now, all Q&A tags related to this user are pulled up. 
-        all_qa_tags = []
-        all_raised_questions = self.question_set.select_related.all()
-        for question in all_raised_questions:
-            all_qa_tags.extend([tag['name'] for tag in question.tags.values('name')])
-        all_given_answers = self.answer_set.all()
-        for answer in all_given_answers:
-            question_tags = [tag['name'] for tag in answer.question.tags.values('name')]
-            all_qa_tags.extend(question_tags)
-        return tuple(set(all_qa_tags))
+        all_questions_tags = Tag.objects.filter(id__in=set([tag_info['tags'] for tag_info in self.question_set.select_related().values('tags')])).values('name')
+        all_answers_tags = Tag.objects.filter(id__in=set([tag_info['tags'] for tag_info in Question.objects.filter(id__in=set([question_info['question'] for question_info in self.answer_set.select_related().values('question')])).values('tags')])).values('name')
+        return tuple(set([tag_info['name'] for tag_info in all_questions_tags] + [tag_info['name'] for tag_info in all_answers_tags]))
     
     @property
     def helped_persons(self):
         persons = []
-        all_given_answers = self.answer_set.all()
+        all_given_answers = self.answer_set.select_related()
         for answer in all_given_answers:
             person = answer.question.raised_by
             if person.id != self.id:
