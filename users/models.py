@@ -73,9 +73,10 @@ class UserProfile(BaseModel):
     
     @property
     def answered_questions(self):
+        #FIXME:the below import globally is causing circular import error
         from quest.models import Question
-        #FIXME:the above import globally is causing circular import error
-        answers_ids = tuple([question['question_id'] for question in self.answer_set.values('question_id')])
+        #FIXME:the below query will bomb if the IN operator receives a million answer ids
+        answers_ids = set([question['question_id'] for question in self.answer_set.values('question_id')])
         return Question.objects.filter(id__in=answers_ids).values('title', 'id', 'slug')
     
     @property
@@ -164,7 +165,7 @@ class UserProfile(BaseModel):
     def interested_tags(self):
         #NOTE:For now, all Q&A tags related to this user are pulled up. 
         all_qa_tags = []
-        all_raised_questions = self.question_set.all()
+        all_raised_questions = self.question_set.select_related.all()
         for question in all_raised_questions:
             all_qa_tags.extend([tag['name'] for tag in question.tags.values('name')])
         all_given_answers = self.answer_set.all()

@@ -17,8 +17,6 @@ from users.models import UserProfile, College, Company, Note, Achievement
 from utils import response, post_data, loggedin_userprofile 
 from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
 from utils.decorators import is_get, is_post, is_ajax
-from django.utils import simplejson
-from taggit.models import Tag
 from datetime import datetime
 
 TODAY = datetime.today()
