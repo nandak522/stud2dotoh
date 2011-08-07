@@ -375,7 +375,7 @@ def view_contactuser(request, user_id, contactuser_template):
     userprofile = loggedin_userprofile(request)
     to_userprofile = get_object_or_404(UserProfile, id=int(user_id))
     if request.method == 'GET':
-        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to':to_userprofile.user.email,
+        return response(request, contactuser_template, {'contactuserform':ContactUserForm({'to':to_userprofile.name,
                                                                                            'message':'Hello,'}),
                                                         'to_userprofile':to_userprofile})
     form = ContactUserForm(post_data(request))
