@@ -151,6 +151,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #give_answer_section textarea{margin-top:0.25em;width:685px;}
 #give_answer_section h3{color:#105FB6;background:#FFF;margin-bottom:4px;}
 #share_question_links{margin-bottom:6px;}
+#all_tags_widget li{margin:15px 0 15px 0;list-style-type:none;list-style-position:inside;}
 
 /*Dashboard Page Styles*/
 .dashboard_widget_header{color:#105FB6;margin:0;padding:4px 6px;color:#FFF;text-align:center;}

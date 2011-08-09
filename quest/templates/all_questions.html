@@ -21,4 +21,15 @@
 {%endblock%}
 {%block sidebar%}
 <input id="ask_question_button" type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
+<br/>
+<br/>
+<br/>
+<h3 class='special_blue'>Browse by Tag</h3>
+<div id='all_tags_widget'>
+<ul>
+{%for tag in all_tags%}
+	<li><a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a></li>
+{%endfor%}
+</ul>
+</div>
 {%endblock%}

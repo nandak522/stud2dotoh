@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from quest.models import Question, Answer
 from quest.forms import AskQuestionForm, GiveAnswerForm
-from taggit.models import Tag 
+from taggit.models import Tag, TaggedItem
 from django.core.paginator import Paginator
 from utils.decorators import is_post
 from utils.emailer import new_anwer_emailer
@@ -15,7 +15,9 @@ from quest.messages import QUESTION_POSTING_SUCCESSFUL
 
 def view_all_questions(request, all_questions_template):
     questions = Question.objects.all().order_by('-modified_on')
-    return response(request, all_questions_template, {'questions':questions})
+    #FIXME/TODO:This has to be cached at all costs
+    all_tags = TaggedItem.tags_for(Question)
+    return response(request, all_questions_template, {'questions':questions, 'all_tags':all_tags})
 
 def view_question(request, question_id, question_slug, question_template):
     question = get_object_or_404(Question, id=int(question_id))#question_slug is for SEO
@@ -131,5 +133,8 @@ def view_tagged_questions(request, tag_name, tagged_questions_template):
         questions = paginator.page(page)
     except (EmptyPage, InvalidPage):
         questions = paginator.page(paginator.num_pages)
+    #FIXME/TODO:This has to be cached at all costs
+    all_tags = TaggedItem.tags_for(Question)
     return response(request, tagged_questions_template, {'questions': questions.object_list,
-                                                        'tag': tag})
+                                                        'tag': tag,
+                                                        'all_tags':all_tags})
