@@ -74,6 +74,7 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 #explain_invite h4{margin-bottom:0;}
 hr{margin:0;padding:0;}
 .feature_usage{padding:0.875em;margin-right:auto;margin-left:auto;width:80%;border:1px solid #CCC;}
+.feature_usage h3{margin-bottom:0.675em;}
 .feature_usage #close{cursor:pointer;text-align:right;background:url(/site_media/css/blueprint/plugins/buttons/icons/cross.png) no-repeat;width:16px;}
 .feature_usage h3{font-size:2em;color:#666;}
 .feature_usage li{font:bold 1.1em Arial,sans-serif;padding:0 0 0.5em 1em;}
