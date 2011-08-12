@@ -1,0 +1,72 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}Questions{%endblock%}
+{%block questionstab%}activetab{%endblock%}
+{%block feature_usage%}
+<div class='feature_usage prepend-top box'>
+    <div id='close' onClick='javascript:$(".feature_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+    <h3>Questions is a Bank of Questions and Answers. You can&nbsp;:</h3>
+    <ul>
+        <li>Clearly know about things you are facing difficulty in understanding from the text book.</li>
+        <li>Get opinions about you topic of interest from Industry Experts</li>
+        {%if userprofile.is_student%}
+        <li>If you are a Senior student, You can help out juniors by advising on the questions they raised</li>
+        {%endif%} 
+        <li>Ask a Question Gets you 3 points</li>
+        <li>Answering a Question Gets you 5 points</li>
+    </ul>
+</div><!-- end of feature_usage -->
+{%endblock%}
+{%block content%}
+<div class='centeralign'>
+<span id="search_question" class='bold'>Search : <input type="text" id='id_question_title' name="term" size="80" style='padding:4px;font-size:1.25em;'/></span>&nbsp;(&nbsp;or&nbsp;)&nbsp;<input id="ask_question_button" type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
+<h3 id='search_questions_header' class='georgia maincontent_header'>Browse all {{questions_count}} Questions by Tags</h3>
+<ul id='all_tags_widget' style='width:80%;'>
+{%for tag in all_tags%}
+	<li><a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a></li>
+{%endfor%}
+<li><a class="tag" title="Browse Sdf Questions" href="/questions/sdf/">sdf</a></li>
+
+    <li><a class="tag" title="Browse Totally-New-Tag Questions" href="/questions/totally-new-tag/">totally-new-tag</a></li>
+
+    <li><a class="tag" title="Browse Safasdfa Questions" href="/questions/safasdfa/">safasdfa</a></li>
+
+    <li><a class="tag" title="Browse Algorithms Questions" href="/questions/algorithms/">algorithms</a></li>
+
+    <li><a class="tag" title="Browse Django Questions" href="/questions/django/">django</a></li>
+
+    <li><a class="tag" title="Browse Verizon Questions" href="/questions/verizon/">verizon</a></li>
+
+    <li><a class="tag" title="Browse Python Questions" href="/questions/python/">python</a></li>
+
+    <li><a class="tag" title="Browse Asdf Questions" href="/questions/asdf/">asdf</a></li>
+
+    <li><a class="tag" title="Browse Infosys Questions" href="/questions/infosys/">infosys</a></li>
+<li><a class="tag" title="Browse Sdf Questions" href="/questions/sdf/">sdf</a></li>
+
+    <li><a class="tag" title="Browse Totally-New-Tag Questions" href="/questions/totally-new-tag/">totally-new-tag</a></li>
+
+    <li><a class="tag" title="Browse Safasdfa Questions" href="/questions/safasdfa/">safasdfa</a></li>
+
+    <li><a class="tag" title="Browse Algorithms Questions" href="/questions/algorithms/">algorithms</a></li>
+
+    <li><a class="tag" title="Browse Django Questions" href="/questions/django/">django</a></li>
+
+    <li><a class="tag" title="Browse Verizon Questions" href="/questions/verizon/">verizon</a></li>
+
+    <li><a class="tag" title="Browse Python Questions" href="/questions/python/">python</a></li>
+
+    <li><a class="tag" title="Browse Asdf Questions" href="/questions/asdf/">asdf</a></li>
+
+    <li><a class="tag" title="Browse Infosys Questions" href="/questions/infosys/">infosys</a></li>
+</ul>
+</div>
+{%endblock%}
+{%block extrajs%}
+<script type='text/javascript' src="/site_media/js/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type='text/javascript'>
+    autocomplete_bind('#id_question_title', '{%url ajax_questions_list%}', true);
+</script>    
+{%endblock%}
+{%block extrastyle%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/js/jquery-ui/css/flick/jquery-ui-1.8.10.custom.css" />
+{%endblock%}

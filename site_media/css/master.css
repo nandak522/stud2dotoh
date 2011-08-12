@@ -110,6 +110,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #slideshow .pagination li.current a {background-position:0 -12px;}
 #features_blocks{text-align:center;}
 #features_blocks #notepad,#webresume,#questions,#answers{border:1px solid #CCC;padding-top:8px;height:40px;margin-right:10px;}
+#search_questions_header{margin-top:2em;}
 
 /*Notepad Page Styles*/
 #notepad h3, #account_settings h3{padding-bottom:0.4em;border-bottom:2px solid #CFE2F3;}
@@ -139,7 +140,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 /*Question Page Styles*/
 #all_questions,#question_body,#ask_or_edit_question{border-right:1px solid #EFEFEF;}
 #all_questions,#questions_sidebar{padding:1em;}
-#questions_sidebar input[type="button"],#ask_question_button{padding:0.875em;font-size:1.2em;font-weight:bold;}
+#questions_sidebar input[type="button"],#ask_question_button{margin-top:0.675em;padding:0.5em;font-size:1.2em;font-weight:bold;}
 #all_questions .content_header{padding-left:0;}
 .answer_block{margin-bottom:1em;padding:8px 0 8px 4px;border:2px solid #EFEFEF;background:#F6F6F6;font:normal 1.1em sans-serif;line-height:1.5em;}
 .accepted_answer{background:#FFD354;}
@@ -152,7 +153,9 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #give_answer_section textarea{margin-top:0.25em;width:685px;}
 #give_answer_section h3{color:#105FB6;background:#FFF;margin-bottom:4px;}
 #share_question_links{margin-bottom:6px;}
-#all_tags_widget li{margin:15px 0 15px 0;list-style-type:none;list-style-position:inside;}
+#all_tags_widget{margin:2em auto;}
+#all_tags_widget li{margin:15px 10px 15px 0;display:inline;line-height:3.2em;}
+#browse_questions{margin-top:2em;}
 
 /*Dashboard Page Styles*/
 .dashboard_widget_header{color:#105FB6;margin:0;padding:4px 6px;color:#FFF;text-align:center;}

@@ -2,16 +2,19 @@
 {% block title %}Notepad{% endblock %}
 {%block notepadtab%}activetab{%endblock%}
 {%block feature_usage%}
-<h3>Notepad is useful to you in these ways &nbsp;:</h3>
-<ul>
-    <li>Save something, for further reference and can keep it private also.</li>
-    {%if userprofile.is_student%}
-    <li>Store your class assignments online. Also you can share your work with the world with this</li>
-    {%endif%}    
-    <li>Write an article about an interesting topic and share it with your friends, collegues, world</li>
-    <li>Show off your writing skills</li>
-    <li>Each Note added will get you 3 points</li>
-</ul>
+<div class='feature_usage prepend-top box'>
+    <div id='close' onClick='javascript:$(".feature_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+    <h3>Notepad is useful to you in these ways &nbsp;:</h3>
+    <ul>
+        <li>Save something, for further reference and can keep it private also.</li>
+        {%if userprofile.is_student%}
+        <li>Store your class assignments online. Also you can share your work with the world with this</li>
+        {%endif%}    
+        <li>Write an article about an interesting topic and share it with your friends, collegues, world</li>
+        <li>Show off your writing skills</li>
+        <li>Each Note added will get you 3 points</li>
+    </ul>
+</div><!-- end of feature_usage -->
 {%endblock%}
 {%block maincontent%}
 <h3 class='georgia maincontent_header blue_underline'>Want to save something quickly ?</h3>

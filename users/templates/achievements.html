@@ -2,14 +2,17 @@
 {% block title %}Achievements{% endblock %}
 {%block achievementstab%}activetab{%endblock%}
 {%block feature_usage%}
-<h3>Achievements tell the world what you are capable of &nbsp;:</h3>
-<ul>
-    <li>An award, you won</li>
-    <li>A Project, you have accomplished successfully</li>
-    <li>A Thesis paper, you presented</li>
-    <li>A Patent, you submitted</li>
-    <li>Achievements gets you 5 points</li>
-</ul>
+<div class='feature_usage prepend-top box'>
+    <div id='close' onClick='javascript:$(".feature_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
+    <h3>Achievements tell the world what you are capable of &nbsp;:</h3>
+    <ul>
+        <li>An award, you won</li>
+        <li>A Project, you have accomplished successfully</li>
+        <li>A Thesis paper, you presented</li>
+        <li>A Patent, you submitted</li>
+        <li>Achievements gets you 5 points</li>
+    </ul>
+</div><!-- end of feature_usage -->
 {%endblock%}
 {%block maincontent%}
 <h2 class='georgia maincontent_header blue_underline'>My Achievements</h2>

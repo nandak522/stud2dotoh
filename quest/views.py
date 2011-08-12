@@ -13,11 +13,12 @@ from utils.decorators import is_post
 from utils.emailer import new_anwer_emailer
 from quest.messages import QUESTION_POSTING_SUCCESSFUL
 
-def view_all_questions(request, all_questions_template):
-    questions = Question.objects.all().order_by('-modified_on')
+def view_questions(request, questions_template):
+    questions_count = Question.objects.count()
     #FIXME/TODO:This has to be cached at all costs
     all_tags = TaggedItem.tags_for(Question)
-    return response(request, all_questions_template, {'questions':questions, 'all_tags':all_tags})
+    return response(request, questions_template, {'questions_count':questions_count,
+                                                  'all_tags':all_tags})
 
 def view_question(request, question_id, question_slug, question_template):
     question = get_object_or_404(Question, id=int(question_id))#question_slug is for SEO
