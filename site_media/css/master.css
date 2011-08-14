@@ -91,7 +91,8 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 .singlepane_maincontent_area{padding:1em;}
 
 /*Homepage Styles*/
-#vision_banner{text-align:center;color:#2B5789;padding:0.5em 0 1em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:4.2em;margin:0;}
+h1.vision_banner{text-align:center;color:#2B5789;padding:0.5em 0 0.875em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:4.2em;margin:0;}
+h3.vision_banner{text-align:center;color:#2B5789;padding-bottom:0.5em;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:2.8em;margin:0;}
 #slideshow{padding:2em 0;color:#092244;border-top:1px solid #EFEFEF;}
 #slideshow h1{color:#092244;}
 #slideshow ul li{font-size:1.8em;font-weight:normal;}
@@ -144,7 +145,7 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #all_questions .content_header{padding-left:0;}
 .answer_block{margin-bottom:1em;padding:8px 0 8px 4px;border:2px solid #EFEFEF;background:#F6F6F6;font:normal 1.1em sans-serif;line-height:1.5em;}
 .accepted_answer{background:#FFD354;}
-#question_description{font:normal 1.1em sans-serif;margin:16px 0 16px;}
+#question_description{font:normal 1.1em sans-serif;margin:10px 0 10px;}
 .addthis_toolbox a{text-decoration:none;border-bottom:0;}
 #question_body{padding:10px;}
 #question_body h2{margin-bottom:0.5em;}

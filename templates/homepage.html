@@ -5,8 +5,9 @@
 {%if user.is_authenticated%}
 {%include 'dashboard.html'%}
 {%else%}
-<h1 id='vision_banner'>Making Students&nbsp;<span
+<h1 class='vision_banner'>Making Students&nbsp;<span
         class='orange_underline'>Ready for Industry</span></h1>
+<h3 class="vision_banner">This is how!</h3>
 <div id='slideshow' class='column span-24 append-top append-bottom'>
 	<div id="slides" class='column prepend-1 span-22'>
 	    <a href="#" class="prev"><img src="/site_media/img/slideshow_pix/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
@@ -19,7 +20,7 @@
 		              <li>Store any assignment <span class='orange_underline'>online</span></li>
 		              <li>Use it to write an article/blog/thesis-paper</li>
 		           </ul>
-		           <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+		           <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 	           </div><!-- end of slideshow_content_area -->
 	           <div class='column span-10 slideshow_pic_area'>
 	               <a href="{%url notepad%}" title="Notepad Page" target="_blank"><img src="/site_media/img/slideshow_pix/notepad_450x291.png" alt="Notepad Page"/></a>
@@ -33,7 +34,7 @@
                       <li>Explain the <span class='orange_underline'>Projects</span> you have done</li>
                       <li>Attract anybody with your <span class='orange_underline'>unique Persona</span></li>
                    </ul>
-                   <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+                   <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
                </div><!-- end of slideshow_content_area -->
                <div class='column span-10 slideshow_pic_area'>
                    <a href="{%url achievements%}" title="Achievements Page" target="_blank"><img src="/site_media/img/slideshow_pix/achievements_450x141.png" alt="Achievements Page"/></a>
@@ -47,7 +48,7 @@
                       <li>Get <span class='orange_underline'>Industry Experts</span> help you</li>
                       <li>College <span class='orange_underline'>Seniors</span> can help their <span class='orange_underline'>juniors</span></li>
                    </ul>
-                   <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+                   <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
                </div><!-- end of slideshow_content_area -->
                <div class='column span-10 slideshow_pic_area'>
                    <a href="{%url all_questions%}" title="Questions Page" target="_blank"><img src="/site_media/img/slideshow_pix/questions_450x239.png" alt="Questions Page"/></a>
@@ -61,7 +62,7 @@
                       <li><span class='orange_underline'>Online</span> and Impressive</li>
                       <li><span class='orange_underline'>Zero Cost</span>. Searchable globally</li>
                    </ul>
-                   <a class='prepend-2' href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
+                   <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
                </div><!-- end of slideshow_content_area -->
                <div class='column span-10 slideshow_pic_area'>
                    <a href="{%url webresume%}" title="Web Resume Page" target="_blank"><img src="/site_media/img/slideshow_pix/webresume_450x305.png" alt="Web Resume Page"/></a>
