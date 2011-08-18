@@ -186,13 +186,13 @@ class UserProfile(BaseModel):
     
     @property
     def helped_persons(self):
-        persons = []
+        persons = {}
         all_given_answers = self.answer_set.select_related()
         for answer in all_given_answers:
             person = answer.question.raised_by
-            if person.id != self.id:
-                persons.append((person.id, person.slug, person.name))
-        return persons
+            if (person.id != self.id) and (not persons.has_key(person.id)):
+                persons[person.id] = (person.id, person.slug, person.name)
+        return tuple(persons.values())
         
     def update(self, **kwargs):
         if 'password' in kwargs.keys():
