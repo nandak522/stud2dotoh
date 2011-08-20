@@ -86,9 +86,10 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #logo{padding-top:1em;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
 .help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
-
 .emboss{background:#F9F9F9;}
 .singlepane_maincontent_area{padding:1em;}
+.inner{margin:0 auto;text-align:left;width:990px;}
+#header_top_ribbon .inner{position:relative;}
 
 /*Homepage Styles*/
 h1.vision_banner{text-align:center;color:#2B5789;padding:0.5em 0 0.875em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:4.2em;margin:0;}

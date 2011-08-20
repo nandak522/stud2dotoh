@@ -104,7 +104,7 @@ form.inline p {margin-bottom:0;}
 .info a {color:#205791;}
 
 /* grid.css */
-.container {min-width:950px;margin:0 auto;width:80%;overflow:hidden;}
+.container {min-width:950px;margin:0 auto;overflow:hidden;}
 .showgrid {background:url(src/grid.png);}
 .column{float:left;}
 .last {margin-right:0;}
