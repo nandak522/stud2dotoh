@@ -80,11 +80,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.webdesign',
     'extensions',
 #    'debug_toolbar',
     'users',
     'quest',
-    'taggit'#Ideally this should be a submodule
+    'taggit',#Ideally this should be a submodule
 )
 
 #DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}

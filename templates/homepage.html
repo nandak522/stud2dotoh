@@ -1,90 +1,117 @@
-{%extends 'singlepane_base.html'%}
-{% block title %}Home{% endblock %}
-{%block hometab%}activetab{%endblock%}
-{%block content%}
-{%if user.is_authenticated%}
-{%include 'dashboard.html'%}
-{%else%}
-<h1 class='vision_banner'>Making Students&nbsp;<span class='required'>&#8220;</span>Ready for Industry<span class='required'>&#8221;</span></h1>
-<div id='slideshow' class='column span-24 append-top append-bottom'>
-<h3 class="vision_banner">Through</h3>
-	<div id="slides" class='column prepend-1 span-22'>
-	    <a href="#" class="prev"><img src="/site_media/img/slideshow_pix/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
-	    <div class="slides_container">
-	        <div>
-	           <div class='column span-12 slideshow_content_area'>
-		           <h1>Notepad</h1>
-		           <ul>
-		              <li>Save Something very quickly</li>
-		              <li>Store any assignment <span class='orange_underline'>online</span></li>
-		              <li>Use it to write an article/blog/thesis-paper</li>
-		           </ul>
-		           <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
-	           </div><!-- end of slideshow_content_area -->
-	           <div class='column span-10 slideshow_pic_area'>
-	               <a href="{%url notepad%}" title="Notepad Page" target="_blank"><img src="/site_media/img/slideshow_pix/notepad_450x291.png" alt="Notepad Page"/></a>
-               </div><!-- end of slideshow_pic_area -->
-	        </div>
-	        <div>
-               <div class='column span-12 slideshow_content_area'>
-                   <h1>Achievements</h1>
-                   <ul>
-                      <li>Show off your talents</li>
-                      <li>Explain the <span class='orange_underline'>Projects</span> you have done</li>
-                      <li>Attract anybody with your <span class='orange_underline'>unique Persona</span></li>
-                   </ul>
-                   <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
-               </div><!-- end of slideshow_content_area -->
-               <div class='column span-10 slideshow_pic_area'>
-                   <a href="{%url achievements%}" title="Achievements Page" target="_blank"><img src="/site_media/img/slideshow_pix/achievements_450x141.png" alt="Achievements Page"/></a>
-               </div><!-- end of slideshow_pic_area -->
-            </div>
-	        <div>
-	           <div class='column span-12 slideshow_content_area'>
-	               <h1>Questions &amp; Answers</h1>
-                   <ul>
-                      <li>Ask a Question</li>
-                      <li>Get <span class='orange_underline'>Industry Experts</span> help you</li>
-                      <li>College <span class='orange_underline'>Seniors</span> can help their <span class='orange_underline'>juniors</span></li>
-                   </ul>
-                   <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
-               </div><!-- end of slideshow_content_area -->
-               <div class='column span-10 slideshow_pic_area'>
-                   <a href="{%url all_questions%}" title="Questions Page" target="_blank"><img src="/site_media/img/slideshow_pix/questions_450x239.png" alt="Questions Page"/></a>
-               </div><!-- end of slideshow_pic_area -->
-	        </div>
-	        <div>
-	           <div class='column span-12 slideshow_content_area'>
-	               <h1>Web Resume</h1>
-                   <ul>
-                      <li>Multi-Dimensional view of your skills</li>
-                      <li><span class='orange_underline'>Online</span> and Impressive</li>
-                      <li><span class='orange_underline'>Zero Cost</span>. Searchable globally</li>
-                   </ul>
-                   <a href="{%url register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
-               </div><!-- end of slideshow_content_area -->
-               <div class='column span-10 slideshow_pic_area'>
-                   <a href="{%url webresume%}" title="Web Resume Page" target="_blank"><img src="/site_media/img/slideshow_pix/webresume_450x305.png" alt="Web Resume Page"/></a>
-               </div><!-- end of slideshow_pic_area -->
-	        </div>
-	    </div>
-	    <a href="#" class="next"><img src="/site_media/img/slideshow_pix/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
-	</div><!-- end of slides -->
-</div><!-- end of slideshow -->
-{%endif%}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{% block title %}Home{% endblock %} - Stud2.0</title>
+{%block css%}
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/blueprint/liquid.css" />
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/master.css" />
+<!--[if lt IE 8]><link rel="stylesheet" href="/site_media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" href="/site_media/js/jquery/plugins/tooltip/tipsy-1.0.0-a/src/stylesheets/tipsy.css" type="text/css" />
 {%endblock%}
-{%block extrajs%}
-<script type='text/javascript' src="/site_media/js/jquery/plugins/slideshow/slides.min.jquery.js"></script>
-<script type="text/javascript">
-$(function(){
-            $('#slides').slides({
-                preload: true,
-                preloadImage: '/site_media/img/slideshow_pix/loading.gif',
-                effect:'fade',
-                play: 3000,
-                pause: 3000,
-                hoverPause: true
-            });
-        });
-</script>
+{%block extrastyle%}
 {%endblock%}
+</head>
+<body>
+    <div id="container" class='container'>
+        <div id='header' class='column span-24 last'>
+            {%block messages%}
+                {% if messages %}
+                    <ul class="messages span-24 last">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{%autoescape off%}{{ message }}{%endautoescape%}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {%endblock%}
+            {%block header%}
+                {%include 'header.html'%} 
+            {%endblock%}
+        </div><!-- end of header -->
+        <div id='content' class='column span-24 lightblue_background white_border'>
+            <div class='inner'>
+                <div id='ajax_status_header'></div>
+                <div id='main_banner' class='column span-10'>
+                    <h1 class='droid'>Powering Students</h1>
+                    <h4>Some notes goes here. Blah Blah Blah!Some notes goes here. Blah Blah Blah!Some notes goes here. Blah Blah Blah!Some notes goes here. Blah Blah Blah!</h4>
+                </div><!-- end of main_banner -->
+                <div id='main_graphic' class='column span-13 last showgrid'>
+                    
+                </div><!-- end of main_graphic -->
+            </div><!-- end of inner -->
+            {% load webdesign %}
+            <div id='feature_tour' class='column span-24'>
+                <div class='inner'>
+                    <h2>Feature Tour</h2>
+                    <div class='feature_block column span-6'>
+                        <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
+                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                        </div>
+                        <h4>Notepad</h4>
+                        <span class='feature_description'>{% lorem 30 w %}</span>
+                    </div><!--end of notepad -->
+                    <div class='feature_block column span-6'>
+                        <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
+                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                        </div>
+                        <h4>Achievements</h4>
+                        <span class='feature_description'>{% lorem 30 w %}</span>
+                    </div><!--end of achievements-->
+                    <div class='feature_block column span-6'>
+                        <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
+                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                        </div>
+                        <h4>Questions</h4>
+                        <span class='feature_description'>{% lorem 30 w %}</span>
+                    </div><!--end of questions-->
+                    <div class='feature_block column span-6 last'>
+                        <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
+                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                        </div>
+                        <h4>Web-Resume</h4>
+                        <span class='feature_description'>{% lorem 30 w %}</span>
+                    </div><!--end of webresume-->
+                </div><!-- end of inner -->
+            </div><!-- end of feature_tour-->
+        </div><!-- end of content -->
+        <div id='footer' class='column span-24 last'>
+            {%block footer%}
+                {%include 'footer.html'%}            
+            {%endblock%}
+        </div><!-- end of footer -->
+    </div><!-- end of container -->
+    {%if debug%}
+    <script type='text/javascript' src='/site_media/js/jquery/jquery-1.6.min.js'></script>
+    {%else%}
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js'></script>
+    {%endif%}
+    <script type='text/javascript' src='/site_media/js/common.js'></script>
+    <script type='text/javascript'>if($('.messages')){$('.messages').fadeOut(8000);}</script>
+    <script type='text/javascript' src='/site_media/js/jquery/plugins/tooltip/tipsy-1.0.0-a/src/javascripts/jquery.tipsy.js'></script>
+    <script type='text/javascript'>
+	    $(function(){
+	       tooltip_icons = $('.tooltip').tipsy({title:'title', gravity:'s',fade:true});
+           $('#id_slug').tipsy({trigger:'focus', title:'title', gravity:'n'});
+           $('form').submit(function(){
+               submit_button = $('input[type=submit]')[0];
+               submit_button.value = 'Please Wait...';
+               submit_button.disabled = true;
+               return true;
+               });
+	    });
+	</script>
+    {%block extrajs%}{%endblock%}
+    {%block google-analytics%}
+    <script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22325032-1']);
+	  _gaq.push(['_setDomainName', '.stud2dotoh.com']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+    {%endblock%}
+</body>
+</html>

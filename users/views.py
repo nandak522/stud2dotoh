@@ -63,7 +63,9 @@ def _set_signup_greeting_for_usertype(request, user_type):
         messages.success(request, EMPLOYEE_SIGNUP_GREETING)
 
 @anonymoususer
-def view_register(request, registration_template, user_type='', next=''):
+def view_register(request, registration_template, user_type=''):
+    next = request.GET.get('next', '') if request.method == 'GET' else request.POST.get('next', '')
+    print 'next:%s' % next
     if not user_type:
         return response(request, registration_template, {'next':next})
     form_to_be_loaded = _get_signup_form_for_usertype(user_type)
@@ -79,7 +81,7 @@ def view_register(request, registration_template, user_type='', next=''):
                                userprofile.user,
                                email=form.cleaned_data.get('email'),
                                password=form.cleaned_data.get('password'),
-                               next=form.cleaned_data.get('next'))
+                               next=next)
     return response(request, registration_template, {'form': form, 'next': next})
 
 def _handle_user_registration(registration_form, user_type):
@@ -107,6 +109,7 @@ def _handle_user_registration(registration_form, user_type):
     return userprofile
         
 def _let_user_login(request, user, email, password, next=''):
+
     user = django_authenticate(email=email, password=password)
     django_login(request, user)
     if next:
