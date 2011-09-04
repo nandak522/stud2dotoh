@@ -29,8 +29,8 @@ textarea{width:auto;border:2px solid #CCC;}
 .current_page{padding:4px;font-weight:bold;background:#00223B;color:#FFF;}
 .tag{background:url(/site_media/img/tag.png) no-repeat transparent;color:#105FB6;padding:4px 10px 4px 20px;background-color:#DFDFDF;-moz-border-radius:2px 2px 2px 2px;}
 a.tag{border-bottom:0;}
-.messages{margin:0 auto;list-style-type:none;padding:0;text-align:center;font:bold 1.2em "Droid Sans","Helvetica",Monospace,Arial,sans-serif;position:absolute;color:#105FB6;top:0;left:10%;width:80%;}
-#personal_settings_messages,#acad_settings_messages,#workinfo_settings_messages{list-style-type:none;font:bold 1.1em "Droid Sans","Helvetica",Monospace,Arial,sans-serif;text-align:center;}
+.messages{margin:0 auto;list-style-type:none;padding:0;text-align:center;font:bold 1.2em "Droid Sans","Helvetica Neue",Monospace,Arial,sans-serif;position:absolute;color:#105FB6;top:0;left:10%;width:80%;}
+#personal_settings_messages,#acad_settings_messages,#workinfo_settings_messages{list-style-type:none;font:bold 1.1em "Droid Sans","Helvetica Neue",Monospace,Arial,sans-serif;text-align:center;}
 #personal_settings h3,#acad_settings h3,#workinfo_settings h3{padding-bottom:4px;color:#073763;}
 .error, .info, .success {padding:4px;margin-bottom:1em;border:2px solid #ddd;}
 .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
@@ -50,9 +50,9 @@ a.tag{border-bottom:0;}
 .file_link{font-size:1em;}
 .italic{font-style:italic;}
 .bold{font-weight:bold;}
-.helvetica{font-family:"Helvetica",Arial,Sans-serif;}
+.helvetica{font-family:"Helvetica Neue",Arial,Sans-serif;}
 .georgia{font-family:Georgia,"Droid Serif",Sans-serif;}
-.droid{font-family:"Droid Serif","Helvetica",Arial,Sans-serif;}
+.droid{font-family:"Droid Serif","Helvetica Neue",Arial,Sans-serif;}
 .maincontent_header{padding-bottom:4px;color:#073763;font-size:2em;}
 .maincontent{border-right:1px solid #EFEFEF;}
 .maincontent,.sidebar{padding:1em;}
@@ -76,7 +76,7 @@ input[type="button"],input[type="submit"]{-moz-border-radius:2px 2px 2px 2px;-mo
 .dropdown{vertical-align:middle;}
 .board{padding:2px;margin-bottom:4px;}
 .stats{margin-bottom:4px;}
-.stats li,.board li{font-size:1.2em;list-style:none;font-family:"Droid Sans","Helvetica",Arial, Sans-serif;margin-top:6px;margin-right:10px;}
+.stats li,.board li{font-size:1.2em;list-style:none;font-family:"Droid Sans","Helvetica Neue",Arial, Sans-serif;margin-top:6px;margin-right:10px;}
 .stats li{display:inline;}
 #explain_invite li{list-style-type:disc;list-style-position:inside;}
 #explain_invite h4{margin-bottom:0;}
@@ -100,12 +100,12 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #header_top_ribbon .inner{position:relative;}
 
 /*Homepage Styles*/
-h1.vision_banner{text-align:center;color:#2B5789;padding:0.5em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:4.2em;margin:0;}
-h3.vision_banner{text-align:center;color:#2B5789;padding-bottom:1em;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica",Arial, Sans-serif;font-size:2.8em;margin:0;}
+h1.vision_banner{text-align:center;color:#2B5789;padding:0.5em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica Neue",Arial, Sans-serif;font-size:4.2em;margin:0;}
+h3.vision_banner{text-align:center;color:#2B5789;padding-bottom:1em;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica Neue",Arial, Sans-serif;font-size:2.8em;margin:0;}
 #slideshow{padding:1em 0 2em;color:#092244;border-top:1px solid #EFEFEF;}
 #slideshow h1{color:#092244;}
 #slideshow ul li{font-size:1.8em;font-weight:normal;}
-.slideshow_content_area li{font:bold 1.2em "Droid Sans","Helvetica", Arial, Sans-serif;padding-bottom:0.5em;border-right:1px solid #EFEFEF;}
+.slideshow_content_area li{font:bold 1.2em "Droid Sans","Helvetica Neue", Arial, Sans-serif;padding-bottom:0.5em;border-right:1px solid #EFEFEF;}
 .slideshow_content_area a{border:0;}
 .slideshow_pic_area{height:380px;padding-left:10px;}
 #slides{position:relative;}
@@ -209,11 +209,11 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 #add_or_edit_achievement{border-right:1px solid #EFEFEF;}
 
 .signup_button{text-decoration:none;border:0;
-border-top: 1px solid #aff797; background: #71b557; background: -webkit-gradient(linear, left top, left bottom, from(#52b355), to(#71b557)); background: -moz-linear-gradient(top, #52b355, #71b557); padding: 6px 12px; -webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px; -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0; -moz-box-shadow: rgba(0,0,0,1) 0 1px 0; box-shadow: rgba(0,0,0,1) 0 1px 0; text-shadow: rgba(0,0,0,.4) 0 1px 0; color: white; font-size: 18px; font-family: Helvetica, Arial, Sans-Serif; text-decoration: none; vertical-align: middle;}
+border-top: 1px solid #aff797; background: #71b557; background: -webkit-gradient(linear, left top, left bottom, from(#52b355), to(#71b557)); background: -moz-linear-gradient(top, #52b355, #71b557); padding: 6px 12px; -webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px; -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0; -moz-box-shadow: rgba(0,0,0,1) 0 1px 0; box-shadow: rgba(0,0,0,1) 0 1px 0; text-shadow: rgba(0,0,0,.4) 0 1px 0; color: white; font-size: 18px; font-family: "Helvetica Neue", Arial, Sans-Serif; text-decoration: none; vertical-align: middle;}
 .signup_button:hover {
 border-top-color: #3d9e2e; background: #3d9e2e; color: #f5f0f5;}
 .signup_button:active {
 border-top-color: #ccab4a; background: #ccab4a;}
 
 .red_button {
-border-top: 1px solid #aff797; background: #943f30; background: -webkit-gradient(linear, left top, left bottom, from(#ebbc6a), to(#943f30)); background: -moz-linear-gradient(top, #ebbc6a, #943f30); padding: 6px 12px; -webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px; -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0; -moz-box-shadow: rgba(0,0,0,1) 0 1px 0; box-shadow: rgba(0,0,0,1) 0 1px 0; text-shadow: rgba(0,0,0,.4) 0 1px 0; color: white; font-size: 22px; font-family: Helvetica, Arial, Sans-Serif; text-decoration: none; vertical-align: middle; }
+border-top: 1px solid #aff797; background: #943f30; background: -webkit-gradient(linear, left top, left bottom, from(#ebbc6a), to(#943f30)); background: -moz-linear-gradient(top, #ebbc6a, #943f30); padding: 6px 12px; -webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px; -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0; -moz-box-shadow: rgba(0,0,0,1) 0 1px 0; box-shadow: rgba(0,0,0,1) 0 1px 0; text-shadow: rgba(0,0,0,.4) 0 1px 0; color: white; font-size: 22px; font-family: "Helvetica Neue", Arial, Sans-Serif; text-decoration: none; vertical-align: middle; }

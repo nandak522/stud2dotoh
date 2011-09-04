@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/site_media/css/master.css" />
 <!--[if lt IE 8]><link rel="stylesheet" href="/site_media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
 <link rel="stylesheet" href="/site_media/js/jquery/plugins/tooltip/tipsy-1.0.0-a/src/stylesheets/tipsy.css" type="text/css" />
+<link href="/site_media/js/jquery/plugins/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
 {%endblock%}
 {%block extrastyle%}
 {%endblock%}
@@ -46,28 +47,36 @@
                     <h2>Feature Tour</h2>
                     <div class='feature_block column span-6'>
                         <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
-                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                            <div style="width:160px;height:120px;background:#EFEFEF;">
+                                <a rel="facebox" href="/site_media/img/slideshow_pix/notepad_450x291.png">Notepad Thumbnail</a>
+                            </div>
                         </div>
                         <h4>Notepad</h4>
                         <span class='feature_description'>{% lorem 30 w %}</span>
                     </div><!--end of notepad -->
                     <div class='feature_block column span-6'>
                         <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
-                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                            <div style="width:160px;height:120px;background:#EFEFEF;">
+                                <a rel="facebox" href="/site_media/img/slideshow_pix/achievements_450x141.png">Achievements Thumbnail</a>
+                            </div>
                         </div>
                         <h4>Achievements</h4>
                         <span class='feature_description'>{% lorem 30 w %}</span>
                     </div><!--end of achievements-->
                     <div class='feature_block column span-6'>
                         <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
-                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                            <div style="width:160px;height:120px;background:#EFEFEF;">
+                                <a rel="facebox" href="/site_media/img/slideshow_pix/questions_450x239.png">Questions Thumbnail</a>
+                            </div>
                         </div>
                         <h4>Questions</h4>
                         <span class='feature_description'>{% lorem 30 w %}</span>
                     </div><!--end of questions-->
                     <div class='feature_block column span-6 last'>
                         <div style="background:#CCCCFF;border:2px solid #8F8F8F;padding:4px;width:160px;height:120px;">
-                            <div style="width:160px;height:120px;background:#EFEFEF;"></div>
+                            <div style="width:160px;height:120px;background:#EFEFEF;">
+                                <a rel="facebox" href="/site_media/img/slideshow_pix/webresume_450x305.png">WebResume Thumbnail</a>
+                            </div>
                         </div>
                         <h4>Web-Resume</h4>
                         <span class='feature_description'>{% lorem 30 w %}</span>
@@ -101,7 +110,14 @@
                });
 	    });
 	</script>
-    {%block extrajs%}{%endblock%}
+    {%block extrajs%}
+    <script src="/site_media/js/jquery/plugins/facebox/facebox.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+    $(document).ready(function($) {
+      $('a[rel*=facebox]').facebox()
+    }) 
+	</script>
+    {%endblock%}
     {%block google-analytics%}
     <script type="text/javascript">
 	  var _gaq = _gaq || [];
