@@ -208,36 +208,12 @@ h3.registration_or_login_header{color:#666;padding-left:2em;margin-top:1em;font-
 #all_achievements h3{padding-left:1em;}
 #add_or_edit_achievement{border-right:1px solid #EFEFEF;}
 
-.button {
-   border-top: 1px solid #baf797;
-   background: #40a33b;
-   background: -webkit-gradient(linear, left top, left bottom, from(#5fb36a), to(#40a33b));
-   background: -moz-linear-gradient(top, #5fb36a, #40a33b);
-   padding: 10.5px 21px;
-   -webkit-border-radius: 5px;
-   -moz-border-radius: 5px;
-   border-radius: 5px;
-   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: white;
-   font-size: 24px;
-   font-family: Helvetica, Arial, Sans-Serif;
-   text-decoration: none;
-   vertical-align: middle;
-   }
-.button:hover {
-   border-top-color: #59a850;
-   background: #59a850;
-   color: #f7f4f7;
-   }
-.button:active {
-   border-top-color: #4bd12a;
-   background: #4bd12a;
-   }
+.signup_button{text-decoration:none;border:0;
+border-top: 1px solid #aff797; background: #71b557; background: -webkit-gradient(linear, left top, left bottom, from(#52b355), to(#71b557)); background: -moz-linear-gradient(top, #52b355, #71b557); padding: 6px 12px; -webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px; -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0; -moz-box-shadow: rgba(0,0,0,1) 0 1px 0; box-shadow: rgba(0,0,0,1) 0 1px 0; text-shadow: rgba(0,0,0,.4) 0 1px 0; color: white; font-size: 18px; font-family: Helvetica, Arial, Sans-Serif; text-decoration: none; vertical-align: middle;}
+.signup_button:hover {
+border-top-color: #3d9e2e; background: #3d9e2e; color: #f5f0f5;}
+.signup_button:active {
+border-top-color: #ccab4a; background: #ccab4a;}
 
-
-.green_button{border-top: 1px solid #baf797;background: #568a45;background: -webkit-gradient(linear, left top, left bottom, from(#7ea84d), to(#568a45));background: -moz-linear-gradient(top, #7ea84d, #568a45);padding: 13.5px 27px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;box-shadow: rgba(0,0,0,1) 0 1px 0;text-shadow: rgba(0,0,0,.4) 0 1px 0;color: white;font-size: 22px;font-family: Helvetica, Arial, Sans-Serif;text-decoration: none;vertical-align: middle;}
-.green_button:hover{border-top-color: #2d7027;background: #2d7027;color: #ffffff;}
-.green_button:active{border-top-color: #54a348;background: #54a348;}
+.red_button {
+border-top: 1px solid #aff797; background: #943f30; background: -webkit-gradient(linear, left top, left bottom, from(#ebbc6a), to(#943f30)); background: -moz-linear-gradient(top, #ebbc6a, #943f30); padding: 6px 12px; -webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px; -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0; -moz-box-shadow: rgba(0,0,0,1) 0 1px 0; box-shadow: rgba(0,0,0,1) 0 1px 0; text-shadow: rgba(0,0,0,.4) 0 1px 0; color: white; font-size: 22px; font-family: Helvetica, Arial, Sans-Serif; text-decoration: none; vertical-align: middle; }
