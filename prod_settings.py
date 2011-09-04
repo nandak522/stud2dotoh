@@ -21,7 +21,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'utils.middlewares.StatsMiddleware',
+#    'utils.middlewares.StatsMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 INSTALLED_APPS = (
@@ -32,10 +33,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.webdesign',
+    'extensions',
+#    'debug_toolbar',
     'users',
     'quest',
-    'taggit',
+    'taggit',#Ideally this should be a submodule
 )
+
 
 EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
 
@@ -70,3 +74,4 @@ NOTE_POINTS = 3
 QUESTION_POINTS = 3
 
 ANSWER_POINTS = 5
+
