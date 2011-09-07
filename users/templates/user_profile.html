@@ -1,24 +1,4 @@
 {%extends 'singlepane_base.html'%}
-{% block main_tabs%}
-<div id='maintabs' class='column span-24 last'>
-    <ul class='main_tabs'>
-        <li class='{%block hometab%}{%endblock%} roundcorner'>
-            <a href='{%url homepage%}'>
-                {%if user.is_authenticated%}
-                Dashboard
-                {%else%}
-                Home
-                {%endif%}
-            </a>
-        </li>
-        <li class='roundcorner'><a href="{%absurl notepad%}">Notepad</a></li>
-        <li class='roundcorner'><a href='{%absurl achievements%}'>Achievements</a></li>
-        <li class='roundcorner'><a href="{%absurl all_questions%}">Questions</a></li>
-        <li class='{%if can_edit%}activetab{%endif%} roundcorner'><a href="{%absurl webresume%}">Web Resume</a></li>
-    </ul>        
-</div><!-- end of maintabs -->
-<hr class='special_blue'/>
-{%endblock%}
 {% block title %}{%if can_edit%}Your{%else%}{{userprofile.name|title}}{%endif%} - Profile Information{% endblock %}
 {%block webresumetab%}{%if can_edit%}activetab{%endif%}{%endblock%}
 {%block content%}
