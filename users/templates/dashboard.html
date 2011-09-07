@@ -1,3 +1,7 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}Dashboard{%endblock%}
+{%block hometab%}activetab{%endblock%}
+{%block content%}
 <h2 class='georgia maincontent_header centeralign'>Hi {{userprofile.name|title}}, This is your Dashboard</h2>
 <div id='notepad_widget' class='dashboard_widget prepend-4 column span-8 append-bottom append-1'>
     <div class='emboss icon left'></div>
@@ -69,3 +73,4 @@
     </div><!-- end of settings_widget_content -->
 </div><!-- end of settings_widget -->
 <div class='clearfix'></div>
+{%endblock%}

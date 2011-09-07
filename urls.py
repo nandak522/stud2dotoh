@@ -20,6 +20,7 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('users.views',
     (r'^$', 'view_homepage', {'homepage_template':'homepage.html'}, 'homepage'),
+    (r'^dashboard/$', 'view_dashboard', {'dashboard_template':'dashboard.html'}, 'dashboard'),
     (r'^notepad/$', 'view_notepad', {'notepad_template':'notepad.html'}, 'notepad'),
     (r'^webresume/$', 'view_webresume', {}, 'webresume'),
     (r'^invite/$', 'view_invite', {'invite_template':'invite.html'}, 'invite'),

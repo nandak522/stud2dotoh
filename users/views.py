@@ -28,6 +28,10 @@ def view_homepage(request, homepage_template):
     return response(request, homepage_template, {})
 
 @login_required
+def view_dashboard(request, dashboard_template):
+    return response(request, dashboard_template, {})
+
+@login_required
 @is_admin
 def view_all_users(request, all_users_template):
     from django.core.paginator import Paginator, EmptyPage, InvalidPage

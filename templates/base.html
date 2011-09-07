@@ -52,12 +52,11 @@
                     <div id='maintabs' class='column span-19 last'>
                         <ul class='main_tabs'>
                             <li class='{%block hometab%}{%endblock%} roundcorner'>
-                                <a href='{%url homepage%}'>
-                                    {%if user.is_authenticated%}
-                                    Dashboard
-                                    {%else%}
-                                    Home
-                                    {%endif%}
+                                {%if user.is_authenticated%}
+                                <a href='{%url dashboard%}'>Dashboard
+                                {%else%}
+                                <a href='{%url homepage%}'>Home
+                                {%endif%}
                                 </a>
                             </li>
                             <li class='{%block notepadtab%}{%endblock%} roundcorner'><a href="{%url notepad%}">Notepad</a></li>
