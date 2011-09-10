@@ -20,16 +20,17 @@
 </div><!-- end of header_ribbon -->
 <div id='header_middle_ribbon' class='column span-24 last'>
     <div class='inner'>
-        <div id='logo' class='column span-5'>
-            <a href="{%absurl homepage%}"><h1 class='droid'>Stud<span class='orange'>2.0</span></h1></a>
+        <div id='logo' class='column span-6'>
+            <a href="{%absurl homepage%}"></a>
         </div><!-- end of logo -->
-        <div id='maintabs' class='column span-19 last'>
+        <div id='maintabs' class='column span-16 last'>
             <ul class='main_tabs'>
                 <li class='{%block hometab%}{%endblock%} roundcorner'>
-                    <a href='{%url homepage%}'>
-                        {%if user.is_authenticated%}
+                    {%if user.is_authenticated%}
+                    <a href='{%url dashboard%}'>
                         Dashboard
                         {%else%}
+                    <a href='{%url homepage%}'>
                         Home
                         {%endif%}
                     </a>

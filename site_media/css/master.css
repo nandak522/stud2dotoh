@@ -6,7 +6,9 @@ a,.spanlink{text-decoration:none;border-bottom:1px solid #06C;border-style:dotte
 #content{color:#09222F;}
 .white_border{border:1px solid #FFF;}
 #main_banner{padding-top:3em;padding-right:1em;}
-#main_graphic{height:300px;}
+#main_banner h1{line-height:1.2em;}
+#main_banner h4{line-height:1.6em;}
+#main_graphic{height:300px;background:url(/site_media/img/homepage_graphic.png) no-repeat;}
 #footer{background:#053B76;border-top:1px solid #105FB6;color:#FFF;font:bold 14px sans-serif,Arial;text-align:center;padding:6px 0;}
 #footer a{color:#FFF;border-bottom-color:#FFF;}
 .help_text{color:#333;padding-left:4px;font-size:0.875em;}
@@ -46,11 +48,10 @@ a.tag{border-bottom:0;}
 #feature_tour{background:#FFF;border-top:1px solid #CCCCFF;padding-bottom:2em;}
 #feature_tour h2{padding-top:1em;}
 #feature_tour h4{color:#105FB6;padding-top:0.5em;font-weight:bold;}
-.feature_block img{background:#EFEFEF;}
 .file_link{font-size:1em;}
 .italic{font-style:italic;}
 .bold{font-weight:bold;}
-.helvetica{font-family:"Helvetica Neue",Arial,Sans-serif;}
+.helvetica{font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;}
 .georgia{font-family:Georgia,"Droid Serif",Sans-serif;}
 .droid{font-family:"Droid Serif","Helvetica Neue",Arial,Sans-serif;}
 .maincontent_header{padding-bottom:4px;color:#073763;font-size:2em;}
@@ -91,7 +92,7 @@ hr{margin:0;padding:0;}
 #header_toplinks_left a,#header_toplinks_right a{text-decoration:none;border:0;color:#FFF;}
 #header_middle_ribbon{background:#2B5789;color:#FFF;}
 ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
-#logo{padding-top:1em;}
+#logo{padding-top:1em;background:url(/site_media/img/logo_230X100.png) no-repeat;height:80px;}
 #logo a h1{color:#FFF;text-decoration:none;border:0;font-size:4em;margin-bottom:0.3em;padding-left:10px;}
 .help{background:url(/site_media/img/help_16x16.png) no-repeat transparent;width:16px;height:16px;cursor:pointer;}
 .emboss{background:#F9F9F9;}
@@ -100,6 +101,16 @@ ul{margin:0;padding:0;list-style-type:disc;list-style-position:inside;}
 #header_top_ribbon .inner{position:relative;}
 
 /*Homepage Styles*/
+.feature_thumbnail{width:160px;height:120px;background:#EFEFEF;}
+.thumbnail a{text-decoration:none;border:0;}
+#notepad_thumbnail{background:url(/site_media/img/thumbs/notepad_thumb_190X150.png) no-repeat transparent;width:190px;height:150px;}
+#notepad_zoomnail{}
+#achievements_thumbnail{background:url(/site_media/img/thumbs/achievements_thumb_190X150.png) no-repeat transparent;width:190px;height:150px;}
+#achievements_zoomnail{}
+#questions_thumbnail{background:url(/site_media/img/thumbs/questions_thumb_190X150.png) no-repeat transparent;width:190px;height:150px;}
+#questions_zoomnail{}
+#webresume_thumbnail{background:url(/site_media/img/thumbs/webresume_thumb_190X150.png) no-repeat transparent;width:190px;height:150px;}
+#webresume_zoomnail{}
 h1.vision_banner{text-align:center;color:#2B5789;padding:0.5em 0;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica Neue",Arial, Sans-serif;font-size:4.2em;margin:0;}
 h3.vision_banner{text-align:center;color:#2B5789;padding-bottom:1em;text-shadow:0px 1px 3px #999;font-family:"Georgia","Droid Sans","Helvetica Neue",Arial, Sans-serif;font-size:2.8em;margin:0;}
 #slideshow{padding:1em 0 2em;color:#092244;border-top:1px solid #EFEFEF;}
