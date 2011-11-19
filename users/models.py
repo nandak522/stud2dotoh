@@ -263,7 +263,7 @@ class UserProfile(BaseModel):
     def achievements(self):
         return self.achievement_set.values('id', 'title', 'description')
     
-    def add_points(self, points):
+    def award_score(self, points):
         Score.objects.add_points(self, points)
         
     def subtract_points(self, points):
@@ -457,7 +457,7 @@ class Score(BaseModel):
     
     def __unicode__(self):
         return "%s ==> %s" % (self.userprofile.name, self.points)
-    
+
 #TODO:Implementing Signals to increment score for user, for each save of a 
 #Note, Question, Answer, Achievement model objects. For Achievement its gonna be
 #aggregate
@@ -465,6 +465,6 @@ class Score(BaseModel):
 def increment_note_points(sender, instance, **kwargs):
     if kwargs['created']:
         userprofile = instance.userprofile
-        userprofile.add_points(settings.NOTE_POINTS)
+        userprofile.award_score(settings.NOTE_POINTS)
     
 post_save.connect(increment_note_points, Note, dispatch_uid='increment_note_signal')

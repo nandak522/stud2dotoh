@@ -156,7 +156,7 @@ class ScoreModelTests(TestCase):
         self.assertFalse(Score.objects.count())
         self.assertFalse(userprofile.score)
         set_score = 10
-        userprofile.add_points(set_score)
+        userprofile.award_score(set_score)
         self.assertTrue(Score.objects.count())
         score = userprofile.score
         self.assertTrue(score)
@@ -164,7 +164,7 @@ class ScoreModelTests(TestCase):
         
     def test_subtracting_score_for_existing_userprofile(self):
         userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
-        userprofile.add_points(100)
+        userprofile.award_score(100)
         set_score = 10
         userprofile.subtract_points(set_score)
         user_score = Score.objects.get(userprofile=userprofile)
@@ -172,7 +172,7 @@ class ScoreModelTests(TestCase):
         
     def test_set_score_for_existing_userprofile(self):
         userprofile = UserProfile.objects.get(user__email='madhav.bnk@gmail.com')
-        userprofile.add_points(100)
+        userprofile.award_score(100)
         points = 10
         userprofile.set_score(points)
         user_score = Score.objects.get(userprofile=userprofile)

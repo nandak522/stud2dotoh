@@ -28,6 +28,9 @@ class Task(BaseModel):
     is_public = models.BooleanField(default=True)
     objects = TaskManager()
 
+    def solvers(self):
+        return self.taskmembership_set.values('user')
+
     def __unicode__(self):
         return self.title
 
@@ -47,6 +50,10 @@ class TaskMembershipManager(BaseModelManager):
             return taskmembership
         raise TaskAlreadyAssignedException
 
+    def complete_task(self, task, user):
+        self.status = 'FINISHED'
+        self.user.award_score(task.bounty)
+
 class TaskMembership(BaseModel):
     _status_choices = (('INPROGRESS','In-Progress'),
                        ('FINISHED','Finished'),
@@ -60,3 +67,10 @@ class TaskMembership(BaseModel):
 
     def __unicode__(self):
         return '%s ==> %s' % (self.task ,self.user)
+        
+class TaskBounty(BaseModel):
+    task = models.OneToOneField(Task)
+    bounty = models.IntegerField()
+
+    def __unicode__(self):
+        return '%s ==> %s' % (self.task.title, self.bounty)

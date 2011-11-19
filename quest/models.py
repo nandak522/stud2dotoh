@@ -129,12 +129,12 @@ class Answer(BaseModel):
 def increment_question_points(sender, instance, **kwargs):
     if kwargs['created']:
         userprofile = instance.raised_by
-        userprofile.add_points(settings.QUESTION_POINTS)
+        userprofile.award_score(settings.QUESTION_POINTS)
 
 def increment_answer_points(sender, instance, **kwargs):
     if kwargs['created']:
         userprofile = instance.given_by 
-        userprofile.add_points(settings.ANSWER_POINTS)
+        userprofile.award_score(settings.ANSWER_POINTS)
             
 post_save.connect(increment_question_points, Question, dispatch_uid='increment_question_signal')
 post_save.connect(increment_answer_points, Answer, dispatch_uid='increment_answer_signal')
