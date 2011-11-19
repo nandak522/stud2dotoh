@@ -1,0 +1,9 @@
+{%extends 'onepane_base.html'%}
+{%block title%}My Tasks{%endblock%}
+{%block maincontent%}
+{%for task in tasks%}
+   <a href='{% url task task.id task.slug %}'>{{ task.title|capfirst }}</a>
+    {%empty%}    
+    No Tasks Found
+{%endfor%}
+{%endblock%}

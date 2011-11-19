@@ -1,0 +1,9 @@
+{%extends 'singlepane_base.html'%}
+{%block title%}Explore Tasks{%endblock%}
+{%block content%}
+{%for task in tasks%}
+   <a href='{% url task task.id task.slug %}'>{{ task.title|capfirst }}</a>
+    {%empty%}    
+    No Tasks Found
+{%endfor%}
+{%endblock%}

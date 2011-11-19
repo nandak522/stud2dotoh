@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
     (r'^users/', include('users.urls')),
     (r'^questions/', include('quest.urls')),
+    (r'^tasks/', include('tasks.urls')),
     (r'^utils/', include('utils.urls')),
 )
 

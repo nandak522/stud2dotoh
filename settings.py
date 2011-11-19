@@ -64,7 +64,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
 #    'utils.middlewares.StatsMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 ROOT_URLCONF = '%s.urls' % PROJECT_FOLDER_NAME
@@ -82,13 +82,14 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.webdesign',
     'extensions',
-#    'debug_toolbar',
+    'debug_toolbar',
+    'tasks',
     'users',
     'quest',
     'taggit',#Ideally this should be a submodule
 )
 
-#DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
+DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
 
