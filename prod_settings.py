@@ -53,8 +53,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
-MEDIA_ROOT = '/home/madhavbnk/webapps/stud2dotoh/stud2dotoh/site_media/'
-
 SEND_BROKEN_LINK_EMAILS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -65,13 +63,8 @@ USE_I18N = False
 
 USE_L10N = False
 
-TEMPLATE_DIRS = (
-                 '/home/madhavbnk/webapps/stud2dotoh/stud2dotoh/templates',
-)
-
 NOTE_POINTS = 3
 
 QUESTION_POINTS = 3
 
 ANSWER_POINTS = 5
-

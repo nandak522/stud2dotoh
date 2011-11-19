@@ -94,7 +94,7 @@ EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
-INTERNAL_IPS = ('127.0.0.1', '192.168.1.2')
+INTERNAL_IPS = ('127.0.0.1', )
 
 FILTER_HTML_TAGS = "script button input marquee style"
 
