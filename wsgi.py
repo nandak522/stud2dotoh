@@ -1,10 +1,11 @@
-import os,sys
+SITE_DIR = '/home/ubuntu/webapps/stud2dotoh/'
+import site
+site.addsitedir(SITE_DIR) 
 
-project = os.path.dirname(os.path.dirname(__file__))
-workspace = os.path.dirname(project)
-sys.path.append(workspace)
+import os
+import sys
+sys.path.append(SITE_DIR)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'prod_settings'
-
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
