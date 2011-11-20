@@ -1,6 +1,6 @@
-{%extends 'onepane_base.html'%}
+{%extends 'singlepane_base.html'%}
 {%block title%}My Tasks{%endblock%}
-{%block maincontent%}
+{%block content%}
 {%for task in tasks%}
    <a href='{% url task task.id task.slug %}'>{{ task.title|capfirst }}</a>
     {%empty%}    
