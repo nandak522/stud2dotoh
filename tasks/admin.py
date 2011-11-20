@@ -15,8 +15,8 @@ class TaskBountyAdmin(admin.ModelAdmin):
 
 class TaskMembershipAdmin(admin.ModelAdmin):
     list_per_page = 25
-    list_display = ('task', 'user')
-    search_fields = ('task', 'user')
+    list_display = ('task', 'userprofile')
+    search_fields = ('task', 'userprofile')
     verbose_name_plural = 'TaskMemberships'
     
 admin.site.register(Task, TaskAdmin)

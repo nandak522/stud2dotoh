@@ -1,7 +1,7 @@
 from django.db import models
 from utils.models import BaseModel, BaseModelManager
-from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from users.models import UserProfile
 
 class TaskAlreadyExistsException(Exception):
     pass
@@ -23,13 +23,16 @@ class Task(BaseModel):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=80, db_index=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
-    creator = models.OneToOneField(User)
+    creator = models.OneToOneField(UserProfile)
     deadline = models.DateField(blank=True, null=True)
     is_public = models.BooleanField(default=True)
     objects = TaskManager()
 
+    def current_assignees(self):
+        return self.taskmembership_set.exclude(status='FINISHED').values('userprofile')
+
     def solvers(self):
-        return self.taskmembership_set.values('user')
+        return self.taskmembership_set.filter(status='FINISHED').values('userprofile')
 
     def __unicode__(self):
         return self.title
@@ -37,6 +40,10 @@ class Task(BaseModel):
     @models.permalink
     def get_absolute_url(self):
         return ('task', (), {'task_id':self.id, 'task_slug':self.slug})
+
+    @property
+    def bounty(self):
+        return self.taskbounty.bounty
 
 class TaskAlreadyAssignedException(Exception):
     pass
@@ -50,9 +57,9 @@ class TaskMembershipManager(BaseModelManager):
             return taskmembership
         raise TaskAlreadyAssignedException
 
-    def complete_task(self, task, user):
+    def finish_task(self, task, user):
         self.status = 'FINISHED'
-        self.user.award_score(task.bounty)
+        self.userprofile.award_score(task.bounty)
 
 class TaskMembership(BaseModel):
     _status_choices = (('INPROGRESS','In-Progress'),
@@ -60,13 +67,13 @@ class TaskMembership(BaseModel):
     )
 
     task = models.ForeignKey(Task)
-    user = models.ForeignKey(User)
+    userprofile = models.ForeignKey(UserProfile, related_name='assigned_tasks')
     status = models.CharField(choices=_status_choices, max_length=10)
     finished_on = models.DateField(blank=True, null=True)
     objects = TaskMembershipManager()
 
     def __unicode__(self):
-        return '%s ==> %s' % (self.task ,self.user)
+        return '%s ==> %s' % (self.task ,self.userprofile)
         
 class TaskBounty(BaseModel):
     task = models.OneToOneField(Task)

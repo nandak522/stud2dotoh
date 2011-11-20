@@ -54,6 +54,7 @@ class UserProfileManager(BaseModelManager):
                                         password=password)
         userprofile = UserProfile(user=user, name=name)
         userprofile.save()
+        userprofile.award_score(settings.SEED_SCORE)
         return userprofile
     
     def _compute_username(self, email):
@@ -67,6 +68,16 @@ class UserProfile(BaseModel):
     
     def __unicode__(self):
         return self.name
+
+    def finish_task(self, task):
+        task_assignments = task.taskmembership_set.filter(userprofile=self)
+        if task_assignments.count():
+            task_membership = task_assignments[0]
+            task_membership.status = 'FINISHED'
+            task_membership.save()
+            self.award_score(task.bounty)
+            return
+        raise Exception, "Given task is not assigned to %s" % self
 
     @property
     def asked_questions(self):
@@ -175,7 +186,6 @@ class UserProfile(BaseModel):
 #            all_qa_tags.extend(question_tags)
 #        return tuple(set(all_qa_tags))
 
-
     @property
     def interested_tags(self):
         from quest.models import Question
@@ -265,6 +275,9 @@ class UserProfile(BaseModel):
     
     def award_score(self, points):
         Score.objects.add_points(self, points)
+
+    def finished_tasks(self):
+        return self.assigned_tasks.filter(status='FINISHED').values('task')
         
     def subtract_points(self, points):
         Score.objects.subtract_points(self, points)
