@@ -2,6 +2,7 @@ from django.contrib import admin
 from quest.models import Question, Answer
 
 class QuestionAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('title',)}
     list_per_page = 25
     list_display = ('title', 'raised_by', 'closed')
     search_fields = ('title',)

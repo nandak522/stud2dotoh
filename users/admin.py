@@ -2,6 +2,7 @@ from django.contrib import admin
 from users.models import UserProfile, College, Company, Achievement
 
 class UserProfileAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('name',)}
     list_per_page = 25
     list_display = ('name', 'email', 'domain', 'group_name')
     search_fields = ('name', 'user__email')
