@@ -40,6 +40,19 @@
     {%endwith%}
 </ul>
 </div><!-- end of personal_details -->
+<div id='finished_tasks'>
+    <h3 class='georgia leftalign'>Finished Tasks&nbsp;&nbsp;<span class="tooltip help" title="These tasks show that I am an accomplisher">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl all_tasks%}">Pick up a Task ?</a></span>{%endif%}</h3>
+    <ol class='webresume_section emboss'>
+    {%for task in userprofile.finished_tasks%}
+    <li>
+        <a target='_blank' href="">{{task.title|capfirst}}</a>&nbsp;&nbsp;<span class="spanlink tooltip" title="View Full Content" onClick="javascript:$('#{{task.id}}_task_desc').slideToggle();">[+]</span>
+        <div class='hide full_description' id="{{task.id}}_task_desc">{{task.description}}</div>
+    </li>
+    {%empty%}
+    <li>{%if can_edit%}You haven't done any tasks yet! Want to pick up a task ? {%else%}{{userprofile.name|title}} has not saved any notes yet!{%endif%}</li>
+    {%endfor%}
+    </ol>
+</div>
 <div id='saved_notes'>
     <h3 class='georgia leftalign'>Saved Notes&nbsp;&nbsp;<span class="tooltip help" title="These Notes tell more about me">&nbsp;&nbsp;&nbsp;&nbsp;</span>{%if can_edit%}<span class='right widget_toplinks rightalign'><a href="{%absurl notepad%}">Add Note ?</a></span>{%endif%}</h3>
     <ol class='webresume_section emboss'>
