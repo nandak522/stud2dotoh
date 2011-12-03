@@ -1,9 +1,9 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'base.html'%}
 {%block title%}{{question.title}}{%endblock%}
 {%block questionstab%}activetab{%endblock%}
 {%block content%}
 {%load users_tags%}
-<div id='question_body' class='span-18 column'>
+<div id='question_body' class='span18 column'>
 <h2><a href="{%url question question.id question.slug%}">{{question.title}}</a></h2>
 
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
@@ -38,7 +38,7 @@
     {%include 'give_answer.html'%}
 </div><!-- end of give_answer_section -->
 </div>
-<div id="questions_sidebar" class='span-4 column last'>
+<div id="questions_sidebar" class='span4 column last'>
 <input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 </div>
 {%endblock%}

@@ -4,6 +4,6 @@
     <tr><td class='rightalign'><label for="id_workplace">WorkPlace :</label></td><td class='leftalign'>{{workinfo_form.workplace}}&nbsp;(<span class='required'>Required</span>. Max of <span class='black_stress'>100</span> characters)</span><br/>{{workinfo_form.workplace.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_designation">Designation :</label></td><td class='leftalign'>{{workinfo_form.designation}}&nbsp;(Max of <span class='black_stress'>50</span> characters)</span><br/>{{workinfo_form.designation.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_years_of_exp">Total Years of Experience :</label></td><td class='leftalign'>{{workinfo_form.years_of_exp}}<br/>{{workinfo_form.years_of_exp.errors}}</td></tr>
-    <tr><td>&nbsp;</td><td><input type='button' id="save_workinfo_settings_button" name='save_workinfo_settings_button' value="Save my WorkPlace Settings" onClick="javascript:save_workinfo_settings(this.form.name);"/></td></tr>
+    <tr><td>&nbsp;</td><td><input type='button' class='btn primary' id="save_workinfo_settings_button" name='save_workinfo_settings_button' value="Save my WorkPlace Settings" onClick="javascript:save_workinfo_settings(this.form.name);"/></td></tr>
 </table>
 </form>

@@ -1,4 +1,4 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'base.html'%}
 {% block title %}Contact Stud2.0 Team{% endblock %}
 {%block content%}
 <div id="contactus">
@@ -9,7 +9,7 @@
     <tr><td class='rightalign'><label for="id_from_email">Your Email:</label></td><td class='leftalign'>{{form.from_email}}<span class='help_text'>(<span class='required'>Required</span>. Max of 50 characters)</span><br/>{{form.from_email.errors}}</td></tr>
     <tr><td class='rightalign'><label for="id_subject">Subject :</label></td><td class='leftalign'>{{form.subject}}<span class='help_text'>(<span class='optional'>Optional</span>. Max of 100 characters)</span></td></tr>
     <tr><td class='rightalign'><label for="id_message">Message :</label></td><td class='leftalign'>{{form.message}}<span class='help_text'>(<span class='required'>Required</span>. Max of 500 characters)</span><br/>{{form.message.errors}}</td></tr>
-    <tr><td class='rightalign'>&nbsp;</td><td><input type="submit" value="Send Message"/></td></tr>
+    <tr><td class='rightalign'>&nbsp;</td><td><input type="button" class="btn primary" value="Send Message"/></td></tr>
 </table>
 </form>
 </div>

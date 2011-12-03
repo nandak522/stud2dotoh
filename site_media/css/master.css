@@ -1,5 +1,5 @@
 /*Global Styles*/
-body{background:#F4F4F4;}
+body{padding-top: 40px;}
 #container{background:#FFF;border-right:1px solid #EDEDED;border-left:1px solid #EDEDED;}
 a,.spanlink{text-decoration:none;border-bottom:1px solid #06C;border-style:dotted;}
 .spanlink{color:#06C;cursor:pointer;border:0;}

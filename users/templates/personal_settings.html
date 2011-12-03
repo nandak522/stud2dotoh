@@ -12,6 +12,6 @@
         {%endif%}
         </td></tr>
     <tr><td class='rightalign'><label for="id_new_password">New Password :</label></td><td class='leftalign'>{{personal_form.new_password}}<span class='help_text'>(Leave this blank, if you dont wish to change the existing password)</span><br/>{{personal_form.new_password.errors}}</td></tr>
-    <tr><td>&nbsp;</td><td><input type='button' name="save_personal_settings_button" id="personal_settings_button" value="Save my Personal Settings" onClick="javascript:save_personal_settings(this.form.getAttribute('name'));"/></td></tr>
+    <tr><td>&nbsp;</td><td><input type='button' class='btn primary' name="save_personal_settings_button" id="personal_settings_button" value="Save my Personal Settings" onClick="javascript:save_personal_settings(this.form.getAttribute('name'));"/></td></tr>
 </table>
 </form>

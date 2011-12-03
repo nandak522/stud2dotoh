@@ -1,7 +1,7 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'base.html'%}
 {% block title %}Invite somebody you know{% endblock %}
 {%block content%}
-<div class='column span-13'>
+<div class='column span13'>
     <h3 class='georgia maincontent_header blue_underline'>Invite somebody you know!</h3>
     <form action="{%url invite %}" method='POST'>{% csrf_token %}
     <table class='form-table'>
@@ -10,7 +10,7 @@
     </table>
     </form>
 </div>
-<div id="explain_invite" class='column span-10 last box'>
+<div id="explain_invite" class='column span10 last box'>
 	<ul class='board'>
 	<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Senior</span> and get help on your studies</li>
 	<li>You can <span class='special_blue bold'>contact</span> your <span class='special_blue bold'>Branch mate</span> and interact with him/her</li>

@@ -8,7 +8,7 @@
         <span class='small_text'>Posted by {%with answer.given_by as given_by%}{%render_user_domain given_by%}{%endwith%} on {{answer.created_on|date:"dS M Y g:i A"}}</span>
         {%if not accepted_answer%}
             {%ifequal question.raised_by.id userprofile.id%}
-                <br/><br/><input type="button" value="Make this as final answer" name="accept_answer" onClick="javascript:accept_answer('{{question.id}}','{{answer.id}}');"/><br/>
+                <br/><br/><input type="button" class="btn primary" value="Make this as final answer" name="accept_answer" onClick="javascript:accept_answer('{{question.id}}','{{answer.id}}');"/><br/>
             {%endifequal%}
         {%endif%}
     </div>

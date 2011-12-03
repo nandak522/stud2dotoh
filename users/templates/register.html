@@ -1,4 +1,4 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'base.html'%}
 {% block title %}Registration{% endblock %}
 {%block content%}
 <style>
@@ -8,7 +8,7 @@
 .signup_notes{text-align:left;padding-left:1em;padding:1em;border:1px solid #EFEFEF;}
 </style>
 <div class='prepend-top'>
-<div id="student_signup_pane" class='prepend-1 column span-7 append-1'>
+<div id="student_signup_pane" class='prepend-1 column span7 append-1'>
 <h3>Are you a Student ?</h3>
 <ul class='signup_notes'>
 <li>Save your college Assignments online</li>
@@ -18,7 +18,7 @@
 </ul>
 <a href="{%url student_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of student_signup_pane -->
-<div id="professor_signup_pane" class='column span-7 append-1'>
+<div id="professor_signup_pane" class='column span7 append-1'>
 <h3>Are you a Professor ?</h3>
 <ul class='signup_notes'>
 <li>View your Students' notes online</li>
@@ -28,7 +28,7 @@
 </ul>
 <a href="{%url professor_register%}"><img src="/site_media/img/join_us.png" alt='Join Us'/></a>
 </div><!-- end of professor_signup_pane -->
-<div id="employee_signup_pane" class='column span-7 last'>
+<div id="employee_signup_pane" class='column span7 last'>
 <h3>Are you an Employee ?</h3>
 <ul class='signup_notes'>
 <li>You can contact a Student</li>

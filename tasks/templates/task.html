@@ -1,6 +1,7 @@
-{%extends 'singlepane_base.html'%}
+{%extends 'base.html'%}
 {%block title%}{{task.title|capfirst}}{%endblock%}
 {%block content%}
 Title:{{task.title}}
 Description:{{task.description}}
+all_stashes:{{all_stashes.values}}
 {%endblock%}
