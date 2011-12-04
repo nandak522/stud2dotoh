@@ -2,12 +2,14 @@ from django.db import models
 from utils.models import BaseModel, BaseModelManager
 from django.template.defaultfilters import slugify
 from users.models import UserProfile
+from utils.session_stash import SessionStashable
+from taggit.managers import TaggableManager
 
 class TaskAlreadyExistsException(Exception):
     pass
 
 class TaskManager(BaseModelManager):
-    def create_task(self, title, creator, description='', is_public=True, deadline=None):
+    def create_task(self, title, creator, tags, description='', is_public=True, deadline=None):
         if not self.filter(title=title).count():
             task = Task(title=title,
                         slug=slugify(title),
@@ -16,6 +18,7 @@ class TaskManager(BaseModelManager):
                         is_public=is_public,
                         deadline=deadline)
             task.save()
+            task.tags.add(*tags)
             return task
         raise TaskAlreadyExistsException
 
@@ -27,6 +30,7 @@ class Task(BaseModel):
     deadline = models.DateField(blank=True, null=True)
     is_public = models.BooleanField(default=True)
     objects = TaskManager()
+    tags = TaggableManager()
 
     def current_assignees(self):
         return self.taskmembership_set.exclude(status='FINISHED').values('userprofile')
@@ -68,7 +72,7 @@ class TaskMembership(BaseModel):
 
     task = models.ForeignKey(Task)
     userprofile = models.ForeignKey(UserProfile, related_name='assigned_tasks')
-    status = models.CharField(choices=_status_choices, max_length=10)
+    status = models.CharField(choices=_status_choices, max_length=10, default='INPROGRESS')
     finished_on = models.DateField(blank=True, null=True)
     objects = TaskMembershipManager()
 

@@ -15,17 +15,26 @@ from users.forms import ContactUsForm, ContactGroupForm, InvitationForm, SaveNot
 from users.forms import ForgotPasswordForm, ResetMyPasswordForm, AddAchievementForm
 from users.models import UserProfile, College, Company, Note, Achievement
 from utils import response, post_data, loggedin_userprofile 
-from utils.emailer import default_emailer, mail_admins, mail_group, invitation_emailer, welcome_emailer, forgot_password_emailer
+from utils.emailer import (default_emailer,
+                           mail_admins,
+                           mail_group,
+                           invitation_emailer,
+                           welcome_emailer,
+                           forgot_password_emailer)
 from utils.decorators import is_get, is_post, is_ajax
-from datetime import datetime
+from datetime import datetime 
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from random import choice
+from tasks.models import Task
 
 TODAY = datetime.today()
 DEFAULT_COLLEGE_END_YEAR = TODAY.year + 1
 DEFAULT_COLLEGE_START_YEAR = DEFAULT_COLLEGE_END_YEAR - 4
 
 def view_homepage(request, homepage_template):
-    #TODO:Homepage layout showing message, screenshots, latest updates across the system
-    return response(request, homepage_template, {})
+    random_basic_task = choice(Task.objects.filter(tags__name__in=['basic'])\
+                                           .values('id', 'slug', 'title'))
+    return response(request, homepage_template, {'random_basic_task':random_basic_task})
 
 @login_required
 def view_dashboard(request, dashboard_template):
@@ -34,7 +43,6 @@ def view_dashboard(request, dashboard_template):
 @login_required
 @is_admin
 def view_all_users(request, all_users_template):
-    from django.core.paginator import Paginator, EmptyPage, InvalidPage
     paginator = Paginator(UserProfile.objects.values('id', 'name', 'slug', 'user__email', 'created_on'), settings.DEFAULT_PAGINATION_COUNT)
     try:
         page = int(request.GET.get('page', 1))

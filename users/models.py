@@ -69,6 +69,10 @@ class UserProfile(BaseModel):
     def __unicode__(self):
         return self.name
 
+    def assign_task(self, task):
+        from tasks.models import TaskMembership
+        TaskMembership.objects.assign_task(task, self)
+
     def finish_task(self, task):
         task_assignments = task.taskmembership_set.filter(userprofile=self)
         if task_assignments.count():
