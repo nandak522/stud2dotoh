@@ -25,7 +25,7 @@ else:
             'USER': 'stud2dotoh',                      # Not used with sqlite3.
             'PASSWORD': 'stud2dotoh',                  # Not used with sqlite3.
             'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+            'PORT': '5433',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
 
@@ -73,7 +73,7 @@ TEMPLATE_DIRS = (
                  '%s/templates' % ROOT_PATH,
 )
 
-INSTALLED_APPS = (
+DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -81,6 +81,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.webdesign',
+)
+
+PROJECT_APPS = (
     'extensions',
     'debug_toolbar',
     'tasks',
@@ -88,6 +91,8 @@ INSTALLED_APPS = (
     'quest',
     'taggit',#Ideally this should be a submodule
 )
+
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
@@ -120,3 +125,5 @@ QUESTION_POINTS = 3
 ANSWER_POINTS = 5
 
 SEED_SCORE = 100
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
