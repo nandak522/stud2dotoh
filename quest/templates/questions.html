@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%block title%}Questions{%endblock%}
 {%block questionstab%}activetab{%endblock%}
-{%block feature_usage%}
+{%block content%}
 <div class='feature_usage prepend-top box'>
     <div id='close' onClick='javascript:$(".feature_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
     <h3>Questions is a Bank of Questions and Answers. You can&nbsp;:</h3>
@@ -16,8 +16,6 @@
         <li>Raise a <span class='special_blue bold'>Project Idea</span> and let People <span class='special_blue bold'>help you</span> by giving their feedback</li>
     </ul>
 </div><!-- end of feature_usage -->
-{%endblock%}
-{%block content%}
 <div class='centeralign'>
 <span id="search_question" class='bold'>Search : <input type="text" id='id_question_title' name="term" size="80" style='padding:4px;font-size:1.25em;'/></span>&nbsp;(&nbsp;or&nbsp;)&nbsp;<input id="ask_question_button" type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <h3 id='search_questions_header' class='georgia maincontent_header'>Browse all {{questions_count}} Questions by Tags</h3>

@@ -24,9 +24,9 @@ class TaskManager(BaseModelManager):
 
 class Task(BaseModel):
     title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=80, db_index=True)
+    slug = models.SlugField(max_length=80, db_index=True, unique=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
-    creator = models.OneToOneField(UserProfile)
+    creator = models.ForeignKey(UserProfile)
     deadline = models.DateField(blank=True, null=True)
     is_public = models.BooleanField(default=True)
     objects = TaskManager()
@@ -41,6 +41,9 @@ class Task(BaseModel):
     def __unicode__(self):
         return self.title
 
+    def all_solutions(self):
+        return self.tasksolution_set.all()
+
     @models.permalink
     def get_absolute_url(self):
         return ('task', (), {'task_id':self.id, 'task_slug':self.slug})
@@ -49,8 +52,22 @@ class Task(BaseModel):
     def bounty(self):
         return self.taskbounty.bounty
 
+    def solve(self, description, solved_by):
+        solution = TaskSolution(task=self, description=description, created_by=solved_by)
+        solution.save()
+
 class TaskAlreadyAssignedException(Exception):
     pass
+
+class TaskSolution(BaseModel, SessionStashable):
+    session_variable = 'solutions_stash'
+
+    created_by = models.ForeignKey(UserProfile, null=True, blank=True)
+    description = models.TextField()
+    task = models.ForeignKey(Task)
+
+    def __unicode__(self):
+        return "%s... ==> %s... ==> %s" % (self.task.title[:10], self.description[:10], self.created_by)
 
 class TaskMembershipManager(BaseModelManager):
     def assign_task(self, task, user):

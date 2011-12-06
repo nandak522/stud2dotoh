@@ -15,20 +15,28 @@
 a#logo{font-size:24px;}
 #lefttopbar > li{padding-left:30px;}
 #righttopbar > li{padding-left:10px;}
-textarea{width:610px;height:150px;}
 </style>
 {%endblock%}
 {%block extrastyle%}
 {%endblock%}
 </head>
 <body>
-    <div class='container'>
 <header>
 {%include 'header.html'%}
 </header>
 <div class='content'>
-    {%block content%}
-    {%endblock%}
+    <div class='container'>
+        <div class='row'>
+            <div class='span12'>
+            {%block content%}
+            {%endblock%}
+            </div>
+            <div class='span4'>
+            {%block sidebar%}
+            {%endblock%}
+            </div>
+        </div>
+    </div>
 </div><!-- end of content -->
 <footer>
 {%include 'footer.html'%}
@@ -61,6 +69,5 @@ $(document).ready(function () {
 {%block extrajs%}{%endblock%}
 {%include 'google_analytics.html'%}
 </footer>
-    </div>
 </body>
 </html>

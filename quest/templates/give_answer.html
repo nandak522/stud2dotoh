@@ -5,7 +5,7 @@
 <li>Answering a Question Gets you 5 points</li>
 <table>
     <tr><td class='leftalign'>{{give_answer_form.description}}<br/><span class='help_text'>(<span class='required'>Required</span>. Max of 2000 characters)</span>&nbsp;&nbsp;<span id='status_meter_id' class='small_text'></span><br/>{{give_answer_form.description.errors}}</td></tr>
-    <tr><td><input type='submit' name='submit' value="Submit Your Answer" onClick="javascript:return confirm('Are you sure you want to submit the answer now ?');"/></td></tr>
+    <tr><td><input class='btn primary' type='submit' name='submit' value="Submit Your Answer" onClick="javascript:return confirm('Are you sure you want to submit the answer now ?');"/></td></tr>
 </table>
 </form>
 {%else%}

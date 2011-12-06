@@ -1,7 +1,13 @@
 {%extends 'base.html'%}
 {%block title%}{{task.title|capfirst}}{%endblock%}
 {%block content%}
-Title:{{task.title}}
-Description:{{task.description}}
-all_stashes:{{all_stashes.values}}
+<h2>{{task.title}}</h2>
+{{task.description}}
+<br/>
+<h3>All Solutions</h3>
+{% for solution in all_solutions %}
+{{ solution.description }} by {{solution.created_by}}
+{% empty %}
+No Solutions Yet
+{% endfor %}
 {%endblock%}

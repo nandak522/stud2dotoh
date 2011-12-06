@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'doublepane_base.html'%}
 {%block title%}{{question.title}}{%endblock%}
 {%block questionstab%}activetab{%endblock%}
 {%block content%}
@@ -8,6 +8,28 @@
 
 <div id='question_description'>{%autoescape off%}{{question.description}}{%endautoescape%}</div>
 <div id='question_action_links'>
+
+<span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
+{%with question.tags as tags %}
+{%if tags.count%}
+	<span class='small_text'> in </span>&nbsp;&nbsp;{%for tag in tags.all%}
+	<a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a>
+	{%endfor%}
+{%endif%}
+{%endwith%}
+<br/>
+</div>
+    {%if not question.closed and userprofile.id == question.owner.id %}
+        <br/><input class='btn primary' type='button' onClick='javascript:close_answering("{{question.id}}")' value='Close Answering' name='close_answering'/>    
+    {%endif%}
+    {%include 'existing_answers.html'%}
+<div id='give_answer_section'>
+    {%include 'give_answer.html'%}
+</div><!-- end of give_answer_section -->
+</div>
+{%endblock%}
+{%block sidebar%}
+<h3>Share</h3>
 <!-- AddThis Button BEGIN -->
 <div id="share_question_links" class="addthis_toolbox addthis_default_style ">
 &nbsp;&nbsp;|&nbsp;&nbsp;<a title="Link to this question" href="{%url question question.id question.slug%}">Link</a>&nbsp;&nbsp;
@@ -20,27 +42,6 @@
 <a class="addthis_button_preferred_4"></a>
 </div>
 <!-- AddThis Button END -->
-<span class='small_text'>Posted by {%with question.raised_by as raised_by%}{%render_user_domain raised_by %}{%endwith%} on {{question.modified_on|date:"dS F Y"}}</span>
-{%with question.tags as tags %}
-{%if tags.count%}
-	<span class='small_text'> in </span>&nbsp;&nbsp;{%for tag in tags.all%}
-	<a class="tag" title="Browse {{tag.name|title}} Questions" href="{%url tagged_questions tag_name=tag.name%}">{{tag.name}}</a>
-	{%endfor%}
-{%endif%}
-{%endwith%}
-<br/>
-</div>
-    {%if not question.closed and userprofile.id == question.owner.id %}
-        <br/><input type='button' onClick='javascript:close_answering("{{question.id}}")' value='Close Answering' name='close_answering'/>    
-    {%endif%}
-    {%include 'existing_answers.html'%}
-<div id='give_answer_section'>
-    {%include 'give_answer.html'%}
-</div><!-- end of give_answer_section -->
-</div>
-<div id="questions_sidebar" class='span4 column last'>
-<input type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
-</div>
 {%endblock%}
 {%block extrajs%}
 <script type='text/javascript' src='/site_media/js/questions.js'></script>

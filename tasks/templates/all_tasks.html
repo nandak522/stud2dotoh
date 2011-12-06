@@ -2,7 +2,7 @@
 {%block title%}Explore Tasks{%endblock%}
 {%block content%}
 {%for task in tasks%}
-   <a href='{% url task task.id task.slug %}'>{{ task.title|capfirst }}</a>
+   <h2><a href='{% url task task.id task.slug %}'>{{ task.title|capfirst }}</a></h2>
     {%empty%}    
     No Tasks Found
 {%endfor%}

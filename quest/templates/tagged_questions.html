@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%block title%}All Questions{%endblock%}
 {%block questionstab%}activetab{%endblock%}
-{%block feature_usage%}
+{%block content%}
 <div class='feature_usage prepend-top box'>
     <div id='close' onClick='javascript:$(".feature_usage").fadeOut();' class='right' title="Hide this Help">&nbsp;&nbsp;</div>
 <h3>Questions is a Bank of Questions and Answers. You can&nbsp;:</h3>
@@ -15,8 +15,6 @@
     <li>Answering a Question Gets you 5 points</li>
 </ul>
 </div><!-- end of feature_usage -->
-{%endblock%}
-{%block maincontent%}
 <h2 class='georgia maincontent_header blue_underline'>All {%if tag%}{{tag.name|title}} {%endif%}Questions</h2>
 {%for question in questions%}
 <h3><a href="{%url question question.id question.slug%}" target='_blank'>{{question.title}}</a></h3>
