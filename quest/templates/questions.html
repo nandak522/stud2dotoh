@@ -17,7 +17,7 @@
     </ul>
 </div><!-- end of feature_usage -->
 <div class='centeralign'>
-<span id="search_question" class='bold'>Search : <input type="text" id='id_question_title' name="term" size="80" style='padding:4px;font-size:1.25em;'/></span>&nbsp;(&nbsp;or&nbsp;)&nbsp;<input id="ask_question_button" type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
+<span id="search_question" class='bold'>Search : <input type="text" id='id_question_title' name="term" size="80" style='padding:4px;font-size:1.25em;'/></span>&nbsp;(&nbsp;or&nbsp;)&nbsp;<input id="ask_question_button" class='btn primary' type='button' name='submit' value="Ask a Question" onClick='javascript:document.location.href="{%url ask_question%}"'/>
 <h3 id='search_questions_header' class='georgia maincontent_header'>Browse all {{questions_count}} Questions by Tags</h3>
 <ul id='all_tags_widget' style='width:80%;'>
 {%for tag in all_tags%}

@@ -6,7 +6,7 @@
     <form action="{%url invite %}" method='POST'>{% csrf_token %}
     <table class='form-table'>
         <tr><td class='rightalign'><label for="id_to">To :</label></td><td class='leftalign'>{{form.to_emails}}<span class='help_text'>(Mention multiple emails separated by commas.)</span>{{form.to_emails.errors}}</td></tr>
-        <tr><td>&nbsp;</td><td><input type='submit' value='Send Invite'/></td></tr>
+        <tr><td>&nbsp;</td><td><input class='btn primary' type='submit' value='Send Invite'/></td></tr>
     </table>
     </form>
 </div>
