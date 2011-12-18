@@ -22,7 +22,7 @@
     {%block content%}
     {%endblock%}
 </div><!-- end of content -->
-<footer>
+<footer class='center'>
 {%include 'footer.html'%}
 {%if debug%}
 <script type='text/javascript' src='/site_media/js/jquery/jquery-1.6.min.js'></script>
@@ -51,7 +51,9 @@ $(document).ready(function () {
     });
 </script>
 {%block extrajs%}{%endblock%}
+{%if not debug%}
 {%include 'google_analytics.html'%}
+{%endif%}
 </footer>
     </div>
 </body>
