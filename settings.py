@@ -4,8 +4,12 @@ import sys
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+PROJECT_NAME = 'iamtheresume'
+
+DOMAIN = '%s.com' % PROJECT_NAME
+
 ADMINS = (
-    ('Admins', 'coreteam@stud2dotoh.com'),
+    ('Admins', 'coreteam@%s' % DOMAIN),
 )
 
 MANAGERS = ADMINS
@@ -14,16 +18,16 @@ if 'test' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'stud2dotoh.db',
+            'NAME': '%s.db' % PROJECT_NAME,
         }
     }
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'stud2dotoh',                      # Or path to database file if using sqlite3.
-            'USER': 'stud2dotoh',                      # Not used with sqlite3.
-            'PASSWORD': 'stud2dotoh',                  # Not used with sqlite3.
+            'NAME': PROJECT_NAME,                      # Or path to database file if using sqlite3.
+            'USER': PROJECT_NAME,                      # Not used with sqlite3.
+            'PASSWORD': PROJECT_NAME,                  # Not used with sqlite3.
             'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '5433',                      # Set to empty string for default. Not used with sqlite3.
         }
@@ -63,7 +67,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-#    'utils.middlewares.StatsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
@@ -96,7 +99,7 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
-EMAIL_SUBJECT_PREFIX = '[Stud2.0] '
+EMAIL_SUBJECT_PREFIX = '['+PROJECT_NAME+'] '
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
@@ -127,3 +130,7 @@ ANSWER_POINTS = 5
 SEED_SCORE = 100
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+TASK_BOUNTIES_BY_LEVELS = {'easy':100,
+                           'doable':200,
+                           'tough':300}

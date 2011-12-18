@@ -6,7 +6,7 @@ from django.template.loader import render_to_string as render_template
 import re
 
 EMAIL_REGEX = '[\w\.-]+@[a-zA-Z0-9]+[\.][a-zA-Z]{2,4}'
-DEFAULT_FROM_EMAIL = 'do-not-reply@stud2dotoh.com'
+DEFAULT_FROM_EMAIL = 'do-not-reply@%s' % settings.DOMAIN
 DEFAULT_MAIL_CONTENT_TYPE = 'text/html'
 
 def default_emailer(from_email, to_emails, message, from_name='', subject=''):

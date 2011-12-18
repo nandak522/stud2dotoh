@@ -6,9 +6,10 @@ from users.messages import WEBRESUME_FIELD_HOVER
 from users.messages import COLLEGE_FIELD_HOVER_FOR_EMP_SIGNUP
 from users.messages import AGGREGATE_HOVER
 from utils.formfields import MultipleEmailsField, AutocompleteWidget
+from django.conf import settings
 
 USER_NAME_CLEANUP_REGEX_PATTERN = re.compile(r'[^\w.&\s-]+', re.IGNORECASE)
-USER_SLUG_DOMAIN_CLEANUP_REGEX_PATTERN = re.compile(r'stud2dotoh.com', re.IGNORECASE)
+USER_SLUG_DOMAIN_CLEANUP_REGEX_PATTERN = re.compile(r'%s' % settings.DOMAIN, re.IGNORECASE)
 USER_SLUG_CLEANUP_REGEX_PATTERN = re.compile(r'[^a-zA-Z0-9]', re.IGNORECASE)
 COLLEGE_NAME_CLEANUP_REGEX_PATTERN = re.compile(r'[^\w.&\s-]+', re.IGNORECASE) 
 FILENAME_FILTER_REGEXT = '[^.]'

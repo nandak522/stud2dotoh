@@ -32,7 +32,7 @@ $(document).ready(function(){
         minLength:1,
     });
     {%if userprofile.can_update_slug%}document.forms[0].slug.focus();{%else%}document.forms[0].name.focus();{%endif%}
-    $('#id_aggregate').tipsy({trigger:'focus', title:'title', gravity:'w'});    
+    $('#id_aggregate').twipsy({trigger:'focus', title:'title', gravity:'w'});    
 });
 </script>
 {%endblock%}
