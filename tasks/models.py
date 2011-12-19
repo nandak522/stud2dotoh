@@ -10,6 +10,14 @@ class TaskAlreadyExistsException(Exception):
 
 class TaskManager(BaseModelManager):
     def create_task(self, title, creator, tags, description='', is_public=True, deadline=None):
+        """
+        Usage:create_task(title='<some title goes here>',
+                          creator='<userprofile object>',
+                          tags='comma separated string containing tags',
+                          description='<text containing the description of the task>',
+                          is_public=True,
+                          deadline=<datetime object containing the deadline of the task>)
+        """
         if not self.filter(title=title).count():
             task = Task(title=title,
                         slug=slugify(title),
@@ -23,8 +31,8 @@ class TaskManager(BaseModelManager):
         raise TaskAlreadyExistsException
 
 class Task(BaseModel):
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=80, db_index=True, unique=True)
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, db_index=True, unique=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
     creator = models.ForeignKey(UserProfile)
     deadline = models.DateField(blank=True, null=True)
@@ -47,10 +55,6 @@ class Task(BaseModel):
     @models.permalink
     def get_absolute_url(self):
         return ('task', (), {'task_id':self.id, 'task_slug':self.slug})
-
-    @property
-    def bounty(self):
-        return self.taskbounty.bounty
 
     def solve(self, description, solved_by):
         solution = TaskSolution(task=self, description=description, created_by=solved_by)
@@ -95,10 +99,14 @@ class TaskMembership(BaseModel):
 
     def __unicode__(self):
         return '%s ==> %s' % (self.task ,self.userprofile)
-        
-class TaskBounty(BaseModel):
+
+class TaskLevel(BaseModel):
+    level = models.CharField(max_length=50)
     task = models.OneToOneField(Task)
-    bounty = models.IntegerField()
+
+    #NOTE:All the interactions related to TaskLevel model happen through
+    #Task model. Like task.tasklevel, TaskLevel() if the former raises a
+    #DoesNotExist error
 
     def __unicode__(self):
-        return '%s ==> %s' % (self.task.title, self.bounty)
+        return '%s ==> %s' % (self.task.title, self.level)

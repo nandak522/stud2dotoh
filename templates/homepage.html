@@ -1,8 +1,15 @@
 {%extends 'base.html'%}
 {%block content%}
-<h1>This is the New Home</h1>
-Here is your random task:{{random_basic_task}}
-<br/>{{form.solution}}
+<div id='homepage_task'>
+<h2>{{random_basic_task.title}}</h2>
+<h4>{{random_basic_task.description}}</h4>
+<br/>{{form.solution}}<br/>
+<br/><input type='submit' class='btn primary' value='Submit Solution'/>
+<input type='submit' class='btn' value='Explore other tasks'/>
+</div>
+<div id='whytasking' class='center' onClick="javascript:">
+<h1>What do I get if I do this ?</h1>
+</div>
 {%endblock%}
 {%block extrajs%}
 

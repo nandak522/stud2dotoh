@@ -1,4 +1,4 @@
-SITE_DIR = '/home/ubuntu/webapps/stud2dotoh/'
+SITE_DIR = '/home/ubuntu/webapps/iamtheresume/'
 import site
 site.addsitedir(SITE_DIR) 
 

@@ -33,7 +33,7 @@ DEFAULT_COLLEGE_END_YEAR = TODAY.year + 1
 DEFAULT_COLLEGE_START_YEAR = DEFAULT_COLLEGE_END_YEAR - 4
 
 def view_homepage(request, homepage_template):
-    random_basic_task = choice(Task.objects.filter(tags__name__in=['basic'])\
+    random_basic_task = choice(Task.objects.filter(tags__name__in=['easy'])\
                                            .values('id', 'slug', 'title', 'description'))
     form = TaskSolutionForm({'task_id':random_basic_task['id'],
                              'solution':'Please go ahead and start typing the solution'})
